@@ -51,7 +51,7 @@
      </tr>
      <tr>
         <th style="border: 1px solid black;"><strong>Covering Specialty:</strong></th>
-        <td style="border: 1px solid black;"><strong><?= $em_1['spec_name'] ?></strong></td>
+        <td style="border: 1px solid black;"><strong><?= $em_1['spec_name'].' '. $em_1['grade_name'] ?></strong></td>
      </tr>
      <tr>
         <th style="border: 1px solid black;"><strong>Covering Date & Time:</strong></th>

@@ -79,6 +79,7 @@ $routes->match(['get' , 'post'], 'admin/client-pwd/(:any)', 'admin\Backend::clie
 $routes->match(['get' , 'post'], 'admin/employee-pwd/(:any)', 'admin\Backend::employee_pwd/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'admin/expired-orders', 'admin\Backend::expired_orders' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'admin/email-1/(:any)', 'admin\Backend::email_1/$1' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'admin/email-2/(:any)', 'admin\Backend::email_2/$1' ,['filter' => 'B_auth']);
 
 // });
 
