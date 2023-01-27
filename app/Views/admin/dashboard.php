@@ -9,7 +9,7 @@
 </div>
 <div class="row g-2 row-deck mb-2">
 <div class="col-lg-3 col-md-6 col-sm-6 text-center">
-<div class="card chart-color1">
+<div class="card chart-color123">
 <div class="card-body p-lg-4 text-light">
 <h3><strong><?= $o_pen ?></strong></h3>
 <span>Pending Orders</span>
@@ -17,15 +17,15 @@
 </div>
 </div>
 <div class="col-lg-3 col-md-6 col-sm-6 text-center">
-<div class="card chart-color2">
-<div class="card-body p-lg-4 text-dark">
+<div class="card chart-color122">
+<div class="card-body p-lg-4 text-light">
 <h3><strong><?= $o_pro ?></strong></h3>
 <span>Processed Orders</span>
 </div>
 </div>
 </div>
 <div class="col-lg-3 col-md-6 col-sm-6 text-center">
-<div class="card chart-color3">
+<div class="card chart-color121 text-light">
 <div class="card-body p-lg-4">
 <h3><strong><?= $o_con ?></h3></strong>
 <span>Confirm Orders</span>
@@ -33,7 +33,7 @@
 </div>
 </div>
 <div class="col-lg-3 col-md-6 col-sm-6 text-center">
-<div class="card chart-color4">
+<div class="card chart-color120">
 <div class="card-body p-lg-4 text-light">
 <h3><strong><?= $o_end ?></strong></h3>
 <span>Ended Orders</span>
@@ -41,8 +41,8 @@
 </div>
 </div>
 <div class="col-lg-3 col-md-6 col-sm-6 text-center">
-<div class="card chart-color5">
-<div class="card-body p-lg-4 text-dark">
+<div class="card chart-color119">
+<div class="card-body p-lg-4 text-light">
 <h3><strong><?= $o_exp ?></h3></strong>
 <span>Expired Orders</span>
 </div>
