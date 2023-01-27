@@ -1771,5 +1771,16 @@ class Backend extends BEBaseController
 		return $this->LoadView('admin/email-1', $data);
 	}
 
+	public function email_2($e2id = null)
+	{
+		$e2id = decryptIt($e2id);
+		$data = [];
+		
+		$e2model = new ordersModel();
+		$data['em_2'] = $e2model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade')->where('ord_id', $e2id)->first();
+		
+
+		return $this->LoadView('admin/email-2', $data);
+	}
 
 }
