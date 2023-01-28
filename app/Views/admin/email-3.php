@@ -20,7 +20,7 @@
                     <div class="col-md-3 offset-md-5">
                     <span id="flash-message" class="alert alert-success"></span>
                         </div>
-                        <h6 class="card-title">Email 2</h6>
+                        <h6 class="card-title">Email 3</h6>
                         <ul class="header-dropdown">
                             <li>
                                 <button type="button" onclick="CopyToClipboard()" class="btn btn-sm btn-outline-primary">Copy</button>
@@ -30,38 +30,39 @@
                     <hr class="primary">
                     <div class="card-body">
                     <div class="row mb-3 " id="email" contenteditable="true">
+                        <h5 class="text-danger">LOCUM CONFIRMATION</h5>
                                <h6>Dear <?php 
-                               if($em_2['cl_gender']== "M"):?>
+                               if($em_3['cl_gender']== "M"):?>
                                Mr.
                                <?php else: ?>
                                 Ms.
                                 <?php endif; ?>
-                                <?php $lname = explode(' ',$em_2['cl_cont_name']) ?>
+                                <?php $lname = explode(' ',$em_3['cl_cont_name']) ?>
                                 <?= $lname[1]?></h6>
                                 <br>
-                                <p>At SRA Locum Service we are pleased to offer you the following doctor. Please review and reply.</p>
+                                <p>At SRA Locum Service we are pleased to confirm you the following doctor.</p>
                                 <p><strong>Your Order Details are;</strong></p>
                                 <div class="table-responsive">
   <table class="table table-bordered align-middle " style="border: 2px solid black;" >
       <tr>
         <th style="border: 1px solid black;"><strong>Hospital Name & Address:</strong></th>
-        <td style="border: 1px solid black;"><strong><?= $em_2['cl_h_name']. ', '. $em_2['cl_address'] ?></strong></td>
+        <td style="border: 1px solid black;"><strong><?= $em_3['cl_h_name']. ', '. $em_3['cl_address'] ?></strong></td>
       </tr>
       <tr>
         <th style="border: 1px solid black;"><strong>Client Contact Name:</strong></th>
-        <td style="border: 1px solid black;"><strong><?= $em_2['cl_cont_name'] ?></strong></td>
+        <td style="border: 1px solid black;"><strong><?= $em_3['cl_cont_name'] ?></strong></td>
      </tr>
      <tr>
         <th style="border: 1px solid black;"><strong>Covering Specialty:</strong></th>
-        <td style="border: 1px solid black;"><strong><?= $em_2['spec_name'].' '. $em_2['grade_name'] ?></strong></td>
+        <td style="border: 1px solid black;"><strong><?= $em_3['spec_name'].' '. $em_3['grade_name'] ?></strong></td>
      </tr>
      <tr>
         <th style="border: 1px solid black;"><strong>Offered Doctor (s):</strong></th>
-        <td style="border: 1px solid black;"><strong>Dr. <?= $em_2['emp_fname']. ' ' .$em_2['emp_lname'] .'( '. $em_2['emp_imcr_no'].')' ?></strong></td>
+        <td style="border: 1px solid black;"><strong>Dr. <?= $em_3['emp_fname']. ' ' .$em_3['emp_lname'] .'( '. $em_3['emp_imcr_no'].')' ?></strong></td>
      </tr>
      <tr>
         <th style="border: 1px solid black;"><strong>Covering Date & Time:</strong></th>
-        <td style="border: 1px solid black;"><strong><?= $em_2['ord_required_from']. ' - ' .$em_2['ord_required_to'] ?></strong></td>
+        <td style="border: 1px solid black;"><strong><?= $em_3['ord_required_from']. ' - ' .$em_3['ord_required_to'] ?></strong></td>
       </tr> 
       <tr>
         <th style="border: 1px solid black;"><strong>Rate:</strong></th>
@@ -69,36 +70,32 @@
      </tr>
      <tr>
         <th style="border: 1px solid black;"><strong>Admin Charges:</strong></th>
-        <td class="text-danger" style="border: 1px solid black;"><strong> <?= $em_2['ord_admin_charges'] ?>%</strong></td>
+        <td class="text-danger" style="border: 1px solid black;"><strong> <?= $em_3['ord_admin_charges'] ?>%</strong></td>
      </tr>  
   </table>
 </div>
 
-<p><strong>Find attached the relevant CV and other documents.</strong></p>
+<p><strong>“SRA Locum”: Shamrock Assist, incorporated in Ireland under registration number 599436, Registered office is at 2nd Floor, 13 Upper Baggot St, Dublin 4 .</strong></p>
 
-   <p>CV</p>
-   <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_cv']) ?>"><?= base_url('public/uploads/employee_attach/'.$em_2['emp_cv']) ?></a>
-   <p>IMC Certificate</p>
-   <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_imc_cert']) ?>"><?= base_url('public/uploads/employee_attach/'.$em_2['emp_imc_cert']) ?></a>
-   <p>Garda Vetting Certificate</p>
-   <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_gv_cert']) ?>"><?= base_url('public/uploads/employee_attach/'.$em_2['emp_gv_cert']) ?></a>
-   <p>Recent Reference</p>
-   <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_rec_refer']) ?>"><?= base_url('public/uploads/employee_attach/'.$em_2['emp_rec_refer']) ?></a>
-   <p>Passport</p>
-   <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_passport']) ?>"><?= base_url('public/uploads/employee_attach/'.$em_2['emp_passport']) ?></a>
-   <p>Occupational Health</p>
-   <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_occup_health']) ?>"><?= base_url('public/uploads/employee_attach/'.$em_2['emp_occup_health']) ?></a>
-   <p>Work Permit</p>
-   <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_work_permit']) ?>"><?= base_url('public/uploads/employee_attach/'.$em_2['emp_work_permit']) ?></a>
-
-
-<br>
+   <br>
+   <h6 class="text-danger">SRA Locum standard terms and conditions are applicable to the above assignment. For the avoidance of doubt,</h6>
+<ol type="a" class="text-danger">
+    <li>The Client acknowledges that they are being provided locum doctor through the SRA Locum,</li>
+    <li>That all payments will be made to SRA Locum, under no circumstances the client will pay the locum doctor directly. </li>
+    <li>Client acknowledges to us that their services are supplied by us as an independent locum.</li>
+    <li>Any placed personnel will be under the supervision, direction, and control of the client.</li>
+    <li>Where a locum is hired directly by the client within the period of six months of the initial introduction, a one recruitment fee of 7% of the year pay will be payable by the client.</li>
+    <li>The credit limit for your every ordering client shall not exceed 1000 euro unless previous dues are paid.</li>
+</ol>
+   <br>
 <hr class="primary">
 <p><strong>Order status:</strong>
 <ol>
    <li>Order confirmation.</li>
    <li>Order processing initiated.</li>
    <li>Proposal of locum to you.</li>
+   <li>Acceptance or declining a locum.</li>
+   <li>Locum Confirmation.</li>
 </ol>
 </p>
 

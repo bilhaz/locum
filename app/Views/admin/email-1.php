@@ -17,12 +17,17 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
                     <div class="card-header">
+                        <div class="col-md-3 offset-md-5">
+                    <span id="flash-message" class="alert alert-success "></span>
+                        </div>
                         <h6 class="card-title">Email 1</h6>
                         <ul class="header-dropdown">
+
                             <li>
                                 <button type="button" onclick="CopyToClipboard()" class="btn btn-sm btn-outline-primary">Copy</button>
                             </li>
                         </ul>
+
                     </div>
                     <hr class="primary">
                     <div class="card-body">

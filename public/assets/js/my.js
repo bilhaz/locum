@@ -35,20 +35,29 @@ $('.select2').select2();
 		  
 		  function copyLink() {
 			var link = document.querySelector("#tocopy").href;
+			
 			navigator.clipboard.writeText(link);
 		  }
 		  		
 		  function CopyToClipboard() {
 
 			var copyBoxElement = document.getElementById('email');
+			var flashMessage = document.getElementById("flash-message");
 			copyBoxElement.contenteditable = true;
 			copyBoxElement.focus();
 			document.execCommand('selectAll');
 			document.execCommand("copy");
 			copyBoxElement.contenteditable = false;
-			alert("Text has been copied")
+			// alert("Text has been copied")
+			flashMessage.innerHTML = "Text Copied!";
+    flashMessage.style.display = "block";
+    setTimeout(()=>{
+    flashMessage.style.display = "none";
+
+    }, 3000);
 		}
-		
+
+
 
 
 			  
