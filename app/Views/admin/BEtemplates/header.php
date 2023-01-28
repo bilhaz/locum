@@ -1367,16 +1367,7 @@ ZW50SUQAQTM4NzFBMzMyNkNENjU3NzkzNzUxRjlEOEI4M0YwNzdgGcdFAAAAAElFTkSuQmCC" />
 
 <div class="tab-pane fade" id="setting_menu" role="tabpanel">
 <div class="px-3">
-<h6>Choose Skin</h6>
-<ul class="choose-skin list-unstyled">
-<li data-theme="purple" class="mb-2"><div class="purple"></div><span>Purple</span></li>
-<li data-theme="blue" class="mb-2"><div class="blue"></div><span>Blue</span></li>
-<li data-theme="cyan" class="mb-2"><div class="cyan"></div><span>Cyan</span></li>
-<li data-theme="green" class="active mb-2"><div class="green"></div><span>Green</span></li>
-<li data-theme="orange" class="mb-2"><div class="orange"></div><span>Orange</span></li>
-<li data-theme="blush" class="mb-2"><div class="blush"></div><span>Blush</span></li>
-</ul>
-<hr>
+
 <h6>Theme Option</h6>
 <ul class="list-unstyled">
 <li class="d-flex align-items-center mb-1">
