@@ -81,7 +81,7 @@
                                         <td>
                                                 
                                         
-<ul class="nav nav-pills me-4 ms-2">
+<ul class="nav nav-pills">
 <li class="nav-item dropdown">
 <a class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Emails</a>
  <ul class="dropdown-menu shadow-sm">
