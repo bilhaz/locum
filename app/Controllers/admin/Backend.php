@@ -1795,4 +1795,28 @@ class Backend extends BEBaseController
 		return $this->LoadView('admin/email-3', $data);
 	}
 
+	public function email_4($e4id = null)
+	{
+		$e4id = decryptIt($e4id);
+		$data = [];
+
+		$e3mdoel = new ordersModel();
+		$data['em_4'] = $e3mdoel->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade')->where('ord_id', $e4id)->first();
+		
+
+		return $this->LoadView('admin/email-4', $data);
+	}
+
+	public function contract($conid = null)
+	{
+		$conid = decryptIt($conid);
+		$data = [];
+
+		$e3mdoel = new ordersModel();
+		$data['cont'] = $e3mdoel->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade')->where('ord_id', $conid)->first();
+		
+
+		return $this->LoadView('admin/contract', $data);
+	}
+
 }

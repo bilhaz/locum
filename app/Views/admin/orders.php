@@ -86,12 +86,11 @@
 <a class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Emails</a>
  <ul class="dropdown-menu shadow-sm">
 <li><a class="dropdown-item" target="_blank" href="<?= base_url('admin/email-1/'.encryptIt($row['ord_id'])) ?>">Email 1</a></li>
-<li><hr class="dropdown-divider"></li>
 <li><a class="dropdown-item" target="_blank" href="<?= base_url('admin/email-2/'.encryptIt($row['ord_id'])) ?>">Email 2</a></li>
-<li><hr class="dropdown-divider"></li>
 <li><a class="dropdown-item" target="_blank" href="<?= base_url('admin/email-3/'.encryptIt($row['ord_id'])) ?>">Email 3</a></li>
-<li><hr class="dropdown-divider"></li>
 <li><a class="dropdown-item" target="_blank" href="<?= base_url('admin/email-4/'.encryptIt($row['ord_id'])) ?>">Email 4</a></li>
+<li><hr class="dropdown-divider"></li>
+<li><a class="dropdown-item" target="_blank" href="<?= base_url('admin/contract/'.encryptIt($row['ord_id'])) ?>">Contract</a></li>
 </ul>
 </li>
 </ul>

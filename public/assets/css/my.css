@@ -71,3 +71,10 @@
         font-size: 18px;
       }
 
+ul.spbull {
+    list-style-type: "\27A8";
+    
+}
+.spbull li{
+padding-left: 1rem;
+}

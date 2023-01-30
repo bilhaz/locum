@@ -76,19 +76,19 @@
 
 <p><strong>Find attached the relevant CV and other documents.</strong></p>
 
-   <p>CV</p>
+   <p class="mb-0"><strong>CV</strong></p>
    <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_cv']) ?>"><?= base_url('public/uploads/employee_attach/'.$em_2['emp_cv']) ?></a>
-   <p>IMC Certificate</p>
+   <p class="mb-0"><strong>IMC Certificate</strong></p>
    <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_imc_cert']) ?>"><?= base_url('public/uploads/employee_attach/'.$em_2['emp_imc_cert']) ?></a>
-   <p>Garda Vetting Certificate</p>
+   <p class="mb-0"><strong>Garda Vetting Certificate</strong></p>
    <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_gv_cert']) ?>"><?= base_url('public/uploads/employee_attach/'.$em_2['emp_gv_cert']) ?></a>
-   <p>Recent Reference</p>
+   <p class="mb-0"><strong>Recent Reference</strong></p>
    <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_rec_refer']) ?>"><?= base_url('public/uploads/employee_attach/'.$em_2['emp_rec_refer']) ?></a>
-   <p>Passport</p>
+   <p class="mb-0"><strong>Passport</strong></p>
    <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_passport']) ?>"><?= base_url('public/uploads/employee_attach/'.$em_2['emp_passport']) ?></a>
-   <p>Occupational Health</p>
+   <p class="mb-0"><strong>Occupational Health</strong></p>
    <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_occup_health']) ?>"><?= base_url('public/uploads/employee_attach/'.$em_2['emp_occup_health']) ?></a>
-   <p>Work Permit</p>
+   <p class="mb-0"><strong>Work Permit</strong></p>
    <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_work_permit']) ?>"><?= base_url('public/uploads/employee_attach/'.$em_2['emp_work_permit']) ?></a>
 
 
