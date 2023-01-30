@@ -347,6 +347,7 @@
             </div>
         </div>
         <div class="row clearfix">
+            <div class="col-lg-12">
     <div class="row">
         <div class="col-md-4">
             <h6 style="font-weight: 1000;" class="text-dark"><u>SRA Locum</u></h6>
@@ -372,7 +373,7 @@
     <p class="mb-3" style="padding-bottom: 2pt;padding-left: 7pt;text-indent: 0pt;text-align: left;">We are now in a position to confirm your placement as Locum doctor with following details:</p>
     
     <div class="table-responsive">
-    <table style="border-collapse:collapse;margin-left:12.72pt" cellspacing="0">
+    <table style="border-collapse:collapse;margin-left:12.72pt" cellspacing="0" width="100%">
         <tr style="height:41pt">
             <td style="width:151pt;border-bottom-style:solid;border-bottom-width:3pt;border-bottom-color:#9BBA58;border-right-style:solid;border-right-width:1pt;border-right-color:#9BBA58">
                 <p class="s2" style="padding-left: 4pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Hospital/GP Name&amp; Address:</p>
@@ -423,7 +424,7 @@
     </table>
 </div>
     <p style="text-indent: 0pt;text-align: left;"><br /></p>
-    <table style="border-collapse:collapse;margin-left:6.6pt" cellspacing="0">
+    <table style="border-collapse:collapse;margin-left:6.6pt" cellspacing="0" width="100%">
         <tr style="height:12pt">
             <td style="width:524pt">
                 <p class="s7" style="text-indent: 0pt;line-height: 10pt;text-align: left;"> <span class="s8">“Locum”: Shall mean Doctor being the person supplied by SRA Locum to provide services to the GP names above. &nbsp;&nbsp;&nbsp;&nbsp; </span></p>
@@ -450,13 +451,33 @@
     <p style="text-indent: 0pt;text-align: left;"><br /></p>
     <p class="s18" style="padding-left: 189pt;text-indent: -73pt;text-align: left;">PLEASE ENSURE YOU OBTAIN AN AUTHORISED SIGNATURE ON YOUR TIMESHEET TO GUARANTEE PAYMENT</p>
     <p style="text-indent: 0pt;text-align: left;"><br /></p>
+    </div>
     <!-- Contract Ends here -->
     <div style="break-after:page"></div>
+
+
+
     <!-- Assesment Form Start -->
+    <div class="row">
+        <div class="col-md-4">
+            <h6 style="font-weight: 1000;" class="text-dark"><u>SRA Locum</u></h6>
+            <p class="mb-0"><u><b>2<sup>nd</sup> Floor, 13 Baggot St Upper,</b></u></p>
+            <p class="mb-0"><u><a href="https://www.sralocum.com">W: www.sralocum.com</a></u></p>
+            <p class="mb-0"><u><a href="mailto:info@shamrockassist.com">E: info@shamrockassist.com</a></u></p>
+            <p class="mb-0"><u><a href="tel:016854700">P: 01-6854700</a>&nbsp;<b>&</b>&nbsp;<a href="tel:016994321">01-6994321</a></u></p>
+            <p class="mb-0"><b><u>Fax: 01-6852538</u></b></p>
+
+        </div>
+        <div class="col-md-4 offset-md-3">
+            <img src="<?= base_url('public/images/sralogo-icon.png') ?>" width="100" height="100" style="float:right;" >
+        </div>
+        </div>
+        <div class="col-lg-12">
     <p style="text-indent: 0pt;text-align: left;"><br /></p>
     <h1 style="padding-top: 2pt;padding-left: 6pt;text-indent: 0pt;text-align: center;">ASSESSMENT FORM</h1>
     <p style="text-indent: 0pt;text-align: left;"><br /></p>
-    <table style="border-collapse:collapse;margin-left:47.434pt" cellspacing="0">
+    <div class="table-responsive">
+    <table style="border-collapse:collapse;margin-left:47.434pt" cellspacing="0" width="80%">
         <tr style="height:16pt">
             <td style="width:221pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
                 <p class="s2" style="padding-left: 74pt;padding-right: 73pt;text-indent: 0pt;line-height: 13pt;text-align: center;">DOCTOR NAME</p>
@@ -490,12 +511,14 @@
             </td>
         </tr>
     </table>
+</div>
     <p style="text-indent: 0pt;text-align: left;"><br /></p>
     <p style="padding-left: 8pt;text-indent: 0pt;text-align: justify;">The above named Doctor has recently been placed under your supervision for a locum position. As part of our follow up after care programme, we would greatly appreciate if you could provide us with a follow up assessment for the doctor’s time spent at this GP. Please could you complete and return this reference at your earliest convenience to assist this locum.</p>
     <p style="text-indent: 0pt;text-align: left;"><br /></p>
     <p style="padding-left: 6pt;text-indent: 0pt;text-align: center;">Please note that this information may be used as a reference for future locum placements.</p>
     <p style="text-indent: 0pt;text-align: left;"><br /></p>
-    <table style="border-collapse:collapse;margin-left:45.994pt" cellspacing="0">
+    <div class="table-responsive">
+    <table style="border-collapse:collapse;margin-left:45.994pt" cellspacing="0" width="80%">
         <tr style="height:14pt">
             <td style="width:127pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
                 <p class="s2" style="padding-left: 46pt;padding-right: 45pt;text-indent: 0pt;line-height: 12pt;text-align: center;">Criteria</p>
@@ -667,8 +690,10 @@
             </td>
         </tr>
     </table>
+</div>
     <p style="text-indent: 0pt;text-align: left;"><br /></p>
-    <table style="border-collapse:collapse;margin-left:5.3pt" cellspacing="0">
+    <div class="table-responsive">
+    <table style="border-collapse:collapse;margin-left:5.3pt" cellspacing="0" width="80%">
         <tr style="height:13pt">
             <td style="width:431pt" colspan="4">
                 <p class="s22" style="padding-left: 2pt;text-indent: 0pt;line-height: 11pt;text-align: left;">Would you be happy to receive this doctor again for a locum position?</p>
@@ -689,6 +714,7 @@
             </td>
         </tr>
     </table>
+</div>
     <p style="text-indent: 0pt;text-align: left;"><br /></p>
     <p style="padding-left: 8pt;text-indent: 0pt;text-align: left;">If so, do you know of any future dates, which this locum maybe required?</p>
     <p style="text-indent: 0pt;text-align: left;"><br /></p>
@@ -704,6 +730,7 @@
     <p style="padding-left: 7pt;text-indent: 0pt;text-align: left;">Once completed please scan and email us. Or Fax to: <span style=" color: #C10000;">01 685 2538</span></p>
     <p style="padding-left: 7pt;text-indent: 0pt;text-align: left;">SRA Locum – 13 Upper Baggot St, 2<span class="s32">nd</span><a href="mailto:info@sralocum.com" class="s33" target="_blank"> floor, Dublin 4. Email: info@sralocum.com</a></p>
     </div>
+        </div>
 </div>
 </div>
 
