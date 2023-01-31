@@ -82,7 +82,7 @@ $routes->match(['get' , 'post'], 'admin/email-1/(:any)', 'admin\Backend::email_1
 $routes->match(['get' , 'post'], 'admin/email-2/(:any)', 'admin\Backend::email_2/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'admin/email-3/(:any)', 'admin\Backend::email_3/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'admin/email-4/(:any)', 'admin\Backend::email_4/$1' ,['filter' => 'B_auth']);
-$routes->match(['get' , 'post'], 'admin/contract/(:any)', 'admin\Backend::contract/$1' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'admin/contract/(:any)', 'admin\Backend::contract/$1');
 
 // });
 

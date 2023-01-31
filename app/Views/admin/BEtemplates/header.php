@@ -3,12 +3,12 @@
 
 <head>
 <meta charset="utf-8">
-<title>:: SRA | Flow</title>
+<title>SRA | Flow</title>
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="Lucid HR & Project Admin Dashboard Template with Bootstrap 5x">
-<meta name="author" content="WrapTheme, design by: ThemeMakker.com">
-<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta name="description" content="Sra Locum is a platform for Irelanf Medical related organidstions where an hospital can find doctors for thier Hospitals according to thier requirements.">
+<meta name="author" content="SRA Locum | www.sralocum.com">
+<link rel="icon" href="<?= base_url('public/images/sralogo-icon.ico') ?>" type="image">
 
 <link rel="stylesheet" href="<?= base_url('public/assets/css/dataTables.min.css')?>">
 
