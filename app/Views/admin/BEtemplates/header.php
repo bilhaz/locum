@@ -1272,7 +1272,7 @@ ZW50SUQAQTM4NzFBMzMyNkNENjU3NzkzNzUxRjlEOEI4M0YwNzdgGcdFAAAAAElFTkSuQmCC" />
 
 <div id="wrapper">
 
-<nav class="navbar navbar-fixed-top">
+<nav class="navbar navbar-fixed-top d-print-none">
 <div class="container-fluid">
 <div class="navbar-btn">
 <button type="button" class="btn-toggle-offcanvas"><i class="fa fa-bars"></i></button>
@@ -1304,7 +1304,7 @@ ZW50SUQAQTM4NzFBMzMyNkNENjU3NzkzNzUxRjlEOEI4M0YwNzdgGcdFAAAAAElFTkSuQmCC" />
 </div>
 </nav>
 
-<div id="left-sidebar" class="sidebar">
+<div id="left-sidebar" class="sidebar d-print-none">
 <div class="user-account p-3 mb-3">
 <div class="d-flex mb-3 pb-3 border-bottom align-items-center">
 <img src="<?= base_url('public/images/user.png') ?>" class="avatar lg rounded me-3" alt="User Profile Picture">

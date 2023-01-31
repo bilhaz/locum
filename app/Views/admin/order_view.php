@@ -27,7 +27,7 @@
                         </ul>
                     </div>
                     <div class="card-body" id="printthis">
-                        
+                    <page size="A4">  
                         <h3>Order ID: <strong class="text-primary">
                                 <?= $ordr_row['ord_id'] ?>
                             </strong></h3>
@@ -36,7 +36,8 @@
 
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="details" role="tabpanel">
-                                <div class="row g-3">
+                                <div class="row">
+                                    <div class="row">
                                     <div class="col-md-6 col-sm-6">
                                         <address>
                                             <strong>
@@ -97,6 +98,7 @@
                                         <?php endif; ?>
                                         </p>
                                     </div>
+                                </div>
 
                                     <div class="col-md-12">
                                         <?php if(!empty($ordr_row['ord_assignment'])) :?>
@@ -108,8 +110,9 @@
                                             <div class="form-group col-md-6">
                                                 <a target="_blank" id="tocopy"
                                                         href="<?= base_url('public/uploads/doc_assesment/'.$ordr_row['ord_assignment']) ?>">View
-                                                        Assesment</a>&nbsp; <i type="button" onclick="copyLink()" class="fa fa-clipboard"></i>
-                                                <hr class="primary">
+                                                        Assesment</a>&nbsp; <i type="button" onclick="copyLink()" class="fa fa-clipboard"><span id="flash-message" class="alert alert-success"></span></i>
+                                                        
+                                                        <hr class="primary">
                                             </div>
                                         </div>
                                         <?php endif; ?>
@@ -448,6 +451,7 @@
                                 </div>
                             </div>
                         </div>
+                    </page>
                     </div>
                 </div>
             </div>

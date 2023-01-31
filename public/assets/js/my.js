@@ -10,6 +10,7 @@ $('.select2').select2();
 			var total = normal + call;
 			document.getElementById("total").value = total;
 		}
+		// Print Section
 		function printSection(el){
 
 			var getFullContent = document.body.innerHTML;
@@ -18,6 +19,8 @@ $('.select2').select2();
 			window.print();
 			document.body.innerHTML = getFullContent;
 		  }
+
+		//   sideBar Active function
 
 		  $(function () {
 			var url = window.location;
@@ -34,9 +37,16 @@ $('.select2').select2();
 
 		  
 		  function copyLink() {
+			var flashMessage = document.getElementById("flash-message");
 			var link = document.querySelector("#tocopy").href;
 			
 			navigator.clipboard.writeText(link);
+			flashMessage.innerHTML = "Link Copied!";
+			flashMessage.style.display = "block";
+    setTimeout(()=>{
+		flashMessage.style.display = "none";
+
+    }, 3000);
 		  }
 		  		
 		  function CopyToClipboard() {

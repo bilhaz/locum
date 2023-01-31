@@ -78,3 +78,29 @@ ul.spbull {
 .spbull li{
 padding-left: 1rem;
 }
+
+
+
+@media print {
+	p {
+		font-size: 9pt;
+	}
+    h2{
+        font-size: 12pt;
+    }
+    h3{
+        font-size: 11pt;
+    }
+    img{
+        width: 40;
+        height: 40;
+        margin-top: 0;
+    }
+    hr{
+        margin: 0;
+    }
+    table{
+        margin-left:13.72pt;
+        margin-right:20.72pt !important;
+    }
+}
