@@ -91,11 +91,11 @@ padding-left: 1rem;
     h3{
         font-size: 11pt;
     }
-    /* img{
+    img{
         width: 40;
         height: 40;
         margin-top: 0;
-    } */
+    }
     hr{
         margin: 0;
     }
@@ -103,4 +103,7 @@ padding-left: 1rem;
         margin-left:13.72pt;
         margin-right:20.72pt !important;
     }
+    .page-break-line {
+        page-break-before: always !important;
+      }
 }

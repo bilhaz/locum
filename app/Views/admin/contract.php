@@ -7,29 +7,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<link rel="icon" href="<?= base_url('public/images/sralogo-icon.ico') ?>" type="image">
-
-<link rel="stylesheet" href="<?= base_url('public/assets/css/dataTables.min.css')?>">
-
-<link rel="stylesheet" href="<?= base_url('public/assets/css/main.css')?>">
-<link rel="stylesheet" href="https://parsleyjs.org/src/parsley.css">
-
-
-<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.min.js" integrity="sha512-eyHL1atYNycXNXZMDndxrDhNAegH2BDWt1TmkXJPoGf1WLlNYt08CSjkqF5lnCRmdm3IrkHid8s2jOUY4NIZVQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="<?= base_url('public/assets/css/my.css')?>">
-<script src="<?= base_url('public/assets/bundles/libscripts.bundle.js')?>"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-
-    
+   
     <style type="text/css">
         * {
             margin: 0;
             padding: 0;
             text-indent: 0;
+            
+    box-sizing: border-box;
+
         }
 
         h2 {
@@ -359,14 +345,25 @@
 
 <body>
 
-<div class="justify-contemt-center">
-    <div class="container-fluid">
-            
-            <!-- <ul class="header-dropdown d-print-none">
+    <div id="main-content">
+            <div class="container-fluid">
+                <div class="block-header py-lg-4 py-3 d-print-none">
+                    <div class="row g-3">
+                        <div class="col-md-6 col-sm-12">
+                            <h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a>Contract</h2>
+                            <ul class="breadcrumb mb-0">
+                                <li class="breadcrumb-item"><a target="_blank" href="https://www.sralocum.com">SRA Locum</a></li>
+        
+                            </ul>
+                        </div>
+        
+                    </div>
+                </div>
+            <ul class="header-dropdown d-print-none">
                 <li class="dropdown">
                     <button onclick="printSection('printthis')" class="btn btn-outline-secondary"><i class="fa fa-print"></i></button>
                 </li>
-            </ul> -->
+            </ul>
        
         <div class="row clearfix" id="printthis">
             <!-- Contract Starts here -->
@@ -772,12 +769,9 @@
 </div>
 
         </div>
-</div>
-</div>
-<script src="<?= base_url('public/assets/bundles/dataTables.bundle.js')?>"></script>
-<script src="<?= base_url('public/assets/js/my.js')?>"></script>
+            </div>
+    </div>
 
-<script src="<?=  base_url('public/assets/bundles/mainscripts.bundle.js')?>"></script>
 </body>
 
 
