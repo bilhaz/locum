@@ -6,8 +6,8 @@ use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\Filters\Honeypot;
-use App\Filters\Auth;
-use App\Filters\noauth;
+use App\Filters\E_Auth;
+use App\Filters\E_noauth;
 use App\Filters\usercheck;
 use App\Filters\B_auth;
 use App\Filters\B_noauth;
@@ -25,11 +25,11 @@ class Filters extends BaseConfig
         'csrf'     => CSRF::class,
         'toolbar'  => DebugToolbar::class,
         'honeypot' => Honeypot::class,
-         'auth' =>    Auth::class,
-         'noauth' =>    noauth::class,
-         'B_auth'   =>  B_auth::class,
-         'B_noauth' => B_noauth::class,
-         'usercheck' =>    usercheck::class,
+        'E_Auth' =>    E_Auth::class,
+        'E_noauth' =>  E_noauth::class,
+        'B_auth'   =>  B_auth::class,
+        'B_noauth' => B_noauth::class,
+        'usercheck' =>    usercheck::class,
         
     ];
 

@@ -3,20 +3,20 @@
 namespace App\Validation;
 
 use App\Models\UserModel;
-use App\Models\BackendModel;
+use App\Models\EmpModel;
 
 class LoginRules {
 
     // Rule is to validate email & password
-    public function validateUser(string $str, string $fields, array $data) {
-        $model = new UserModel();
-        $user = $model->where('cd_nic',$data['cd_nic'])
+    public function validateEmp(string $str, string $fields, array $data) {
+        $model = new EmpModel();
+        $user = $model->where('emp_email',$data['emp_email'])
                       -> first();
 
         if(!$user)
         return false;
 
-        return password_verify($data['usr_pwd'], $user['usr_pwd']);
+        return password_verify($data['emp_pwd'], $user['emp_pwd']);
     }
 
     public function validateAdmUser(string $str, string $fields, array $data) {
