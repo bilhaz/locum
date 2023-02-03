@@ -1136,7 +1136,7 @@ class Backend extends BEBaseController
 		$dt = date('Y-m-d H:i:s', $timestamp);
 		helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->where('ord_required_to>=', $dt)->orderBy('ord_created', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->where('ord_required_to>=', $dt)->orderBy('ord_created', 'DESC')->findAll();
 
 		return $this->LoadView('admin/orders', $data);
 	}

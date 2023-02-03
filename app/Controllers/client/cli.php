@@ -116,7 +116,7 @@ class cli extends CLIBaseController
 	{
 		
 		$data = [];
-		$usrid = session()->usr_id;
+		$usrid = session()->cl_id;
 		helper(['form']);
 		if ($this->request->getMethod() == 'post') {
 			//let's do the validation here
@@ -134,7 +134,7 @@ class cli extends CLIBaseController
 				$model = new ClientModel();
 				$newData = [
 					
-					'cl_cont_pwd' => $this->request->getVar('usr_pwd'),
+					'cl_cont_pwd' => $this->request->getVar('cl_cont_pwd'),
 				];
 				$model->update($usrid,$newData);
 				$session = session();
@@ -151,8 +151,7 @@ class cli extends CLIBaseController
 		$data = [];
 		
 		$model = new ordersModel();
-		$data['order'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->where('orders.cl_id', session()->cl_id)->orderBy('ord_created', 'DESC')->findAll();
-		
+		$data['order'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->where('orders.cl_id', session()->cl_id)->orderBy('orders.ord_created', 'DESC')->findAll();
 		return $this->LoadView('clients/contracts', $data);
 	}
 
@@ -234,6 +233,7 @@ class cli extends CLIBaseController
 					'ord_required_from' => $this->request->getVar('ord_required_from'),
 					'ord_required_to' => $this->request->getVar('ord_required_to'),
 					'ord_status' => 1,
+					'cl_id'=> session()->cl_id,
 					
 
 
@@ -264,6 +264,7 @@ class cli extends CLIBaseController
 
 		$model = new ordersModel();
 		$data['e_ord'] = $model->where('ord_id', $eoid)->first();
+
 		if ($this->request->getMethod() == 'post') {
 			//let's do the validation here
 			$rules = [

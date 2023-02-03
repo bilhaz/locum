@@ -364,7 +364,7 @@
                     <?php if($cont['ord_cancel_bdr'] <> 1): ?>
                     <ul class="header-dropdown" style="background-color: transparent;">
                         <li style="background-color: transparent;">
-                            <a type="button" href="<?= base_url('employee/timesheet/' .encryptIt($cont['ord_id'])) ?>" class="btn btn-sm btn-primary d-print-none">Fill TimeSheet</a>
+                            <a type="button" href="<?= base_url('employee/timesheet/' .encryptIt($cont['ord_id'])) ?>" class="btn btn-sm btn-primary d-print-none"><i class="fa fa-calendar text-light">&nbsp;</i>Fill TimeSheet</a>
                             <?php if(!empty($cont['ord_assignment'])): ?>
                             <a type="button" target="_blank" href="<?= base_url('public/uploads/doc_assesment/'. $cont['ord_assignment']) ?>" class="btn btn-sm btn-info d-print-none text-light">View Assesment</a>
                             <?php else: ?>

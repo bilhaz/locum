@@ -1332,9 +1332,8 @@ ZW50SUQAQTM4NzFBMzMyNkNENjU3NzkzNzUxRjlEOEI4M0YwNzdgGcdFAAAAAElFTkSuQmCC" />
 <nav class="sidebar-nav">
 <ul class="main-menu cust metismenu list-unstyled">
 <li class="nav-item"><a class="nav-link" href="<?= base_url('client/dashboard') ?>"><i class="fa fa-tachometer"></i><span>Dashboard</span></a></li>
-<li class="nav-item"><a href="<?= base_url('client/orders') ?>"><i class="fa fa-user-md"></i>Orders</a>
-</li>
-
+<li class="nav-item"><a href="<?= base_url('client/orders') ?>"><i class="fa fa-user-md"></i>Orders</a></li>
+<li class="nav-item"><a href="<?= base_url('client/timesheet') ?>"><i class="fa fa-calendar"></i>TimeSheet Approval</a></li>
 </ul>
 </nav>
 </div>

@@ -129,12 +129,12 @@ $routes->get('employee/logout', 'employee\emp::logout');
 // route since we don't have to scan directories.
 $routes->match(['get' , 'post'],'client', 'client\cli::dashboard',['filter' => 'C_Auth']);
 $routes->match(['get' , 'post'], 'client/new-order', 'client\cli::new_order',['filter' => 'C_Auth']);
+$routes->match(['get' , 'post'], 'client/edit-order/(:any)', 'client\cli::order_edit/$1',['filter' => 'C_Auth']);
 $routes->match(['get' , 'post'], 'client/login', 'client\cli::login',['filter' => 'C_noauth']);
 $routes->match(['get' , 'post'],'client/pwdupd', 'client\cli::pwdupd',['filter' => 'C_Auth']);
 $routes->get('client/dashboard', 'client\cli::dashboard',['filter' => 'C_Auth']);
 $routes->match(['get' , 'post'], 'client/orders', 'client\cli::contracts',['filter' => 'C_Auth']);
 $routes->match(['get' , 'post'], 'client/ord-view/(:any)', 'client\cli::order_view/$1',['filter' => 'C_Auth']);
-$routes->match(['get' , 'post'], 'client/upl-asses/(:any)', 'client\cli::upl_asses/$1',['filter' => 'C_Auth']);
 $routes->match(['get' , 'post'], 'client/canc-ord/(:any)', 'client\cli::canc_ord/$1',['filter' => 'C_Auth']);
 $routes->match(['get' , 'post'], 'client/timesheet/(:any)', 'client\cli::timesheet/$1',['filter' => 'C_Auth']);
 $routes->get('client/logout', 'client\cli::logout');

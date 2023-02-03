@@ -4,7 +4,7 @@
             <div class="row g-3">
                 <div class="col-md-6 col-sm-12">
                     <h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a>
-                        New Order</h2>
+                        Order</h2>
                     <ul class="breadcrumb mb-0">
                         <li class="breadcrumb-item"><a target="_blank" href="https://www.sralocum.com">SRA Locum</a>
                         </li>
@@ -40,10 +40,10 @@
                                 </div>
                             <?php endif; ?>
                         <div class="card-title">
-                            <h3 class="text-center title-2">Create New Order</h3>
+                            <h3 class="text-center title-2">Edit Order</h3>
                         </div>
                         <hr>
-                        <form action="<?= base_url('client/new-order') ?>" method="post" autocomplete="off" enctype="multipart/form-data" accept-charset="utf-8" data-parsley-validate="" id="forma">
+                        <form action="<?= base_url('client/edit-order/'. encryptIt($e_ord['ord_id'])) ?>" method="post" autocomplete="off" enctype="multipart/form-data" accept-charset="utf-8" data-parsley-validate="" id="forma">
                         
                             
                             <div class="row mb-3">
@@ -52,7 +52,7 @@
                                     <select id="ord_speciality" name="ord_speciality" class="form-control select2" required="" data-parsley-trigger="change">
                                         <option value="">Select Speciality</option>
                                         <?php foreach($sp_row as $srow):?>
-                                        <option value="<?= $srow['spec_id']?>" <?= set_select('ord_speciality',$srow['spec_id'], ( !empty($fieldType) && $fieldType == $srow['spec_id'] ? TRUE : FALSE )); ?>><?= $srow['spec_name']?></option>
+                                        <option value="<?= $srow['spec_id']?>" <?php if ($e_ord ['ord_speciality'] == $srow['spec_id']) { ?> echo selected="selected" <?php } ?>><?= $srow['spec_name']?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -61,7 +61,7 @@
                                     <select id="ord_grade" name="ord_grade"  class="form-control select2" required="" data-parsley-trigger="change">
                                         <option value="">Select Grade</option>
                                         <?php foreach($gr_row as $grow):?>
-                                        <option value="<?= $grow['grade_id']?>" <?= set_select('ord_grade',$grow['grade_id'], ( !empty($fieldType) && $fieldType == $grow['grade_id'] ? TRUE : FALSE )); ?>><?= $grow['grade_name']?></option>
+                                        <option value="<?= $grow['grade_id']?>" <?php if ($e_ord ['ord_grade'] == $grow['grade_id']) { ?> echo selected="selected" <?php } ?>><?= $grow['grade_name']?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -70,11 +70,11 @@
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
                                     <label for="ord_required_from" class="ord_required_from-label mb-1">Locum Required From</label>
-                                    <input id="ord_required_from" name="ord_required_from" type="datetime-local" class="form-control" required="" value="<?= set_value('ord_required_from') ?>">
+                                    <input id="ord_required_from" name="ord_required_from" type="datetime-local" class="form-control" required="" value="<?= $e_ord['ord_required_from'] ?>">
                                 </div>
                                 <div class="form-group col-md-6 ">
                                     <label for="ord_required_to" class="control-label mb-1">Locum Required To</label>
-                                    <input id="ord_required_to" name="ord_required_to" type="datetime-local" class="form-control" required="" value="<?= set_value('ord_required_to') ?>">
+                                    <input id="ord_required_to" name="ord_required_to" type="datetime-local" class="form-control" required="" value="<?= $e_ord['ord_required_to'] ?>">
                                 </div>
                             </div>
                             <div>
