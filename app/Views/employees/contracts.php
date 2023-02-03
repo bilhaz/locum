@@ -17,11 +17,7 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         <h6 class="card-title">All Orders</h6>
-                        <ul class="header-dropdown">
-                            <li>
-                                <a type="button" href="<?= base_url('admin/new_order') ?>" class="btn btn-sm btn-outline-primary">New Order</a>
-                            </li>
-                        </ul>
+                        
                     </div>
                     <?php if (isset($validation)) : ?>
                         <div class="alert alert-danger" role="alert">
@@ -45,10 +41,9 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Hospital Name</th>
-                                    <th>Employee</th>
-                                    <th>Craeted</th>
+                                    <th>Payemnt</th>
+                                    <th>Work till</th>
                                     <th>Status</th>
-                                    <th>Emails</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -56,7 +51,7 @@
 
                                 <?php
 
-                                foreach ($ord_row as $row) : ?>
+                                foreach ($order as $row) : ?>
                                     <tr>
                                         <td>
                                             <?= $row['ord_id'] ?>
@@ -66,14 +61,17 @@
                                         <td>
                                             <h6 class="mb-0"><?= $row['cl_h_name'] ?></h6>
                                         </td>
-                                        <td><span><?= $row['emp_fname'] . ' ' . $row['emp_lname'] ?></span></td>
-                                        <td><?= $row['ord_created'] ?></td>
                                         <td>
-                                        <?php if($row['ord_cancel_bcl'] == 1): ?>
-                                                <span class="badge bg-danger">Cancelled By Client</span>
-                                                <?php else: ?>
-                                        <?php if($row['ord_cancel_bdr'] == 1): ?>
-                                                <span class="badge bg-danger">Cancelled By Dr.</span>
+                                        <?php if ($row['ord_payment_status'] == "Pending") : ?>
+                                                <span class="badge chart-color123">Pending</span>
+                                                <?php else : ?>
+                                                <span class="badge bg-success">Paid</span>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td><?= $row['ord_L_E_date'] ?></td>
+                                        <td>
+                                            <?php if($row['ord_cancel_bdr'] == 1): ?>
+                                                <span class="badge bg-danger">You Cancelled</span>
                                                 <?php else: ?>
                                             <?php if ($row['ord_status'] == "1") : ?>
                                                 <span class="badge chart-color123">Pending</span>
@@ -85,28 +83,12 @@
                                                 <span class="badge chart-color120">Ended</span>
                                             <?php endif; ?>
                                             <?php endif; ?>
-                                            <?php endif; ?>
-                                        <td>
-                                                
-                                        
-<ul class="nav nav-pills">
-<li class="nav-item dropdown">
-<a class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Emails</a>
- <ul class="dropdown-menu shadow-sm">
-<li><a class="dropdown-item" target="_blank" href="<?= base_url('admin/email-1/'.encryptIt($row['ord_id'])) ?>">Email 1</a></li>
-<li><a class="dropdown-item" target="_blank" href="<?= base_url('admin/email-2/'.encryptIt($row['ord_id'])) ?>">Email 2</a></li>
-<li><a class="dropdown-item" target="_blank" href="<?= base_url('admin/email-3/'.encryptIt($row['ord_id'])) ?>">Email 3</a></li>
-<li><a class="dropdown-item" target="_blank" href="<?= base_url('admin/email-4/'.encryptIt($row['ord_id'])) ?>">Email 4</a></li>
-<li><hr class="dropdown-divider"></li>
-<li><a class="dropdown-item" target="_blank" href="<?= base_url('admin/contract/'.encryptIt($row['ord_id'])) ?>">Contract</a></li>
-</ul>
-</li>
-</ul>
-                                        </td>
-
                                             <td>
-                                            <a type="button" href="<?= base_url('admin/order_edit/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
-                                            <a type="button" href="<?= base_url('admin/order_view/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View" data-type="confirm"><i class="fa fa-eye"></i></a>
+                                            <a type="button" href="<?= base_url('employee/ord-view/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View" data-type="confirm"><i class="fa fa-eye"></i></a>
+                                            <?php if($row['ord_cancel_bdr'] <> 1): ?>
+                                            <a type="button" href="<?= base_url('employee/canc-ord/'.encryptIt($row['ord_id']))?>" class="btn btn-sm btn-outline-danger js-sweetalert" title="Cancel" Onclick="return confirm('Are You sure?');" data-type="confirm"><i class="fa fa-ban"></i></a>
+                                                <?php endif; ?>
+                                                
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

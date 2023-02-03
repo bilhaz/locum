@@ -4,7 +4,7 @@
             <div class="row g-3">
                 <div class="col-md-6 col-sm-12">
                     <h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a>
-                        New Order</h2>
+                        Edit Order</h2>
                     <ul class="breadcrumb mb-0">
                         <li class="breadcrumb-item"><a target="_blank" href="https://www.sralocum.com">SRA Locum</a>
                         </li>
@@ -40,12 +40,28 @@
                                 </div>
                             <?php endif; ?>
                         <div class="card-title">
-                            <h3 class="text-center title-2">Create New Order</h3>
+                            <h3 class="text-center title-2">Edit Order</h3>
                         </div>
                         <hr>
                         <form action="<?= base_url('admin/order_edit/'. encryptIt($eord_row['ord_id'])) ?>" method="post" autocomplete="off" enctype="multipart/form-data" accept-charset="utf-8" data-parsley-validate="" id="forma">
                         <div class="row mb-3">
-                                <div class="form-group col-md-4 offset-md-8">
+                        <div class="form-group col-md-4">
+                                <label for="ord_status" class="control-label mb-1">Cancel By Dr.</label>
+                        <select id="ord_cancel_bdr" name="ord_cancel_bdr"  class="form-control select2">
+                                        <option value="1" <?php if ($eord_row ['ord_cancel_bdr'] == "1") { ?> echo selected="selected" <?php } ?> >Cancel</option>
+                                        <option value="" <?php if ($eord_row ['ord_cancel_bdr'] == "") { ?> echo selected="selected" <?php } ?> >Active</option>
+                                        
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                <label for="ord_status" class="control-label mb-1">Cancel By Client</label>
+                        <select id="ord_cancel_bcl" name="ord_cancel_bcl"  class="form-control select2">
+                                        <option value="1" <?php if ($eord_row ['ord_cancel_bcl'] == "1") { ?> echo selected="selected" <?php } ?> >Cancel</option>
+                                        <option value="" <?php if ($eord_row ['ord_cancel_bcl'] == "") { ?> echo selected="selected" <?php } ?> >Active</option>
+                                        
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4 ">
                                 <label for="ord_status" class="control-label mb-1">Order Status</label>
                         <select id="ord_status" name="ord_status"  class="form-control select2">
                                         <option value="1" <?php if ($eord_row ['ord_status'] == "1") { ?> echo selected="selected" <?php } ?> >Pending</option>

@@ -14,35 +14,35 @@ use App\Models\clRegModel;
 use App\Models\usrgrpModel;
 use DateTimeZone;
 
-class emp extends EMPBaseController
+class cli extends CLIBaseController
 {
 	public function login()
 	{
 		$data = [];
 		helper(['form']);
 		$validation = \Config\Services::validation();
-		$model = new EmpModel();
-		$data['emp_user'] = $model->where('emp_email', $this->request->getVar('emp_email'))
+		$model = new ClientModel();
+		$data['cli_user'] = $model->where('cl_cont_email', $this->request->getVar('cl_cont_email'))
 		->first();
 
 		if ($this->request->getMethod() == 'post') {
 			//let's do the validation here
 			$rules = [
-				'emp_email' => ['label' => 'Email', 'rules' => 'required|valid_email'],
-				'emp_pwd' => ['label' => 'Password', 'rules' => 'required|validateEmp[emp_email,emp_pwd]'],
+				'cl_cont_email' => ['label' => 'Email', 'rules' => 'required|valid_email'],
+				'cl_cont_pwd' => ['label' => 'Password', 'rules' => 'required|validateCli[cl_cont_email,cl_cont_pwd]'],
 			];
 
 			$errors = [
-				'emp_pwd' => [
-					'validateEmp' => 'Email or Password don\'t match'
+				'cl_cont_pwd' => [
+					'validateCli' => 'Email or Password don\'t match'
 				],
 				
 			];
 
-			if (isset($data['emp_user']['emp_status']) && $data['emp_user']['emp_status'] == 0) {
+			if (isset($data['cli_user']['cl_status']) && $data['cli_user']['cl_status'] == 0) {
 				$session = session();
 				$session->setFlashdata('error', 'Your Account is Disabled');
-				return redirect()->to('employee/login');
+				return redirect()->to('client/login');
 			}
 			else{
 			
@@ -54,26 +54,26 @@ class emp extends EMPBaseController
 			} else {
 				
 
-				$empuser = $model->where('emp_email', $this->request->getVar('emp_email'))
+				$cliuser = $model->where('cl_cont_email', $this->request->getVar('cl_cont_email'))
 					->first();
 
-				$this->setUserSession($empuser);
-				return redirect()->to('employee/dashboard');
+				$this->setUserSession($cliuser);
+				return redirect()->to('client/dashboard');
 			}
 		}
 		}
 
-		return $this->LoadView('employees/login', $data);
+		return $this->LoadView('clients/login', $data);
 	}
 	// Setting User Session
-	private function setUserSession($empuser)
+	private function setUserSession($cliuser)
 	{
 		$data = [
-			'emp_id' => $empuser['emp_id'],
-			'emp_email' => $empuser['emp_email'],
-			'emp_fname' => $empuser['emp_fname'],
-			'emp_lname' => $empuser['emp_lname'],
-			'EmpLoggedIn' => true,
+			'cl_id' => $cliuser['cl_id'],
+			'cl_cont_email' => $cliuser['cl_cont_email'],
+			'cl_cont_name' => $cliuser['cl_cont_name'],
+			'cl_h_lname' => $cliuser['cl_h_lname'],
+			'CliLoggedIn' => true,
 		];
 
 		session()->set($data);
@@ -94,7 +94,7 @@ class emp extends EMPBaseController
 
 
 
-		return $this->LoadView('employees/dashboard', $data);
+		return $this->LoadView('clients/dashboard', $data);
 	}
 
 	
@@ -102,8 +102,8 @@ class emp extends EMPBaseController
 	public function logout()
 	{
 		// Unsetting a specific session
-		session()->remove('EmpLoggedIn');
-		return redirect()->to('employee/login');
+		session()->remove('CliLoggedIn');
+		return redirect()->to('client/login');
 	}
 
 	public function pwdupd()
@@ -115,7 +115,7 @@ class emp extends EMPBaseController
 		if ($this->request->getMethod() == 'post') {
 			//let's do the validation here
 			$rules = [
-				'emp_pwd' => ['label' => 'Password', 'rules' => 'required|min_length[8]|max_length[255]'],
+				'cl_cont_pwd' => ['label' => 'Password', 'rules' => 'required|min_length[8]|max_length[255]'],
 				'password_confirm' => ['label' => 'Confirm Password', 'rules' => 'matches[usr_pwd]'],
 			];
 
@@ -125,19 +125,19 @@ class emp extends EMPBaseController
 			} else {
 				//store this to database
 
-				$model = new EmpModel();
+				$model = new ClientModel();
 				$newData = [
 					
-					'emp_pwd' => $this->request->getVar('usr_pwd'),
+					'cl_cont_pwd' => $this->request->getVar('usr_pwd'),
 				];
 				$model->update($usrid,$newData);
 				$session = session();
 				$session->setFlashdata('success', 'Password Updation Successful');
-				return redirect()->to('employee/pwdupd');
+				return redirect()->to('client/pwdupd');
 			}
 		}
 
-		return $this->LoadView('employees/changepwd', $data);
+		return $this->LoadView('clients/changepwd', $data);
 	}
 
 	public function contracts()

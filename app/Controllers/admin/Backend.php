@@ -1363,6 +1363,9 @@ class Backend extends BEBaseController
 					'ord_comment2' => $this->request->getVar('ord_comment2'),
 					'ord_assignment' => $DAname,
 					'ord_status' => $this->request->getVar('ord_status'),
+					'ord_cancel_bdr' => $this->request->getVar('ord_cancel_bdr'),
+					'ord_cancel_bcl' => $this->request->getVar('ord_cancel_bcl'),
+
 
 				];
 				$model->update($eid, $newData);

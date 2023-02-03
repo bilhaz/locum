@@ -29,7 +29,7 @@
 </head>
 <body>
     <?php  $uri = service('uri'); ?>
-    <?php  if (session()->get('EmpLoggedIn')):?>
+    <?php  if (session()->get('CliLoggedIn')):?>
    
 <div id="layout" class="theme-green">
 

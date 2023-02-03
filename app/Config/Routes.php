@@ -105,27 +105,13 @@ $routes->match(['get' , 'post'], 'admin/contract/(:any)', 'admin\Backend::contra
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->match(['get' , 'post'], 'employee/login', 'employee\emp::login',['filter' => 'E_noauth']);
-//$routes->post('login', 'usersAuth::login');
-$routes->match(['get' , 'post'],'create', 'usersAuth::create',['filter' => 'noauth']);
-$routes->match(['get' , 'post'],'usersauth/(:segment)', 'usersauth::$1',['filter' => 'noauth']);
-$routes->match(['get' , 'post'], 'usersauth/login', 'usersAuth::login',['filter' => 'noauth']);
-$routes->match(['get' , 'post'],'apply', 'Careers::apply',['filter' => 'auth']);
-$routes->match(['get' , 'post'],'careers', 'Careers::apply',['filter' => 'auth']);
-$routes->match(['get' , 'post'],'careers/(:any)', 'careers::$1',['filter' => 'auth']);
-$routes->match(['get' , 'post'],'education', 'Careers::education',['filter' => 'auth']);
-$routes->match(['get' , 'post'],'experience', 'Careers::experience',['filter' => 'auth']);
-$routes->match(['get' , 'post'],'picupload', 'Careers::picupload',['filter' => 'auth']);
-$routes->match(['get' , 'post'],'applypost', 'Careers::applypost',['filter' => 'auth']);
-$routes->match(['get' , 'post'],'viewprofile', 'Careers::viewprofile',['filter' => 'auth']);
-$routes->match(['get' , 'post'],'updpwd', 'Careers::updpwd',['filter' => 'auth']);
-$routes->match(['get' , 'post'],'attachments', 'Careers::attch',['filter' => 'auth']);
-$routes->match(['get' , 'post'],'upd_attachments', 'Careers::upd_attachments',['filter' => 'auth']);
+$routes->match(['get' , 'post'],'updpwd', 'Careers::updpwd',['filter' => 'E_Auth']);
 $routes->get('employee/dashboard', 'employee\emp::dashboard',['filter' => 'E_Auth']);
-$routes->get('eddelete/(:num)', 'careers::eddelete/$1',['filter' => 'auth']);
-$routes->get('expdelete/(:num)', 'careers::expdelete/$1',['filter' => 'auth']);
-$routes->get('apliedposts/(:num)', 'careers::apliedposts/$1',['filter' => 'auth']);
-$routes->get('postdelete/(:num)', 'careers::postdelete/$1',['filter' => 'auth']);
-$routes->match(['get' , 'post'],'upd_persnl', 'Careers::upd_persnl',['filter' => 'auth']);
+$routes->match(['get' , 'post'], 'employee/orders', 'employee\emp::contracts',['filter' => 'E_Auth']);
+$routes->match(['get' , 'post'], 'employee/ord-view/(:any)', 'employee\emp::order_view/$1',['filter' => 'E_Auth']);
+$routes->match(['get' , 'post'], 'employee/upl-asses/(:any)', 'employee\emp::upl_asses/$1',['filter' => 'E_Auth']);
+$routes->match(['get' , 'post'], 'employee/canc-ord/(:any)', 'employee\emp::canc_ord/$1',['filter' => 'E_Auth']);
+$routes->match(['get' , 'post'], 'employee/timesheet/(:any)', 'employee\emp::timesheet/$1',['filter' => 'E_Auth']);
 $routes->get('employee/logout', 'employee\emp::logout');
 $routes->get('careers_index', 'careers::careers_index');
 

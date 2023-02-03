@@ -27,7 +27,25 @@
                         </ul>
                     </div>
                     <div class="card-body" id="printthis">
-                    <page size="A4">  
+                    <page size="A4"> 
+                    <?php if($ordr_row['ord_cancel_bdr'] == 1): ?> 
+                    <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                    
+                                            <span class="badge bg-danger">Cancelled by Dr</span>
+                                            
+                    </div>
+                    </div>
+                    <?php endif; ?>
+                    <?php if($ordr_row['ord_cancel_bcl'] == 1): ?> 
+                    <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                    
+                                            <span class="badge bg-danger">Cancelled by Client</span>
+                                            
+                    </div>
+                    </div>
+                    <?php endif; ?>
                         <h3>Order ID: <strong class="text-primary">
                                 <?= $ordr_row['ord_id'] ?>
                             </strong></h3>
@@ -60,13 +78,13 @@
                                         </p>
                                         <p class="mb-0"><strong>Order Status: </strong>
                                             <?php if($ordr_row['ord_status'] == "1"): ?>
-                                            <span class="badge bg-danger">Pending</span>
+                                            <span class="badge chart-color123">Pending</span>
                                             <?php elseif($ordr_row['ord_status'] == "2"): ?>
-                                            <span class="badge bg-warning text-dark">Processed</span>
+                                            <span class="badge chart-color122 ">Processed</span>
                                             <?php elseif($ordr_row['ord_status'] == "3"): ?>
                                             <span class="badge bg-success">Confirmed</span>
                                             <?php else: ?>
-                                            <span class="badge bg-dark">Ended</span>
+                                            <span class="badge chart-color120">Ended</span>
                                             <?php endif;?>
                                         </p>
                                         
@@ -75,7 +93,7 @@
                                         </p>
                                         <p class="mb-0"><strong>Payment Status: </strong>
                                             <?php if ($ordr_row['ord_payment_status'] == 'Pending') : ?>
-                                            <span class="badge bg-danger">
+                                            <span class="badge chart-color123">
                                                 <?= $ordr_row['ord_payment_status'] ?>
                                             </span>
 
@@ -87,7 +105,7 @@
                                         </p>
                                         <p class="mb-0"><strong>Case Status: </strong>
                                             <?php if ($ordr_row['ord_case_status'] == 'Pending') : ?>
-                                            <span class="badge bg-danger">
+                                            <span class="badge chart-color123">
                                                 <?= $ordr_row['ord_case_status'] ?>
                                             </span>
 
@@ -332,7 +350,7 @@
                                                 </span>
                                                 <hr class="primary">
                                                 <?php else: ?>
-                                                <span class="cview badge bg-danger ">
+                                                <span class="cview badge chart-color123">
                                                     <?= $ordr_row['ord_time_sheet_approved']?>
                                                 </span>
                                                 <hr class="primary">
