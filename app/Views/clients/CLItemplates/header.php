@@ -1297,7 +1297,7 @@ ZW50SUQAQTM4NzFBMzMyNkNENjU3NzkzNzUxRjlEOEI4M0YwNzdgGcdFAAAAAElFTkSuQmCC" />
 <div class="flex-grow-1">
 <ul class="nav navbar-nav flex-row justify-content-end align-items-center">
 
-<li><a href="<?= base_url('employee/logout') ?>" class="icon-menu"><i class="fa fa-sign-out"></i></a></li>
+<li><a href="<?= base_url('client/logout') ?>" class="icon-menu"><i class="fa fa-sign-out"></i></a></li>
 </ul>
 </div>
 </div>
@@ -1310,12 +1310,12 @@ ZW50SUQAQTM4NzFBMzMyNkNENjU3NzkzNzUxRjlEOEI4M0YwNzdgGcdFAAAAAElFTkSuQmCC" />
 <img src="<?= base_url('public/images/user.png') ?>" class="avatar lg rounded me-3" alt="User Profile Picture">
 <div class="dropdown flex-grow-1">
 <span class="d-block">Welcome,</span>
-<a href="#" class="dropdown-toggle user-name" data-bs-toggle="dropdown"><strong><?= session()->get('emp_lname')?></strong></a>
+<a href="#" class="dropdown-toggle user-name" data-bs-toggle="dropdown"><strong><?= session()->get('cl_cont_name')?></strong></a>
 <ul class="dropdown-menu p-2 shadow-sm">
 
-<li><a href="<?= base_url('admin/pwdupd') ?>"><i class="fa fa-cog me-2"></i>Password</a></li>
+<li><a href="<?= base_url('client/pwdupd') ?>"><i class="fa fa-cog me-2"></i>Password</a></li>
 <li class="divider"></li>
-<li><a href="<?= base_url('employee/logout') ?>"><i class="fa fa-power-off me-2"></i>Logout</a></li>
+<li><a href="<?= base_url('client/logout') ?>"><i class="fa fa-power-off me-2"></i>Logout</a></li>
  </ul>
 </div>
 </div>
@@ -1331,8 +1331,8 @@ ZW50SUQAQTM4NzFBMzMyNkNENjU3NzkzNzUxRjlEOEI4M0YwNzdgGcdFAAAAAElFTkSuQmCC" />
 <div class="tab-pane fade show active" id="hr_menu" role="tabpanel">
 <nav class="sidebar-nav">
 <ul class="main-menu cust metismenu list-unstyled">
-<li class="nav-item"><a class="nav-link" href="<?= base_url('employee/dashboard') ?>"><i class="fa fa-tachometer"></i><span>Dashboard</span></a></li>
-<li class="nav-item"><a href="<?= base_url('employee/orders') ?>"><i class="fa fa-user-md"></i>Orders</a>
+<li class="nav-item"><a class="nav-link" href="<?= base_url('client/dashboard') ?>"><i class="fa fa-tachometer"></i><span>Dashboard</span></a></li>
+<li class="nav-item"><a href="<?= base_url('client/orders') ?>"><i class="fa fa-user-md"></i>Orders</a>
 </li>
 
 </ul>

@@ -11,6 +11,8 @@ use App\Filters\E_noauth;
 use App\Filters\usercheck;
 use App\Filters\B_auth;
 use App\Filters\B_noauth;
+use App\Filters\C_Auth;
+use App\Filters\C_noauth;
 
 
 class Filters extends BaseConfig
@@ -29,6 +31,8 @@ class Filters extends BaseConfig
         'E_noauth' =>  E_noauth::class,
         'B_auth'   =>  B_auth::class,
         'B_noauth' => B_noauth::class,
+        'C_Auth' =>    C_Auth::class,
+        'C_noauth' => C_noauth::class,
         'usercheck' =>    usercheck::class,
         
     ];

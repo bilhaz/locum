@@ -86,10 +86,10 @@ class emp extends EMPBaseController
 		$timestamp = \time();
 		$dt = date('Y-m-d H:i:s', $timestamp);
 		$model = new ordersModel();
-		$data['o_pen'] = $model->where('ord_status', '1')->where('emp_id', session()->emp_id)->where('ord_required_to >=', $dt)->countAllResults();
-		$data['o_pro'] = $model->where('ord_status', '2')->where('emp_id', session()->emp_id)->where('ord_required_to >=', $dt)->countAllResults();
-		$data['o_con'] = $model->where('ord_status', '3')->where('emp_id', session()->emp_id)->where('ord_required_to >=', $dt)->countAllResults();
-		$data['o_end'] = $model->where('ord_status', '4')->where('emp_id', session()->emp_id)->where('ord_required_to >=', $dt)->countAllResults();
+		$data['o_pen'] = $model->where('ord_status', '1')->where('emp_id', session()->emp_id)->countAllResults();
+		$data['o_pro'] = $model->where('ord_status', '2')->where('emp_id', session()->emp_id)->countAllResults();
+		$data['o_con'] = $model->where('ord_status', '3')->where('emp_id', session()->emp_id)->countAllResults();
+		$data['o_end'] = $model->where('ord_status', '4')->where('emp_id', session()->emp_id)->countAllResults();
 
 
 

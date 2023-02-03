@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\employee;
+namespace App\Controllers\client;
 
 
 
@@ -16,6 +16,12 @@ use DateTimeZone;
 
 class cli extends CLIBaseController
 {
+	public function index()
+	{
+
+		return redirect()->to('client/login');
+
+	}
 	public function login()
 	{
 		$data = [];
@@ -72,7 +78,7 @@ class cli extends CLIBaseController
 			'cl_id' => $cliuser['cl_id'],
 			'cl_cont_email' => $cliuser['cl_cont_email'],
 			'cl_cont_name' => $cliuser['cl_cont_name'],
-			'cl_h_lname' => $cliuser['cl_h_lname'],
+			'cl_h_name' => $cliuser['cl_h_name'],
 			'CliLoggedIn' => true,
 		];
 
@@ -86,10 +92,10 @@ class cli extends CLIBaseController
 		$timestamp = \time();
 		$dt = date('Y-m-d H:i:s', $timestamp);
 		$model = new ordersModel();
-		$data['o_pen'] = $model->where('ord_status', '1')->where('emp_id', session()->emp_id)->where('ord_required_to >=', $dt)->countAllResults();
-		$data['o_pro'] = $model->where('ord_status', '2')->where('emp_id', session()->emp_id)->where('ord_required_to >=', $dt)->countAllResults();
-		$data['o_con'] = $model->where('ord_status', '3')->where('emp_id', session()->emp_id)->where('ord_required_to >=', $dt)->countAllResults();
-		$data['o_end'] = $model->where('ord_status', '4')->where('emp_id', session()->emp_id)->where('ord_required_to >=', $dt)->countAllResults();
+		$data['o_pen'] = $model->where('ord_status', '1')->where('cl_id', session()->cl_id)->countAllResults();
+		$data['o_pro'] = $model->where('ord_status', '2')->where('cl_id', session()->cl_id)->countAllResults();
+		$data['o_con'] = $model->where('ord_status', '3')->where('cl_id', session()->cl_id)->countAllResults();
+		$data['o_end'] = $model->where('ord_status', '4')->where('cl_id', session()->cl_id)->countAllResults();
 
 
 
@@ -116,7 +122,7 @@ class cli extends CLIBaseController
 			//let's do the validation here
 			$rules = [
 				'cl_cont_pwd' => ['label' => 'Password', 'rules' => 'required|min_length[8]|max_length[255]'],
-				'password_confirm' => ['label' => 'Confirm Password', 'rules' => 'matches[usr_pwd]'],
+				'password_confirm' => ['label' => 'Confirm Password', 'rules' => 'matches[cl_cont_pwd]'],
 			];
 
 			if (!$this->validate($rules)) {
@@ -145,70 +151,11 @@ class cli extends CLIBaseController
 		$data = [];
 		
 		$model = new ordersModel();
-		$data['order'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->where('orders.emp_id', session()->emp_id)->orderBy('ord_created', 'DESC')->findAll();
+		$data['order'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->where('orders.cl_id', session()->cl_id)->orderBy('ord_created', 'DESC')->findAll();
 		
-		return $this->LoadView('employees/contracts', $data);
+		return $this->LoadView('clients/contracts', $data);
 	}
 
-    public function order_view($oid = null)
-	{
-		$data = [];
-		$oid = decryptIt($oid);
-		$model = new ordersModel();
-		$data['cont'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade')->where('ord_id', $oid)->first();
-
-		return $this->LoadView('employees/order_view', $data);
-	}
-
-    public function upl_asses($asid = null)
-	{
-        $asid = decryptIt($asid);
-		$data = [];
-		helper(['form']);	
-
-		$model = new ordersModel();
-		$data['e_ord'] = $model->where('ord_id', $asid)->first();
-
-		if ($this->request->getMethod() == 'post') {
-			//let's do the validation here
-			$rules = [
-				'ord_assignment' => ['label' => 'Assesment', 'rules' => 'ext_in[ord_assignment,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[ord_assignment,2048]'],
-
-			];
-
-			if (!$this->validate($rules)) {
-				$data['validation'] = $this->validator;
-			} else {
-
-				$DA = $this->request->getFile('ord_assignment');
-
-				if ($DA->isValid() && !$DA->hasMoved()) {
-					$DAname = encryptIt($DA->getName()) . '.' . pathinfo($_FILES['ord_assignment']['name'], PATHINFO_EXTENSION);
-
-					$DA->move('public/uploads/doc_assesment/', $DAname, true);
-				
-				}
-
-
-				//store this to database
-
-
-				$newData = [
-					
-					'ord_assignment' => $DAname,
-					
-
-				];
-				$model->update($asid, $newData);
-				$session = session();
-				$session->setFlashdata('success', 'Assesment Successful Added');
-				return redirect()->to('employee/ord-view/' . encryptIt($asid));
-			}
-		}
-
-
-		return $this->LoadView('employees/upl_asses', $data);
-	}
 
 	public function  canc_ord($coid = null)
 
@@ -222,7 +169,7 @@ class cli extends CLIBaseController
 		
 
 			$newData = [
-				'ord_cancel_bdr' => 1,
+				'ord_cancel_bcl' => 1,
 
 			];
 
@@ -231,7 +178,7 @@ class cli extends CLIBaseController
 			$model->update($coid, $newData);
 			$session = session();
 			$session->setFlashdata('success', 'Order Cancelled');
-			return redirect()->to('employee/orders');
+			return redirect()->to('client/orders');
 		
 	}
 
@@ -244,15 +191,116 @@ class cli extends CLIBaseController
 		$model = new ordersModel();
 		$data['e_ord'] = $model->where('ord_id', $tid)->first();
 
-		
-				
-				
-				
-			
-		
-
-
 		return $this->LoadView('employees/timesheet', $data);
 	}
+
+
+	public function new_order()
+	{
+
+		$data = [];
+		helper(['form']);
+		$Gmodel = new gradeModel();
+		$data['gr_row'] = $Gmodel->findAll();
+		$Smodel = new specialityModel();
+		$data['sp_row'] = $Smodel->findAll();
+		
+
+		$model = new ordersModel();
+
+		if ($this->request->getMethod() == 'post') {
+			//let's do the validation here
+			$rules = [
+				
+				'ord_speciality' => ['label' => 'Speciality', 'rules' => 'required'],
+				'ord_grade' => ['label' => 'Grade', 'rules' => 'required'],
+				'ord_required_from' => ['label' => 'Required From', 'rules' => 'required'],
+				'ord_required_to' => ['label' => 'Required To', 'rules' => 'required'],
+
+			];
+
+			if (!$this->validate($rules)) {
+				$data['validation'] = $this->validator;
+			} else {
+
+
+				//store this to database
+
+
+				$newData = [
+					
+					'ord_speciality' => $this->request->getVar('ord_speciality'),
+					'ord_grade' => $this->request->getVar('ord_grade'),
+					'ord_required_from' => $this->request->getVar('ord_required_from'),
+					'ord_required_to' => $this->request->getVar('ord_required_to'),
+					'ord_status' => 1,
+					
+
+
+				];
+				$model->insert($newData);
+				$session = session();
+				$session->setFlashdata('success', 'Order Successful Created');
+				return redirect()->to('client/orders');
+			}
+		}
+
+
+		return $this->LoadView('clients/new_order', $data);
+	}
+
+	public function order_edit($eoid = null)
+	{
+		$eoid = decryptIt($eoid);
+		
+		 
+		$data = [];
+		helper(['form']);
+		$Gmodel = new gradeModel();
+		$data['gr_row'] = $Gmodel->findAll();
+		$Smodel = new specialityModel();
+		$data['sp_row'] = $Smodel->findAll();
+		
+
+		$model = new ordersModel();
+		$data['e_ord'] = $model->where('ord_id', $eoid)->first();
+		if ($this->request->getMethod() == 'post') {
+			//let's do the validation here
+			$rules = [
+				
+				'ord_speciality' => ['label' => 'Speciality', 'rules' => 'required'],
+				'ord_grade' => ['label' => 'Grade', 'rules' => 'required'],
+				'ord_required_from' => ['label' => 'Required From', 'rules' => 'required'],
+				'ord_required_to' => ['label' => 'Required To', 'rules' => 'required'],
+
+			];
+
+			if (!$this->validate($rules)) {
+				$data['validation'] = $this->validator;
+			} else {
+
+
+				//store this to database
+
+
+				$newData = [
+					
+					'ord_speciality' => $this->request->getVar('ord_speciality'),
+					'ord_grade' => $this->request->getVar('ord_grade'),
+					'ord_required_from' => $this->request->getVar('ord_required_from'),
+					'ord_required_to' => $this->request->getVar('ord_required_to'),
+					
+				];
+				$model->update($eoid,$newData);
+				$session = session();
+				$session->setFlashdata('success', 'Order Successful Updated');
+				return redirect()->to('client/orders');
+			}
+		}
+
+
+		return $this->LoadView('clients/order_edit', $data);
+	}
+
 
 }

@@ -105,6 +105,8 @@ $routes->match(['get' , 'post'], 'admin/contract/(:any)', 'admin\Backend::contra
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
+$routes->match(['get' , 'post'], 'employee', 'employee\emp::dashboard',['filter' => 'E_Auth']);
+
 $routes->match(['get' , 'post'], 'employee/login', 'employee\emp::login',['filter' => 'E_noauth']);
 $routes->match(['get' , 'post'],'employee/pwdupd', 'employee\emp::pwdupd',['filter' => 'E_Auth']);
 $routes->get('employee/dashboard', 'employee\emp::dashboard',['filter' => 'E_Auth']);
@@ -125,15 +127,17 @@ $routes->get('employee/logout', 'employee\emp::logout');
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->match(['get' , 'post'], 'employee/login', 'employee\cli::login',['filter' => 'E_noauth']);
-$routes->match(['get' , 'post'],'employee/pwdupd', 'employee\cli::pwdupd',['filter' => 'E_Auth']);
-$routes->get('employee/dashboard', 'employee\cli::dashboard',['filter' => 'E_Auth']);
-$routes->match(['get' , 'post'], 'employee/orders', 'employee\cli::contracts',['filter' => 'E_Auth']);
-$routes->match(['get' , 'post'], 'employee/ord-view/(:any)', 'employee\cli::order_view/$1',['filter' => 'E_Auth']);
-$routes->match(['get' , 'post'], 'employee/upl-asses/(:any)', 'employee\cli::upl_asses/$1',['filter' => 'E_Auth']);
-$routes->match(['get' , 'post'], 'employee/canc-ord/(:any)', 'employee\cli::canc_ord/$1',['filter' => 'E_Auth']);
-$routes->match(['get' , 'post'], 'employee/timesheet/(:any)', 'employee\cli::timesheet/$1',['filter' => 'E_Auth']);
-$routes->get('employee/logout', 'employee\emp::logout');
+$routes->match(['get' , 'post'],'client', 'client\cli::dashboard',['filter' => 'C_Auth']);
+$routes->match(['get' , 'post'], 'client/new-order', 'client\cli::new_order',['filter' => 'C_Auth']);
+$routes->match(['get' , 'post'], 'client/login', 'client\cli::login',['filter' => 'C_noauth']);
+$routes->match(['get' , 'post'],'client/pwdupd', 'client\cli::pwdupd',['filter' => 'C_Auth']);
+$routes->get('client/dashboard', 'client\cli::dashboard',['filter' => 'C_Auth']);
+$routes->match(['get' , 'post'], 'client/orders', 'client\cli::contracts',['filter' => 'C_Auth']);
+$routes->match(['get' , 'post'], 'client/ord-view/(:any)', 'client\cli::order_view/$1',['filter' => 'C_Auth']);
+$routes->match(['get' , 'post'], 'client/upl-asses/(:any)', 'client\cli::upl_asses/$1',['filter' => 'C_Auth']);
+$routes->match(['get' , 'post'], 'client/canc-ord/(:any)', 'client\cli::canc_ord/$1',['filter' => 'C_Auth']);
+$routes->match(['get' , 'post'], 'client/timesheet/(:any)', 'client\cli::timesheet/$1',['filter' => 'C_Auth']);
+$routes->get('client/logout', 'client\cli::logout');
 
 
 

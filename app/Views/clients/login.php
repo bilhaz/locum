@@ -1242,10 +1242,10 @@ ZW50SUQAQTM4NzFBMzMyNkNENjU3NzkzNzUxRjlEOEI4M0YwNzdgGcdFAAAAAElFTkSuQmCC" />
                 </div>
                 <div class="card shadow p-lg-4">
                     <div class="card-header">
-                        <p class="fs-5 mb-0">Doctor Login</p>
+                        <p class="fs-5 mb-0">Hospital Login</p>
                     </div>
                     <div class="card-body">
-                        <form action="<?= base_url('employee/login')?>" method="post">
+                        <form action="<?= base_url('client/login')?>" method="post">
                             <?php  if (isset($validation)) : 
                             ?>
                             <div class="alert alert-danger" role="alert">
@@ -1260,11 +1260,11 @@ ZW50SUQAQTM4NzFBMzMyNkNENjU3NzkzNzUxRjlEOEI4M0YwNzdgGcdFAAAAAElFTkSuQmCC" />
                                 </div>
                             <?php endif; ?>
                             <div class="form-floating mb-1">
-                                <input type="email" class="form-control" name="emp_email"  value="<?= set_value('emp_email') ?>">
+                                <input type="email" class="form-control" name="cl_cont_email"  value="<?= set_value('cl_cont_email') ?>">
                                 <label>Email address</label>
                             </div>
                             <div class="form-floating">
-                                <input type="password" class="form-control" name="emp_pwd" >
+                                <input type="password" class="form-control" name="cl_cont_pwd" >
                                 <label>Password</label>
                             </div>
                             <div class="form-check my-3">
