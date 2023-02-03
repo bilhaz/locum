@@ -110,13 +110,14 @@ class emp extends EMPBaseController
 	{
 		
 		$data = [];
-		$usrid = session()->usr_id;
+		$usrid = session()->emp_id;
+		
 		helper(['form']);
 		if ($this->request->getMethod() == 'post') {
 			//let's do the validation here
 			$rules = [
 				'emp_pwd' => ['label' => 'Password', 'rules' => 'required|min_length[8]|max_length[255]'],
-				'password_confirm' => ['label' => 'Confirm Password', 'rules' => 'matches[usr_pwd]'],
+				'password_confirm' => ['label' => 'Confirm Password', 'rules' => 'matches[emp_pwd]'],
 			];
 
 			if (!$this->validate($rules)) {
@@ -128,7 +129,7 @@ class emp extends EMPBaseController
 				$model = new EmpModel();
 				$newData = [
 					
-					'emp_pwd' => $this->request->getVar('usr_pwd'),
+					'emp_pwd' => $this->request->getVar('emp_pwd'),
 				];
 				$model->update($usrid,$newData);
 				$session = session();

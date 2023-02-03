@@ -1313,7 +1313,7 @@ ZW50SUQAQTM4NzFBMzMyNkNENjU3NzkzNzUxRjlEOEI4M0YwNzdgGcdFAAAAAElFTkSuQmCC" />
 <a href="#" class="dropdown-toggle user-name" data-bs-toggle="dropdown"><strong><?= session()->get('emp_lname')?></strong></a>
 <ul class="dropdown-menu p-2 shadow-sm">
 
-<li><a href="<?= base_url('admin/pwdupd') ?>"><i class="fa fa-cog me-2"></i>Password</a></li>
+<li><a href="<?= base_url('employee/pwdupd') ?>"><i class="fa fa-cog me-2"></i>Password</a></li>
 <li class="divider"></li>
 <li><a href="<?= base_url('employee/logout') ?>"><i class="fa fa-power-off me-2"></i>Logout</a></li>
  </ul>

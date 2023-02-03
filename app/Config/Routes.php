@@ -17,7 +17,7 @@ if (file_exists(SYSTEMPATH . 'Config/Routes.php')) {
  * --------------------------------------------------------------------
  */
 $routes->setDefaultNamespace('App\Controllers');
-$routes->setDefaultController('careers');
+$routes->setDefaultController('Backend');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
@@ -101,11 +101,12 @@ $routes->match(['get' , 'post'], 'admin/contract/(:any)', 'admin\Backend::contra
  * Route Definitions 
  * --------------------------------------------------------------------
  */
+// **** Employee Routes *******//
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->match(['get' , 'post'], 'employee/login', 'employee\emp::login',['filter' => 'E_noauth']);
-$routes->match(['get' , 'post'],'updpwd', 'Careers::updpwd',['filter' => 'E_Auth']);
+$routes->match(['get' , 'post'],'employee/pwdupd', 'employee\emp::pwdupd',['filter' => 'E_Auth']);
 $routes->get('employee/dashboard', 'employee\emp::dashboard',['filter' => 'E_Auth']);
 $routes->match(['get' , 'post'], 'employee/orders', 'employee\emp::contracts',['filter' => 'E_Auth']);
 $routes->match(['get' , 'post'], 'employee/ord-view/(:any)', 'employee\emp::order_view/$1',['filter' => 'E_Auth']);
@@ -113,7 +114,26 @@ $routes->match(['get' , 'post'], 'employee/upl-asses/(:any)', 'employee\emp::upl
 $routes->match(['get' , 'post'], 'employee/canc-ord/(:any)', 'employee\emp::canc_ord/$1',['filter' => 'E_Auth']);
 $routes->match(['get' , 'post'], 'employee/timesheet/(:any)', 'employee\emp::timesheet/$1',['filter' => 'E_Auth']);
 $routes->get('employee/logout', 'employee\emp::logout');
-$routes->get('careers_index', 'careers::careers_index');
+
+
+/*
+ * --------------------------------------------------------------------
+ * Route Definitions 
+ * --------------------------------------------------------------------
+ */
+// **** Clients Routes *******//
+
+// We get a performance increase by specifying the default
+// route since we don't have to scan directories.
+$routes->match(['get' , 'post'], 'employee/login', 'employee\cli::login',['filter' => 'E_noauth']);
+$routes->match(['get' , 'post'],'employee/pwdupd', 'employee\cli::pwdupd',['filter' => 'E_Auth']);
+$routes->get('employee/dashboard', 'employee\cli::dashboard',['filter' => 'E_Auth']);
+$routes->match(['get' , 'post'], 'employee/orders', 'employee\cli::contracts',['filter' => 'E_Auth']);
+$routes->match(['get' , 'post'], 'employee/ord-view/(:any)', 'employee\cli::order_view/$1',['filter' => 'E_Auth']);
+$routes->match(['get' , 'post'], 'employee/upl-asses/(:any)', 'employee\cli::upl_asses/$1',['filter' => 'E_Auth']);
+$routes->match(['get' , 'post'], 'employee/canc-ord/(:any)', 'employee\cli::canc_ord/$1',['filter' => 'E_Auth']);
+$routes->match(['get' , 'post'], 'employee/timesheet/(:any)', 'employee\cli::timesheet/$1',['filter' => 'E_Auth']);
+$routes->get('employee/logout', 'employee\emp::logout');
 
 
 
