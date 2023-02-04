@@ -1,3 +1,5 @@
+<?php print_r($c_det); exit; ?>
+<?php if(!empty($c_det['cl_h_name'] && $c_det['cl_cont_name'])){ ?>
 <div id="main-content">
     <div class="container-fluid">
         <div class="block-header py-lg-4 py-3">
@@ -106,3 +108,11 @@
 </div>
 </div>
 </div>
+<?php } else{ ?>
+    header("Location: profile");
+    $session = session();
+    $session->setFlashdata('error', 'First Fill this Form');
+    exit();
+  exit();
+<?php } ?>
+    

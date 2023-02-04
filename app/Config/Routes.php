@@ -133,6 +133,7 @@ $routes->match(['get' , 'post'], 'client/edit-order/(:any)', 'client\cli::order_
 $routes->match(['get' , 'post'], 'client/login', 'client\cli::login',['filter' => 'C_noauth']);
 $routes->match(['get' , 'post'],'client/pwdupd', 'client\cli::pwdupd',['filter' => 'C_Auth']);
 $routes->get('client/dashboard', 'client\cli::dashboard',['filter' => 'C_Auth']);
+$routes->match(['get' , 'post'], 'client/profile', 'client\cli::profile',['filter' => 'C_Auth']);
 $routes->match(['get' , 'post'], 'client/orders', 'client\cli::contracts',['filter' => 'C_Auth']);
 $routes->match(['get' , 'post'], 'client/ord-view/(:any)', 'client\cli::order_view/$1',['filter' => 'C_Auth']);
 $routes->match(['get' , 'post'], 'client/canc-ord/(:any)', 'client\cli::canc_ord/$1',['filter' => 'C_Auth']);

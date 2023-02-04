@@ -67,7 +67,7 @@
                                         
                                         <td><?= $row['ord_L_E_date'] ?></td>
                                         <td>
-                                            <?php if($row['ord_cancel_bcl'] == 1): ?>
+                                            <?php if($row['ord_cancel_bcl'] == "1"): ?>
                                                 <span class="badge bg-danger">You Cancelled</span>
                                                 <?php else: ?>
                                             <?php if ($row['ord_status'] == "1") : ?>

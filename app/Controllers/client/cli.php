@@ -196,16 +196,19 @@ class cli extends CLIBaseController
 
 	public function new_order()
 	{
-
+		$id = session()->cl_id;
 		$data = [];
 		helper(['form']);
 		$Gmodel = new gradeModel();
 		$data['gr_row'] = $Gmodel->findAll();
 		$Smodel = new specialityModel();
 		$data['sp_row'] = $Smodel->findAll();
+		$clmodel = new ClientModel();
+		$data['c_det'] = $clmodel->where('cl_id', $id)->first();
 		
 
 		$model = new ordersModel();
+		
 
 		if ($this->request->getMethod() == 'post') {
 			//let's do the validation here
@@ -301,6 +304,60 @@ class cli extends CLIBaseController
 
 
 		return $this->LoadView('clients/order_edit', $data);
+	}
+
+	public function profile()
+	{
+		$id = session()->cl_id;
+		$data = [];
+		$clmodel = new clRegModel();
+		$data['cl_cat'] = $clmodel->findAll();
+		helper(['form']);
+		$model = new ClientModel();
+		$data['cli'] = $model->where('cl_id', $id)->first();
+		if ($this->request->getMethod() == 'post') {
+			//let's do the validation here
+			$rules = [
+				'cl_h_name' => ['label' => 'Hospital Name', 'rules' => 'required'],
+				'cl_reg_as' => ['label' => 'Register As', 'rules' => 'required'],
+				'cl_county' => ['label' => 'County', 'rules' => 'required'],
+				'cl_eircode' => ['label' => 'Eircode', 'rules' => 'required|numeric'],
+				'cl_cont_name' => ['label' => 'Contact Personnel Name', 'rules' => 'required'],
+				'cl_cont_phone' => ['label' => 'Contact No.', 'rules' => 'required|numeric'],
+				'cl_address' => ['label' => 'Address', 'rules' => 'required'],
+				'cl_cont_desig' => ['label' => 'Designation', 'rules' => 'required'],
+				 'cl_gender' => ['label' => 'Gender', 'rules' => 'required'],
+			];
+
+			if (!$this->validate($rules)) {
+				$data['validation'] = $this->validator;
+			} else {
+
+
+				//store this to database
+
+
+				$newData = [
+					'cl_h_name' => $this->request->getVar('cl_h_name'),
+					'cl_reg_as' => $this->request->getVar('cl_reg_as'),
+					'cl_county' => $this->request->getVar('cl_county'),
+					'cl_eircode' => $this->request->getVar('cl_eircode'),
+					'cl_cont_name' => $this->request->getVar('cl_cont_name'),
+					'cl_cont_phone' => $this->request->getVar('cl_cont_phone'),
+					'cl_address' => $this->request->getVar('cl_address'),
+					'cl_cont_desig' => $this->request->getVar('cl_cont_desig'),
+					'cl_gender' => $this->request->getVar('cl_gender'),
+
+				];
+				$model->update($id, $newData);
+				$session = session();
+				$session->setFlashdata('success', 'Record Successful Saved');
+				return redirect()->to('clients/profile');
+			}
+		}
+
+
+		return $this->LoadView('clients/profile', $data);
 	}
 
 
