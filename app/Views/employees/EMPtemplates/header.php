@@ -1332,8 +1332,8 @@ ZW50SUQAQTM4NzFBMzMyNkNENjU3NzkzNzUxRjlEOEI4M0YwNzdgGcdFAAAAAElFTkSuQmCC" />
 <nav class="sidebar-nav">
 <ul class="main-menu cust metismenu list-unstyled">
 <li class="nav-item"><a class="nav-link" href="<?= base_url('employee/dashboard') ?>"><i class="fa fa-tachometer"></i><span>Dashboard</span></a></li>
-<li class="nav-item"><a href="<?= base_url('employee/orders') ?>"><i class="fa fa-user-md"></i>Orders</a>
-</li>
+<li class="nav-item"><a href="<?= base_url('employee/profile') ?>"><i class="fa fa-user-circle-o"></i>Profile</a></li>
+<li class="nav-item"><a href="<?= base_url('employee/orders') ?>"><i class="fa fa-user-md"></i>Orders</a></li>
 
 </ul>
 </nav>

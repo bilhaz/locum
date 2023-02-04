@@ -53,7 +53,7 @@
                                     <br>
                                     <button id="payment-button" type="submit" class="btn btn-lg btn-success btn-block">
                                         
-                                        <span id="payment-button-amount">Update Password</span>
+                                        <span id="payment-button-amount">Change Password</span>
                                     </button>
                                 </div>
                             </form>
