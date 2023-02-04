@@ -1,3 +1,5 @@
+<?php if(!empty($e_doc['emp_fname'] && $e_doc['emp_lname'] )) { ?>
+
 <div id="main-content">
     <div class="container-fluid">
         <div class="block-header py-lg-4 py-3">
@@ -102,3 +104,10 @@
     </div>
 </div>
 </div>
+<?php } else {
+    header("Location: profile");
+    $session = session();
+    $session->setFlashdata('error', 'First Fill this Form');
+    exit();
+  exit();
+ } ?>

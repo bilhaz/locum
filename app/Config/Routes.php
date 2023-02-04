@@ -111,6 +111,7 @@ $routes->match(['get' , 'post'], 'employee/login', 'employee\emp::login',['filte
 $routes->match(['get' , 'post'],'employee/pwdupd', 'employee\emp::pwdupd',['filter' => 'E_Auth']);
 $routes->get('employee/dashboard', 'employee\emp::dashboard',['filter' => 'E_Auth']);
 $routes->match(['get' , 'post'], 'employee/orders', 'employee\emp::contracts',['filter' => 'E_Auth']);
+$routes->match(['get' , 'post'], 'employee/profile', 'employee\emp::profile',['filter' => 'E_Auth']);
 $routes->match(['get' , 'post'], 'employee/ord-view/(:any)', 'employee\emp::order_view/$1',['filter' => 'E_Auth']);
 $routes->match(['get' , 'post'], 'employee/upl-asses/(:any)', 'employee\emp::upl_asses/$1',['filter' => 'E_Auth']);
 $routes->match(['get' , 'post'], 'employee/canc-ord/(:any)', 'employee\emp::canc_ord/$1',['filter' => 'E_Auth']);
