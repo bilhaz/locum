@@ -352,7 +352,7 @@ class cli extends CLIBaseController
 				$model->update($id, $newData);
 				$session = session();
 				$session->setFlashdata('success', 'Record Successful Saved');
-				return redirect()->to('clients/profile');
+				return redirect()->to('client/profile');
 			}
 		}
 
