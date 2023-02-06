@@ -259,9 +259,11 @@ class emp extends EMPBaseController
 	}
 
 	public function timesheet_save($ord_id){
+		// var_dump($_POST);
 		$ord_id = decryptIt($ord_id);
 		$model = new timesheetModel();
 		foreach($_POST['status'] as $row=>$key){
+			// echo $key;exit;
 			$model->insert(array('order_id'=>$ord_id,'dutyDate' => explode(',', $key)[0], 'dutyTime' => explode(',', $key)[1], 'siteStatus' => explode(',', $key)[2]));
 		}
 
