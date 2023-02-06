@@ -70,7 +70,7 @@
                                                 <span class="badge bg-success">Paid</span>
                                             <?php endif; ?>
                                         </td>
-                                        <td><?= $row['ord_L_E_date'] ?></td>
+                                        <td><?= $row['ord_process_date'] ?></td>
                                         <td>
                                             <?php if($row['ord_cancel_bdr'] == 1): ?>
                                                 <span class="badge bg-danger">You Cancelled</span>
