@@ -248,8 +248,8 @@ class emp extends EMPBaseController
 		$model = new ordersModel();
 		$data['e_ord'] = $model->where('ord_id', $tid)->first();
 
-		$data['start_date'] = $data['e_ord']['ord_L_S_date'];
-		$data['end_date'] = $data['e_ord']['ord_L_E_date'];	
+		$data['start_date'] = $data['e_ord']['ord_process_details_from'];
+		$data['end_date'] = $data['e_ord']['ord_process_details_to'];	
 
 
 
