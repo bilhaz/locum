@@ -240,7 +240,7 @@ class emp extends EMPBaseController
 
 	public function timesheet($tid = null)
 	{
-        // $tid = decryptIt($tid);
+        $tid = decryptIt($tid);
 		$data = [];
 		helper(['form']);	
 
