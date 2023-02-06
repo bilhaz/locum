@@ -52,11 +52,11 @@
                             <tbody>
 
                                 <?php
-
+                                $i = 1;
                                 foreach ($order as $row) : ?>
                                     <tr>
                                         <td>
-                                            <?= $row['ord_id'] ?>
+                                            <?= $i++ ?>
                                         </td>
 
 

@@ -1160,8 +1160,7 @@ class Backend extends BEBaseController
 		if ($this->request->getMethod() == 'post') {
 			//let's do the validation here
 			$rules = [
-				'ord_L_S_date' => ['label' => 'Locum Start Date', 'rules' => 'required'],
-				'ord_L_E_date' => ['label' => 'Locum End Date', 'rules' => 'required'],
+				
 				'ord_speciality' => ['label' => 'Speciality', 'rules' => 'required'],
 				'ord_grade' => ['label' => 'Grade', 'rules' => 'required'],
 				'cl_id' => ['label' => 'Client', 'rules' => 'required'],
@@ -1204,8 +1203,7 @@ class Backend extends BEBaseController
 
 
 				$newData = [
-					'ord_L_S_date' => $this->request->getVar('ord_L_S_date'),
-					'ord_L_E_date' => $this->request->getVar('ord_L_E_date'),
+					
 					'ord_speciality' => $this->request->getVar('ord_speciality'),
 					'ord_grade' => $this->request->getVar('ord_grade'),
 					'cl_id' => $this->request->getVar('cl_id'),
@@ -1272,8 +1270,7 @@ class Backend extends BEBaseController
 		if ($this->request->getMethod() == 'post') {
 			//let's do the validation here
 			$rules = [
-				'ord_L_S_date' => ['label' => 'Locum Start Date', 'rules' => 'required'],
-				'ord_L_E_date' => ['label' => 'Locum End Date', 'rules' => 'required'],
+				
 				'ord_speciality' => ['label' => 'Speciality', 'rules' => 'required'],
 				'ord_grade' => ['label' => 'Grade', 'rules' => 'required'],
 				'cl_id' => ['label' => 'Client', 'rules' => 'required'],
@@ -1327,8 +1324,7 @@ class Backend extends BEBaseController
 
 
 				$newData = [
-					'ord_L_S_date' => $this->request->getVar('ord_L_S_date'),
-					'ord_L_E_date' => $this->request->getVar('ord_L_E_date'),
+					
 					'ord_speciality' => $this->request->getVar('ord_speciality'),
 					'ord_grade' => $this->request->getVar('ord_grade'),
 					'cl_id' => $this->request->getVar('cl_id'),

@@ -134,24 +134,7 @@
                                             </div>
                                         </div>
                                         <?php endif; ?>
-                                        <div class="row mb-3">
-                                            <div class="form-group col-md-6">
-
-
-                                                <h6 class="control-label ">Locum Start-End Date:</h6>
-                                                <hr class="primary">
-
-                                            </div>
-                                            <div class="form-group col-md-6">
-
-
-                                                <span class="cview ">
-                                                    <?= $ordr_row['ord_L_S_date'] . ' - ' . $ordr_row['ord_L_E_date'] ?>
-                                                </span>
-                                                <hr class="primary">
-
-                                            </div>
-                                        </div>
+                                        
                                         <div class="row mb-3">
                                             <div class="form-group col-md-6">
                                                 <h6 class="control-label ">Speciality:</h6>

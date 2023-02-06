@@ -56,16 +56,7 @@
                                     </select>
                                 </div>
                         </div>
-                            <div class="row mb-3">
-                                <div class="form-group col-md-6">
-                                    <label for="ord_L_S_date" class="control-label mb-1">Locum Start Date</label>
-                                    <input id="ord_L_S_date" name="ord_L_S_date" type="datetime-local" class="form-control" required="" value="<?= set_value('ord_L_S_date') ?>">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="ord_L_E_date" class="control-label mb-1">Locum End Date</label>
-                                    <input id="ord_L_E_date" name="ord_L_E_date" type="datetime-local" class="form-control" required="" value="<?= set_value('ord_L_E_date') ?>">
-                                </div>
-                            </div>
+                            
                             <div class="row mb-3">
                                 <div class="form-group col-md-6">
                                     <label for="ord_speciality" class="control-label mb-1">Speciality</label>

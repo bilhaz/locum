@@ -447,7 +447,7 @@
             </td>
             <td style="width:367pt;border-left-style:solid;border-left-width:1pt;border-left-color:#9BBA58">
                 <p class="s2" style="padding-left: 4pt;text-indent: 0pt;line-height: 13pt;text-align: left;"><?= $cont['spec_name'].'  &nbsp;'. $cont['grade_name'] ?></p>
-                <p class="s2" style="padding-left: 4pt;text-indent: 0pt;text-align: left;"><?= $cont['ord_required_from']. ' - ' .$cont['ord_required_to'] ?></p>
+                <p class="s2" style="padding-left: 4pt;text-indent: 0pt;text-align: left;"><?= $cont['ord_process_details_from']. ' - ' .$cont['ord_process_details_to'] ?></p>
             </td>
         </tr>
         <tr style="height:27pt">
