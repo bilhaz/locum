@@ -10,6 +10,7 @@ use App\Models\ClientModel;
 use App\Models\gradeModel;
 use App\Models\ordersModel;
 use App\Models\specialityModel;
+use App\Models\timesheetModel;
 use App\Models\clRegModel;
 use App\Models\usrgrpModel;
 use DateTimeZone;
@@ -251,8 +252,21 @@ class emp extends EMPBaseController
 		$data['end_date'] = $data['e_ord']['ord_L_E_date'];	
 
 
+
+
+
 		return $this->LoadView('employees/timesheet', $data);
 	}
+
+	public function timesheet_save($ord_id){
+		$ord_id = decryptIt($ord_id);
+		$model = new timesheetModel();
+		foreach($_POST['status'] as $row=>$key){
+			$model->insert(array('order_id'=>$ord_id,'dutyDate' => explode(',', $key)[0], 'dutyTime' => explode(',', $key)[1], 'siteStatus' => explode(',', $key)[2]));
+		}
+
+	}
+	
 
 	public function profile()
 	{

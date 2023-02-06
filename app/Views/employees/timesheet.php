@@ -39,49 +39,59 @@
                         </div>
                     <?php endif; ?>
 
-                    <form action="<?= base_url('employee/timesheet/' . encryptIt($e_ord['ord_id'])) ?>" method="post">
+                    <form action="<?= base_url('employee/timesheet_save/' . encryptIt($e_ord['ord_id'])) ?>" method="post">
 
                         <table class="table table-striped table-bordered">
                             <thead class="thead-dark">
                                 <tr>
                                     <th>Date</th>
                                     <?php $days = 1;
-                                    while (strtotime($start_date) <= strtotime($end_date)) {
-                                        echo '<th>' . date('d-m-Y', strtotime($start_date)) . '</th>';
-                                        $start_date = date("Y-m-d", strtotime("+1 days", strtotime($start_date)));
+                                    $tmp_Startdate = $start_date;
+                                    while (strtotime($tmp_Startdate) <= strtotime($end_date)) {
+                                        echo '<th>' . date('d-m-Y', strtotime($tmp_Startdate)) . '</th>';
+                                        $tmp_Startdate = date("Y-m-d", strtotime("+1 days", strtotime($tmp_Startdate)));
                                         $days++;
                                     } ?>
                                 </tr>
                             </thead>
                             <tbody>
 
-                                <?php $stsCounter = 1; for ($i = 0; $i < 24; $i++): ?>
+                                <?php $stsCounter = 1;
+                                for ($i = 0; $i < 24; $i++): ?>
                                     <tr>
                                         <td>
-                                            
-                                            <?= ($i).'00to'.($i + 1) ?>.00hr
+
+                                            <?=($i) . '00to' . ($i + 1) ?>.00hr
                                         </td>
 
                                         <?php
-                                        
-                                        for ($x = 1; $x < $days; $x++): ?>
+                                        $x = 1;
+                                        $tmp_Startdate2 = $start_date;
+                                        while (strtotime($tmp_Startdate2) <= strtotime($end_date)) { ?>
                                             <td>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="status<?=$stsCounter?>"
-                                                        id="flexRadioDefault<?=$stsCounter?>">
-                                                    <label class="form-check-label" for="flexRadioDefault<?=$stsCounter?>">
+                                                    <input class="form-check-input" value="<?=$tmp_Startdate2.','.$i?>,1" type="radio"
+                                                        name="status[value<?=$stsCounter?>]"
+                                                        id="flexRadioDefault<?= $stsCounter ?>">
+                                                    <label class="form-check-label" for="flexRadioDefault<?= $stsCounter ?>">
                                                         Onsite
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="status<?=$stsCounter?>"
-                                                        id="flexRadioDefault<?=$stsCounter+1000?>">
-                                                    <label class="form-check-label" for="flexRadioDefault<?=$stsCounter+2000?>">
+                                                    <input class="form-check-input" value="<?=$tmp_Startdate2.','.$i?>,2" type="radio" name="status[value<?=$stsCounter?>]"
+                                                        id="flexRadioDefault<?= $stsCounter + 1000 ?>">
+                                                    <label class="form-check-label"
+                                                        for="flexRadioDefault<?= $stsCounter + 2000 ?>">
                                                         Offsite
                                                     </label>
                                                 </div>
                                             </td>
-                                        <?php $stsCounter++; endfor; ?>
+                                            <?php 
+                                            $tmp_Startdate2 = date("Y-m-d", strtotime("+1 days", strtotime($tmp_Startdate2)));
+                                            $stsCounter++;
+                                            $x++;
+                                        }
+                                        ?>
                                     </tr>
                                 <?php endfor; ?>
 
