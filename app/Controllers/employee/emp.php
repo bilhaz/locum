@@ -28,8 +28,8 @@ class emp extends EMPBaseController
 		if ($this->request->getMethod() == 'post') {
 			//let's do the validation here
 			$rules = [
-				'emp_email' => ['label' => 'Email', 'rules' => 'required|valid_email'],
-				'emp_pwd' => ['label' => 'Password', 'rules' => 'required|validateEmp[emp_email,emp_pwd]'],
+				'emp_email' => ['label' => 'Email', 'rules' => 'required'],
+				'emp_pwd' => ['label' => 'Password', 'rules' => 'required'],
 			];
 
 			$errors = [
@@ -240,19 +240,15 @@ class emp extends EMPBaseController
 
 	public function timesheet($tid = null)
 	{
-        $tid = decryptIt($tid);
+        // $tid = decryptIt($tid);
 		$data = [];
 		helper(['form']);	
 
 		$model = new ordersModel();
 		$data['e_ord'] = $model->where('ord_id', $tid)->first();
 
-		
-				
-				
-				
-			
-		
+		$data['start_date'] = $data['e_ord']['ord_L_S_date'];
+		$data['end_date'] = $data['e_ord']['ord_L_E_date'];	
 
 
 		return $this->LoadView('employees/timesheet', $data);

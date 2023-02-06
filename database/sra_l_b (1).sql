@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 03, 2023 at 09:59 AM
--- Server version: 5.7.36
--- PHP Version: 7.3.33
+-- Generation Time: Feb 06, 2023 at 06:53 AM
+-- Server version: 5.7.9
+-- PHP Version: 7.3.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `sra_l_b`
+-- Database: `locum`
 --
 
 -- --------------------------------------------------------
@@ -251,9 +251,26 @@ CREATE TABLE IF NOT EXISTS `orders` (
 --
 
 INSERT INTO `orders` (`ord_id`, `ord_L_S_date`, `ord_L_E_date`, `ord_speciality`, `ord_grade`, `cl_id`, `emp_id`, `ord_required_from`, `ord_required_to`, `ord_process_date`, `ord_process_details_from`, `ord_process_details_to`, `ord_confirmation_date`, `ord_invoice_id`, `ord_normal_hrs`, `ord_on_call_hrs`, `ord_total_hrs`, `ord_approx_cost`, `ord_pay_to_dr`, `ord_admin_charges`, `ord_diff_profit_admin`, `ord_time_sheet_rcvd`, `ord_time_sheet_mode`, `ord_time_sheet_process`, `ord_time_sheet_approved`, `ord_comment1`, `ord_invoice_refer`, `ord_invoice_date`, `ord_invoice_by`, `ord_sage_refer_no`, `ord_paymnt_rcvd_date`, `ord_pay_to_dr_date`, `ord_case_status`, `ord_payment_status`, `ord_assignment`, `ord_comment2`, `ord_status`, `ord_cancel_bdr`, `ord_cancel_bcl`, `ord_created`, `ord_updated`) VALUES
-(1, '2023-01-28 10:25:00', '2023-01-11 10:25:00', '2', '5', 2, 2, '2023-02-09 03:22:00', '2023-02-09 17:14:00', '2023-02-03', '2023-01-27 10:25:00', '2023-01-26 17:08:00', '2023-01-23', '23456', '15', '5', '20', '7', '34', '9', '6', '2023-01-25', 'whatsapp', '2023-01-19', 'Not-Approved', '123', '435325', '2023-01-09', 'ak', '2023-01-22', '2023-01-11', '2023-01-17', 'Pending', 'Pending', 'T3FiMUtuMmd6R2Fjc0tYa0lLYlVkcVJ3SkF3YkdZOWxPdVBkU0NyVjY5WT0=.pdf', 'abc', '3', '1', '', '2023-01-23 10:25:20', '2023-02-03 12:45:16'),
+(1, '2023-01-28 10:25:00', '2023-01-11 10:25:00', '2', '5', 2, 2, '2023-02-09 03:22:00', '2023-02-09 17:14:00', '2023-02-03', '2023-01-27 10:25:00', '2023-01-31 17:08:00', '2023-01-23', '23456', '15', '5', '20', '7', '34', '9', '6', '2023-01-25', 'whatsapp', '2023-01-19', 'Not-Approved', '123', '435325', '2023-01-09', 'ak', '2023-01-22', '2023-01-11', '2023-01-17', 'Pending', 'Pending', 'T3FiMUtuMmd6R2Fjc0tYa0lLYlVkcVJ3SkF3YkdZOWxPdVBkU0NyVjY5WT0=.pdf', 'abc', '3', '1', '', '2023-01-23 10:25:20', '2023-02-03 12:45:16'),
 (2, '2023-01-28 10:25:00', '2023-01-11 10:25:00', '15', '2', 1, 3, '2023-02-09 03:22:00', '2023-02-18 10:27:00', '2023-02-03', '2023-01-27 10:25:00', '2023-01-23 10:25:00', '2023-01-23', '23456', '7', '5', '11', '7', '34', '5', '6', '2023-02-02', 'whatsapp', '2023-01-19', 'Approved', '324423', '435325', '2023-01-09', 'ak', '2023-01-22', '2023-01-11', '2023-01-17', 'Closed', 'Paid', '', '', '3', NULL, NULL, '2023-01-23 12:15:57', '2023-02-02 13:08:32'),
-(3, '2023-01-06 10:32:00', '2023-01-17 10:32:00', '2', '3', 1, 2, '2023-01-31 10:32:00', '2023-02-23 00:32:00', '2023-01-20', '2023-01-27 10:32:00', '2023-01-20 10:32:00', '2023-01-25', 'SqQdIFe2z5', '999524', '585893', '912231', 'TpXC5LZ3Fv', 'Tg9OfM6DX7', 'Hjpmt6MAd1', 'WhfUQc6CG2', '2023-01-17', 'email', '2023-01-10', 'Approved', 'jpKJczGQRC', '9hHD6FSisw', '2023-01-16', 'I6ux4dd5gF', '2023-01-19', '2023-01-27', '2023-01-20', 'Closed', 'Paid', '', 'Z75fbsji54', '1', '', NULL, '2023-01-26 17:49:34', '2023-02-03 10:28:34');
+(3, '2023-01-06 10:32:00', '2023-01-18 10:32:00', '2', '3', 1, 2, '2023-01-31 10:32:00', '2023-02-23 00:32:00', '2023-01-20', '2023-01-27 10:32:00', '2023-01-20 10:32:00', '2023-01-25', 'SqQdIFe2z5', '999524', '585893', '912231', 'TpXC5LZ3Fv', 'Tg9OfM6DX7', 'Hjpmt6MAd1', 'WhfUQc6CG2', '2023-01-17', 'email', '2023-01-10', 'Approved', 'jpKJczGQRC', '9hHD6FSisw', '2023-01-16', 'I6ux4dd5gF', '2023-01-19', '2023-01-27', '2023-01-20', 'Closed', 'Paid', '', 'Z75fbsji54', '1', '', NULL, '2023-01-26 17:49:34', '2023-02-03 10:28:34');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `timesheets`
+--
+
+DROP TABLE IF EXISTS `timesheets`;
+CREATE TABLE IF NOT EXISTS `timesheets` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL,
+  `dutyDate` date NOT NULL,
+  `dutyTime` varchar(10) NOT NULL,
+  `siteStatus` tinyint(1) NOT NULL,
+  `Timestamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 

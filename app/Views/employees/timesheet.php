@@ -22,667 +22,88 @@
                         <h4 class="card-title text-center">Time Sheet</h4>
 
                     </div>
-                    <?php if (isset($validation)) : ?>
-                    <div class="alert alert-danger" role="alert">
-                        <?= $validation->listErrors() ?>
-                    </div>
+                    <?php if (isset($validation)): ?>
+                        <div class="alert alert-danger" role="alert">
+                            <?= $validation->listErrors() ?>
+                        </div>
                     <?php endif; ?>
-                    <?php if (session()->get('success')) : ?>
-                    <div class="alert alert-success" role="alert">
-                        <?= session()->get('success') ?>
-                    </div>
+                    <?php if (session()->get('success')): ?>
+                        <div class="alert alert-success" role="alert">
+                            <?= session()->get('success') ?>
+                        </div>
                     <?php endif; ?>
 
-                    <?php if (session()->get('error')) : ?>
-                    <div class="alert alert-danger" role="alert">
-                        <?= session()->get('error') ?>
-                    </div>
+                    <?php if (session()->get('error')): ?>
+                        <div class="alert alert-danger" role="alert">
+                            <?= session()->get('error') ?>
+                        </div>
                     <?php endif; ?>
-                    
+
                     <form action="<?= base_url('employee/timesheet/' . encryptIt($e_ord['ord_id'])) ?>" method="post">
-                        
-                            <table  class="table border">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th></th>
-                                        <th>Monday</th>
-                                        <th>Tuesday</th>
-                                        <th>Wednesday</th>
-                                        <th>Thursday</th>
-                                        <th>Friday</th>
-                                        <th>Saturday</th>
-                                        <th>Sunday</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
 
+                        <table class="table table-striped table-bordered">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Date</th>
+                                    <?php $days = 1;
+                                    while (strtotime($start_date) <= strtotime($end_date)) {
+                                        echo '<th>' . date('d-m-Y', strtotime($start_date)) . '</th>';
+                                        $start_date = date("Y-m-d", strtotime("+1 days", strtotime($start_date)));
+                                        $days++;
+                                    } ?>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                                    <tr>
-                                        <td>
-                                            11:00-12:00pm
-                                        </td>
-
-
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="1"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="flexRadioDefault1">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="1"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="flexRadioDefault2">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="2"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="flexRadioDefault1">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="2"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="flexRadioDefault2">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="3"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="3">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="3"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="3">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="4"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="4">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="4"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="4">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        <td>
-
-
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="5"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="5">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="5"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="5">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="6"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="6">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="6"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="6">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="6"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="6">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="6"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="6">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                <?php $stsCounter = 1; for ($i = 0; $i < 24; $i++): ?>
                                     <tr>
                                         <td>
-                                            11:00-12:00pm
+                                            
+                                            <?= $i ?>.00to
+                                            <?= $i + 1 ?>.00hr
                                         </td>
 
-
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="1"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="flexRadioDefault1">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="1"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="flexRadioDefault2">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="2"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="flexRadioDefault1">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="2"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="flexRadioDefault2">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="3"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="3">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="3"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="3">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="4"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="4">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="4"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="4">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        <td>
-
-
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="5"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="5">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="5"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="5">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="6"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="6">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="6"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="6">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="6"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="6">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="6"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="6">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        </td>
+                                        <?php
+                                        
+                                        for ($x = 1; $x < $days; $x++): ?>
+                                            <td>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="status<?=$stsCounter?>"
+                                                        id="flexRadioDefault<?=$stsCounter?>">
+                                                    <label class="form-check-label" for="flexRadioDefault<?=$stsCounter?>">
+                                                        Onsite
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="status<?=$stsCounter?>"
+                                                        id="flexRadioDefault<?=$stsCounter+1000?>">
+                                                    <label class="form-check-label" for="flexRadioDefault<?=$stsCounter+2000?>">
+                                                        Offsite
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        <?php $stsCounter++; endfor; ?>
                                     </tr>
-                                    <tr>
-                                        <td>
-                                            11:00-12:00pm
-                                        </td>
-
-
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="1"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="flexRadioDefault1">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="1"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="flexRadioDefault2">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="2"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="flexRadioDefault1">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="2"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="flexRadioDefault2">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="3"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="3">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="3"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="3">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="4"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="4">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="4"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="4">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        <td>
-
-
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="5"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="5">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="5"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="5">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="6"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="6">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="6"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="6">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="6"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="6">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="6"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="6">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            11:00-12:00pm
-                                        </td>
-
-
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="1"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="flexRadioDefault1">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="1"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="flexRadioDefault2">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="2"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="flexRadioDefault1">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="2"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="flexRadioDefault2">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="3"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="3">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="3"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="3">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="4"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="4">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="4"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="4">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        <td>
-
-
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="5"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="5">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="5"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="5">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="6"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="6">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="6"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="6">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="6"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="6">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="6"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="6">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            11:00-12:00pm
-                                        </td>
-
-
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="1"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="flexRadioDefault1">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="1"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="flexRadioDefault2">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="2"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="flexRadioDefault1">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="2"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="flexRadioDefault2">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="3"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="3">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="3"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="3">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="4"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="4">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="4"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="4">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        <td>
-
-
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="5"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="5">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="5"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="5">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="6"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="6">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="6"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="6">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="6"
-                                                    id="flexRadioDefault1">
-                                                <label class="form-check-label" for="6">
-                                                    Default radio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="6"
-                                                    id="flexRadioDefault2" >
-                                                <label class="form-check-label" for="6">
-                                                    Default  radio
-                                                </label>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-    
-
-
-                                </tbody>
-                            </table>
-                            <br>
-                            <div>
-                                <button id="payment-button" type="submit" class="btn btn-lg btn-primary btn-block">
-                                    <span id="payment-button-amount">Save Data</span>
-                                </button>
-                            </div>
-
-                        </form>
-                        
+                                <?php endfor; ?>
 
 
 
-                    </div>
+                            </tbody>
+                        </table>
+                        <br>
+                        <div>
+                            <button id="payment-button" type="submit" class="btn btn-lg btn-primary btn-block">
+                                <span id="payment-button-amount">Save Data</span>
+                            </button>
+                        </div>
+
+                    </form>
+
+
+
+
                 </div>
+            </div>
         </div>
-        </div>
-        </div>
-
+    </div>
+</div>
