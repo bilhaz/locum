@@ -359,6 +359,22 @@
         
                     </div>
                 </div>
+                <?php if (isset($validation)) : ?>
+                        <div class="alert alert-danger" role="alert">
+                            <?= $validation->listErrors() ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if (session()->get('success')) : ?>
+                        <div class="alert alert-success" role="alert">
+                            <?= session()->get('success') ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if (session()->get('error')) : ?>
+                        <div class="alert alert-danger" role="alert">
+                            <?= session()->get('error') ?>
+                        </div>
+                    <?php endif; ?>
                 <div class="card" style="background-color: transparent; border:transparent;">
                 <div class="card-header" style="background-color: transparent;">
                     <?php if($cont['ord_cancel_bdr'] <> 1): ?>

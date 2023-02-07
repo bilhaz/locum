@@ -11,6 +11,7 @@ use App\Models\gradeModel;
 use App\Models\ordersModel;
 use App\Models\specialityModel;
 use App\Models\clRegModel;
+use App\Models\formulaModel;
 use App\Models\usrgrpModel;
 use DateTimeZone;
 
@@ -1810,6 +1811,9 @@ class Backend extends BEBaseController
 	{
 		$conid = decryptIt($conid);
 		$data = [];
+
+		$formula = new formulaModel();
+		$data['forml'] = $formula->where('id',1)->first();
 
 		$e3mdoel = new ordersModel();
 		$data['cont'] = $e3mdoel->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade')->where('ord_id', $conid)->first();

@@ -260,12 +260,29 @@ class emp extends EMPBaseController
 
 	public function timesheet_save($ord_id){
 		// var_dump($_POST);
+		// Print_r($_POST);exit;
 		$ord_id = decryptIt($ord_id);
 		$model = new timesheetModel();
 		foreach($_POST['status'] as $row=>$key){
 			// echo $key;exit;
 			$model->insert(array('order_id'=>$ord_id,'dutyDate' => explode(',', $key)[0], 'dutyTime' => explode(',', $key)[1], 'siteStatus' => explode(',', $key)[2]));
+			
 		}
+		$session = session();
+			$session->setFlashdata('success', 'TimeSheet Saved');
+			return redirect()->to('employee/ord-view/' . encryptIt($ord_id));
+	}
+
+	public function timesheet_view($ord_id){
+		$data = [];
+		
+		$ord_id = decryptIt($ord_id);
+		$model = new timesheetModel();
+		
+			
+			$data['t_view'] = $model->where('order_id',$ord_id)->find();
+		
+		return $this->LoadView('employees/timesheet_view', $data);
 
 	}
 	
