@@ -5,7 +5,7 @@
                 <div class="col-md-6 col-sm-12">
                     <h2 class="m-0 fs-5"><a href="javascript:void(0);"
                             class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i
-                                class="fa fa-arrow-left"></i></a>Fill Time Sheet</h2>
+                                class="fa fa-arrow-left"></i></a>View Time Sheet</h2>
                     <ul class="breadcrumb mb-0">
                         <li class="breadcrumb-item"><a target="_blank" href="https://www.sralocum.com">SRA Locum</a>
                         </li>
@@ -41,14 +41,14 @@
 
                     <form action="<?= base_url('employee/timesheet_save/' . encryptIt($e_ord['ord_id'])) ?>" method="post">
 
-                        <table class="table table-striped table-bordered border-primary" style="border: solid green;">
+                        <table class="table table-striped table-bordered border-primary" style="border: 1px #28a745;">
                             <thead>
                                 <tr>
-                                    <th>Date</th>
+                                    <th style="border: solid #28a745;">Date</th>
                                     <?php $days = 1;
                                     $tmp_Startdate = $start_date;
                                     while (strtotime($tmp_Startdate) <= strtotime($end_date)) {
-                                        echo '<th>' . date('d-m-Y', strtotime($tmp_Startdate)) . '</th>';
+                                        echo '<th style="border: solid #28a745;">' . date('d-m-Y', strtotime($tmp_Startdate)) . '</th>';
                                         $tmp_Startdate = date("Y-m-d", strtotime("+1 days", strtotime($tmp_Startdate)));
                                         $days++;
                                     } ?>
