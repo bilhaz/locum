@@ -39,14 +39,19 @@
                         </div>
                     <?php endif; ?>
 
+                    <form action="<?= base_url('employee/timesheet_save/' . encryptIt($e_ord['ord_id'])) ?>" method="post">
 
-                        <table class="table table-striped table-bordered">
-                            <thead class="thead-dark">
+                        <table class="table table-striped table-bordered border-primary" style="border: solid green;">
+                            <thead>
                                 <tr>
                                     <th>Date</th>
-                                        <?php foreach($t_view as $date): ?>
-                                        <th><?=$date['dutyDate']?></th>
-                                       <?php endforeach; ?>
+                                    <?php $days = 1;
+                                    $tmp_Startdate = $start_date;
+                                    while (strtotime($tmp_Startdate) <= strtotime($end_date)) {
+                                        echo '<th>' . date('d-m-Y', strtotime($tmp_Startdate)) . '</th>';
+                                        $tmp_Startdate = date("Y-m-d", strtotime("+1 days", strtotime($tmp_Startdate)));
+                                        $days++;
+                                    } ?>
                                 </tr>
                             </thead>
                             <tbody>
@@ -60,28 +65,30 @@
 
                                             <?=($i) . '.00 to ' . ($i + 1) ?>.00hr
                                         </td>
-
                                         <?php
                                         $x = 1;
-                                        $tmp_Startdate2 = $date['dutyDate'];
-                                        while (strtotime($tmp_Startdate2) <= strtotime($date['dutyDate'])) { ?>
+                                        $tmp_Startdate2 = $start_date;
+                                        while (strtotime($tmp_Startdate2) <= strtotime($end_date)) { ?>
                                             <td>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" value="<?=$tmp_Startdate2.','.$i?>,1" type="radio"
-                                                        name="status[value<?= $stsCounter ?>]"
-                                                        id="flexRadioDefault<?= $stsCounter ?>">
-                                                    <label class="form-check-label" for="flexRadioDefault<?= $stsCounter ?>">
-                                                        Onsite
-                                                    </label>
+                                                    
+                                                    <?php foreach($t_view as $r): ?>
+                                                   <?php if($r['dutyTime'] == $i && date('Y-m-d',strtotime($tmp_Startdate2)) == $r['dutyDate']):
+                                                   
+                                                     if($r['siteStatus'] == "1"): ?>
+                                                        <b>OnSite</b> 
+                                                        <?php elseif($r['siteStatus'] == "2"): ?>
+                                                            <b>OffSite</b>
+                                                            <?php else: ?>
+                                                                <b>-</b>
+                                                                
+                                                                <?php endif;
+                                                                endif; 
+                                                              endforeach; ?>
+                                                            
+
                                                 </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" value="<?=$tmp_Startdate2.','.$i?>,2" type="radio" name="status[value<?=$stsCounter?>]"
-                                                        id="flexRadioDefault<?= $stsCounter + 1000 ?>">
-                                                    <label class="form-check-label"
-                                                        for="flexRadioDefault<?= $stsCounter + 2000 ?>">
-                                                        Offsite
-                                                    </label>
-                                                </div>
+                                                
                                             </td>
                                             <?php 
                                             $tmp_Startdate2 = date("Y-m-d", strtotime("+1 days", strtotime($tmp_Startdate2)));
@@ -97,11 +104,7 @@
                             </tbody>
                         </table>
                         <br>
-                        <div>
-                            <button id="payment-button" type="submit" class="btn btn-lg btn-primary btn-block">
-                                <span id="payment-button-amount">Save Data</span>
-                            </button>
-                        </div>
+                        
 
                     </form>
 

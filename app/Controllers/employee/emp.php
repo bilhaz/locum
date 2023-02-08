@@ -6,13 +6,11 @@ namespace App\Controllers\employee;
 
 use App\Models\UserModel;
 use App\Models\EmpModel;
-use App\Models\ClientModel;
 use App\Models\gradeModel;
 use App\Models\ordersModel;
 use App\Models\specialityModel;
 use App\Models\timesheetModel;
-use App\Models\clRegModel;
-use App\Models\usrgrpModel;
+use App\Models\formulaModel;
 use DateTimeZone;
 
 class emp extends EMPBaseController
@@ -158,6 +156,10 @@ class emp extends EMPBaseController
 	{
 		$data = [];
 		$oid = decryptIt($oid);
+
+		$formula = new formulaModel();
+		$data['forml'] = $formula->where('id',1)->first();
+		
 		$model = new ordersModel();
 		$data['cont'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade')->where('ord_id', $oid)->first();
 
@@ -259,12 +261,11 @@ class emp extends EMPBaseController
 	}
 
 	public function timesheet_save($ord_id){
-		// var_dump($_POST);
-		// Print_r($_POST);exit;
+		
 		$ord_id = decryptIt($ord_id);
 		$model = new timesheetModel();
 		foreach($_POST['status'] as $row=>$key){
-			// echo $key;exit;
+			
 			$model->insert(array('order_id'=>$ord_id,'dutyDate' => explode(',', $key)[0], 'dutyTime' => explode(',', $key)[1], 'siteStatus' => explode(',', $key)[2]));
 			
 		}
@@ -278,9 +279,13 @@ class emp extends EMPBaseController
 		
 		$ord_id = decryptIt($ord_id);
 		$model = new timesheetModel();
-		
-			
-			$data['t_view'] = $model->where('order_id',$ord_id)->find();
+		$data['t_view'] = $model->where('order_id',$ord_id)->find();
+
+		$model = new ordersModel();
+		$data['e_ord'] = $model->where('ord_id', $ord_id)->first();
+
+		$data['start_date'] = $data['e_ord']['ord_process_details_from'];
+		$data['end_date'] = $data['e_ord']['ord_process_details_to'];	
 		
 		return $this->LoadView('employees/timesheet_view', $data);
 
