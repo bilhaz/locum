@@ -380,7 +380,15 @@
                     <?php if($cont['ord_cancel_bdr'] <> 1): ?>
                     <ul class="header-dropdown" style="background-color: transparent;">
                         <li style="background-color: transparent;">
+                        
+                        <?php if(isset($ord['order_id']) && $cont['ord_time_sheet_approved'] <> "Approved"): ?>
+                            <a type="button" href="<?= base_url('employee/t-edit/' .encryptIt($cont['ord_id'])) ?>" class="btn btn-sm btn-primary d-print-none"><i class="fa fa-calendar text-light">&nbsp;</i>Edit TimeSheet</a>
+                            <?php endif; ?>
+                        <?php if(!isset($ord['order_id'])): ?>
                             <a type="button" href="<?= base_url('employee/timesheet/' .encryptIt($cont['ord_id'])) ?>" class="btn btn-sm btn-primary d-print-none"><i class="fa fa-calendar text-light">&nbsp;</i>Fill TimeSheet</a>
+                            <?php elseif(isset($ord['order_id'])): ?>
+                            <a type="button" href="<?= base_url('employee/t-view/' .encryptIt($cont['ord_id'])) ?>" class="btn btn-sm btn-warning d-print-none"><i class="fa fa-eye ">&nbsp;</i>View TimeSheet</a>
+                                <?php endif; ?>
                             <?php if(!empty($cont['ord_assignment'])): ?>
                             <a type="button" target="_blank" href="<?= base_url('public/uploads/doc_assesment/'. $cont['ord_assignment']) ?>" class="btn btn-sm btn-info d-print-none text-light">View Assesment</a>
                             <?php else: ?>

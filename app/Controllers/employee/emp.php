@@ -159,6 +159,9 @@ class emp extends EMPBaseController
 
 		$formula = new formulaModel();
 		$data['forml'] = $formula->where('id',1)->first();
+
+		$ttmodel = new timesheetModel();
+		$data['ord'] = $ttmodel->where('order_id',$oid)->first();
 		
 		$model = new ordersModel();
 		$data['cont'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade')->where('ord_id', $oid)->first();
@@ -223,16 +226,10 @@ class emp extends EMPBaseController
 		$model = new ordersModel();
 		$del = $model->where('ord_id', $coid)->first();
 
-
-
-		
-
 			$newData = [
 				'ord_cancel_bdr' => 1,
 
 			];
-
-
 
 			$model->update($coid, $newData);
 			$session = session();
@@ -252,10 +249,6 @@ class emp extends EMPBaseController
 
 		$data['start_date'] = $data['e_ord']['ord_process_details_from'];
 		$data['end_date'] = $data['e_ord']['ord_process_details_to'];	
-
-
-
-
 
 		return $this->LoadView('employees/timesheet', $data);
 	}
