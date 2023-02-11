@@ -20,7 +20,17 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         <h4 class="card-title text-center">Time Sheet</h4>
-
+                        
+                        <ul class="header-dropdown">
+                            <li>
+                            <?php if($e_ord['ord_time_sheet_approved'] <> "Approved"): ?>
+                                <a type="button" href="<?= base_url('client/timesheet-approve/'. encryptIt($e_ord['ord_id'])) ?>" class="btn btn-sm btn-primary">Approve Sheet</a>
+                                <?php else: ?>
+                            <span class="badge h3 chart-color122">Timesheet is Approved</span>
+                            <?php endif; ?>
+                            </li>
+                        </ul>
+                        
                     </div>
                     <?php if (isset($validation)): ?>
                         <div class="alert alert-danger" role="alert">

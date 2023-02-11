@@ -4,14 +4,12 @@ namespace App\Controllers\client;
 
 
 
-use App\Models\UserModel;
-use App\Models\EmpModel;
+use App\Models\timesheetModel;
 use App\Models\ClientModel;
 use App\Models\gradeModel;
 use App\Models\ordersModel;
 use App\Models\specialityModel;
 use App\Models\clRegModel;
-use App\Models\usrgrpModel;
 use DateTimeZone;
 
 class cli extends CLIBaseController
@@ -149,9 +147,21 @@ class cli extends CLIBaseController
 	public function contracts()
 	{
 		$data = [];
+
 		
 		$model = new ordersModel();
+		// $data['t_order'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('timesheets', 'timesheets.order_id = orders.ord_id')->where('orders.cl_id', session()->cl_id)->distinct('timesheets.order_id')->findAll();
+		$data['t_order'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')
+    ->Join('timesheets', 'timesheets.order_id = orders.ord_id','LEFT')
+    ->where('orders.cl_id', session()->cl_id)
+    ->groupBy('timesheets.order_id')
+    ->find();
+		// dd($data['t_order']);
+		// $data['ord_id'] = $data['t_order']['ord_id'];
+
 		$data['order'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->where('orders.cl_id', session()->cl_id)->orderBy('orders.ord_created', 'DESC')->findAll();
+
+
 		return $this->LoadView('clients/contracts', $data);
 	}
 
@@ -181,16 +191,44 @@ class cli extends CLIBaseController
 		
 	}
 
-	public function timesheet($tid = null)
+	public function timesheet($ord_id = null)
 	{
-        $tid = decryptIt($tid);
+        $ord_id = decryptIt($ord_id);
 		$data = [];
-		helper(['form']);	
+		
+		
+		$model = new timesheetModel();
+		$data['t_view'] = $model->where('order_id',$ord_id)->find();
 
 		$model = new ordersModel();
-		$data['e_ord'] = $model->where('ord_id', $tid)->first();
+		$data['e_ord'] = $model->where('ord_id', $ord_id)->first();
 
-		return $this->LoadView('employees/timesheet', $data);
+		$data['start_date'] = $data['e_ord']['ord_process_details_from'];
+		$data['end_date'] = $data['e_ord']['ord_process_details_to'];
+		return $this->LoadView('clients/timesheet', $data);
+	}
+
+	public function timesheet_approve($id = null)
+	{
+        $id = decryptIt($id);
+		$data = [];
+		
+		$model = new ordersModel();
+		$data['e_ord'] = $model->where('ord_id', $id)->first();
+
+		$newData = [
+			'ord_time_sheet_approved' => "Approved",
+
+		];
+
+
+
+		$model->update($id, $newData);
+		$session = session();
+		$session->setFlashdata('success', 'Timesheet Approved');
+		return redirect()->to('client/timesheet/'.encryptIt($data['e_ord']['ord_id']));
+
+		
 	}
 
 
@@ -359,6 +397,8 @@ class cli extends CLIBaseController
 
 		return $this->LoadView('clients/profile', $data);
 	}
+
+
 
 
 }

@@ -119,7 +119,7 @@ $routes->match(['get' , 'post'], 'employee/timesheet/(:any)', 'employee\emp::tim
 $routes->match(['get' , 'post'], 'employee/t-edit/(:any)', 'employee\emp::edit_timesheet/$1',['filter' => 'E_Auth']);
 $routes->match(['get' , 'post'], 'employee/t-upd/(:any)', 'employee\emp::timesheet_upd/$1',['filter' => 'E_Auth']);
 $routes->match(['get' , 'post'], 'employee/t-view/(:any)', 'employee\emp::timesheet_view/$1',['filter' => 'E_Auth']);
-$routes->match(['post' , 'post'], 'employee/timesheet_save/(:any)', 'employee\emp::timesheet_save/$1',['filter' => 'E_Auth']);
+$routes->match(['get' , 'post'], 'employee/timesheet_save/(:any)', 'employee\emp::timesheet_save/$1',['filter' => 'E_Auth']);
 $routes->get('employee/logout', 'employee\emp::logout');
 
 
@@ -143,6 +143,7 @@ $routes->match(['get' , 'post'], 'client/orders', 'client\cli::contracts',['filt
 $routes->match(['get' , 'post'], 'client/ord-view/(:any)', 'client\cli::order_view/$1',['filter' => 'C_Auth']);
 $routes->match(['get' , 'post'], 'client/canc-ord/(:any)', 'client\cli::canc_ord/$1',['filter' => 'C_Auth']);
 $routes->match(['get' , 'post'], 'client/timesheet/(:any)', 'client\cli::timesheet/$1',['filter' => 'C_Auth']);
+$routes->match(['get' , 'post'], 'client/timesheet-approve/(:any)', 'client\cli::timesheet_approve/$1',['filter' => 'C_Auth']);
 $routes->get('client/logout', 'client\cli::logout');
 
 
@@ -154,22 +155,6 @@ $routes->get('client/logout', 'client\cli::logout');
 // });
 
 
-/*
- * --------------------------------------------------------------------
- * Route Site
- * --------------------------------------------------------------------
- */
-#$routes->get('apply', 'signin::apply',['filter'=>'ACP_auth']);
-#$routes->get('applypost', 'signin::applypost',['filter'=>'ACP_auth']);
-#$routes->post('education', 'signin::education',['filter'=>'ACP_auth']);
-#$routes->get('experience', 'signin::experience',['filter'=>'ACP_auth']);
-#$routes->post('picupload', 'signin::picupload',['filter'=>'ACP_auth']);
-#$routes->get('form_print', 'signin::form_print',['filter'=>'ACP_auth']);
-#$routes->get('contact', 'signin::contact',['filter'=>'ACP_auth']);
-#$routes->get('signup', 'signin::signup',['filter'=>'noauth']);
-#$routes->post('register', 'signin::register',['filter'=>'noauth']);
-#$routes->get('edit_password', 'signin::edit_password',['filter'=>'ACP_auth']);
-#$routes->post('update_password', 'signin::update_password',['filter'=>'ACP_auth']);
 
 
 

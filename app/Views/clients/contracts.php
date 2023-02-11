@@ -1,3 +1,4 @@
+
 <div id="main-content">
     <div class="container-fluid">
         <div class="block-header py-lg-4 py-3">
@@ -40,12 +41,14 @@
                         </div>
                     <?php endif; ?>
                     <div class="card-body">
+                   
                         <table id="employee_List" class="table table-hover">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th>ID</th>
+                                    <th>#</th>
                                     <th>Hospital Name</th>
-                                    <th>Required till</th>
+                                    <th>Processed till</th>
+                                    <th>Timesheet</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -53,19 +56,27 @@
                             <tbody>
 
                                 <?php
-
-                                foreach ($order as $row) : ?>
+                                $i=1;
+                                foreach ($t_order as $row) : ?>
                                     <tr>
                                         <td>
-                                            <?= $row['ord_id'] ?>
+                                            <?= $i++ ?>
                                         </td>
-
+                                        
 
                                         <td>
                                             <h6 class="mb-0"><?= $row['cl_h_name'] ?></h6>
                                         </td>
                                         
-                                        <td><?= $row['ord_L_E_date'] ?></td>
+                                        
+                                        <td><?= $row['ord_process_details_to'] ?></td>
+                                        <td>
+                                        <?php if(!empty($row['order_id'])): ?>
+                                            <a type="button" href="<?= base_url('client/timesheet/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-info" title="TimeSheet"><i class="fa fa-eye"></i> View</a>
+                                            <?php else: ?>
+                                                <span class="badge bg-danger">No Submitted</span>
+                                                <?php endif; ?>
+                                        </td>
                                         <td>
                                             <?php if($row['ord_cancel_bcl'] == "1"): ?>
                                                 <span class="badge bg-danger">You Cancelled</span>
