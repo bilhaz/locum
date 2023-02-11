@@ -115,9 +115,11 @@ $routes->match(['get' , 'post'], 'employee/profile', 'employee\emp::profile',['f
 $routes->match(['get' , 'post'], 'employee/ord-view/(:any)', 'employee\emp::order_view/$1',['filter' => 'E_Auth']);
 $routes->match(['get' , 'post'], 'employee/upl-asses/(:any)', 'employee\emp::upl_asses/$1',['filter' => 'E_Auth']);
 $routes->match(['get' , 'post'], 'employee/canc-ord/(:any)', 'employee\emp::canc_ord/$1',['filter' => 'E_Auth']);
-$routes->match(['get'], 'employee/timesheet/(:any)', 'employee\emp::timesheet/$1',['filter' => 'E_Auth']);
-$routes->match(['get'], 'employee/t-view/(:any)', 'employee\emp::timesheet_view/$1',['filter' => 'E_Auth']);
-$routes->match(['post'], 'employee/timesheet_save/(:any)', 'employee\emp::timesheet_save/$1',['filter' => 'E_Auth']);
+$routes->match(['get' , 'post'], 'employee/timesheet/(:any)', 'employee\emp::timesheet/$1',['filter' => 'E_Auth']);
+$routes->match(['get' , 'post'], 'employee/t-edit/(:any)', 'employee\emp::edit_timesheet/$1',['filter' => 'E_Auth']);
+$routes->match(['get' , 'post'], 'employee/t-upd/(:any)', 'employee\emp::timesheet_upd/$1',['filter' => 'E_Auth']);
+$routes->match(['get' , 'post'], 'employee/t-view/(:any)', 'employee\emp::timesheet_view/$1',['filter' => 'E_Auth']);
+$routes->match(['post' , 'post'], 'employee/timesheet_save/(:any)', 'employee\emp::timesheet_save/$1',['filter' => 'E_Auth']);
 $routes->get('employee/logout', 'employee\emp::logout');
 
 

@@ -12,7 +12,7 @@ class timesheetModel extends Model
     //protected $returnType     = 'array';
     //protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['id', 'order_id', 'dutyDate', 'dutyTime', 'siteStatus', 'Timestamp'];
+    protected $allowedFields = ['id', 'order_id', 'dutyDate', 'dutyTime', 'siteStatus'];
     
 
 

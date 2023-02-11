@@ -72,7 +72,7 @@
                                         while (strtotime($tmp_Startdate2) <= strtotime($end_date)) { ?>
                                             <td>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" value="<?=$tmp_Startdate2.','.$i?>,1" type="radio"
+                                                    <input class="form-check-input" onclick="handleCheck(this)" value="<?=$tmp_Startdate2.','.$i?>,1" type="checkbox"
                                                         name="status[value<?=$stsCounter?>]"
                                                         id="flexRadioDefault<?= $stsCounter ?>">
                                                     <label class="form-check-label" for="flexRadioDefault<?= $stsCounter ?>">
@@ -80,7 +80,7 @@
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" value="<?=$tmp_Startdate2.','.$i?>,2" type="radio" name="status[value<?=$stsCounter?>]"
+                                                    <input class="form-check-input" onclick="handleCheck(this)" value="<?=$tmp_Startdate2.','.$i?>,2" type="checkbox" name="status[value<?=$stsCounter?>]"
                                                         id="flexRadioDefault<?= $stsCounter + 1000 ?>">
                                                     <label class="form-check-label"
                                                         for="flexRadioDefault<?= $stsCounter + 2000 ?>">
@@ -118,3 +118,14 @@
         </div>
     </div>
 </div>
+<script>
+      function handleCheck(checkbox) {
+        const td = checkbox.closest("td");
+        const checkboxes = td.querySelectorAll("input[type='checkbox']");
+        checkboxes.forEach(cb => {
+          if (cb !== checkbox) {
+            cb.checked = false;
+          }
+        });
+      }
+    </script>

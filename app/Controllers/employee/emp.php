@@ -274,6 +274,44 @@ class emp extends EMPBaseController
 			return redirect()->to('employee/ord-view/' . encryptIt($ord_id));
 	}
 
+	public function edit_timesheet($ord_id){
+		$data = [];
+		
+		$ord_id = decryptIt($ord_id);
+		$model = new timesheetModel();
+		$data['t_view'] = $model->where('order_id',$ord_id)->find();
+
+		$model = new ordersModel();
+		$data['e_ord'] = $model->where('ord_id', $ord_id)->first();
+
+		$data['start_date'] = $data['e_ord']['ord_process_details_from'];
+		$data['end_date'] = $data['e_ord']['ord_process_details_to'];	
+		
+		
+		return $this->LoadView('employees/edit_timesheet', $data);
+
+	}
+
+	public function timesheet_upd($ord_id){
+		$data = [];
+		
+		$ord_id = decryptIt($ord_id);
+		$model = new timesheetModel();
+		
+			// Delete all existing timesheet data for this order
+			$model->where(['order_id' => $ord_id])->delete();
+		
+			// Insert the updated timesheet data
+			foreach($_POST['status'] as $row => $key){
+				$model->insert(['order_id' => $ord_id, 'dutyDate' => explode(',', $key)[0], 'dutyTime' => explode(',', $key)[1], 'siteStatus' => explode(',', $key)[2]]);
+			}
+		
+			$session = session();
+				$session->setFlashdata('success', 'TimeSheet Updated');
+				return redirect()->to('employee/t-edit/' . encryptIt($ord_id));
+
+	}
+
 	public function timesheet_view($ord_id){
 		$data = [];
 		
@@ -287,6 +325,7 @@ class emp extends EMPBaseController
 		$data['start_date'] = $data['e_ord']['ord_process_details_from'];
 		$data['end_date'] = $data['e_ord']['ord_process_details_to'];	
 		
+
 		return $this->LoadView('employees/timesheet_view', $data);
 
 	}
