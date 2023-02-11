@@ -13,6 +13,8 @@ use App\Models\specialityModel;
 use App\Models\clRegModel;
 use App\Models\formulaModel;
 use App\Models\usrgrpModel;
+use App\Models\timesheetModel;
+
 use DateTimeZone;
 
 class Backend extends BEBaseController
@@ -1821,5 +1823,131 @@ class Backend extends BEBaseController
 
 		return $this->LoadView('admin/contract', $data);
 	}
+
+	public function timesheet()
+	{
+		$data = [];
+
+		
+		$model = new ordersModel();
+		$data['t_order'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')
+    ->Join('timesheets', 'timesheets.order_id = orders.ord_id','LEFT')
+    ->groupBy('orders.ord_id')
+    ->findAll();
+		
+
+
+
+		return $this->LoadView('admin/timesheet', $data);
+	}
+
+	public function fill_timesheet($tid = null)
+	{
+        $tid = decryptIt($tid);
+		$data = [];
+		helper(['form']);	
+
+		$model = new ordersModel();
+		$data['e_ord'] = $model->where('ord_id', $tid)->first();
+
+		$data['start_date'] = $data['e_ord']['ord_process_details_from'];
+		$data['end_date'] = $data['e_ord']['ord_process_details_to'];	
+
+		return $this->LoadView('admin/fill_timesheet', $data);
+	}
+
+	public function timesheet_save($ord_id){
+		
+		$ord_id = decryptIt($ord_id);
+		$model = new timesheetModel();
+		foreach($_POST['status'] as $row=>$key){
+			
+			$model->insert(array('order_id'=>$ord_id,'dutyDate' => explode(',', $key)[0], 'dutyTime' => explode(',', $key)[1], 'siteStatus' => explode(',', $key)[2]));
+			
+		}
+		$session = session();
+			$session->setFlashdata('success', 'TimeSheet Saved');
+			return redirect()->to('admin/timesheet');
+	}
+
+	public function edit_timesheet($ord_id){
+		$data = [];
+		
+		$ord_id = decryptIt($ord_id);
+		$model = new timesheetModel();
+		$data['t_view'] = $model->where('order_id',$ord_id)->find();
+
+		$model = new ordersModel();
+		$data['e_ord'] = $model->where('ord_id', $ord_id)->first();
+
+		$data['start_date'] = $data['e_ord']['ord_process_details_from'];
+		$data['end_date'] = $data['e_ord']['ord_process_details_to'];	
+		
+		
+		return $this->LoadView('admin/timesheet_edit', $data);
+
+	}
+
+	public function upd_timesheet($ord_id){
+		$data = [];
+		
+		$ord_id = decryptIt($ord_id);
+		$model = new timesheetModel();
+		
+			// Delete all existing timesheet data for this order
+			$model->where(['order_id' => $ord_id])->delete();
+		
+			// Insert the updated timesheet data
+			foreach($_POST['status'] as $row => $key){
+				$model->insert(['order_id' => $ord_id, 'dutyDate' => explode(',', $key)[0], 'dutyTime' => explode(',', $key)[1], 'siteStatus' => explode(',', $key)[2]]);
+			}
+		
+			$session = session();
+				$session->setFlashdata('success', 'TimeSheet Updated');
+				return redirect()->to('admin/timesheet');
+
+	}
+
+	public function timesheet_view($ord_id){
+		$data = [];
+		
+		$ord_id = decryptIt($ord_id);
+		$model = new timesheetModel();
+		$data['t_view'] = $model->where('order_id',$ord_id)->find();
+
+		$model = new ordersModel();
+		$data['e_ord'] = $model->where('ord_id', $ord_id)->first();
+
+		$data['start_date'] = $data['e_ord']['ord_process_details_from'];
+		$data['end_date'] = $data['e_ord']['ord_process_details_to'];	
+		
+
+		return $this->LoadView('admin/timesheet_view', $data);
+
+	}
+
+	public function timesheet_approve($id = null)
+	{
+        $id = decryptIt($id);
+		$data = [];
+		
+		$model = new ordersModel();
+		$data['e_ord'] = $model->where('ord_id', $id)->first();
+
+		$newData = [
+			'ord_time_sheet_approved' => "Approved",
+
+		];
+
+
+
+		$model->update($id, $newData);
+		$session = session();
+		$session->setFlashdata('success', 'Timesheet Approved');
+		return redirect()->to('admin/t-view/'.encryptIt($data['e_ord']['ord_id']));
+
+		
+	}
+
 
 }

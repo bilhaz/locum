@@ -1354,6 +1354,7 @@ ZW50SUQAQTM4NzFBMzMyNkNENjU3NzkzNzUxRjlEOEI4M0YwNzdgGcdFAAAAAElFTkSuQmCC" />
 <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/expired-orders') ?>"><i class="fa fa-list-ul"></i>Expired Orders</a></li>
 </ul>
 </li>
+<li class="nav-item"><a href="<?= base_url('admin/timesheet') ?>"><i class="fa fa-calendar"></i>TimeSheet</a></li>
 <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/speciality') ?>"><i class="fa fa-stethoscope"></i>Specialities</a></li>
 <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/grade') ?>"><i class="fa fa-star"></i>Grades</a></li>
 <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/cat') ?>"><i class="fa fa-th-large"></i>Client Category</a></li>

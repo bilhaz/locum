@@ -154,17 +154,16 @@ class cli extends CLIBaseController
 		$data['t_order'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')
     ->Join('timesheets', 'timesheets.order_id = orders.ord_id','LEFT')
     ->where('orders.cl_id', session()->cl_id)
-    ->groupBy('timesheets.order_id')
+    ->groupBy('orders.ord_id')
     ->find();
 		// dd($data['t_order']);
 		// $data['ord_id'] = $data['t_order']['ord_id'];
 
-		$data['order'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->where('orders.cl_id', session()->cl_id)->orderBy('orders.ord_created', 'DESC')->findAll();
+		// $data['order'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->where('orders.cl_id', session()->cl_id)->orderBy('orders.ord_created', 'DESC')->findAll();
 
 
 		return $this->LoadView('clients/contracts', $data);
 	}
-
 
 	public function  canc_ord($coid = null)
 

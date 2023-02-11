@@ -78,6 +78,13 @@ $routes->match(['get' , 'post'], 'admin/paid-payment', 'admin\Backend::paid_paym
 $routes->match(['get' , 'post'], 'admin/client-pwd/(:any)', 'admin\Backend::client_pwd/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'admin/employee-pwd/(:any)', 'admin\Backend::employee_pwd/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'admin/expired-orders', 'admin\Backend::expired_orders' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'admin/timesheet', 'admin\Backend::timesheet' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'admin/t-fill/(:any)', 'admin\Backend::fill_timesheet/$1' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'admin/timesheet_save/(:any)', 'admin\Backend::timesheet_save/$1' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'admin/t-edit/(:any)', 'admin\Backend::edit_timesheet/$1' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'admin/t-upd/(:any)', 'admin\Backend::upd_timesheet/$1' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'admin/t-view/(:any)', 'admin\Backend::timesheet_view/$1' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'admin/timesheet-approve/(:any)', 'admin\Backend::timesheet_approve/$1',['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'admin/email-1/(:any)', 'admin\Backend::email_1/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'admin/email-2/(:any)', 'admin\Backend::email_2/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'admin/email-3/(:any)', 'admin\Backend::email_3/$1' ,['filter' => 'B_auth']);
@@ -85,15 +92,6 @@ $routes->match(['get' , 'post'], 'admin/email-4/(:any)', 'admin\Backend::email_4
 $routes->match(['get' , 'post'], 'admin/contract/(:any)', 'admin\Backend::contract/$1',['filter' => 'B_auth']);
 
 // });
-
-
-
-
-
-
-
-
-
 
 
 /*
