@@ -28,7 +28,7 @@ class emp extends EMPBaseController
 			//let's do the validation here
 			$rules = [
 				'emp_email' => ['label' => 'Email', 'rules' => 'required'],
-				'emp_pwd' => ['label' => 'Password', 'rules' => 'required'],
+				'emp_pwd' => ['label' => 'Password', 'rules' => 'required|validateEmp[emp_email,emp_pwd]'],
 			];
 
 			$errors = [
