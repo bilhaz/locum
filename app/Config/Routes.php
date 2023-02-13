@@ -55,6 +55,7 @@ $routes->match(['get' , 'post'], 'admin/new_order', 'admin\Backend::new_order' ,
 $routes->match(['get' , 'post'], 'admin/order_edit/(:any)', 'admin\Backend::order_edit/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'admin/order_view/(:any)', 'admin\Backend::order_view/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'admin/pending_order', 'admin\Backend::pending_order' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'admin/processed_order', 'admin\Backend::processed_order' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'admin/closed_order', 'admin\Backend::closed_order' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'admin/ord_status/(:any)', 'admin\Backend::ord_status/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'admin/speciality', 'admin\Backend::specialities' ,['filter' => 'B_auth']);
@@ -73,8 +74,8 @@ $routes->match(['get' , 'post'], 'admin/users', 'admin\Backend::users' ,['filter
 $routes->match(['get' , 'post'], 'admin/destroy', 'admin\Backend::logout' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'admin/pwdupd', 'admin\Backend::pwdupd' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'admin/b-userp/(:any)', 'admin\Backend::buser/$1' ,['filter' => 'B_auth']);
-$routes->match(['get' , 'post'], 'admin/pending-payment', 'admin\Backend::pending_payment' ,['filter' => 'B_auth']);
-$routes->match(['get' , 'post'], 'admin/paid-payment', 'admin\Backend::paid_payment' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'admin/ended_order', 'admin\Backend::ended_order' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'admin/confirm_order', 'admin\Backend::confirm_order' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'admin/client-pwd/(:any)', 'admin\Backend::client_pwd/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'admin/employee-pwd/(:any)', 'admin\Backend::employee_pwd/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'admin/expired-orders', 'admin\Backend::expired_orders' ,['filter' => 'B_auth']);

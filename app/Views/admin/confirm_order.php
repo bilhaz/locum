@@ -3,7 +3,7 @@
 <div class="block-header py-lg-4 py-3">
 <div class="row g-3">
 <div class="col-md-6 col-sm-12">
-<h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a>Pending Payments</h2>
+<h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> Orders List</h2>
 <ul class="breadcrumb mb-0">
 <li class="breadcrumb-item"><a target="_blank" href="https://www.sralocum.com">SRA Locum</a></li>
 
@@ -16,7 +16,7 @@
 <div class="col-lg-12">
 <div class="card mb-4">
 <div class="card-header">
-<h6 class="card-title">Pending Payment list</h6>
+<h6 class="card-title">Confirm Orders</h6>
 <ul class="header-dropdown">
 <li>
 </li>
@@ -46,8 +46,9 @@
 <th>Hospital Name</th>
 <th>Employee</th>
 <th>Craeted</th>
-<th>Payment Status</th>
+<th>Status</th>
 <th>View</th>
+<th>Action</th>
 </tr>
 </thead>
 <tbody>
@@ -67,13 +68,23 @@
 </td>
 <td><span><?= $row['emp_fname'].' '. $row['emp_lname']?></span></td>
 <td><?= $row['ord_created']?></td>
-<td><span class="badge bg-danger"><?= $row['ord_payment_status']?></span></td>
+<td><span class="badge chart-color121 text-light">Confirm</span></td>
 <td>
   
 <a type="button" href="<?= base_url('admin/order_view/'.encryptIt($row['ord_id']))?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View"  data-type="confirm"><i class="fa fa-eye"></i></a>
 
 </td>
-
+<td>
+    <form action="<?= base_url('admin/ord_status/'.encryptIt( $row ['ord_id']) ) ?>" method="post">
+    <select id="ord_status" name="ord_status" class="form-control" required="" data-parsley-trigger="change">
+                                        <option value="1" <?php if ($row ['ord_status'] == "Pending") { ?> echo selected="selected" <?php } ?>>Pending</option>
+                                        <option value="2" <?php if ($row ['ord_status'] == "Processed") { ?> echo selected="selected" <?php } ?>>Processed</option>
+                                        <option value="3" <?php if ($row ['ord_status'] == "Confirmed") { ?> echo selected="selected" <?php } ?>>Confirmed</option>
+                                        <option value="4" <?php if ($row ['ord_status'] == "Ended") { ?> echo selected="selected" <?php } ?>>Ended</option>
+                                    </select>
+                                    <button class="btn btn-sm btn-outline-primary btn-block" Onclick="return confirm('Are You sure?');" id="change" type="submit" value="Change"><span id="change">Change</span></button>
+    </form>
+</td>
 </tr>
 <?php endforeach; ?>
 

@@ -1389,13 +1389,25 @@ class Backend extends BEBaseController
 		return $this->LoadView('admin/order_view', $data);
 	}
 
+
+	public function processed_order()
+	{
+
+		$data = [];
+		helper(['form']);
+		$model = new ordersModel();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->where('ord_status', '2')->orderBy('ord_updated', 'DESC')->findAll();
+
+		return $this->LoadView('admin/processed_order', $data);
+	}
+
 	public function pending_order()
 	{
 
 		$data = [];
 		helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->where('ord_case_status', 'Pending')->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->where('ord_status', '1')->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('admin/pending_order', $data);
 	}
@@ -1411,26 +1423,26 @@ class Backend extends BEBaseController
 		return $this->LoadView('admin/closed_order', $data);
 	}
 
-	public function pending_payment()
+	public function ended_order()
 	{
 
 		$data = [];
 		helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->where('ord_payment_status', 'Pending')->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->where('ord_status', '4')->orderBy('ord_updated', 'DESC')->findAll();
 
-		return $this->LoadView('admin/pending_payment', $data);
+		return $this->LoadView('admin/ended_order', $data);
 	}
 
-	public function paid_payment()
+	public function confirm_order()
 	{
 
 		$data = [];
 		helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->where('ord_payment_status', 'Paid')->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->where('ord_status', '3')->orderBy('ord_updated', 'DESC')->findAll();
 
-		return $this->LoadView('admin/paid_payment', $data);
+		return $this->LoadView('admin/confirm_order', $data);
 	}
 
 	public function expired_orders()
@@ -1455,7 +1467,7 @@ class Backend extends BEBaseController
 		if ($this->request->getMethod() == 'post') {
 			//let's do the validation here
 			$newData = [
-				'ord_case_status' => $this->request->getVar('ord_case_status'),
+				'ord_status' => $this->request->getVar('ord_status'),
 			];
 			$model->update($ordid, $newData);
 			$session = session();

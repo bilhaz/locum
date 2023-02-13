@@ -1347,10 +1347,10 @@ ZW50SUQAQTM4NzFBMzMyNkNENjU3NzkzNzUxRjlEOEI4M0YwNzdgGcdFAAAAAElFTkSuQmCC" />
 <li class="nav-item"><a  href="#orders" class="nav-link has-arrow"><i class="fa fa-shopping-cart"></i>Orders</a>
 <ul class="list-unstyled">
 <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/orders') ?>"><i class="fa fa-list-ul"></i>All Orders</a></li>
-<!-- <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/pending_order') ?>"><i class="fa fa-list-ul"></i>Pending Orders</a></li>
-<li class="nav-item"><a class="nav-link" href="<?= base_url('admin/closed_order') ?>"><i class="fa fa-list-ul"></i>Closed Orders</a></li>
-<li class="nav-item"><a class="nav-link" href="<?= base_url('admin/pending-payment') ?>"><i class="fa fa-list-ul"></i>Pending Payment</a></li>
-<li class="nav-item"><a class="nav-link" href="<?= base_url('admin/paid-payment') ?>"><i class="fa fa-list-ul"></i>Pid Payment</a></li> -->
+<li class="nav-item"><a class="nav-link" href="<?= base_url('admin/pending_order') ?>"><i class="fa fa-list-ul"></i>Pending Orders</a></li>
+<li class="nav-item"><a class="nav-link" href="<?= base_url('admin/processed_order') ?>"><i class="fa fa-list-ul"></i>Processed Orders</a></li>
+<li class="nav-item"><a class="nav-link" href="<?= base_url('admin/confirm_order') ?>"><i class="fa fa-list-ul"></i>Confirm Payment</a></li>
+<li class="nav-item"><a class="nav-link" href="<?= base_url('admin/ended_order') ?>"><i class="fa fa-list-ul"></i>Ended Payment</a></li>
 <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/expired-orders') ?>"><i class="fa fa-list-ul"></i>Expired Orders</a></li>
 </ul>
 </li>

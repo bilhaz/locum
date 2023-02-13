@@ -16,7 +16,7 @@
 <div class="col-lg-12">
 <div class="card mb-4">
 <div class="card-header">
-<h6 class="card-title">Pending Orders</h6>
+<h6 class="card-title">Processed Orders</h6>
 <ul class="header-dropdown">
 <li>
 </li>
@@ -68,7 +68,7 @@
 </td>
 <td><span><?= $row['emp_fname'].' '. $row['emp_lname']?></span></td>
 <td><?= $row['ord_created']?></td>
-<td><span class="badge bg-danger">Pending</span></td>
+<td><span class="badge chart-color122">Processed</span></td>
 <td>
   
 <a type="button" href="<?= base_url('admin/order_view/'.encryptIt($row['ord_id']))?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View"  data-type="confirm"><i class="fa fa-eye"></i></a>
