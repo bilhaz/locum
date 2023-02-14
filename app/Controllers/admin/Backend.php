@@ -15,10 +15,12 @@ use App\Models\formulaModel;
 use App\Models\usrgrpModel;
 use App\Models\timesheetModel;
 
-use DateTimeZone;
-
 class Backend extends BEBaseController
 {
+	public static $allowedRoles = [
+		'dashboard' => ['admin'],
+		'edit' => ['admin', 'editor'],
+	];
 	public function login()
 	{
 		$data = [];
@@ -26,7 +28,7 @@ class Backend extends BEBaseController
 		$validation = \Config\Services::validation();
 		$model = new UserModel();
 		$data['c_user'] = $model->where('usr_email', $this->request->getVar('usr_email'))
-		->first();
+			->first();
 
 		if ($this->request->getMethod() == 'post') {
 			//let's do the validation here
@@ -39,40 +41,46 @@ class Backend extends BEBaseController
 				'usr_pwd' => [
 					'validateAdmUser' => 'Email or Password don\'t match'
 				],
-				
+
 			];
 
 			if (isset($data['c_user']['usr_status']) && $data['c_user']['usr_status'] == 0) {
 				$session = session();
 				$session->setFlashdata('error', 'Your Account is Disabled');
 				return redirect()->to('admin/login');
-			}
-			else{
-			
-
-			if (!$this->validate($rules, $errors)) {
-
-
-				$data['validation'] = $this->validator;
 			} else {
-				
 
-				$admuser = $model->where('usr_email', $this->request->getVar('usr_email'))
-					->first();
 
-				$this->setUserSession($admuser);
-				return redirect()->to('admin/dashboard');
+				if (!$this->validate($rules, $errors)) {
+
+
+					$data['validation'] = $this->validator;
+				} else {
+
+
+					$admuser = $model->where('usr_email', $this->request->getVar('usr_email'))
+						->first();
+
+					$this->setUserSession($admuser);
+					return redirect()->to('backend/dashboard');
+				}
 			}
-		}
 		}
 
 		return $this->LoadView('admin/login', $data);
 	}
+
+	public function forbidden()
+	{
+		return $this->LoadView('admin/login');
+	}
+
 	// Setting User Session
 	private function setUserSession($admuser)
 	{
 		$data = [
 			'usr_id' => $admuser['usr_id'],
+			'grp_id' => $admuser['grp_id'],
 			'usr_email' => $admuser['usr_email'],
 			'usr_name' => $admuser['usr_name'],
 			'usr_designation' => $admuser['usr_designation'],
@@ -104,10 +112,10 @@ class Backend extends BEBaseController
 	public function users()
 	{
 		$data = [];
-		
+
 		helper(['form']);
 		$user = new UserModel();
-		$data['usr_row'] = $user->join('usr_groups','usr_groups.grp_id = users.grp_id')->findAll();
+		$data['usr_row'] = $user->join('usr_groups', 'usr_groups.grp_id = users.grp_id')->findAll();
 
 		return $this->LoadView('admin/users', $data);
 	}
@@ -115,8 +123,8 @@ class Backend extends BEBaseController
 	public function register()
 	{
 		$data = [];
-			$grps = new usrgrpModel();
-			$data['grp'] = $grps->findAll();
+		$grps = new usrgrpModel();
+		$data['grp'] = $grps->findAll();
 		helper(['form']);
 		if ($this->request->getMethod() == 'post') {
 			//let's do the validation here
@@ -170,13 +178,13 @@ class Backend extends BEBaseController
 
 	public function edit_user($uid = null)
 	{
-		$uid= decryptIt($uid);
+		$uid = decryptIt($uid);
 		$data = [];
-			$grps = new usrgrpModel();
-			$data['grp'] = $grps->findAll();
+		$grps = new usrgrpModel();
+		$data['grp'] = $grps->findAll();
 
-			$model = new UserModel();
-			$data['euser'] = $model->where('usr_id',$uid)->first();
+		$model = new UserModel();
+		$data['euser'] = $model->where('usr_id', $uid)->first();
 
 		helper(['form']);
 		if ($this->request->getMethod() == 'post') {
@@ -190,14 +198,14 @@ class Backend extends BEBaseController
 
 
 			];
-			
+
 
 			if (!$this->validate($rules)) {
 				$data['validation'] = $this->validator;
 			} else {
 				//store this to database
 
-				
+
 				$newData = [
 					'usr_email' => $this->request->getVar('usr_email'),
 					'usr_name' => $this->request->getVar('usr_name'),
@@ -206,7 +214,7 @@ class Backend extends BEBaseController
 					'usr_status' => $this->request->getVar('usr_status'),
 
 				];
-				$model->update($uid,$newData);
+				$model->update($uid, $newData);
 				$session = session();
 				$session->setFlashdata('success', 'Updated Successful');
 				return redirect()->to('admin/users');
@@ -221,7 +229,7 @@ class Backend extends BEBaseController
 		$bid = decryptIt($bid);
 		$data = [];
 		$model = new UserModel();
-		$data['buser_p'] = $model->where('usr_id',$bid)->first();
+		$data['buser_p'] = $model->where('usr_id', $bid)->first();
 		helper(['form']);
 		if ($this->request->getMethod() == 'post') {
 			//let's do the validation here
@@ -231,17 +239,17 @@ class Backend extends BEBaseController
 			];
 
 			if (!$this->validate($rules)) {
-				
+
 				$data['validation'] = $this->validator;
 			} else {
 				//store this to database
 
-				
+
 				$newData = [
-					
+
 					'usr_pwd' => $this->request->getVar('usr_pwd'),
 				];
-				$model->update($bid,$newData);
+				$model->update($bid, $newData);
 				$session = session();
 				$session->setFlashdata('success', 'Password Updated Successful');
 				return redirect()->to('admin/users');
@@ -260,7 +268,7 @@ class Backend extends BEBaseController
 
 	public function pwdupd()
 	{
-		
+
 		$data = [];
 		$usrid = session()->usr_id;
 		helper(['form']);
@@ -272,17 +280,17 @@ class Backend extends BEBaseController
 			];
 
 			if (!$this->validate($rules)) {
-				
+
 				$data['validation'] = $this->validator;
 			} else {
 				//store this to database
 
 				$model = new UserModel();
 				$newData = [
-					
+
 					'usr_pwd' => $this->request->getVar('usr_pwd'),
 				];
-				$model->update($usrid,$newData);
+				$model->update($usrid, $newData);
 				$session = session();
 				$session->setFlashdata('success', 'Password Updation Successful');
 				return redirect()->to('admin/pwdupd');
@@ -384,7 +392,7 @@ class Backend extends BEBaseController
 				'emp_passport' => ['label' => 'Passport', 'rules' => 'uploaded[emp_passport]|ext_in[emp_passport,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_passport,2048]'],
 				'emp_occup_health' => ['label' => 'Occupational Health', 'rules' => 'uploaded[emp_occup_health]|ext_in[emp_occup_health,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_occup_health,2048]'],
 				'emp_work_permit' => ['label' => 'Work Permit', 'rules' => 'uploaded[emp_work_permit]|ext_in[emp_work_permit,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_work_permit,2048]'],
-					'emp_gender'=> ['label' => 'Gender', 'rules' => 'required'],
+				'emp_gender' => ['label' => 'Gender', 'rules' => 'required'],
 			];
 
 			$errors = [
@@ -586,7 +594,7 @@ class Backend extends BEBaseController
 				'emp_passport' => ['label' => 'Passport', 'rules' => 'ext_in[emp_passport,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_passport,2048]'],
 				'emp_occup_health' => ['label' => 'Occupational Health', 'rules' => 'ext_in[emp_occup_health,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_occup_health,2048]'],
 				'emp_work_permit' => ['label' => 'Work Permit', 'rules' => 'ext_in[emp_work_permit,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_work_permit,2048]'],
-				'emp_gender'=> ['label' => 'Gender', 'rules' => 'required'],
+				'emp_gender' => ['label' => 'Gender', 'rules' => 'required'],
 			];
 
 			$errors = [
@@ -728,7 +736,7 @@ class Backend extends BEBaseController
 				$newData = [
 					'emp_fname' => $this->request->getVar('emp_fname'),
 					'emp_lname' => $this->request->getVar('emp_lname'),
-					'emp_gender'=> $this->request->getVar('emp_gender'),
+					'emp_gender' => $this->request->getVar('emp_gender'),
 					'emp_spec1' => $this->request->getVar('emp_spec1'),
 					'emp_spec2' => $this->request->getVar('emp_spec2'),
 					'emp_spec3' => $this->request->getVar('emp_spec3'),
@@ -764,7 +772,7 @@ class Backend extends BEBaseController
 		$emid = decryptIt($emid);
 		$data = [];
 		$model = new EmpModel();
-		$data['e_up'] = $model->where('emp_id',$emid)->first();
+		$data['e_up'] = $model->where('emp_id', $emid)->first();
 		helper(['form']);
 		if ($this->request->getMethod() == 'post') {
 			//let's do the validation here
@@ -774,19 +782,19 @@ class Backend extends BEBaseController
 			];
 
 			if (!$this->validate($rules)) {
-				
+
 				$data['validation'] = $this->validator;
 			} else {
 				//store this to database
 
-				
+
 				$newData = [
-					
+
 					'emp_pwd' => $this->request->getVar('emp_pwd'),
 				];
-				$model->update($emid,$newData);
+				$model->update($emid, $newData);
 				$session = session();
-				$session->setFlashdata('success', 'Password Updated Successful for '.$data['e_up']['emp_email']);
+				$session->setFlashdata('success', 'Password Updated Successful for ' . $data['e_up']['emp_email']);
 				return redirect()->to('admin/employees');
 			}
 		}
@@ -795,8 +803,7 @@ class Backend extends BEBaseController
 	}
 
 
-	public function  emp_block($id = null)
-
+	public function emp_block($id = null)
 	{
 		$id = decryptIt($id);
 		$model = new EmpModel();
@@ -833,8 +840,7 @@ class Backend extends BEBaseController
 		return $this->LoadView('admin/block_employees', $data);
 	}
 
-	public function  emp_unblock($id = null)
-
+	public function emp_unblock($id = null)
 	{
 		$id = decryptIt($id);
 		$model = new EmpModel();
@@ -943,7 +949,7 @@ class Backend extends BEBaseController
 				'cl_cont_phone' => ['label' => 'Contact No.', 'rules' => 'required|numeric'],
 				'cl_address' => ['label' => 'Address', 'rules' => 'required'],
 				'cl_cont_desig' => ['label' => 'Designation', 'rules' => 'required'],
-				 'cl_gender' => ['label' => 'Gender', 'rules' => 'required'],
+				'cl_gender' => ['label' => 'Gender', 'rules' => 'required'],
 			];
 
 			if (!$this->validate($rules)) {
@@ -1038,7 +1044,7 @@ class Backend extends BEBaseController
 		$ccid = decryptIt($ccid);
 		$data = [];
 		$model = new ClientModel();
-		$data['p_up'] = $model->where('cl_id',$ccid)->first();
+		$data['p_up'] = $model->where('cl_id', $ccid)->first();
 		helper(['form']);
 		if ($this->request->getMethod() == 'post') {
 			//let's do the validation here
@@ -1048,19 +1054,19 @@ class Backend extends BEBaseController
 			];
 
 			if (!$this->validate($rules)) {
-				
+
 				$data['validation'] = $this->validator;
 			} else {
 				//store this to database
 
-				
+
 				$newData = [
-					
+
 					'cl_cont_pwd' => $this->request->getVar('cl_cont_pwd'),
 				];
-				$model->update($ccid,$newData);
+				$model->update($ccid, $newData);
 				$session = session();
-				$session->setFlashdata('success', 'Password Updated Successful for '.$data['p_up']['cl_cont_email']);
+				$session->setFlashdata('success', 'Password Updated Successful for ' . $data['p_up']['cl_cont_email']);
 				return redirect()->to('admin/clients');
 			}
 		}
@@ -1068,8 +1074,7 @@ class Backend extends BEBaseController
 		return $this->LoadView('admin/client_pwd', $data);
 	}
 
-	public function  client_block($id = null)
-
+	public function client_block($id = null)
 	{
 		$id = decryptIt($id);
 		$model = new ClientModel();
@@ -1094,8 +1099,7 @@ class Backend extends BEBaseController
 		}
 	}
 
-	public function  client_unblock($id = null)
-
+	public function client_unblock($id = null)
 	{
 		$id = decryptIt($id);
 		$model = new ClientModel();
@@ -1163,7 +1167,7 @@ class Backend extends BEBaseController
 		if ($this->request->getMethod() == 'post') {
 			//let's do the validation here
 			$rules = [
-				
+
 				'ord_speciality' => ['label' => 'Speciality', 'rules' => 'required'],
 				'ord_grade' => ['label' => 'Grade', 'rules' => 'required'],
 				'cl_id' => ['label' => 'Client', 'rules' => 'required'],
@@ -1206,7 +1210,7 @@ class Backend extends BEBaseController
 
 
 				$newData = [
-					
+
 					'ord_speciality' => $this->request->getVar('ord_speciality'),
 					'ord_grade' => $this->request->getVar('ord_grade'),
 					'cl_id' => $this->request->getVar('cl_id'),
@@ -1273,7 +1277,7 @@ class Backend extends BEBaseController
 		if ($this->request->getMethod() == 'post') {
 			//let's do the validation here
 			$rules = [
-				
+
 				'ord_speciality' => ['label' => 'Speciality', 'rules' => 'required'],
 				'ord_grade' => ['label' => 'Grade', 'rules' => 'required'],
 				'cl_id' => ['label' => 'Client', 'rules' => 'required'],
@@ -1327,7 +1331,7 @@ class Backend extends BEBaseController
 
 
 				$newData = [
-					
+
 					'ord_speciality' => $this->request->getVar('ord_speciality'),
 					'ord_grade' => $this->request->getVar('ord_grade'),
 					'cl_id' => $this->request->getVar('cl_id'),
@@ -1517,7 +1521,7 @@ class Backend extends BEBaseController
 				$session->setFlashdata('success', 'Speciality Successful Added');
 				return redirect()->to('admin/speciality');
 			}
-			
+
 
 		}
 
@@ -1527,11 +1531,11 @@ class Backend extends BEBaseController
 	public function edit_spec($sid = null)
 	{
 
-		$sid= decryptIt($sid);
+		$sid = decryptIt($sid);
 		$data = [];
 		helper(['form']);
 		$smodel = new specialityModel();
-		$data['sp_row'] = $smodel->where('spec_id',$sid)->first();
+		$data['sp_row'] = $smodel->where('spec_id', $sid)->first();
 		if ($this->request->getMethod() == 'post') {
 			$rules = [
 				'spec_name' => ['label' => 'Speciality', 'rules' => 'required'],
@@ -1551,15 +1555,15 @@ class Backend extends BEBaseController
 
 
 				];
-				$smodel->update($sid,$newData);
+				$smodel->update($sid, $newData);
 				$session = session();
 				$session->setFlashdata('success', 'Speciality Successful Updated');
 				return redirect()->to('admin/speciality');
 			}
-		
-	}
+
+		}
 		return $this->LoadView('admin/edit_spec', $data);
-}
+	}
 
 	public function del_spec($ssid = null)
 	{
@@ -1568,10 +1572,10 @@ class Backend extends BEBaseController
 		helper(['form']);
 		$Smodel = new specialityModel();
 		$data['sp_row'] = $Smodel->where('spec_id', $ssid)->delete();
-		
-				$session = session();
-				$session->setFlashdata('error', 'Speciality Successful Deleted');
-				return redirect()->to('admin/speciality');
+
+		$session = session();
+		$session->setFlashdata('error', 'Speciality Successful Deleted');
+		return redirect()->to('admin/speciality');
 	}
 
 	public function grade()
@@ -1616,7 +1620,7 @@ class Backend extends BEBaseController
 				$session->setFlashdata('success', 'Grade Successful Added');
 				return redirect()->to('admin/grade');
 			}
-			
+
 
 		}
 
@@ -1629,7 +1633,7 @@ class Backend extends BEBaseController
 		$data = [];
 		helper(['form']);
 		$model = new gradeModel();
-		$data['gr_row'] = $model->where('grade_id',$gid)->first();
+		$data['gr_row'] = $model->where('grade_id', $gid)->first();
 		if ($this->request->getMethod() == 'post') {
 			$rules = [
 				'grade_name' => ['label' => 'Grade', 'rules' => 'required'],
@@ -1649,12 +1653,12 @@ class Backend extends BEBaseController
 
 
 				];
-				$model->update($gid,$newData);
+				$model->update($gid, $newData);
 				$session = session();
 				$session->setFlashdata('success', 'Grade Successful Updated');
 				return redirect()->to('admin/grade');
 			}
-			
+
 
 		}
 
@@ -1668,10 +1672,10 @@ class Backend extends BEBaseController
 		helper(['form']);
 		$Smodel = new gradeModel();
 		$data['gr_row'] = $Smodel->where('grade_id', $gid)->delete();
-		
-				$session = session();
-				$session->setFlashdata('error', 'Grade Successful Deleted');
-				return redirect()->to('admin/grade');
+
+		$session = session();
+		$session->setFlashdata('error', 'Grade Successful Deleted');
+		return redirect()->to('admin/grade');
 	}
 
 	public function cl_cat()
@@ -1715,7 +1719,7 @@ class Backend extends BEBaseController
 				$session->setFlashdata('success', 'Category Successful Added');
 				return redirect()->to('admin/cat');
 			}
-			
+
 
 		}
 
@@ -1728,7 +1732,7 @@ class Backend extends BEBaseController
 		$data = [];
 		helper(['form']);
 		$model = new clRegModel();
-		$data['ecl'] = $model->where('reg_cat_id',$idcl)->first();
+		$data['ecl'] = $model->where('reg_cat_id', $idcl)->first();
 		if ($this->request->getMethod() == 'post') {
 			$rules = [
 				'reg_cat_name' => ['label' => 'Grade', 'rules' => 'required'],
@@ -1748,12 +1752,12 @@ class Backend extends BEBaseController
 
 
 				];
-				$model->update($idcl,$newData);
- 				$session = session();
+				$model->update($idcl, $newData);
+				$session = session();
 				$session->setFlashdata('success', 'Category Successful Updated');
 				return redirect()->to('admin/cat');
 			}
-			
+
 
 		}
 
@@ -1767,10 +1771,10 @@ class Backend extends BEBaseController
 		helper(['form']);
 		$Smodel = new clRegModel();
 		$data['gr_row'] = $Smodel->where('reg_cat_id', $cid)->delete();
-		
-				$session = session();
-				$session->setFlashdata('error', 'Category Successful Deleted');
-				return redirect()->to('admin/cat');
+
+		$session = session();
+		$session->setFlashdata('error', 'Category Successful Deleted');
+		return redirect()->to('admin/cat');
 	}
 
 	public function email_1($e1id = null)
@@ -1780,7 +1784,7 @@ class Backend extends BEBaseController
 		helper(['form']);
 		$model = new ordersModel();
 		$data['em_1'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade')->where('ord_id', $e1id)->first();
-		
+
 
 		return $this->LoadView('admin/email-1', $data);
 	}
@@ -1789,10 +1793,10 @@ class Backend extends BEBaseController
 	{
 		$e2id = decryptIt($e2id);
 		$data = [];
-		
+
 		$e2model = new ordersModel();
 		$data['em_2'] = $e2model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade')->where('ord_id', $e2id)->first();
-		
+
 
 		return $this->LoadView('admin/email-2', $data);
 	}
@@ -1804,7 +1808,7 @@ class Backend extends BEBaseController
 
 		$e3mdoel = new ordersModel();
 		$data['em_3'] = $e3mdoel->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade')->where('ord_id', $e3id)->first();
-		
+
 
 		return $this->LoadView('admin/email-3', $data);
 	}
@@ -1816,7 +1820,7 @@ class Backend extends BEBaseController
 
 		$e3mdoel = new ordersModel();
 		$data['em_4'] = $e3mdoel->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade')->where('ord_id', $e4id)->first();
-		
+
 
 		return $this->LoadView('admin/email-4', $data);
 	}
@@ -1827,11 +1831,11 @@ class Backend extends BEBaseController
 		$data = [];
 
 		$formula = new formulaModel();
-		$data['forml'] = $formula->where('id',1)->first();
+		$data['forml'] = $formula->where('id', 1)->first();
 
 		$e3mdoel = new ordersModel();
 		$data['cont'] = $e3mdoel->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade')->where('ord_id', $conid)->first();
-		
+
 
 		return $this->LoadView('admin/contract', $data);
 	}
@@ -1840,13 +1844,13 @@ class Backend extends BEBaseController
 	{
 		$data = [];
 
-		
+
 		$model = new ordersModel();
 		$data['t_order'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')
-    ->Join('timesheets', 'timesheets.order_id = orders.ord_id','LEFT')
-    ->groupBy('orders.ord_id')
-    ->findAll();
-		
+			->Join('timesheets', 'timesheets.order_id = orders.ord_id', 'LEFT')
+			->groupBy('orders.ord_id')
+			->findAll();
+
 
 
 
@@ -1855,84 +1859,88 @@ class Backend extends BEBaseController
 
 	public function fill_timesheet($tid = null)
 	{
-        $tid = decryptIt($tid);
+		$tid = decryptIt($tid);
 		$data = [];
-		helper(['form']);	
+		helper(['form']);
 
 		$model = new ordersModel();
 		$data['e_ord'] = $model->where('ord_id', $tid)->first();
 
 		$data['start_date'] = $data['e_ord']['ord_process_details_from'];
-		$data['end_date'] = $data['e_ord']['ord_process_details_to'];	
+		$data['end_date'] = $data['e_ord']['ord_process_details_to'];
 
 		return $this->LoadView('admin/fill_timesheet', $data);
 	}
 
-	public function timesheet_save($ord_id){
-		
+	public function timesheet_save($ord_id)
+	{
+
 		$ord_id = decryptIt($ord_id);
 		$model = new timesheetModel();
-		foreach($_POST['status'] as $row=>$key){
-			
-			$model->insert(array('order_id'=>$ord_id,'dutyDate' => explode(',', $key)[0], 'dutyTime' => explode(',', $key)[1], 'siteStatus' => explode(',', $key)[2]));
-			
+		foreach ($_POST['status'] as $row => $key) {
+
+			$model->insert(array('order_id' => $ord_id, 'dutyDate' => explode(',', $key)[0], 'dutyTime' => explode(',', $key)[1], 'siteStatus' => explode(',', $key)[2]));
+
 		}
 		$session = session();
-			$session->setFlashdata('success', 'TimeSheet Saved');
-			return redirect()->to('admin/timesheet');
+		$session->setFlashdata('success', 'TimeSheet Saved');
+		return redirect()->to('admin/timesheet');
 	}
 
-	public function edit_timesheet($ord_id){
+	public function edit_timesheet($ord_id)
+	{
 		$data = [];
-		
+
 		$ord_id = decryptIt($ord_id);
 		$model = new timesheetModel();
-		$data['t_view'] = $model->where('order_id',$ord_id)->find();
+		$data['t_view'] = $model->where('order_id', $ord_id)->find();
 
 		$model = new ordersModel();
 		$data['e_ord'] = $model->where('ord_id', $ord_id)->first();
 
 		$data['start_date'] = $data['e_ord']['ord_process_details_from'];
-		$data['end_date'] = $data['e_ord']['ord_process_details_to'];	
-		
-		
+		$data['end_date'] = $data['e_ord']['ord_process_details_to'];
+
+
 		return $this->LoadView('admin/timesheet_edit', $data);
 
 	}
 
-	public function upd_timesheet($ord_id){
+	public function upd_timesheet($ord_id)
+	{
 		$data = [];
-		
+
 		$ord_id = decryptIt($ord_id);
 		$model = new timesheetModel();
-		
-			// Delete all existing timesheet data for this order
-			$model->where(['order_id' => $ord_id])->delete();
-		
-			// Insert the updated timesheet data
-			foreach($_POST['status'] as $row => $key){
-				$model->insert(['order_id' => $ord_id, 'dutyDate' => explode(',', $key)[0], 'dutyTime' => explode(',', $key)[1], 'siteStatus' => explode(',', $key)[2]]);
-			}
-		
-			$session = session();
-				$session->setFlashdata('success', 'TimeSheet Updated');
-				return redirect()->to('admin/timesheet');
+
+		// Delete all existing timesheet data for this order
+		$model->where(['order_id' => $ord_id])->delete();
+
+		// Insert the updated timesheet data
+		foreach ($_POST['status'] as $row => $key) {
+			$model->insert(['order_id' => $ord_id, 'dutyDate' => explode(',', $key)[0], 'dutyTime' => explode(',', $key)[1], 'siteStatus' => explode(',', $key)[2]]);
+		}
+
+		$session = session();
+		$session->setFlashdata('success', 'TimeSheet Updated');
+		return redirect()->to('admin/timesheet');
 
 	}
 
-	public function timesheet_view($ord_id){
+	public function timesheet_view($ord_id)
+	{
 		$data = [];
-		
+
 		$ord_id = decryptIt($ord_id);
 		$model = new timesheetModel();
-		$data['t_view'] = $model->where('order_id',$ord_id)->find();
+		$data['t_view'] = $model->where('order_id', $ord_id)->find();
 
 		$model = new ordersModel();
 		$data['e_ord'] = $model->where('ord_id', $ord_id)->first();
 
 		$data['start_date'] = $data['e_ord']['ord_process_details_from'];
-		$data['end_date'] = $data['e_ord']['ord_process_details_to'];	
-		
+		$data['end_date'] = $data['e_ord']['ord_process_details_to'];
+
 
 		return $this->LoadView('admin/timesheet_view', $data);
 
@@ -1940,9 +1948,9 @@ class Backend extends BEBaseController
 
 	public function timesheet_approve($id = null)
 	{
-        $id = decryptIt($id);
+		$id = decryptIt($id);
 		$data = [];
-		
+
 		$model = new ordersModel();
 		$data['e_ord'] = $model->where('ord_id', $id)->first();
 
@@ -1956,9 +1964,9 @@ class Backend extends BEBaseController
 		$model->update($id, $newData);
 		$session = session();
 		$session->setFlashdata('success', 'Timesheet Approved');
-		return redirect()->to('admin/t-view/'.encryptIt($data['e_ord']['ord_id']));
+		return redirect()->to('admin/t-view/' . encryptIt($data['e_ord']['ord_id']));
 
-		
+
 	}
 
 

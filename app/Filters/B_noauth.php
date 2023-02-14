@@ -12,7 +12,7 @@ class B_noauth implements FilterInterface
     {
         
         if(session()->get('ALoggedIn')){
-            return redirect()->to('admin/dashboard');
+            return redirect()->to('backend/dashboard');
             // echo 'hello';
           }
     }

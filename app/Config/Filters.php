@@ -13,6 +13,7 @@ use App\Filters\B_auth;
 use App\Filters\B_noauth;
 use App\Filters\C_Auth;
 use App\Filters\C_noauth;
+use App\Filters\RoleAccessFilter;
 
 
 class Filters extends BaseConfig
@@ -34,7 +35,7 @@ class Filters extends BaseConfig
         'C_Auth' =>    C_Auth::class,
         'C_noauth' => C_noauth::class,
         'usercheck' =>    usercheck::class,
-        
+        'RoleAccess' => RoleAccessFilter::class
     ];
 
     /**
@@ -48,6 +49,7 @@ class Filters extends BaseConfig
             // 'usercheck'
             // 'honeypot',
             // 'csrf',
+                // 'RoleAccess' => ['except' => ['forbidden']]
             
         ],
         'after' => [
@@ -76,5 +78,6 @@ class Filters extends BaseConfig
      *
      * @var array
      */
-    public $filters = [];
+    public $filters = [
+    ];
 }
