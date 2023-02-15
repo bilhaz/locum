@@ -10,6 +10,7 @@
                         <li class="breadcrumb-item"><a href="https://www.sralocum.com/">SRA Locum</a></li>
 
                     </ul>
+                    <a href="javascript:history.go(-1)" class="btn btn-secondary"><i class="fa fa-arrow-left me-2"></i>Go Back</a>
                 </div>
 
             </div>

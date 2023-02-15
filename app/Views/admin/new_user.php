@@ -1,5 +1,10 @@
 <div id="main-content">
 <div class="container-fluid">
+<div class="block-header py-lg-4 py-3">
+<div class="row g-3">
+<div class="col-md-6 col-sm-12">
+<a href="javascript:history.go(-1)" class="btn btn-secondary"><i class="fa fa-arrow-left me-2"></i>Go Back</a>
+</div>
 <!-- <div id="wrapper"> -->
 <div class="d-flex h50vh align-items-center  w-100">
 <div class="auth-box">
@@ -19,7 +24,7 @@
 <p class="fs-5 mb-0">Register User</p>
 </div>
 <div class="card-body">
-<form action="<?= base_url('admin/createuser')?>" method="post" data-parsley-validate="" id="forma" autocomplete="off">
+<form action="<?= base_url('backend/createuser')?>" method="post" data-parsley-validate="" id="forma" autocomplete="off">
 <div class="form-floating mb-1">
 <input type="email" class="form-control" name="usr_email" id="usr_email" placeholder="name@example.com" required=""  >
 <label>Email address</label>
@@ -43,9 +48,9 @@
 <div class="form-floating">
 <select  class="form-control " name="grp_id" id="grp_id" required="">
     <option value="">Select Role</option>
-    <?php foreach($grp as $row): ?>
-    <option value="<?= $row['grp_id'] ?>"><?= $row['grp_role'] ?></option>
-        <?php endforeach; ?>
+    <option value="super admin">Super Admin</option>
+    <option value="admin">Admin</option>
+    <option value="user">User</option>
 </select>
 <label>Group role</label>
 </div>
@@ -63,7 +68,7 @@
 </form>
 <div class="d-grid gap-2 mt-3 pt-3">
 
-<a id="cancel" href="<?= base_url('admin/users') ?>" class="btn btn-lg btn-dark btn-block">
+<a id="cancel" href="<?= base_url('backend/users') ?>" class="btn btn-lg btn-dark btn-block">
 
 <span id="cancel">Cancel</span>
 </a>

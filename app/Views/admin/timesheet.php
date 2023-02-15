@@ -9,6 +9,7 @@
                         <li class="breadcrumb-item"><a target="_blank" href="https://www.sralocum.com">SRA Locum</a></li>
 
                     </ul>
+                    <a href="javascript:history.go(-1)" class="btn btn-secondary"><i class="fa fa-arrow-left me-2"></i>Go Back</a>
                 </div>
 
             </div>
@@ -69,14 +70,14 @@
                                         <td><?php if($row['ord_time_sheet_approved'] == "Approved" ): ?> <span class="badge bg-success">Approved</span> <?php else: ?><span class="badge bg-danger">Not-Approved</span><?php endif; ?></td>
                                         <td>
                                         <?php if(!isset($row['order_id'])):?>
-                            <a type="button" href="<?= base_url('admin/t-fill/' .encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-primary d-print-none"><i class="fa fa-calendar text-light">&nbsp;</i>Fill TimeSheet</a>
+                            <a type="button" href="<?= base_url('backend/t-fill/' .encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-primary d-print-none"><i class="fa fa-calendar text-light">&nbsp;</i>Fill TimeSheet</a>
                                             <?php else: ?>
-                            <a type="button" href="<?= base_url('admin/t-edit/' .encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-warning d-print-none"><i class="fa fa-calendar text-dark">&nbsp;</i>Edit TimeSheet</a>
+                            <a type="button" href="<?= base_url('backend/t-edit/' .encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-warning d-print-none"><i class="fa fa-calendar text-dark">&nbsp;</i>Edit TimeSheet</a>
                                                 <?php endif; ?>
                                         </td>
                                         <td>
                                         <?php if(!empty($row['order_id'])): ?>
-                                            <a type="button" href="<?= base_url('admin/t-view/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-info" title="TimeSheet"><i class="fa fa-eye"></i> View</a>
+                                            <a type="button" href="<?= base_url('backend/t-view/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-info" title="TimeSheet"><i class="fa fa-eye"></i> View</a>
                                             <?php else: ?>
                                                 <span class="badge bg-danger">No Submitted</span>
                                                 <?php endif; ?>

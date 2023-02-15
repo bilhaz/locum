@@ -8,6 +8,7 @@
 <li class="breadcrumb-item"><a target="_blank" href="https://www.sralocum.com">SRA Locum</a></li>
 
 </ul>
+<a href="javascript:history.go(-1)" class="btn btn-secondary"><i class="fa fa-arrow-left me-2"></i>Go Back</a>
 </div>
 
 </div>
@@ -27,7 +28,7 @@
 <h3 class="text-center title-2">Update Category</h3>
 </div>
 <hr>
-<form action="<?= base_url('admin/edit_cat/'. encryptIt($ecl['reg_cat_id']))?>" method="post">
+<form action="<?= base_url('backend/edit_cat/'. encryptIt($ecl['reg_cat_id']))?>" method="post">
 <div class="form-group">
 <label for="reg_cat_name" class="control-label mb-1">Category</label>
 <input id="reg_cat_name" name="reg_cat_name" type="text" class="form-control" value="<?= $ecl['reg_cat_name'] ?>" placeholder="Enter Category" aria-required="true" aria-invalid="false">
@@ -42,7 +43,7 @@
 <span id="submit">Update</span>
 </button>
 
-<a id="cancel" href="<?= base_url('admin/cat') ?>" class="btn btn-lg btn-dark btn-block">
+<a id="cancel" href="<?= base_url('backend/cat') ?>" class="btn btn-lg btn-dark btn-block">
 
 <span id="cancel">Cancel</span>
 </a>

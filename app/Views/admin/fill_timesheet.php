@@ -11,6 +11,7 @@
                         </li>
 
                     </ul>
+                    <a href="javascript:history.go(-1)" class="btn btn-secondary"><i class="fa fa-arrow-left me-2"></i>Go Back</a>
                 </div>
 
             </div>
@@ -39,7 +40,7 @@
                         </div>
                     <?php endif; ?>
 
-                    <form action="<?= base_url('admin/timesheet_save/' . encryptIt($e_ord['ord_id'])) ?>" method="post">
+                    <form action="<?= base_url('backend/timesheet_save/' . encryptIt($e_ord['ord_id'])) ?>" method="post">
 
                         <table class="table table-striped table-bordered">
                             <thead class="thead-dark">
@@ -107,6 +108,13 @@
                                 <span id="payment-button-amount">Save Data</span>
                             </button>
                         </div>
+                        <br>
+                                <div>
+                                    <a id="payment-button" href="<?= base_url('backend/timesheet') ?>" class="btn btn-lg btn-dark btn-block">
+
+                                        <span id="payment-button-amount">Cancel</span>
+                                    </a>
+                                </div>
 
                     </form>
 

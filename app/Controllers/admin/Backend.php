@@ -18,8 +18,66 @@ use App\Models\timesheetModel;
 class Backend extends BEBaseController
 {
 	public static $allowedRoles = [
-		'dashboard' => ['admin'],
-		'edit' => ['admin', 'editor'],
+		'dashboard' => ['super admin', 'admin','user'],
+		'destroy' => ['super admin', 'admin','user'],
+		'pwdupd' => ['super admin', 'admin','user'],
+		'employees' => ['super admin','admin', 'user'],
+		'reg_emp' => ['super admin','admin', 'user'],
+		'emp_details' => ['super admin','admin', 'user'],
+		'emp_edit' => ['super admin','admin', 'user'],
+		'emp_block' => ['super admin','admin', 'user'],
+		'emp_unblock' => ['super admin','admin', 'user'],
+		'block_employees' => ['super admin','admin', 'user'],
+		'employee-pwd' => ['super admin'],
+		'clients' => ['super admin','admin', 'user'],
+		'reg_client' => ['super admin','admin', 'user'],
+		'client_details' => ['super admin','admin', 'user'],
+		'client_edit' => ['super admin','admin', 'user'],
+		'client_block' => ['super admin','admin', 'user'],
+		'client_unblock' => ['super admin','admin', 'user'],
+		'block_clients' => ['super admin','admin', 'user'],
+		'client-pwd' => ['super admin'],
+		'orders' => ['super admin','admin', 'user'],
+		'new_order' => ['super admin','admin', 'user'],
+		'order_view' => ['super admin','admin', 'user'],
+		'order_edit' => ['super admin','admin', 'user'],
+		'ord_status' => ['super admin','admin', 'user'],
+		'email-1' => ['super admin','admin', 'user'],
+		'email-2' => ['super admin','admin', 'user'],
+		'email-3' => ['super admin','admin', 'user'],
+		'email-4' => ['super admin','admin', 'user'],
+		'contract' => ['super admin','admin', 'user'],
+		'pending_order' => ['super admin','admin', 'user'],
+		'processed_order' => ['super admin','admin', 'user'],
+		'confirm_order' => ['super admin','admin', 'user'],
+		'ended_order' => ['super admin','admin', 'user'],
+		'expired-orders' => ['super admin','admin', 'user'],
+		'timesheet' => ['super admin','admin', 'user'],
+		't-fill' => ['super admin','admin', 'user'],
+		't-edit' => ['super admin','admin', 'user'],
+		't-view' => ['super admin','admin', 'user'],
+		'timesheet_save' => ['super admin','admin', 'user'],
+		'timesheet-approve' => ['super admin','admin', 'user'],
+		'speciality' => ['super admin','admin'],
+		'new_spec' => ['super admin','admin'],
+		'edit_spec' => ['super admin','admin'],
+		'del_spec' => ['super admin'],
+		'grade'=> ['super admin','admin'],
+		'new_grade'=> ['super admin','admin'],
+		'edit_grade'=> ['super admin','admin'],
+		'del_grade'=> ['super admin'],
+		'cat'=> ['super admin','admin'],
+		'new_cat'=> ['super admin','admin'],
+		'edit_cat'=> ['super admin','admin'],
+		'del_cat'=> ['super admin'],
+		'users'=> ['super admin'],
+		'createuser'=> ['super admin'],
+		'edit-user'=> ['super admin'],
+		'b-userp'=> ['super admin'],
+
+		
+
+
 	];
 	public function login()
 	{
@@ -47,7 +105,7 @@ class Backend extends BEBaseController
 			if (isset($data['c_user']['usr_status']) && $data['c_user']['usr_status'] == 0) {
 				$session = session();
 				$session->setFlashdata('error', 'Your Account is Disabled');
-				return redirect()->to('admin/login');
+				return redirect()->to('backend/login');
 			} else {
 
 
@@ -72,7 +130,7 @@ class Backend extends BEBaseController
 
 	public function forbidden()
 	{
-		return $this->LoadView('admin/login');
+		return view('forbidden');
 	}
 
 	// Setting User Session
@@ -115,7 +173,7 @@ class Backend extends BEBaseController
 
 		helper(['form']);
 		$user = new UserModel();
-		$data['usr_row'] = $user->join('usr_groups', 'usr_groups.grp_id = users.grp_id')->findAll();
+		$data['usr_row'] = $user->findAll();
 
 		return $this->LoadView('admin/users', $data);
 	}
@@ -169,7 +227,7 @@ class Backend extends BEBaseController
 				$model->save($newData);
 				$session = session();
 				$session->setFlashdata('success', 'Registration Successful');
-				return redirect()->to('admin/users');
+				return redirect()->to('backend/users');
 			}
 		}
 
@@ -217,7 +275,7 @@ class Backend extends BEBaseController
 				$model->update($uid, $newData);
 				$session = session();
 				$session->setFlashdata('success', 'Updated Successful');
-				return redirect()->to('admin/users');
+				return redirect()->to('backend/users');
 			}
 		}
 
@@ -252,7 +310,7 @@ class Backend extends BEBaseController
 				$model->update($bid, $newData);
 				$session = session();
 				$session->setFlashdata('success', 'Password Updated Successful');
-				return redirect()->to('admin/users');
+				return redirect()->to('backend/users');
 			}
 		}
 
@@ -263,7 +321,7 @@ class Backend extends BEBaseController
 	{
 		// Unsetting a specific session
 		session()->remove('ALoggedIn');
-		return redirect()->to('admin/login');
+		return redirect()->to('backend/login');
 	}
 
 	public function pwdupd()
@@ -293,7 +351,7 @@ class Backend extends BEBaseController
 				$model->update($usrid, $newData);
 				$session = session();
 				$session->setFlashdata('success', 'Password Updation Successful');
-				return redirect()->to('admin/pwdupd');
+				return redirect()->to('backend/pwdupd');
 			}
 		}
 
@@ -353,7 +411,7 @@ class Backend extends BEBaseController
 				$id = $model->insertID;
 				$session = session();
 				$session->setFlashdata('success', 'Registration successful');
-				return redirect()->to('admin/emp_details/' . encryptIt($id));
+				return redirect()->to('backend/emp_details/' . encryptIt($id));
 			}
 		}
 
@@ -557,7 +615,7 @@ class Backend extends BEBaseController
 				$model->update($id, $newData);
 				$session = session();
 				$session->setFlashdata('success', 'Record Successful Saved');
-				return redirect()->to('admin/employees');
+				return redirect()->to('backend/employees');
 			}
 		}
 
@@ -759,7 +817,7 @@ class Backend extends BEBaseController
 				$model->update($id, $newData);
 				$session = session();
 				$session->setFlashdata('success', 'Record Successful Updated');
-				return redirect()->to('admin/emp_edit/' . encryptIt($id));
+				return redirect()->to('backend/emp_edit/' . encryptIt($id));
 			}
 		}
 
@@ -795,7 +853,7 @@ class Backend extends BEBaseController
 				$model->update($emid, $newData);
 				$session = session();
 				$session->setFlashdata('success', 'Password Updated Successful for ' . $data['e_up']['emp_email']);
-				return redirect()->to('admin/employees');
+				return redirect()->to('backend/employees');
 			}
 		}
 
@@ -824,7 +882,7 @@ class Backend extends BEBaseController
 
 			$session = session();
 			$session->setFlashdata('success', 'Employee Blocked');
-			return redirect()->to('admin/employees');
+			return redirect()->to('backend/employees');
 		}
 	}
 
@@ -861,7 +919,7 @@ class Backend extends BEBaseController
 
 			$session = session();
 			$session->setFlashdata('success', 'Employee Unblocked');
-			return redirect()->to('admin/block_employees');
+			return redirect()->to('backend/block_employees');
 		}
 	}
 
@@ -921,7 +979,7 @@ class Backend extends BEBaseController
 				$id = $model->insertID;
 				$session = session();
 				$session->setFlashdata('success', 'Registration successful');
-				return redirect()->to('admin/client_details/' . encryptIt($id));
+				return redirect()->to('backend/client_details/' . encryptIt($id));
 			}
 		}
 
@@ -975,7 +1033,7 @@ class Backend extends BEBaseController
 				$model->update($id, $newData);
 				$session = session();
 				$session->setFlashdata('success', 'Record Successful Saved');
-				return redirect()->to('admin/clients');
+				return redirect()->to('backend/clients');
 			}
 		}
 
@@ -1031,7 +1089,7 @@ class Backend extends BEBaseController
 				$model->update($id, $newData);
 				$session = session();
 				$session->setFlashdata('success', 'Record Successful Saved');
-				return redirect()->to('admin/clients');
+				return redirect()->to('backend/clients');
 			}
 		}
 
@@ -1067,7 +1125,7 @@ class Backend extends BEBaseController
 				$model->update($ccid, $newData);
 				$session = session();
 				$session->setFlashdata('success', 'Password Updated Successful for ' . $data['p_up']['cl_cont_email']);
-				return redirect()->to('admin/clients');
+				return redirect()->to('backend/clients');
 			}
 		}
 
@@ -1095,7 +1153,7 @@ class Backend extends BEBaseController
 
 			$session = session();
 			$session->setFlashdata('success', 'Client Blocked');
-			return redirect()->to('admin/clients');
+			return redirect()->to('backend/clients');
 		}
 	}
 
@@ -1120,7 +1178,7 @@ class Backend extends BEBaseController
 
 			$session = session();
 			$session->setFlashdata('success', 'Client Unblocked');
-			return redirect()->to('admin/block_clients');
+			return redirect()->to('backend/block_clients');
 		}
 	}
 
@@ -1249,7 +1307,7 @@ class Backend extends BEBaseController
 				$model->insert($newData);
 				$session = session();
 				$session->setFlashdata('success', 'Order Successful Added');
-				return redirect()->to('admin/orders');
+				return redirect()->to('backend/orders');
 			}
 		}
 
@@ -1374,7 +1432,7 @@ class Backend extends BEBaseController
 				$model->update($eid, $newData);
 				$session = session();
 				$session->setFlashdata('success', 'Order Successful Updated');
-				return redirect()->to('admin/order_edit/' . encryptIt($eid));
+				return redirect()->to('backend/order_edit/' . encryptIt($eid));
 			}
 		}
 
@@ -1476,7 +1534,7 @@ class Backend extends BEBaseController
 			$model->update($ordid, $newData);
 			$session = session();
 			$session->setFlashdata('success', 'Case Status Updated');
-			return redirect()->to('admin/orders');
+			return redirect()->to('backend/orders');
 		}
 	}
 
@@ -1519,7 +1577,7 @@ class Backend extends BEBaseController
 				$model->insert($newData);
 				$session = session();
 				$session->setFlashdata('success', 'Speciality Successful Added');
-				return redirect()->to('admin/speciality');
+				return redirect()->to('backend/speciality');
 			}
 
 
@@ -1558,7 +1616,7 @@ class Backend extends BEBaseController
 				$smodel->update($sid, $newData);
 				$session = session();
 				$session->setFlashdata('success', 'Speciality Successful Updated');
-				return redirect()->to('admin/speciality');
+				return redirect()->to('backend/speciality');
 			}
 
 		}
@@ -1575,7 +1633,7 @@ class Backend extends BEBaseController
 
 		$session = session();
 		$session->setFlashdata('error', 'Speciality Successful Deleted');
-		return redirect()->to('admin/speciality');
+		return redirect()->to('backend/speciality');
 	}
 
 	public function grade()
@@ -1618,7 +1676,7 @@ class Backend extends BEBaseController
 				$model->insert($newData);
 				$session = session();
 				$session->setFlashdata('success', 'Grade Successful Added');
-				return redirect()->to('admin/grade');
+				return redirect()->to('backend/grade');
 			}
 
 
@@ -1656,7 +1714,7 @@ class Backend extends BEBaseController
 				$model->update($gid, $newData);
 				$session = session();
 				$session->setFlashdata('success', 'Grade Successful Updated');
-				return redirect()->to('admin/grade');
+				return redirect()->to('backend/grade');
 			}
 
 
@@ -1675,7 +1733,7 @@ class Backend extends BEBaseController
 
 		$session = session();
 		$session->setFlashdata('error', 'Grade Successful Deleted');
-		return redirect()->to('admin/grade');
+		return redirect()->to('backend/grade');
 	}
 
 	public function cl_cat()
@@ -1717,7 +1775,7 @@ class Backend extends BEBaseController
 				$model->insert($newData);
 				$session = session();
 				$session->setFlashdata('success', 'Category Successful Added');
-				return redirect()->to('admin/cat');
+				return redirect()->to('backend/cat');
 			}
 
 
@@ -1755,7 +1813,7 @@ class Backend extends BEBaseController
 				$model->update($idcl, $newData);
 				$session = session();
 				$session->setFlashdata('success', 'Category Successful Updated');
-				return redirect()->to('admin/cat');
+				return redirect()->to('backend/cat');
 			}
 
 
@@ -1774,7 +1832,7 @@ class Backend extends BEBaseController
 
 		$session = session();
 		$session->setFlashdata('error', 'Category Successful Deleted');
-		return redirect()->to('admin/cat');
+		return redirect()->to('backend/cat');
 	}
 
 	public function email_1($e1id = null)
@@ -1878,13 +1936,12 @@ class Backend extends BEBaseController
 		$ord_id = decryptIt($ord_id);
 		$model = new timesheetModel();
 		foreach ($_POST['status'] as $row => $key) {
-
 			$model->insert(array('order_id' => $ord_id, 'dutyDate' => explode(',', $key)[0], 'dutyTime' => explode(',', $key)[1], 'siteStatus' => explode(',', $key)[2]));
 
 		}
 		$session = session();
 		$session->setFlashdata('success', 'TimeSheet Saved');
-		return redirect()->to('admin/timesheet');
+		return redirect()->to('backend/timesheet');
 	}
 
 	public function edit_timesheet($ord_id)
@@ -1923,7 +1980,7 @@ class Backend extends BEBaseController
 
 		$session = session();
 		$session->setFlashdata('success', 'TimeSheet Updated');
-		return redirect()->to('admin/timesheet');
+		return redirect()->to('backend/timesheet');
 
 	}
 
@@ -1964,7 +2021,7 @@ class Backend extends BEBaseController
 		$model->update($id, $newData);
 		$session = session();
 		$session->setFlashdata('success', 'Timesheet Approved');
-		return redirect()->to('admin/t-view/' . encryptIt($data['e_ord']['ord_id']));
+		return redirect()->to('backend/t-view/' . encryptIt($data['e_ord']['ord_id']));
 
 
 	}

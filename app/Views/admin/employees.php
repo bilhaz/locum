@@ -8,6 +8,7 @@
 <li class="breadcrumb-item"><a target="_blank" href="https://www.sralocum.com">SRA Locum</a></li>
 
 </ul>
+<a href="javascript:history.go(-1)" class="btn btn-secondary"><i class="fa fa-arrow-left me-2"></i>Go Back</a>
 </div>
 
 </div>
@@ -19,7 +20,7 @@
 <h6 class="card-title">Employee List</h6>
 <ul class="header-dropdown">
 <li>
-<a type="button" href="<?=base_url('admin/reg_emp')?>" class="btn btn-sm btn-outline-primary">Register Employee</a>
+<a type="button" href="<?=base_url('backend/reg_emp')?>" class="btn btn-sm btn-outline-primary">Register Employee</a>
 </li>
 </ul>
 </div>
@@ -69,12 +70,12 @@
 <td><?= $row['emp_created']?></td>
 <td>
   <?php if(!empty($row['emp_cv'])) : ?>
-<a type="button" href="<?= base_url('admin/emp_edit/'. encryptIt($row['emp_id']))?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+<a type="button" href="<?= base_url('backend/emp_edit/'. encryptIt($row['emp_id']))?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
 <?php else: ?>
-<a type="button" href="<?= base_url('admin/emp_details/'. encryptIt($row['emp_id']))?>" class="btn btn-sm btn-outline-warning" title="Form Pending"><i class="fa fa-wpforms"></i></a>
+<a type="button" href="<?= base_url('backend/emp_details/'. encryptIt($row['emp_id']))?>" class="btn btn-sm btn-outline-warning" title="Form Pending"><i class="fa fa-wpforms"></i></a>
 <?php endif; ?>
-<a type="button" href="<?= base_url('admin/emp_block/'.encryptIt($row['emp_id']))?>" class="btn btn-sm btn-outline-danger js-sweetalert" title="Block" Onclick="return confirm('Are You sure?');" data-type="confirm"><i class="fa fa-ban"></i></a>
-<a type="button" href="<?= base_url('admin/employee-pwd/' . encryptIt($row['emp_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="Change Password" Onclick="return confirm('Are You sure?');" data-type="confirm"><i class="fa fa-unlock-alt"></i></a>
+<a type="button" href="<?= base_url('backend/emp_block/'.encryptIt($row['emp_id']))?>" class="btn btn-sm btn-outline-danger js-sweetalert" title="Block" Onclick="return confirm('Are You sure?');" data-type="confirm"><i class="fa fa-ban"></i></a>
+<a type="button" href="<?= base_url('backend/employee-pwd/' . encryptIt($row['emp_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="Change Password" Onclick="return confirm('Are You sure?');" data-type="confirm"><i class="fa fa-unlock-alt"></i></a>
 </td>
 </tr>
 <?php endforeach; ?>

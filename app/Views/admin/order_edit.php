@@ -10,6 +10,7 @@
                         </li>
 
                     </ul>
+                    <a href="javascript:history.go(-1)" class="btn btn-secondary"><i class="fa fa-arrow-left me-2"></i>Go Back</a>
                 </div>
 
             </div>
@@ -43,7 +44,7 @@
                             <h3 class="text-center title-2">Edit Order</h3>
                         </div>
                         <hr>
-                        <form action="<?= base_url('admin/order_edit/'. encryptIt($eord_row['ord_id'])) ?>" method="post" autocomplete="off" enctype="multipart/form-data" accept-charset="utf-8" data-parsley-validate="" id="forma">
+                        <form action="<?= base_url('backend/order_edit/'. encryptIt($eord_row['ord_id'])) ?>" method="post" autocomplete="off" enctype="multipart/form-data" accept-charset="utf-8" data-parsley-validate="" id="forma">
                         <div class="row mb-3">
                         <div class="form-group col-md-4">
                                 <label for="ord_status" class="control-label mb-1">Cancel By Dr.</label>
@@ -292,7 +293,7 @@
                             </div>
                             <br>
                             <div>
-                                <a id="payment-button" href="<?= base_url('admin/orders') ?>" class="btn btn-lg btn-dark btn-block">
+                                <a id="payment-button" href="<?= base_url('backend/orders') ?>" class="btn btn-lg btn-dark btn-block">
 
                                     <span id="payment-button-amount">Cancel</span>
                                 </a>

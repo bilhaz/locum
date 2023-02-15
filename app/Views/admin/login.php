@@ -1245,7 +1245,7 @@ ZW50SUQAQTM4NzFBMzMyNkNENjU3NzkzNzUxRjlEOEI4M0YwNzdgGcdFAAAAAElFTkSuQmCC" />
                         <p class="fs-5 mb-0">Login to your account</p>
                     </div>
                     <div class="card-body">
-                        <form action="<?= base_url('admin/login')?>" method="post">
+                        <form action="<?= base_url('backend/login')?>" method="post">
                             <?php  if (isset($validation)) : 
                             ?>
                             <div class="alert alert-danger" role="alert">

@@ -8,6 +8,7 @@
                         <li class="breadcrumb-item"><a target="_blank" href="https://www.sralocum.com">SRA Locum</a></li>
 
                     </ul>
+                    <a href="javascript:history.go(-1)" class="btn btn-secondary"><i class="fa fa-arrow-left me-2"></i>Go Back</a>
                 </div>
 
             </div>
@@ -19,7 +20,7 @@
                         <h6 class="card-title">All Orders</h6>
                         <ul class="header-dropdown">
                             <li>
-                                <a type="button" href="<?= base_url('admin/new_order') ?>" class="btn btn-sm btn-outline-primary">New Order</a>
+                                <a type="button" href="<?= base_url('backend/new_order') ?>" class="btn btn-sm btn-outline-primary">New Order</a>
                             </li>
                         </ul>
                     </div>
@@ -93,20 +94,20 @@
 <li class="nav-item dropdown">
 <a class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Emails</a>
  <ul class="dropdown-menu shadow-sm">
-<li><a class="dropdown-item" target="_blank" href="<?= base_url('admin/email-1/'.encryptIt($row['ord_id'])) ?>">First Response</a></li>
-<li><a class="dropdown-item" target="_blank" href="<?= base_url('admin/email-2/'.encryptIt($row['ord_id'])) ?>">Locum Process</a></li>
-<li><a class="dropdown-item" target="_blank" href="<?= base_url('admin/email-3/'.encryptIt($row['ord_id'])) ?>">Client Confirmation</a></li>
-<li><a class="dropdown-item" target="_blank" href="<?= base_url('admin/email-4/'.encryptIt($row['ord_id'])) ?>">Dr. Confirmation</a></li>
+<li><a class="dropdown-item" target="_blank" href="<?= base_url('backend/email-1/'.encryptIt($row['ord_id'])) ?>">First Response</a></li>
+<li><a class="dropdown-item" target="_blank" href="<?= base_url('backend/email-2/'.encryptIt($row['ord_id'])) ?>">Locum Process</a></li>
+<li><a class="dropdown-item" target="_blank" href="<?= base_url('backend/email-3/'.encryptIt($row['ord_id'])) ?>">Client Confirmation</a></li>
+<li><a class="dropdown-item" target="_blank" href="<?= base_url('backend/email-4/'.encryptIt($row['ord_id'])) ?>">Dr. Confirmation</a></li>
 <li><hr class="dropdown-divider"></li>
-<li><a class="dropdown-item" target="_blank" href="<?= base_url('admin/contract/'.encryptIt($row['ord_id'])) ?>">Contract</a></li>
+<li><a class="dropdown-item" target="_blank" href="<?= base_url('backend/contract/'.encryptIt($row['ord_id'])) ?>">Contract</a></li>
 </ul>
 </li>
 </ul>
                                         </td>
 
                                             <td>
-                                            <a type="button" href="<?= base_url('admin/order_edit/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
-                                            <a type="button" href="<?= base_url('admin/order_view/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View" data-type="confirm"><i class="fa fa-eye"></i></a>
+                                            <a type="button" href="<?= base_url('backend/order_edit/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                            <a type="button" href="<?= base_url('backend/order_view/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View" data-type="confirm"><i class="fa fa-eye"></i></a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

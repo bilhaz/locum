@@ -11,6 +11,7 @@
                         </li>
 
                     </ul>
+                    <a href="javascript:history.go(-1)" class="btn btn-secondary"><i class="fa fa-arrow-left me-2"></i>Go Back</a>
                 </div>
 
             </div>
@@ -24,7 +25,7 @@
                         <ul class="header-dropdown">
                             <li>
                             <?php if($e_ord['ord_time_sheet_approved'] <> "Approved"): ?>
-                                <a type="button" href="<?= base_url('admin/timesheet-approve/'. encryptIt($e_ord['ord_id'])) ?>" class="btn btn-sm btn-primary">Approve Sheet</a>
+                                <a type="button" href="<?= base_url('backend/timesheet-approve/'. encryptIt($e_ord['ord_id'])) ?>" class="btn btn-sm btn-primary">Approve Sheet</a>
                                 <?php else: ?>
                             <span class="badge h3 chart-color122">Timesheet is Approved</span>
                             <?php endif; ?>

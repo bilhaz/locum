@@ -38,7 +38,7 @@
                                 <h3 class="text-center title-2">Type Your New Password</h3>
                             </div>
                             <hr>
-                            <form action="<?= base_url('admin/pwdupd') ?>" method="post" validate="validate">
+                            <form action="<?= base_url('backend/pwdupd') ?>" method="post" validate="validate">
                                 <div class="form-group">
                                     <label for="cc-payment" class="control-label mb-1">New Password</label>
                                     <input id="cc-pament" name="usr_pwd" type="password" placeholder="New Pass..." class="form-control" aria-required="true" aria-invalid="false">

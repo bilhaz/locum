@@ -8,6 +8,7 @@
 <li class="breadcrumb-item"><a target="_blank" href="https://www.sralocum.com">SRA Locum</a></li>
 
 </ul>
+<a href="javascript:history.go(-1)" class="btn btn-secondary"><i class="fa fa-arrow-left me-2"></i>Go Back</a>
 </div>
 
 </div>
@@ -27,7 +28,7 @@
 <h3 class="text-center title-2">Add New Grade</h3>
 </div>
 <hr>
-<form action="<?= base_url('admin/new_grade')?>" method="post">
+<form action="<?= base_url('backend/new_grade')?>" method="post">
 <div class="form-group">
 <label for="grade_name" class="control-label mb-1">Grade</label>
 <input id="grade_name" name="grade_name" type="text" class="form-control" placeholder="Enter Grade" aria-required="true" aria-invalid="false">
@@ -42,7 +43,7 @@
 <span id="submit">Add</span>
 </button>
 
-<a id="cancel" href="<?= base_url('admin/grade') ?>" class="btn btn-lg btn-dark btn-block">
+<a id="cancel" href="<?= base_url('backend/grade') ?>" class="btn btn-lg btn-dark btn-block">
 
 <span id="cancel">Cancel</span>
 </a>

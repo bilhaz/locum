@@ -8,6 +8,7 @@
 <li class="breadcrumb-item"><a target="_blank" href="https://www.sralocum.com">SRA Locum</a></li>
 
 </ul>
+<a href="javascript:history.go(-1)" class="btn btn-secondary"><i class="fa fa-arrow-left me-2"></i>Go Back</a>
 </div>
 
 </div>
@@ -19,7 +20,7 @@
 <h6 class="card-title">Employee List</h6>
 <ul class="header-dropdown">
 <li>
-<!-- <a type="button" href="<?=base_url('admin/reg_emp')?>" class="btn btn-sm btn-outline-primary">Register Employee</a> -->
+<!-- <a type="button" "<?= base_url('backend/reg_emp')?>" class="btn btn-sm btn-outline-primary">Register Employee</a> -->
 </li>
 </ul>
 </div>
@@ -68,7 +69,7 @@
 <td><?= $row['emp_created']?></td>
 <td>
   
-<a type="button" href="<?= base_url('admin/emp_unblock/'.encryptIt($row['emp_id']))?>" class="btn btn-sm btn-outline-danger js-sweetalert" Onclick="return confirm('Are You sure?');" title="Unblock" data-type="confirm"><i class="fa fa-unlock"></i></a>
+<a type="button" href="<?= base_url('backend/emp_unblock/'.encryptIt($row['emp_id']))?>" class="btn btn-sm btn-outline-danger js-sweetalert" Onclick="return confirm('Are You sure?');" title="Unblock" data-type="confirm"><i class="fa fa-unlock"></i></a>
 </td>
 </tr>
 <?php endforeach; ?>

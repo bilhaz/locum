@@ -19,7 +19,7 @@
 <p class="fs-5 mb-0">Change Password For Client</p>
 </div>
 <div class="card-body">
-<form action="<?= base_url('admin/client-pwd/'. encryptIt($p_up['cl_id'])) ?>" method="post" data-parsley-validate="" id="forma" autocomplete="off">
+<form action="<?= base_url('backend/client-pwd/'. encryptIt($p_up['cl_id'])) ?>" method="post" data-parsley-validate="" id="forma" autocomplete="off">
 <div class="form-floating">
 <input type="text" class="form-control" value="<?= $p_up['cl_cont_email'] ?>" disabled>
 </div>
@@ -39,7 +39,7 @@
 </form>
 <div class="d-grid gap-2 mt-3 pt-3">
 
-<a id="cancel" href="<?= base_url('admin/users') ?>" class="btn btn-lg btn-dark btn-block">
+<a id="cancel" href="<?= base_url('backend/clients') ?>" class="btn btn-lg btn-dark btn-block">
 
 <span id="cancel">Cancel</span>
 </a>

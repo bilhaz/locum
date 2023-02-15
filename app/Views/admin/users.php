@@ -7,6 +7,7 @@
 <ul class="breadcrumb mb-0">
 <li class="breadcrumb-item"><a href="https://www.sralocum.com">SRA Locum</a></li>
 </ul>
+<a href="javascript:history.go(-1)" class="btn btn-secondary"><i class="fa fa-arrow-left me-2"></i>Go Back</a>
 </div>
 
 </div>
@@ -17,7 +18,7 @@
 <div class="card-header">
 <h6 class="card-title">List</h6>
 <ul class="header-dropdown">
-<li><a type="button" class="btn btn-outline-secondary" href="<?= base_url('admin/createuser') ?>">Add User</a></li>
+<li><a type="button" class="btn btn-outline-secondary" href="<?= base_url('backend/createuser') ?>">Add User</a></li>
 </ul>
 </div>
 <div class="card-body">
@@ -58,16 +59,12 @@
 
 </td>
 <td>
-    <?php if($row['grp_role'] == "SuperAdmin"): ?>
-    <span class="badge bg-success"><?= $row['grp_role'] ?></span>
-    <?php elseif($row['grp_role'] == "Admin"): ?>
-        <span class="badge bg-warning"><?= $row['grp_role'] ?></span>
-        <?php elseif($row['grp_role'] == "Editor"): ?>
-        <span class="badge bg-dark"><?= $row['grp_role'] ?></span>
-        <?php elseif($row['grp_role'] == "HR"): ?>
-            <span class="badge bg-info"><?= $row['grp_role'] ?></span>
-        <?php else: ?>
-            <span class="badge bg-danger"><?= $row['grp_role'] ?></span>
+    <?php if($row['grp_id'] == "super admin"): ?>
+    <span class="badge bg-success"><?= $row['grp_id'] ?></span>
+    <?php elseif($row['grp_id'] == "admin"): ?>
+        <span class="badge bg-warning"><?= $row['grp_id'] ?></span>
+        <?php elseif($row['grp_id'] == "user"): ?>
+        <span class="badge bg-dark"><?= $row['grp_id'] ?></span>
             <?php endif;?>
 
 </td>
@@ -82,8 +79,8 @@
         <?php endif; ?>
         </td>
         <td>
-<a type="button" href="<?= base_url('admin/edit-user/'. encryptIt($row['usr_id'])) ?>" class="btn btn-sm btn-outline-primary" title="Edit"><i class="fa fa-edit"></i></a>
-<a type="button" href="<?= base_url('admin/b-userp/'. encryptIt($row['usr_id'])) ?>" class="btn btn-sm btn-outline-info" title="Change Password"><i class="fa fa-unlock-alt"></i></a>
+<a type="button" href="<?= base_url('backend/edit-user/'. encryptIt($row['usr_id'])) ?>" class="btn btn-sm btn-outline-primary" title="Edit"><i class="fa fa-edit"></i></a>
+<a type="button" href="<?= base_url('backend/b-userp/'. encryptIt($row['usr_id'])) ?>" class="btn btn-sm btn-outline-info" title="Change Password"><i class="fa fa-unlock-alt"></i></a>
 </td>
 </tr>
 <?php endforeach; ?>

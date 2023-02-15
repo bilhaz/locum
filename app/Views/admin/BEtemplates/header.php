@@ -1278,7 +1278,7 @@ ZW50SUQAQTM4NzFBMzMyNkNENjU3NzkzNzUxRjlEOEI4M0YwNzdgGcdFAAAAAElFTkSuQmCC" />
 <button type="button" class="btn-toggle-offcanvas"><i class="fa fa-bars"></i></button>
 </div>
 <div class="navbar-brand ps-2">
-<a class="mr-4" href="<?= base_url('admin/') ?>">
+<a class="mr-4" href="<?= base_url('backend/') ?>">
 <img src="<?= base_url('public/images/sralogo-icon.png') ?>" width="40" height="40" />
 <span class="text-success mt-4 text-center">SRA LOCUM</span>
 </a>
@@ -1297,7 +1297,7 @@ ZW50SUQAQTM4NzFBMzMyNkNENjU3NzkzNzUxRjlEOEI4M0YwNzdgGcdFAAAAAElFTkSuQmCC" />
 <div class="flex-grow-1">
 <ul class="nav navbar-nav flex-row justify-content-end align-items-center">
 
-<li><a href="<?= base_url('admin/destroy') ?>" class="icon-menu"><i class="fa fa-sign-out"></i></a></li>
+<li><a href="<?= base_url('backend/destroy') ?>" class="icon-menu"><i class="fa fa-sign-out"></i></a></li>
 </ul>
 </div>
 </div>
@@ -1313,9 +1313,9 @@ ZW50SUQAQTM4NzFBMzMyNkNENjU3NzkzNzUxRjlEOEI4M0YwNzdgGcdFAAAAAElFTkSuQmCC" />
 <a href="#" class="dropdown-toggle user-name" data-bs-toggle="dropdown"><strong><?= session()->get('usr_name')?></strong></a>
 <ul class="dropdown-menu p-2 shadow-sm">
 
-<li><a href="<?= base_url('admin/pwdupd') ?>"><i class="fa fa-cog me-2"></i>Password</a></li>
+<li><a href="<?= base_url('backend/pwdupd') ?>"><i class="fa fa-cog me-2"></i>Password</a></li>
 <li class="divider"></li>
-<li><a href="<?= base_url('admin/destroy') ?>"><i class="fa fa-power-off me-2"></i>Logout</a></li>
+<li><a href="<?= base_url('backend/destroy') ?>"><i class="fa fa-power-off me-2"></i>Logout</a></li>
  </ul>
 </div>
 </div>
@@ -1331,34 +1331,34 @@ ZW50SUQAQTM4NzFBMzMyNkNENjU3NzkzNzUxRjlEOEI4M0YwNzdgGcdFAAAAAElFTkSuQmCC" />
 <div class="tab-pane fade show active" id="hr_menu" role="tabpanel">
 <nav class="sidebar-nav">
 <ul class="main-menu cust metismenu list-unstyled">
-<li class="nav-item"><a class="nav-link" href="<?= base_url('admin/dashboard') ?>"><i class="fa fa-tachometer"></i><span>Dashboard</span></a></li>
+<li class="nav-item"><a class="nav-link" href="<?= base_url('backend/dashboard') ?>"><i class="fa fa-tachometer"></i><span>Dashboard</span></a></li>
 <li class="nav-item"><a href="#" class="nav-link has-arrow"><i class="fa fa-user-md"></i>Employee</a>
 <ul class="list-tree lower">
-<li class="nav-item"><a class="nav-link" href="<?= base_url('admin/employees') ?>"><i class="fa fa-list-ul"></i>All Employee</a></li>
-<li class="nav-item"><a class="nav-link" href="<?= base_url('admin/block_employees') ?>"><i class="fa fa-list-ul"></i>Block Employees</a></li>
+<li class="nav-item"><a class="nav-link" href="<?= base_url('backend/employees') ?>"><i class="fa fa-list-ul"></i>All Employee</a></li>
+<li class="nav-item"><a class="nav-link" href="<?= base_url('backend/block_employees') ?>"><i class="fa fa-list-ul"></i>Block Employees</a></li>
 </ul>
 </li>
 <li class="nav-item"><a class="nav-link has-arrow"><i class="fa fa-h-square"></i>Clients</a>
 <ul class="list-unstyled">
-<li class="nav-item"><a class="nav-link" href="<?= base_url('admin/clients') ?>"><i class="fa fa-list-ul"></i>All Clients</a></li>
-<li class="nav-item"><a class="nav-link" href="<?= base_url('admin/block_clients') ?>"><i class="fa fa-list-ul"></i>Block Clients</a></li>
+<li class="nav-item"><a class="nav-link" href="<?= base_url('backend/clients') ?>"><i class="fa fa-list-ul"></i>All Clients</a></li>
+<li class="nav-item"><a class="nav-link" href="<?= base_url('backend/block_clients') ?>"><i class="fa fa-list-ul"></i>Block Clients</a></li>
 </ul>
 </li>
 <li class="nav-item"><a  href="#orders" class="nav-link has-arrow"><i class="fa fa-shopping-cart"></i>Orders</a>
 <ul class="list-unstyled">
-<li class="nav-item"><a class="nav-link" href="<?= base_url('admin/orders') ?>"><i class="fa fa-list-ul"></i>All Orders</a></li>
-<li class="nav-item"><a class="nav-link" href="<?= base_url('admin/pending_order') ?>"><i class="fa fa-list-ul"></i>Pending Orders</a></li>
-<li class="nav-item"><a class="nav-link" href="<?= base_url('admin/processed_order') ?>"><i class="fa fa-list-ul"></i>Processed Orders</a></li>
-<li class="nav-item"><a class="nav-link" href="<?= base_url('admin/confirm_order') ?>"><i class="fa fa-list-ul"></i>Confirm Payment</a></li>
-<li class="nav-item"><a class="nav-link" href="<?= base_url('admin/ended_order') ?>"><i class="fa fa-list-ul"></i>Ended Payment</a></li>
-<li class="nav-item"><a class="nav-link" href="<?= base_url('admin/expired-orders') ?>"><i class="fa fa-list-ul"></i>Expired Orders</a></li>
+<li class="nav-item"><a class="nav-link" href="<?= base_url('backend/orders') ?>"><i class="fa fa-list-ul"></i>All Orders</a></li>
+<li class="nav-item"><a class="nav-link" href="<?= base_url('backend/pending_order') ?>"><i class="fa fa-list-ul"></i>Pending Orders</a></li>
+<li class="nav-item"><a class="nav-link" href="<?= base_url('backend/processed_order') ?>"><i class="fa fa-list-ul"></i>Processed Orders</a></li>
+<li class="nav-item"><a class="nav-link" href="<?= base_url('backend/confirm_order') ?>"><i class="fa fa-list-ul"></i>Confirm Payment</a></li>
+<li class="nav-item"><a class="nav-link" href="<?= base_url('backend/ended_order') ?>"><i class="fa fa-list-ul"></i>Ended Payment</a></li>
+<li class="nav-item"><a class="nav-link" href="<?= base_url('backend/expired-orders') ?>"><i class="fa fa-list-ul"></i>Expired Orders</a></li>
 </ul>
 </li>
-<li class="nav-item"><a href="<?= base_url('admin/timesheet') ?>"><i class="fa fa-calendar"></i>TimeSheet</a></li>
-<li class="nav-item"><a class="nav-link" href="<?= base_url('admin/speciality') ?>"><i class="fa fa-stethoscope"></i>Specialities</a></li>
-<li class="nav-item"><a class="nav-link" href="<?= base_url('admin/grade') ?>"><i class="fa fa-star"></i>Grades</a></li>
-<li class="nav-item"><a class="nav-link" href="<?= base_url('admin/cat') ?>"><i class="fa fa-th-large"></i>Client Category</a></li>
-<li class="nav-item"><a class="nav-link" href="<?= base_url('admin/users') ?>"><i class="fa fa-user-plus"></i>Users</a></li>
+<li class="nav-item"><a href="<?= base_url('backend/timesheet') ?>"><i class="fa fa-calendar"></i>TimeSheet</a></li>
+<li class="nav-item"><a class="nav-link" href="<?= base_url('backend/speciality') ?>"><i class="fa fa-stethoscope"></i>Specialities</a></li>
+<li class="nav-item"><a class="nav-link" href="<?= base_url('backend/grade') ?>"><i class="fa fa-star"></i>Grades</a></li>
+<li class="nav-item"><a class="nav-link" href="<?= base_url('backend/cat') ?>"><i class="fa fa-th-large"></i>Client Category</a></li>
+<li class="nav-item"><a class="nav-link" href="<?= base_url('backend/users') ?>"><i class="fa fa-user-plus"></i>Users</a></li>
 
 
 </ul>

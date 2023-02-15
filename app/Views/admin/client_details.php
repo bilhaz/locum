@@ -11,6 +11,7 @@
                         </li>
 
                     </ul>
+                    <a href="javascript:history.go(-1)" class="btn btn-secondary"><i class="fa fa-arrow-left me-2"></i>Go Back</a>
                 </div>
 
             </div>
@@ -44,7 +45,7 @@
                             <h3 class="text-center title-2">Client Details</h3>
                         </div>
                         <hr>
-                        <form action="<?= base_url('admin/client_details/' . encryptIt($cli['cl_id'])) ?>" method="post"
+                        <form action="<?= base_url('backend/client_details/' . encryptIt($cli['cl_id'])) ?>" method="post"
                             autocomplete="off" enctype="multipart/form-data" accept-charset="utf-8"
                             data-parsley-validate="" id="forma">
                             <div class="row mb-3">
@@ -119,7 +120,7 @@
                             </div>
                             <br>
                             <div>
-                                <a id="payment-button" href="<?= base_url('admin/clients') ?>"
+                                <a id="payment-button" href="<?= base_url('backend/clients') ?>"
                                     class="btn btn-lg btn-dark btn-block">
 
                                     <span id="payment-button-amount">Cancel</span>

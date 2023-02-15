@@ -8,6 +8,7 @@
 <li class="breadcrumb-item"><a target="_blank" href="https://www.sralocum.com">SRA Locum</a></li>
 
 </ul>
+<a href="javascript:history.go(-1)" class="btn btn-secondary"><i class="fa fa-arrow-left me-2"></i>Go Back</a>
 </div>
 
 </div>
@@ -71,11 +72,11 @@
 <td><span class="badge chart-color120">Ended</span></td>
 <td>
   
-<a type="button" href="<?= base_url('admin/order_view/'.encryptIt($row['ord_id']))?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View"  data-type="confirm"><i class="fa fa-eye"></i></a>
+<a type="button" href="<?= base_url('backend/order_view/'.encryptIt($row['ord_id']))?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View"  data-type="confirm"><i class="fa fa-eye"></i></a>
 
 </td>
 <td>
-    <form action="<?= base_url('admin/ord_status/'.encryptIt( $row ['ord_id']) ) ?>" method="post">
+    <form action="<?= base_url('backend/ord_status/'.encryptIt( $row ['ord_id']) ) ?>" method="post">
     <select id="ord_status" name="ord_status" class="form-control" required="" data-parsley-trigger="change">
                                         <option value="1" <?php if ($row ['ord_status'] == "Pending") { ?> echo selected="selected" <?php } ?>>Pending</option>
                                         <option value="2" <?php if ($row ['ord_status'] == "Processed") { ?> echo selected="selected" <?php } ?>>Processed</option>

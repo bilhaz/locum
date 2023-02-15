@@ -1278,7 +1278,7 @@ ZW50SUQAQTM4NzFBMzMyNkNENjU3NzkzNzUxRjlEOEI4M0YwNzdgGcdFAAAAAElFTkSuQmCC" />
 <button type="button" class="btn-toggle-offcanvas"><i class="fa fa-bars"></i></button>
 </div>
 <div class="navbar-brand ps-2">
-<a class="mr-4" href="<?= base_url('admin/') ?>">
+<a class="mr-4" href="<?= base_url('backend/') ?>">
 <img src="<?= base_url('public/images/sralogo-icon.png') ?>" width="40" height="40" />
 <span class="text-success mt-4 text-center">SRA LOCUM</span>
 </a>

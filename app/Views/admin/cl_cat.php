@@ -8,6 +8,7 @@
 <li class="breadcrumb-item"><a target="_blank" href="https://www.sralocum.com">SRA Locum</a></li>
 
 </ul>
+<a href="javascript:history.go(-1)" class="btn btn-secondary"><i class="fa fa-arrow-left me-2"></i>Go Back</a>
 </div>
 
 </div>
@@ -19,7 +20,7 @@
 <h6 class="card-title">All Doctor Categories</h6>
 <ul class="header-dropdown">
 <li>
-<a type="button" href="<?=base_url('admin/new_cat')?>" class="btn btn-sm btn-outline-primary">Add New</a>
+<a type="button" href="<?= base_url('backend/new_cat')?>" class="btn btn-sm btn-outline-primary">Add New</a>
 </li>
 </ul>
 </div>
@@ -66,9 +67,9 @@
 <td><span><?= $row['reg_cat_created']?></span></td>
 <td>
   
-<a type="button" href="<?= base_url('admin/edit_cat/'. encryptIt($row['reg_cat_id']))?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+<a type="button" href="<?= base_url('backend/edit_cat/'. encryptIt($row['reg_cat_id']))?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
 
-<a type="button" href="<?= base_url('admin/del_cat/'.encryptIt($row['reg_cat_id']))?>" class="btn btn-sm btn-outline-danger js-sweetalert" title="Delete" Onclick="return confirm('Are You sure?');" data-type="confirm"><i class="fa fa-trash"></i></a>
+<a type="button" href="<?= base_url('backend/del_cat/'.encryptIt($row['reg_cat_id']))?>" class="btn btn-sm btn-outline-danger js-sweetalert" title="Delete" Onclick="return confirm('Are You sure?');" data-type="confirm"><i class="fa fa-trash"></i></a>
 </td>
 </tr>
 <?php endforeach; ?>

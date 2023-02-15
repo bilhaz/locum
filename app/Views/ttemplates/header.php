@@ -178,17 +178,17 @@
 <div class="tab-pane fade show active" id="hr_menu" role="tabpanel">
 <nav class="sidebar-nav">
 <ul class="metismenu list-unstyled">
-<li><a href="<?= base_url('admin/dashboard') ?>"><i class="fa fa-tachometer"></i><span>Dashboard</span></a></li>
+<li><a href="<?= base_url('backend/dashboard') ?>"><i class="fa fa-tachometer"></i><span>Dashboard</span></a></li>
 <li><a href="#employees" class="has-arrow"><i class="fa fa-users"></i>Employee</a>
 <ul class="list-unstyled">
-<li><a href="<?= base_url('admin/employees') ?>"><i class="fa fa-list-ul"></i>All Employee</a></li>
-<li><a href="<?= base_url('admin/block_employees') ?>"><i class="fa fa-list-ul"></i>Block Employees</a></li>
+<li><a href="<?= base_url('backend/employees') ?>"><i class="fa fa-list-ul"></i>All Employee</a></li>
+<li><a href="<?= base_url('backend/block_employees') ?>"><i class="fa fa-list-ul"></i>Block Employees</a></li>
 </ul>
 </li>
 <li><a href="#clients" class="has-arrow"><i class="fa fa-users"></i>Clients</a>
 <ul class="list-unstyled">
-<li><a href="<?= base_url('admin/clients') ?>"><i class="fa fa-list-ul"></i>All Clients</a></li>
-<li><a href="<?= base_url('admin/block_clients') ?>"><i class="fa fa-list-ul"></i>Block Clients</a></li>
+<li><a href="<?= base_url('backend/clients') ?>"><i class="fa fa-list-ul"></i>All Clients</a></li>
+<li><a href="<?= base_url('backend/block_clients') ?>"><i class="fa fa-list-ul"></i>Block Clients</a></li>
 </ul>
 </li>
 <li><a href="app-events.html"><i class="fa fa-calendar"></i>Events</a></li>

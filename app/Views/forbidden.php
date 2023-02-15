@@ -10,32 +10,32 @@
 <meta name="author" content="SRA Locum | www.sralocum.com">
 <link rel="icon" href="<?= base_url('public/images/sralogo-icon.ico') ?>" type="image">
 
-<link rel="stylesheet" href="<?= base_url('public/assets/css/dataTables.min.css')?>">
-
 <link rel="stylesheet" href="<?= base_url('public/assets/css/main.css')?>">
-<link rel="stylesheet" href="https://parsleyjs.org/src/parsley.css">
+<link rel="stylesheet" href="<?= base_url('public/assets/css/my.css')?>">
 
 <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
 
 <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.min.js" integrity="sha512-eyHL1atYNycXNXZMDndxrDhNAegH2BDWt1TmkXJPoGf1WLlNYt08CSjkqF5lnCRmdm3IrkHid8s2jOUY4NIZVQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="<?= base_url('public/assets/css/my.css')?>">
 <script src="<?= base_url('public/assets/bundles/libscripts.bundle.js')?>"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
 </head>
 <body>
-    <?php  $uri = service('uri'); ?>
-    <?php  if (session()->get('EmpLoggedIn')):?>
+    
    
 <div id="layout" class="theme-green">
 
-<div class="page-loader-wrapper text-center">
-<div class="loader">
-<svg width="130px" height="40px" viewBox="0 0 62.5 50.9">  
+
+
+    
+    <div id="wrapper">
+        <div class="d-flex h100vh align-items-center restrict-main w-100">
+            <div class="rist-box">
+                <div class="top mb-4">
+                    <div class="logo">
+                       
+                            <svg width="130px" height="40px" viewBox="0 0 85.5 50.9">  
                     <image id="image0" style="z-index: 100;" width="60" height="60" x="0" y="0"
     href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAAABGdBTUEAALGPC/xhBQAAACBjSFJN
 AAB6JQAAgIMAAPn/AACA6QAAdTAAAOpgAAA6mAAAF2+SX8VGAAAABmJLR0QA/wD/AP+gvaeTAAAA
@@ -1266,109 +1266,26 @@ YzVjYzBmMmJiOUPALmAAAAA9dEVYdHhtcE1NOkluc3RhbmNlSUQAeG1wLmlpZDpkOTJiMGNmYS01
 MGE5LTlkNGYtYTdhNS1mYzhlMTMzYTc4ZjaASvgvAAAAOXRFWHR4bXBNTTpPcmlnaW5hbERvY3Vt
 ZW50SUQAQTM4NzFBMzMyNkNENjU3NzkzNzUxRjlEOEI4M0YwNzdgGcdFAAAAAElFTkSuQmCC" />
 </svg>
-<div class="h5 fw-light mt-3">Please wait</div>
 </div>
 </div>
-
-<div id="wrapper">
-
-<nav class="navbar navbar-fixed-top d-print-none">
-<div class="container-fluid">
-<div class="navbar-btn">
-<button type="button" class="btn-toggle-offcanvas"><i class="fa fa-bars"></i></button>
+<div class="card shadow p-lg-4">
+<div class="card-header fs-4 fw-bold">
+Error 403<br />Forbiddon Error!
 </div>
-<div class="navbar-brand ps-2">
-<a class="mr-4" href="<?= base_url('backend/') ?>">
-<img src="<?= base_url('public/images/sralogo-icon.png') ?>" width="40" height="40" />
-<span class="text-success mt-4 text-center">SRA LOCUM</span>
-</a>
-
-</div>
-<div class="d-flex flex-grow-1 align-items-center">
-<div class="d-flex">
-<ul class="nav nav-pills me-4 ms-2 d-none d-lg-block">
-
-</ul>
-<!-- <form id="navbar-search" class="navbar-form search-form position-relative d-none d-md-block">
-<input value="" class="form-control" placeholder="Search here..." type="text">
-<button type="button" class="btn btn-secondary"><i class="fa fa-search"></i></button>
-</form> -->
-</div>
-<div class="flex-grow-1">
-<ul class="nav navbar-nav flex-row justify-content-end align-items-center">
-
-<li><a href="<?= base_url('employee/logout') ?>" class="icon-menu"><i class="fa fa-sign-out"></i></a></li>
-</ul>
+<div class="card-body">
+<p>You don't have permission to access this Page on this server.</p>
+<div class="mt-3">
+<a href="javascript:history.go(-1)" class="btn btn-secondary"><i class="fa fa-arrow-left me-2"></i>Go Back</a>
+<a href="<?= base_url('backend/dashboard') ?>" class="btn btn-primary"><i class="fa fa-home me-2"></i>Dashboard</a>
 </div>
 </div>
 </div>
-</nav>
-
-<div id="left-sidebar" class="sidebar d-print-none">
-<div class="user-account p-3 mb-3">
-<div class="d-flex mb-3 pb-3 border-bottom align-items-center">
-<img src="<?= base_url('public/images/user.png') ?>" class="avatar lg rounded me-3" alt="User Profile Picture">
-<div class="dropdown flex-grow-1">
-<span class="d-block">Welcome,</span>
-<a href="#" class="dropdown-toggle user-name" data-bs-toggle="dropdown"><strong><?= session()->get('emp_lname')?></strong></a>
-<ul class="dropdown-menu p-2 shadow-sm">
-
-<li><a href="<?= base_url('employee/pwdupd') ?>"><i class="fa fa-cog me-2"></i>Password</a></li>
-<li class="divider"></li>
-<li><a href="<?= base_url('employee/logout') ?>"><i class="fa fa-power-off me-2"></i>Logout</a></li>
- </ul>
+</div>
 </div>
 </div>
 
 </div>
+</body>
 
-<ul class="nav nav-tabs text-center mb-2" role="tablist">
-<li class="nav-item flex-fill"><a class="nav-link active" data-bs-toggle="tab" href="#hr_menu" role="tab">SRA Admin</a></li>
-<li class="nav-item flex-fill"><a class="nav-link" data-bs-toggle="tab" href="#setting_menu" role="tab"><i class="fa fa-cog"></i></a></li>
-</ul>
-
-<div class="tab-content px-0">
-<div class="tab-pane fade show active" id="hr_menu" role="tabpanel">
-<nav class="sidebar-nav">
-<ul class="main-menu cust metismenu list-unstyled">
-<li class="nav-item"><a class="nav-link" href="<?= base_url('employee/dashboard') ?>"><i class="fa fa-tachometer"></i><span>Dashboard</span></a></li>
-<li class="nav-item"><a href="<?= base_url('employee/profile') ?>"><i class="fa fa-user-circle-o"></i>Profile</a></li>
-<li class="nav-item"><a href="<?= base_url('employee/orders') ?>"><i class="fa fa-user-md"></i>Orders</a></li>
-
-</ul>
-</nav>
-</div>
-
-
-<div class="tab-pane fade" id="setting_menu" role="tabpanel">
-<div class="px-3">
-
-<h6>Theme Option</h6>
-<ul class="list-unstyled">
-<li class="d-flex align-items-center mb-1">
-<div class="form-check form-switch theme-switch">
-<input class="form-check-input" type="checkbox" id="theme-switch">
-<label class="form-check-label" for="theme-switch">Enable Dark Mode!</label>
-</div>
-</li>
-<li class="d-flex align-items-center mb-1">
-<div class="form-check form-switch theme-high-contrast">
-<input class="form-check-input" type="checkbox" id="theme-high-contrast">
-<label class="form-check-label" for="theme-high-contrast">Enable High Contrast</label>
-</div>
-</li>
-<li class="d-flex align-items-center mb-1">
-<div class="form-check form-switch theme-rtl">
-<input class="form-check-input" type="checkbox" id="theme-rtl">
-<label class="form-check-label" for="theme-rtl">Enable RTL Mode!</label>
-</div>
-</li>
-</ul>
-
-</div>
-</div>
-</div>
-</div>
-<?php else:?>
-
-<?php endif; ?>
+<!-- Mirrored from wrraptheme.com/templates/lucid/hr/bs5/dist/page-403.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 26 Aug 2022 05:10:35 GMT -->
+</html>

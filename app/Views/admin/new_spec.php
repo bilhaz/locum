@@ -8,6 +8,7 @@
 <li class="breadcrumb-item"><a target="_blank" href="https://www.sralocum.com">SRA Locum</a></li>
 
 </ul>
+<a href="javascript:history.go(-1)" class="btn btn-secondary"><i class="fa fa-arrow-left me-2"></i>Go Back</a>
 </div>
 
 </div>
@@ -27,7 +28,7 @@
 <h3 class="text-center title-2">Add New Speciality</h3>
 </div>
 <hr>
-<form action="<?= base_url('admin/new_spec')?>" method="post">
+<form action="<?= base_url('backend/new_spec')?>" method="post">
 <div class="form-group">
 <label for="spec_name" class="control-label mb-1">Speciality</label>
 <input id="spec_name" name="spec_name" type="text" class="form-control" placeholder="Enter Speciality" aria-required="true" aria-invalid="false">
@@ -42,7 +43,7 @@
 <span id="submit">Add</span>
 </button>
 
-<a id="cancel" href="<?= base_url('admin/speciality') ?>" class="btn btn-lg btn-dark btn-block">
+<a id="cancel" href="<?= base_url('backend/speciality') ?>" class="btn btn-lg btn-dark btn-block">
 
 <span id="cancel">Cancel</span>
 </a>
