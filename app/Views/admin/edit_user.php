@@ -4,7 +4,6 @@
 <div class="row g-3">
 <div class="col-md-6 col-sm-12">
 
-<a href="javascript:history.go(-1)" class="btn btn-secondary"><i class="fa fa-arrow-left me-2"></i>Go Back</a>
 </div>
 <!-- <div id="wrapper"> -->
 <div class="d-flex h50vh align-items-center  w-100">

@@ -5,10 +5,9 @@
 <div class="col-md-6 col-sm-12">
 <h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> Grade List</h2>
 <ul class="breadcrumb mb-0">
-<li class="breadcrumb-item"><a target="_blank" href="https://www.sralocum.com">SRA Locum</a></li>
+<li class="breadcrumb-item"><a target="_blank" href="<?= base_url('backend/dashboard') ?>">SRA Locum</a></li>
 
 </ul>
-<a href="javascript:history.go(-1)" class="btn btn-secondary"><i class="fa fa-arrow-left me-2"></i>Go Back</a>
 </div>
 
 </div>
@@ -63,14 +62,14 @@
 
 <td>
 <h6 class="mb-0"><?= $row['grade_name']?></h6>
-<!-- <span><a href="https://wrraptheme.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="771a1605041f161b1b5a1937101a161e1b5914181a">[email&#160;protected]</a></span> -->
 </td>
 <td><span><?= $row['grade_created']?></span></td>
 <td>
   
 <a type="button" href="<?= base_url('backend/edit_grade/'. encryptIt($row['grade_id']))?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
-
+<?php if (session()->grp_id == 'super admin'): ?>
 <a type="button" href="<?= base_url('backend/del_grade/'.encryptIt($row['grade_id']))?>" class="btn btn-sm btn-outline-danger js-sweetalert" title="Delete" Onclick="return confirm('Are You sure?');" data-type="confirm"><i class="fa fa-trash"></i></a>
+<?php endif; ?>
 </td>
 </tr>
 <?php endforeach; ?>

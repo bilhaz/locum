@@ -7,11 +7,10 @@
                             class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i
                                 class="fa fa-arrow-left"></i></a>View Time Sheet</h2>
                     <ul class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a target="_blank" href="https://www.sralocum.com">SRA Locum</a>
+                        <li class="breadcrumb-item"><a target="_blank" href="<?= base_url('backend/dashboard') ?>">SRA Locum</a>
                         </li>
 
                     </ul>
-                    <a href="javascript:history.go(-1)" class="btn btn-secondary"><i class="fa fa-arrow-left me-2"></i>Go Back</a>
                 </div>
 
             </div>

@@ -123,4 +123,10 @@ padding-left: 1rem;
     @media(max-width:767.98px){.rist-box{width:80%;margin:0 auto}}
     @media(max-width:575.98px){.rist-box{width:90%}}
 
+    .disabled1 {
+        color: currentColor;
+        cursor: not-allowed !important;
+        opacity: 0.5;
+        text-decoration: none;
+    }
 

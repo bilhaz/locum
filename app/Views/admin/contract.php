@@ -352,10 +352,9 @@
                         <div class="col-md-6 col-sm-12">
                             <h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a>Contract</h2>
                             <ul class="breadcrumb mb-0">
-                                <li class="breadcrumb-item"><a target="_blank" href="https://www.sralocum.com">SRA Locum</a></li>
+                                <li class="breadcrumb-item"><a target="_blank" href="<?= base_url('backend/dashboard') ?>">SRA Locum</a></li>
         
                             </ul>
-                            <a href="javascript:history.go(-1)" class="btn btn-secondary"><i class="fa fa-arrow-left me-2"></i>Go Back</a>
                         </div>
         
                     </div>
@@ -380,7 +379,7 @@
             <td><u class="text-dark"><b>2<sup>nd</sup> Floor, 13 Baggot St Upper,</b></u></td>
         </tr>
         <tr>
-            <td><u class="text-dark"><a href="https://www.sralocum.com">W: www.sralocum.com</a></u></td>
+            <td><u class="text-dark"><a href="<?= base_url('backend/dashboard') ?>">W: www.sralocum.com</a></u></td>
         </tr>
         <tr>
             <td><p class="mb-0"><u><a href="mailto:info@shamrockassist.com">E: info@shamrockassist.com</a></u></p></td>
@@ -470,7 +469,7 @@
         </tr>
     </table>
     <p style="text-indent: 0pt;text-align: left;" ></p>
-    <p class="s12" style="padding-top: 7pt;padding-left: 7pt;text-indent: 0pt;text-align: justify;"><a href="http://www.sralocum.com/" style=" color: #F00; font-family:Calibri, sans-serif; font-style: normal; font-weight: bold; text-decoration: none; font-size: 9pt;" target="_blank">SRA Locum standard terms and conditions published on our website </a><span style=" color: #00F; font-family:Calibri, sans-serif; font-style: normal; font-weight: bold; text-decoration: underline; font-size: 9pt;"><a href="https://www.sralocum.com">www.sralocum.com</a></span> <span style=" color: #F00;">are applicable to the above assignment. For the avoidance of doubt, (a) the Locum acknowledges that they are being provided through the SRA Locum, and that all payments will be made to SRA Locum, and not directly from the ordering client. (b) the Locum acknowledges to us that their services are supplied to us as an independent locum and not as an employee, and that accordingly the responsibility of complying with all statutory and legal requirements relating to the Locum (including the payment of taxation) shall fall upon and be discharged wholly and exclusively by SRA Locum. Any placed personnel will be under the supervision, direction and control of the client</span></p>
+    <p class="s12" style="padding-top: 7pt;padding-left: 7pt;text-indent: 0pt;text-align: justify;"><a href="http://www.sralocum.com/" style=" color: #F00; font-family:Calibri, sans-serif; font-style: normal; font-weight: bold; text-decoration: none; font-size: 9pt;" target="_blank">SRA Locum standard terms and conditions published on our website </a><span style=" color: #00F; font-family:Calibri, sans-serif; font-style: normal; font-weight: bold; text-decoration: underline; font-size: 9pt;"><a href="<?= base_url('backend/dashboard') ?>">www.sralocum.com</a></span> <span style=" color: #F00;">are applicable to the above assignment. For the avoidance of doubt, (a) the Locum acknowledges that they are being provided through the SRA Locum, and that all payments will be made to SRA Locum, and not directly from the ordering client. (b) the Locum acknowledges to us that their services are supplied to us as an independent locum and not as an employee, and that accordingly the responsibility of complying with all statutory and legal requirements relating to the Locum (including the payment of taxation) shall fall upon and be discharged wholly and exclusively by SRA Locum. Any placed personnel will be under the supervision, direction and control of the client</span></p>
     <p class="s13" style="padding-top: 6pt;padding-left: 7pt;text-indent: 0pt;text-align: left;">We have included the client’s telephone number so should a problem arise; where you are going to be late or cannot fulfill the booking please notify SRA Locum OR the client immediately.</p>
     <p class="s15" style="padding-left: 7pt;text-indent: 0pt;text-align: left;"><a href="mailto:info@sralocum.com" style=" color: black; font-family:Calibri, sans-serif; font-style: normal; font-weight: normal; text-decoration: none; font-size: 9pt;" target="_blank">We operate a comprehensive 24-hour on call service manned by senior members of staff who can assist you on: </a><span style=" color: #00F; font-family:Calibri, sans-serif; font-style: normal; font-weight: normal; text-decoration: underline; font-size: 9pt;">info@sralocum.com</span> <span style=" color: #000;">OR 01-6854700 &amp; 01-6994321 Dublin or .020-33182900 This is not a emergency service.</span></p>
     <p class="s13" style="padding-left: 7pt;text-indent: 0pt;text-align: left;">You agree that you as Locum if decide to take a short term or permanent position with this client either during the assignment or within 6 months of leaving the post arranged by SRA Locum, an introduction fee will automatically become due for payment by the you and client.</p>
@@ -501,7 +500,7 @@
                     <td><u class="text-dark"><b>2<sup>nd</sup> Floor, 13 Baggot St Upper,</b></u></td>
                 </tr>
                 <tr>
-                    <td><u class="text-dark"><a href="https://www.sralocum.com">W: www.sralocum.com</a></u></td>
+                    <td><u class="text-dark"><a href="<?= base_url('backend/dashboard') ?>">W: www.sralocum.com</a></u></td>
                 </tr>
                 <tr>
                     <td><p class="mb-0"><u><a href="mailto:info@shamrockassist.com">E: info@shamrockassist.com</a></u></p></td>

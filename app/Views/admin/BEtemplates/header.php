@@ -1355,11 +1355,14 @@ ZW50SUQAQTM4NzFBMzMyNkNENjU3NzkzNzUxRjlEOEI4M0YwNzdgGcdFAAAAAElFTkSuQmCC" />
 </ul>
 </li>
 <li class="nav-item"><a href="<?= base_url('backend/timesheet') ?>"><i class="fa fa-calendar"></i>TimeSheet</a></li>
+<?php if (session()->grp_id == 'super admin' || session()->grp_id == 'admin' ): ?>
 <li class="nav-item"><a class="nav-link" href="<?= base_url('backend/speciality') ?>"><i class="fa fa-stethoscope"></i>Specialities</a></li>
 <li class="nav-item"><a class="nav-link" href="<?= base_url('backend/grade') ?>"><i class="fa fa-star"></i>Grades</a></li>
 <li class="nav-item"><a class="nav-link" href="<?= base_url('backend/cat') ?>"><i class="fa fa-th-large"></i>Client Category</a></li>
+<?php endif; ?>
+<?php if (session()->grp_id == 'super admin'): ?>
 <li class="nav-item"><a class="nav-link" href="<?= base_url('backend/users') ?>"><i class="fa fa-user-plus"></i>Users</a></li>
-
+    <?php endif; ?>
 
 </ul>
 </nav>
