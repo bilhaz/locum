@@ -43,7 +43,7 @@
 <div class="form-floating">
 <select  class="form-control " name="grp_id" id="grp_id" required="">
     <option value="">Select Role</option>
-    <option value="super_admin">super_admin</option>
+    <option value="super_admin">Super Admin</option>
     <option value="admin">Admin</option>
     <option value="user">User</option>
 </select>
