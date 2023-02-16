@@ -18,64 +18,65 @@ use App\Models\timesheetModel;
 class Backend extends BEBaseController
 {
 	public static $allowedRoles = [
-		'dashboard' => ['super_admin', 'admin','user'],
-		'destroy' => ['super_admin', 'admin','user'],
-		'pwdupd' => ['super_admin', 'admin','user'],
-		'employees' => ['super_admin','admin', 'user'],
-		'reg_emp' => ['super_admin','admin', 'user'],
-		'emp_details' => ['super_admin','admin', 'user'],
-		'emp_edit' => ['super_admin','admin', 'user'],
-		'emp_block' => ['super_admin','admin', 'user'],
-		'emp_unblock' => ['super_admin','admin', 'user'],
-		'block_employees' => ['super_admin','admin', 'user'],
+		'dashboard' => ['super_admin', 'admin', 'user'],
+		'destroy' => ['super_admin', 'admin', 'user'],
+		'pwdupd' => ['super_admin', 'admin', 'user'],
+		'employees' => ['super_admin', 'admin', 'user'],
+		'reg_emp' => ['super_admin', 'admin', 'user'],
+		'emp_details' => ['super_admin', 'admin', 'user'],
+		'emp_edit' => ['super_admin', 'admin', 'user'],
+		'emp_block' => ['super_admin', 'admin', 'user'],
+		'emp_unblock' => ['super_admin', 'admin', 'user'],
+		'block_employees' => ['super_admin', 'admin', 'user'],
 		'employee-pwd' => ['super_admin'],
-		'clients' => ['super_admin','admin', 'user'],
-		'reg_client' => ['super_admin','admin', 'user'],
-		'client_details' => ['super_admin','admin', 'user'],
-		'client_edit' => ['super_admin','admin', 'user'],
-		'client_block' => ['super_admin','admin', 'user'],
-		'client_unblock' => ['super_admin','admin', 'user'],
-		'block_clients' => ['super_admin','admin', 'user'],
+		'clients' => ['super_admin', 'admin', 'user'],
+		'reg_client' => ['super_admin', 'admin', 'user'],
+		'client_details' => ['super_admin', 'admin', 'user'],
+		'client_edit' => ['super_admin', 'admin', 'user'],
+		'client_block' => ['super_admin', 'admin', 'user'],
+		'client_unblock' => ['super_admin', 'admin', 'user'],
+		'block_clients' => ['super_admin', 'admin', 'user'],
 		'client-pwd' => ['super_admin'],
-		'orders' => ['super_admin','admin', 'user'],
-		'new_order' => ['super_admin','admin', 'user'],
-		'order_view' => ['super_admin','admin', 'user'],
-		'order_edit' => ['super_admin','admin', 'user'],
-		'ord_status' => ['super_admin','admin', 'user'],
-		'email-1' => ['super_admin','admin', 'user'],
-		'email-2' => ['super_admin','admin', 'user'],
-		'email-3' => ['super_admin','admin', 'user'],
-		'email-4' => ['super_admin','admin', 'user'],
-		'contract' => ['super_admin','admin', 'user'],
-		'pending_order' => ['super_admin','admin', 'user'],
-		'processed_order' => ['super_admin','admin', 'user'],
-		'confirm_order' => ['super_admin','admin', 'user'],
-		'ended_order' => ['super_admin','admin', 'user'],
-		'expired-orders' => ['super_admin','admin', 'user'],
-		'timesheet' => ['super_admin','admin', 'user'],
-		't-fill' => ['super_admin','admin', 'user'],
-		't-edit' => ['super_admin','admin', 'user'],
-		't-view' => ['super_admin','admin', 'user'],
-		'timesheet_save' => ['super_admin','admin', 'user'],
-		'timesheet-approve' => ['super_admin','admin', 'user'],
-		'speciality' => ['super_admin','admin'],
-		'new_spec' => ['super_admin','admin'],
-		'edit_spec' => ['super_admin','admin'],
+		'orders' => ['super_admin', 'admin', 'user'],
+		'new_order' => ['super_admin', 'admin', 'user'],
+		'order_view' => ['super_admin', 'admin', 'user'],
+		'order_edit' => ['super_admin', 'admin', 'user'],
+		'ord_status' => ['super_admin', 'admin', 'user'],
+		'email-1' => ['super_admin', 'admin', 'user'],
+		'email-2' => ['super_admin', 'admin', 'user'],
+		'email-3' => ['super_admin', 'admin', 'user'],
+		'email-4' => ['super_admin', 'admin', 'user'],
+		'contract' => ['super_admin', 'admin', 'user'],
+		'pending_order' => ['super_admin', 'admin', 'user'],
+		'processed_order' => ['super_admin', 'admin', 'user'],
+		'confirm_order' => ['super_admin', 'admin', 'user'],
+		'ended_order' => ['super_admin', 'admin', 'user'],
+		'expired-orders' => ['super_admin', 'admin', 'user'],
+		'timesheet' => ['super_admin', 'admin', 'user'],
+		't-fill' => ['super_admin', 'admin', 'user'],
+		't-edit' => ['super_admin', 'admin', 'user'],
+		't-view' => ['super_admin', 'admin', 'user'],
+		'timesheet_save' => ['super_admin', 'admin', 'user'],
+		'timesheet-approve' => ['super_admin', 'admin', 'user'],
+		'speciality' => ['super_admin', 'admin'],
+		'new_spec' => ['super_admin', 'admin'],
+		'edit_spec' => ['super_admin', 'admin'],
 		'del_spec' => ['super_admin'],
-		'grade'=> ['super_admin','admin'],
-		'new_grade'=> ['super_admin','admin'],
-		'edit_grade'=> ['super_admin','admin'],
-		'del_grade'=> ['super_admin'],
-		'cat'=> ['super_admin','admin'],
-		'new_cat'=> ['super_admin','admin'],
-		'edit_cat'=> ['super_admin','admin'],
-		'del_cat'=> ['super_admin'],
-		'users'=> ['super_admin'],
-		'createuser'=> ['super_admin'],
-		'edit-user'=> ['super_admin'],
-		'b-userp'=> ['super_admin'],
+		'grade' => ['super_admin', 'admin'],
+		'new_grade' => ['super_admin', 'admin'],
+		'edit_grade' => ['super_admin', 'admin'],
+		'del_grade' => ['super_admin'],
+		'cat' => ['super_admin', 'admin'],
+		'new_cat' => ['super_admin', 'admin'],
+		'edit_cat' => ['super_admin', 'admin'],
+		'del_cat' => ['super_admin'],
+		'users' => ['super_admin'],
+		'createuser' => ['super_admin'],
+		'edit-user' => ['super_admin'],
+		'b-userp' => ['super_admin'],
+		'change_doctor_cancelled_order' => ['super_admin','admin'],
 
-		
+
 
 
 	];
@@ -202,11 +203,10 @@ class Backend extends BEBaseController
 					'validateUser' => 'Password field does\'t match'
 				],
 				'usr_email' => [
-					'validateUser' => 'email is not valid and it\'s required'
-				],
-				'usr_email' => [
+					'validateUser' => 'email is not valid and it\'s required',
 					'is_unique' => 'This email is already Registered'
-				]
+				],
+				
 			];
 
 			if (!$this->validate($rules, $errors)) {
@@ -1393,7 +1393,7 @@ class Backend extends BEBaseController
 					'ord_speciality' => $this->request->getVar('ord_speciality'),
 					'ord_grade' => $this->request->getVar('ord_grade'),
 					'cl_id' => $this->request->getVar('cl_id'),
-					'emp_id' => $this->request->getVar('emp_id'),
+					'emp_id' => decryptIt($this->request->getVar('emp_id')),
 					'ord_required_from' => $this->request->getVar('ord_required_from'),
 					'ord_required_to' => $this->request->getVar('ord_required_to'),
 					'ord_process_date' => $this->request->getVar('ord_process_date'),
@@ -1449,6 +1449,26 @@ class Backend extends BEBaseController
 		// $data['ordr_row'] = $model->where('ord_id',$oid)->findAll();
 
 		return $this->LoadView('admin/order_view', $data);
+	}
+
+	public function change_doctor_cancelled_order($oid, $doc_id)
+	{
+		$oid = decryptIt($oid);
+		$doc_id = decryptIt($doc_id);
+		$model = new ordersModel();
+		$ordr_row = $model->where('ord_id', $oid)->first();
+		$ordr_row['emp_id'] = $doc_id;
+		$ordr_row['ord_cancel_bdr'] = 0;
+		unset($ordr_row['ord_id']);
+		if ($id = $model->insert($ordr_row)) {
+			session()->setFlashdata('success', 'Doctor Changed and Order status has been set to active.');
+			return redirect()->to('backend/order_edit/' . encryptIt($id));
+		} else {
+			session()->setFlashdata('success', 'Something went wrong!');
+			return redirect()->to('backend/order_edit/' . encryptIt($oid));
+		}
+
+
 	}
 
 

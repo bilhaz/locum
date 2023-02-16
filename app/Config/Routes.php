@@ -92,6 +92,7 @@ $routes->match(['get' , 'post'], 'backend/email-2/(:any)', 'admin\Backend::email
 $routes->match(['get' , 'post'], 'backend/email-3/(:any)', 'admin\Backend::email_3/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/email-4/(:any)', 'admin\Backend::email_4/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/contract/(:any)', 'admin\Backend::contract/$1',['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'backend/change_doctor_cancelled_order/(:any)/(:any)', 'admin\Backend::change_doctor_cancelled_order/$1/$2',['filter' => 'B_auth']);
 
 // });
 
