@@ -41,7 +41,7 @@
 <select  class="form-control " name="grp_id" id="grp_id" required="">
     <option value="">Select Role</option>
    
-    <option value="super admin" <?php if ($euser['grp_id'] == "super admin") { ?> echo selected="selected" <?php } ?>>Super Admin</option>
+    <option value="super_admin" <?php if ($euser['grp_id'] == "super_admin") { ?> echo selected="selected" <?php } ?>>super_admin</option>
     <option value="admin" <?php if ($euser['grp_id'] == "admin") { ?> echo selected="selected" <?php } ?>>Admin</option>
     <option value="user" <?php if ($euser['grp_id'] == "user") { ?> echo selected="selected" <?php } ?>>User</option>
 </select>

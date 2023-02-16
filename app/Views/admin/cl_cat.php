@@ -67,7 +67,7 @@
 <td>
   
 <a type="button" href="<?= base_url('backend/edit_cat/'. encryptIt($row['reg_cat_id']))?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
-<?php if (session()->grp_id == 'super admin'): ?>
+<?php if (session()->grp_id == 'super_admin'): ?>
 <a type="button" href="<?= base_url('backend/del_cat/'.encryptIt($row['reg_cat_id']))?>" class="btn btn-sm btn-outline-danger js-sweetalert" title="Delete" Onclick="return confirm('Are You sure?');" data-type="confirm"><i class="fa fa-trash"></i></a>
 <?php endif; ?>
 </td>

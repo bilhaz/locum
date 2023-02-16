@@ -58,7 +58,7 @@
 
 </td>
 <td>
-    <?php if($row['grp_id'] == "super admin"): ?>
+    <?php if($row['grp_id'] == "super_admin"): ?>
     <span class="badge bg-success"><?= $row['grp_id'] ?></span>
     <?php elseif($row['grp_id'] == "admin"): ?>
         <span class="badge bg-warning"><?= $row['grp_id'] ?></span>
