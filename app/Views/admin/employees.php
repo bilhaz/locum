@@ -46,7 +46,7 @@
 <th>SNo.</th>
 <th>Name</th>
 <th>Email</th>
-<th>Register</th>
+<th>Registration Date</th>
 <th>Action</th>
 </tr>
 </thead>
@@ -63,7 +63,6 @@
 
 <td>
 <h6 class="mb-0"><?= $row['emp_fname'] . ' ' . $row['emp_lname'] ?></h6>
-<!-- <span><a href="https://wrraptheme.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="771a1605041f161b1b5a1937101a161e1b5914181a">[email&#160;protected]</a></span> -->
 </td>
 <td><span><?= $row['emp_email']?></span></td>
 <td><?= $row['emp_created']?></td>
@@ -71,11 +70,11 @@
   <?php if(!empty($row['emp_cv'])) : ?>
 <a type="button" href="<?= base_url('backend/emp_edit/'. encryptIt($row['emp_id']))?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
 <?php else: ?>
-<a type="button" href="<?= base_url('backend/emp_details/'. encryptIt($row['emp_id']))?>" class="btn btn-sm btn-outline-warning" title="Form Pending"><i class="fa fa-wpforms"></i></a>
+<a type="button" href="<?= base_url('backend/emp_details/'. encryptIt($row['emp_id']))?>" class="btn btn-sm btn-outline-warning" title="Registration Form Pending"><i class="fa fa-wpforms"></i></a>
 <?php endif; ?>
 <a type="button" href="<?= base_url('backend/emp_block/'.encryptIt($row['emp_id']))?>" class="btn btn-sm btn-outline-danger js-sweetalert" title="Block" Onclick="return confirm('Are You sure?');" data-type="confirm"><i class="fa fa-ban"></i></a>
 <?php if (session()->grp_id == 'super_admin'): ?>
-<a type="button" href="<?= base_url('backend/employee-pwd/' . encryptIt($row['emp_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="Change Password" Onclick="return confirm('Are You sure?');" data-type="confirm"><i class="fa fa-unlock-alt"></i></a>
+<a type="button" href="<?= base_url('backend/employee-pwd/' . encryptIt($row['emp_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="Change Password" Onclick="return confirm('Are You sure?');" data-type="confirm"><i class="fa fa-key"></i></a>
 <?php endif; ?>
 </td>
 </tr>

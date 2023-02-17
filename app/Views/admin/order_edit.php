@@ -87,7 +87,7 @@
 
                             <div class="row mb-3">
                                 <div class="form-group col-md-6">
-                                    <label for="ord_speciality" class="control-label mb-1">Speciality</label>
+                                    <label for="ord_speciality" class="control-label mb-1">Required Speciality</label>
                                     <select id="ord_speciality" name="ord_speciality" class="form-control select2"
                                         required="" data-parsley-trigger="change">
                                         <option value="">Select Speciality</option>
@@ -97,7 +97,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="ord_grade" class="control-label mb-1">Grade</label>
+                                    <label for="ord_grade" class="control-label mb-1">Required Grade</label>
                                     <select id="ord_grade" name="ord_grade" class="form-control select2" required=""
                                         data-parsley-trigger="change">
                                         <option value="">Select Grade</option>
@@ -110,7 +110,7 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="form-group col-md-6">
-                                    <label for="cl_id" class="control-label mb-1">Medical Personnel</label>
+                                    <label for="cl_id" class="control-label mb-1">Order Form</label>
                                     <select id="cl_id" name="cl_id" class="select2 form-control" required=""
                                         data-parsley-trigger="change">
                                         <option value="">Select Client</option>
@@ -121,7 +121,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="emp_id" class="control-label mb-1">Doctor</label>
+                                    <label for="emp_id" class="control-label mb-1">Doctor Assigned to</label>
                                     <select id="emp_id" name="emp_id" class="form-control select2"
                                         data-parsley-trigger="change" required=""  onchange="checkCancellation()">
                                         <option value="">Select Employee</option>
@@ -161,14 +161,14 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
-                                    <label for="ord_process_details_from" class="control-label mb-1">Process Details
+                                    <label for="ord_process_details_from" class="control-label mb-1">Locum Process
                                         From</label>
                                     <input id="ord_process_details_from" name="ord_process_details_from"
                                         type="datetime-local" class="form-control" required=""
                                         value="<?= $eord_row['ord_process_details_from'] ?>">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="ord_process_details_to" class="control-label mb-1">Process Details
+                                    <label for="ord_process_details_to" class="control-label mb-1">Locum Process
                                         To</label>
                                     <input id="ord_process_details_to" name="ord_process_details_to"
                                         type="datetime-local" class="form-control" required=""
@@ -177,12 +177,12 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
-                                    <label for="ord_normal_hrs" class="control-label mb-1">Normal Hours</label>
+                                    <label for="ord_normal_hrs" class="control-label mb-1">No of Normal Hours</label>
                                     <input id="ord_normal_hrs" name="ord_normal_hrs" oninput="calculate()" type="text"
                                         class="form-control" required="" value="<?= $eord_row['ord_normal_hrs'] ?>">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="ord_on_call_hrs" class="control-label mb-1">On Call Hours</label>
+                                    <label for="ord_on_call_hrs" class="control-label mb-1">No of On Call Hours</label>
                                     <input id="ord_on_call_hrs" name="ord_on_call_hrs" oninput="calculate()" type="text"
                                         class="form-control" required="" value="<?= $eord_row['ord_on_call_hrs'] ?>">
                                 </div>
@@ -249,7 +249,7 @@
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
                                     <label for="ord_time_sheet_process" class="control-label mb-1">Time Sheet
-                                        Process</label>
+                                        Processed</label>
                                     <input id="ord_time_sheet_process" name="ord_time_sheet_process" type="date"
                                         class="form-control" required=""
                                         value="<?= $eord_row['ord_time_sheet_process'] ?>">
@@ -293,7 +293,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="ord_sage_refer_no" class="control-label mb-1">Sage Reference No.</label>
-                                    <input id="ord_sage_refer_no" name="ord_sage_refer_no" type="date"
+                                    <input id="ord_sage_refer_no" name="ord_sage_refer_no" type="text"
                                         class="form-control" required="" value="<?= $eord_row['ord_sage_refer_no'] ?>">
                                 </div>
                             </div>
@@ -306,7 +306,7 @@
                                         value="<?= $eord_row['ord_paymnt_rcvd_date'] ?>">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="ord_pay_to_dr_date" class="control-label mb-1">Paid to Dr.</label>
+                                    <label for="ord_pay_to_dr_date" class="control-label mb-1">Paid to Employee Date</label>
                                     <input id="ord_pay_to_dr_date" name="ord_pay_to_dr_date" type="date"
                                         class="form-control" required="" value="<?= $eord_row['ord_pay_to_dr_date'] ?>">
                                 </div>
@@ -324,7 +324,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="ord_payment_status" class="control-label mb-1">Payment Status</label>
+                                    <label for="ord_payment_status" class="control-label mb-1">Employee Payment Status</label>
                                     <select id="ord_payment_status" name="ord_payment_status"
                                         class="form-control select2" required="" data-parsley-trigger="change">
                                         <option value="">Select status</option>
@@ -336,7 +336,7 @@
                             </div>
 
                             <div class="row mb-3">
-                                <label for="ord_comment2" class="control-label mb-1">Comment</label>
+                                <label for="ord_comment2" class="control-label mb-1">Payment Remarks</label>
                                 <textarea id="ord_comment2" name="ord_comment2" type="text"
                                     class="form-control"><?= $eord_row['ord_comment2'] ?></textarea>
                             </div>
@@ -359,16 +359,13 @@
 
 
 
-                            <div>
+                            <div> 
                                 <button id="payment-button" type="submit" class="btn btn-lg btn-primary btn-block">
-                                    <span id="payment-button-amount">Save Order</span>
+                                    <span id="payment-button-amount">Update Order</span>
                                 </button>
-                            </div>
-                            <br>
-                            <div>
-                                <a id="payment-button" href="<?= base_url('backend/orders') ?>"
-                                    class="btn btn-lg btn-dark btn-block">
 
+                                <a style="float:right !important;" id="payment-button" href="<?= base_url('backend/orders') ?>"
+                                    class="btn btn-lg btn-dark text-light btn-block">
                                     <span id="payment-button-amount">Cancel</span>
                                 </a>
                             </div>

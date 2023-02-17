@@ -69,58 +69,58 @@
                                     <input id="cl_h_name" name="cl_h_name" type="text" class="form-control" value="<?= $cli['cl_h_name'] ?>" required="">
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="cl_gender" class="control-label mb-1">Gender</label>
-                                    <select id="cl_gender" name="cl_gender" class="form-control select2"  data-parsley-trigger="change" required="">
-                                        <option value="">Select Gender</option>
-                                        <option value="M" <?php if ($cli['cl_gender'] == "M") { ?> echo selected="selected" <?php } ?>>Male</option>
-                                        <option value="F" <?php if ($cli['cl_gender'] == "F") { ?> echo selected="selected" <?php } ?>>Female</option>
-                                    </select>                               
+                                <label for="cl_address" class="control-label mb-1">Address</label>
+                                    <input id="cl_address" name="cl_address" type="text" class="form-control" required="" value="<?= $cli['cl_address'] ?>">
                                  </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
-                                <label for="cl_cont_desig" class="control-label mb-1">Contact Personnel Designation</label>
-                                    <input id="cl_cont_desig" name="cl_cont_desig" type="text" class="form-control" required="" value="<?= $cli['cl_cont_desig'] ?>">
-                                    
+                                <label for="cl_eircode" class="control-label mb-1">Eircode</label>
+                                    <input id="cl_eircode" name="cl_eircode" type="text" class="form-control" required="" value="<?= $cli['cl_eircode'] ?>">
                                 </div>
                                 <div class="form-group col-md-6 ">
-                                    <label for="cl_eircode" class="control-label mb-1">Eircode</label>
-                                    <input id="cl_eircode" name="cl_eircode" type="number" class="form-control"
-                                        required="" value="<?= $cli['cl_eircode'] ?>">
+                                <label for="cl_county" class="control-label mb-1">County</label>
+                                    <input id="cl_county" name="cl_county" type="text" class="form-control" required="" value="<?= $cli['cl_county'] ?>">
+                                    
+                                        
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
-                                    <label for="cl_cont_name" class="control-label mb-1">Contact Personnel Name</label>
+                                    <label for="cl_cont_name" class="control-label mb-1">Personnel Name</label>
                                     <input id="cl_cont_name" name="cl_cont_name" type="text" class="form-control" required="" value="<?= $cli['cl_cont_name'] ?>">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="cl_cont_phone" class="control-label mb-1">Contact Number</label>
-                                    <input id="cl_cont_phone" name="cl_cont_phone" type="number" class="form-control" required="" value="<?= $cli['cl_cont_phone'] ?>">
+                                <label for="cl_gender" class="control-label mb-1">Personnel Gender</label>
+                            <select id="cl_gender" name="cl_gender" class="form-control select2"  data-parsley-trigger="change" required="">
+                                        <option value="">Select Gender</option>
+                                        <option value="M" <?php if ($cli['cl_gender'] == "M") { ?> echo selected="selected" <?php } ?>>Male</option>
+                                        <option value="F" <?php if ($cli['cl_gender'] == "F") { ?> echo selected="selected" <?php } ?>>Female</option>
+                                        <option value="O" <?php if ($cli['cl_gender'] == "O") { ?> echo selected="selected" <?php } ?>>Other</option>
+                                    </select>  
+                                    
                                 </div>
                             </div>
                             <div class="row mb-3">
                             <div class="form-group col-md-6 ">  
-                                    <label for="cl_address" class="control-label mb-1">Address</label>
-                                    <input id="cl_address" name="cl_address" type="text" class="form-control" required="" value="<?= $cli['cl_address'] ?>">
+                            <label for="cl_cont_phone" class="control-label mb-1">Personnel Contact Number</label>
+                                    <input id="cl_cont_phone" name="cl_cont_phone" type="number" class="form-control" required="" value="<?= $cli['cl_cont_phone'] ?>">
                             </div>
                             <div class="form-group col-md-6 ">
-                                    <label for="cl_county" class="control-label mb-1">County</label>
-                                    <input id="cl_county" name="cl_county" type="text" class="form-control" required="" value="<?= $cli['cl_county'] ?>">
+                            <label for="cl_cont_desig" class="control-label mb-1">Personnel Designation</label>
+                                    <input id="cl_cont_desig" name="cl_cont_desig" type="text" class="form-control" required="" value="<?= $cli['cl_cont_desig'] ?>">
+                                    
                                 </div>
                                 </div>
                             
 
-                            <div>
+                                <div> 
                                 <button id="payment-button" type="submit" class="btn btn-lg btn-primary btn-block">
-                                    <span id="payment-button-amount">Save Record</span>
+                                    <span id="payment-button-amount">Update Client</span>
                                 </button>
-                            </div>
-                            <br>
-                            <div>
-                                <a id="payment-button" href="<?= base_url('backend/clients') ?>"
-                                    class="btn btn-lg btn-dark btn-block">
 
+                                <a style="float:right !important;" id="payment-button" href="<?= base_url('backend/clients') ?>"
+                                    class="btn btn-lg btn-dark text-light btn-block">
                                     <span id="payment-button-amount">Cancel</span>
                                 </a>
                             </div>

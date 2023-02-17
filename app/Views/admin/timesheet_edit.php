@@ -129,18 +129,16 @@
                             </tbody>
                         </table>
                         <br>
-                        <div>
-                            <button id="payment-button" type="submit" class="btn btn-lg btn-primary btn-block">
-                                <span id="payment-button-amount">Save Data</span>
-                            </button>
-                        </div>
-                        <br>
-                                <div>
-                                    <a id="payment-button" href="<?= base_url('backend/timesheet') ?>" class="btn btn-lg btn-dark btn-block">
+                        <div> 
+                                <button id="payment-button" type="submit" class="btn btn-lg btn-primary btn-block">
+                                    <span id="payment-button-amount">Save Record</span>
+                                </button>
 
-                                        <span id="payment-button-amount">Cancel</span>
-                                    </a>
-                                </div>
+                                <a style="float:right !important;" id="payment-button" href="<?= base_url('backend/timesheet') ?>"
+                                    class="btn btn-lg btn-dark text-light btn-block">
+                                    <span id="payment-button-amount">Cancel</span>
+                                </a>
+                            </div>
 
                     </form>
 

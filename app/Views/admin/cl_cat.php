@@ -45,7 +45,7 @@
 <tr>
 <th>SNo.</th>
 <th>Category</th>
-<th>Created</th>
+<th>Craeted Date</th>
 <th>Action</th>
 </tr>
 </thead>

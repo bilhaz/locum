@@ -15,12 +15,15 @@
         $('#employee_List')
         .dataTable({
             responsive: true,
+            order: false,
             columnDefs: [
                 {
                     orderable: true,
-                    targets: [0]
+                    targets: [0],
                 }
+                
             ]
+                
         });
     });
 </script>

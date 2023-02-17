@@ -71,7 +71,7 @@
                                         <?php if(!isset($row['order_id'])):?>
                             <a type="button" href="<?= base_url('backend/t-fill/' .encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-primary d-print-none"><i class="fa fa-calendar text-light">&nbsp;</i>Fill TimeSheet</a>
                                             <?php else: ?>
-                            <a type="button" href="<?= base_url('backend/t-edit/' .encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-warning d-print-none"><i class="fa fa-calendar text-dark">&nbsp;</i>Edit TimeSheet</a>
+                            <a type="button" href="<?= base_url('backend/t-edit/' .encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-warning d-print-none"><i class="fa fa-calendar text-dark">&nbsp;</i>Update TimeSheet</a>
                                                 <?php endif; ?>
                                         </td>
                                         <td>

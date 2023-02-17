@@ -3,7 +3,7 @@
 <div class="block-header py-lg-4 py-3">
 <div class="row g-3">
 <div class="col-md-6 col-sm-12">
-<h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> Client List</h2>
+<h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a>Blocked Clients</h2>
 <ul class="breadcrumb mb-0">
 <li class="breadcrumb-item"><a target="_blank" href="<?= base_url('backend/dashboard') ?>">SRA Locum</a></li>
 </ul>
@@ -44,7 +44,7 @@
 <th>SNo.</th>
 <th>Hospital Name</th>
 <th>Email</th>
-<th>Register</th>
+<th>Registration Date</th>
 <th>Action</th>
 </tr>
 </thead>
@@ -61,12 +61,11 @@
 
 <td>
 <h6 class="mb-0"><?= $row['cl_h_name']?></h6>
-<!-- <span><a href="https://wrraptheme.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="771a1605041f161b1b5a1937101a161e1b5914181a">[email&#160;protected]</a></span> -->
 </td>
 <td><span><?= $row['cl_cont_email']?></span></td>
 <td><?= $row['cl_created']?></td>
 <td>
-<a type="button" href="<?= base_url('backend/client_unblock/'.encryptIt($row['cl_id']))?>" class="btn btn-sm btn-outline-danger js-sweetalert" title="Block" Onclick="return confirm('Are You sure?');" data-type="confirm"><i class="fa fa-ban"></i></a>
+<a type="button" href="<?= base_url('backend/client_unblock/'.encryptIt($row['cl_id']))?>" class="btn btn-sm btn-outline-danger js-sweetalert" title="Block" Onclick="return confirm('Are You sure?');" data-type="confirm"><i class="fa fa-unlock"></i></a>
 </td>
 </tr>
 <?php endforeach; ?>

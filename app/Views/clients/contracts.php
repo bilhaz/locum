@@ -92,7 +92,9 @@
                                             <?php endif; ?>
                                             <?php endif; ?>
                                             <td>
+                                                <?php if($row['ord_status'] == "1"): ?>
                                             <a type="button" href="<?= base_url('client/edit-order/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                           <?php endif; ?>
                                             <?php if($row['ord_cancel_bcl'] <> 1): ?>
                                             <a type="button" href="<?= base_url('client/canc-ord/'.encryptIt($row['ord_id']))?>" class="btn btn-sm btn-outline-danger js-sweetalert" title="Cancel" Onclick="return confirm('Are You sure?');" data-type="confirm"><i class="fa fa-ban"></i></a>
                                                 <?php endif; ?>

@@ -24,11 +24,22 @@
                 <div class="card">
                     <div class="card-header"></div>
                     <div class="card-body">
-                        <?php if (isset($validation)) : ?>
-                        <div class="alert alert-danger" role="alert">
-                            <?= $validation->listErrors() ?>
-                        </div>
-                        <?php endif; ?>
+                    <?php if (isset($validation)) : ?>
+                                <div class="alert alert-danger" role="alert">
+                                    <?= $validation->listErrors() ?>
+                                </div>
+                            <?php endif; ?>
+                            <?php if (session()->get('success')) : ?>
+                                <div class="alert alert-success" role="alert">
+                                    <?= session()->get('success') ?>
+                                </div>
+                            <?php endif; ?>
+
+                            <?php if (session()->get('error')) : ?>
+                                <div class="alert alert-danger" role="alert">
+                                    <?= session()->get('error') ?>
+                                </div>
+                            <?php endif; ?>
                         <div class="card-title">
                             <h3 class="text-center title-2">Employee Details</h3>
                         </div>
@@ -58,6 +69,7 @@
                                         <option value="">Select Gender</option>
                                         <option value="M" <?= set_select('cl_gender','M', ( !empty($fieldType) && $fieldType == 'M' ? TRUE : FALSE )); ?> >Male</option>
                                         <option value="F" <?= set_select('cl_gender','F', ( !empty($fieldType) && $fieldType == 'F' ? TRUE : FALSE )); ?> >Female</option>
+                                        <option value="O" <?= set_select('cl_gender','O', ( !empty($fieldType) && $fieldType == 'O' ? TRUE : FALSE )); ?> >Other</option>
                                        
                                     </select>                                 
                                  </div>
@@ -85,7 +97,7 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
-                                    <label for="emp_spec2" class="control-label mb-1">Speciality 2</label>
+                                    <label for="emp_spec2" class="control-label mb-1">Speciality 2<small>&nbsp;(Optional)</small></label>
                                     <select id="emp_spec2" name="emp_spec2" class="form-control select2"  data-parsley-trigger="change">
                                         <option value="">Select Speciality</option>
                                         <?php foreach($spec as $srow):?>
@@ -94,7 +106,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="emp_grade2" class="control-label mb-1">Grade 2</label>
+                                    <label for="emp_grade2" class="control-label mb-1">Grade 2<small>&nbsp;(Optional)</small></label>
                                     <select id="emp_grade2" name="emp_grade2" class="form-control select2"  data-parsley-trigger="change">
                                         <option value="">Select Grade</option>
                                         <?php foreach($grade as $grow):?>
@@ -104,7 +116,7 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
-                                    <label for="emp_spec3" class="control-label mb-1">Speciality 3</label>
+                                    <label for="emp_spec3" class="control-label mb-1">Speciality 3<small>&nbsp;(Optional)</small></label>
                                     <select id="emp_spec3" name="emp_spec3" class="form-control select2"  data-parsley-trigger="change">
                                         <option value="">Select Speciality</option>
                                         <?php foreach($spec as $srow):?>
@@ -112,7 +124,7 @@
                                         <?php endforeach; ?>
                                     </select>                                </div>
                                 <div class="form-group col-md-6">
-                                    <label for="emp_grade3" class="control-label mb-1">Grade 3</label>
+                                    <label for="emp_grade3" class="control-label mb-1">Grade 3<small>&nbsp;(Optional)</small></label>
                                     <select id="emp_grade3" name="emp_grade3" class="form-control select2"  data-parsley-trigger="change">
                                         <option value="">Select Grade</option>
                                         <?php foreach($grade as $grow):?>
@@ -155,44 +167,41 @@
                             <div class="row mb-3">
                                 <label for="formFile" class="form-label">Garda Vetting Certificate</label>
                                 <input class="form-control" type="file" name="emp_gv_cert" id="formFile"
-                                    data-parsley-max-file-size="2000" required="" />
+                                    data-parsley-max-file-size="2000" />
                             </div>
 
                             <div class="row mb-3">
                                 <label for="formFile" class="form-label">Recent Reference</label>
                                 <input class="form-control" type="file" name="emp_rec_refer" id="formFile"
-                                    data-parsley-max-file-size="2000" required="" />
+                                    data-parsley-max-file-size="2000"  />
                             </div>
 
                             <div class="row mb-3">
                                 <label for="formFile" class="form-label">Passport</label>
                                 <input class="form-control" type="file" name="emp_passport" id="formFile"
-                                    data-parsley-max-file-size="2000" required="" />
+                                    data-parsley-max-file-size="2000"  />
                             </div>
 
                             <div class="row mb-3">
                                 <label for="formFile" class="form-label">Occupational Health</label>
                                 <input class="form-control" type="file" name="emp_occup_health" id="formFile"
-                                    data-parsley-max-file-size="2000" required="" />
+                                    data-parsley-max-file-size="2000"  />
                             </div>
 
 
                             <div class="row mb-3">
                                 <label for="formFile" class="form-label">Work Permit</label>
                                 <input class="form-control" type="file" name="emp_work_permit" id="formFile"
-                                    data-parsley-max-file-size="2000" required="" />
+                                    data-parsley-max-file-size="2000"  />
                             </div>
 
-                            <div>
+                            <div> 
                                 <button id="payment-button" type="submit" class="btn btn-lg btn-primary btn-block">
                                     <span id="payment-button-amount">Save Record</span>
                                 </button>
-                            </div>
-                            <br>
-                            <div>
-                                <a id="payment-button" href="<?= base_url('backend/employees') ?>"
-                                    class="btn btn-lg btn-dark btn-block">
 
+                                <a style="float:right !important;" id="payment-button" href="<?= base_url('backend/employees') ?>"
+                                    class="btn btn-lg btn-dark text-light btn-block">
                                     <span id="payment-button-amount">Cancel</span>
                                 </a>
                             </div>

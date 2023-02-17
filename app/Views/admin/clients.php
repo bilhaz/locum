@@ -46,7 +46,7 @@
                                     <th>SNo.</th>
                                     <th>Hospital Name</th>
                                     <th>Email</th>
-                                    <th>Register</th>
+                                    <th>Registration Date</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -70,11 +70,11 @@
                                             <?php if (!empty($row['cl_h_name'])) : ?>
                                                 <a type="button" href="<?= base_url('backend/client_edit/' . encryptIt($row['cl_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
                                             <?php else : ?>
-                                                <a type="button" href="<?= base_url('backend/client_details/' . encryptIt($row['cl_id'])) ?>" class="btn btn-sm btn-outline-warning" title="Form Pending"><i class="fa fa-wpforms"></i></a>
+                                                <a type="button" href="<?= base_url('backend/client_details/' . encryptIt($row['cl_id'])) ?>" class="btn btn-sm btn-outline-warning" title="Registration Form Pending"><i class="fa fa-wpforms"></i></a>
                                             <?php endif; ?>
                                             <a type="button" href="<?= base_url('backend/client_block/' . encryptIt($row['cl_id'])) ?>" class="btn btn-sm btn-outline-danger js-sweetalert" title="Block" Onclick="return confirm('Are You sure?');" data-type="confirm"><i class="fa fa-ban"></i></a>
                                             <?php if (session()->grp_id == 'super_admin'): ?>
-                                            <a type="button" href="<?= base_url('backend/client-pwd/' . encryptIt($row['cl_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="Change Password" Onclick="return confirm('Are You sure?');" data-type="confirm"><i class="fa fa-unlock-alt"></i></a>
+                                            <a type="button" href="<?= base_url('backend/client-pwd/' . encryptIt($row['cl_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="Change Password" Onclick="return confirm('Are You sure?');" data-type="confirm"><i class="fa fa-key"></i></a>
                                             <?php endif; ?>
 
                                         </td>

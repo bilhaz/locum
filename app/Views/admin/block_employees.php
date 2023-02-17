@@ -19,7 +19,6 @@
 <h6 class="card-title">Employee List</h6>
 <ul class="header-dropdown">
 <li>
-<!-- <a type="button" "<?= base_url('backend/reg_emp')?>" class="btn btn-sm btn-outline-primary">Register Employee</a> -->
 </li>
 </ul>
 </div>
@@ -46,7 +45,7 @@
 <th>SNo.</th>
 <th>Name</th>
 <th>Email</th>
-<th>Register</th>
+<th>Registration Date</th>
 <th>Action</th>
 </tr>
 </thead>

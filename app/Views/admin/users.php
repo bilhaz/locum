@@ -42,7 +42,7 @@
 <tr>
 <th>Name</th>
 <th>Role</th>
-<th>Created</th>
+<th>Craeted Date</th>
 <th>Designation</th>
 <th>Status</th>
 
@@ -79,7 +79,7 @@
         </td>
         <td>
 <a type="button" href="<?= base_url('backend/edit-user/'. encryptIt($row['usr_id'])) ?>" class="btn btn-sm btn-outline-primary" title="Edit"><i class="fa fa-edit"></i></a>
-<a type="button" href="<?= base_url('backend/b-userp/'. encryptIt($row['usr_id'])) ?>" class="btn btn-sm btn-outline-info" title="Change Password"><i class="fa fa-unlock-alt"></i></a>
+<a type="button" href="<?= base_url('backend/b-userp/'. encryptIt($row['usr_id'])) ?>" class="btn btn-sm btn-outline-info" title="Change Password"><i class="fa fa-key"></i></a>
 </td>
 </tr>
 <?php endforeach; ?>

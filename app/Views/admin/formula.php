@@ -3,7 +3,7 @@
 <div class="block-header py-lg-4 py-3">
 <div class="row g-3">
 <div class="col-md-6 col-sm-12">
-<h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> Grade List</h2>
+<h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> Formulae</h2>
 <ul class="breadcrumb mb-0">
 <li class="breadcrumb-item"><a target="_blank" href="<?= base_url('backend/dashboard') ?>">SRA Locum</a></li>
 
@@ -16,10 +16,10 @@
 <div class="col-lg-12">
 <div class="card mb-4">
 <div class="card-header">
-<h6 class="card-title">All Grades</h6>
+<h6 class="card-title">All Formulae</h6>
 <ul class="header-dropdown">
 <li>
-<a type="button" href="<?= base_url('backend/new_grade')?>" class="btn btn-sm btn-outline-primary">Add New</a>
+<!-- <a type="button" href="<?= base_url('backend/new_grade')?>" class="btn btn-sm btn-outline-primary">Add New</a> -->
 </li>
 </ul>
 </div>
@@ -44,7 +44,7 @@
 <thead class="thead-dark">
 <tr>
 <th>SNo.</th>
-<th>Grade</th>
+<th>Title</th>
 <th>Craeted Date</th>
 <th>Action</th>
 </tr>
@@ -53,7 +53,7 @@
   
   <?php 
   $i=1;
-  foreach($grade as $row): ?>
+  foreach($form as $row): ?>
 <tr>
 <td>
 <?= $i++ ?>
@@ -61,15 +61,13 @@
 
 
 <td>
-<h6 class="mb-0"><?= $row['grade_name']?></h6>
+<h6 class="mb-0"><?= $row['title']?></h6>
 </td>
-<td><span><?= $row['grade_created']?></span></td>
+<td><span><?= $row['created']?></span></td>
 <td>
   
-<a type="button" href="<?= base_url('backend/edit_grade/'. encryptIt($row['grade_id']))?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
-<?php if (session()->grp_id == 'super_admin'): ?>
-<a type="button" href="<?= base_url('backend/del_grade/'.encryptIt($row['grade_id']))?>" class="btn btn-sm btn-outline-danger js-sweetalert" title="Delete" Onclick="return confirm('Are You sure?');" data-type="confirm"><i class="fa fa-trash"></i></a>
-<?php endif; ?>
+<a type="button" href="<?= base_url('backend/edit-formula/'. encryptIt($row['id']))?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+
 </td>
 </tr>
 <?php endforeach; ?>

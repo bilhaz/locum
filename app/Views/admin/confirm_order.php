@@ -45,7 +45,7 @@
 <th>ID</th>
 <th>Hospital Name</th>
 <th>Employee</th>
-<th>Craeted</th>
+<th>Craeted Date</th>
 <th>Status</th>
 <th>View</th>
 <th>Action</th>

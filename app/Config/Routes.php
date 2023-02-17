@@ -68,6 +68,8 @@ $routes->match(['get' , 'post'], 'backend/new_grade', 'admin\Backend::new_grade'
 $routes->match(['get' , 'post'], 'backend/edit_grade/(:any)', 'admin\Backend::edit_grade/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/del_grade/(:any)', 'admin\Backend::del_grade/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/cat', 'admin\Backend::cl_cat' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'backend/formula', 'admin\Backend::formula' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'backend/edit-formula/(:any)', 'admin\Backend::edit_formula/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/new_cat', 'admin\Backend::new_cl_cat' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/edit_cat/(:any)', 'admin\Backend::edit_cl_cat/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/del_cat/(:any)', 'admin\Backend::del_cl_cat/$1' ,['filter' => 'B_auth']);

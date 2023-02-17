@@ -17,8 +17,8 @@ class formulaModel extends Model
 
 
     protected $useTimestamps = true;
-    protected $createdField  = 'grade_created';
-    protected $updatedField  = 'grade_updated';
+    protected $createdField  = 'created';
+    protected $updatedField  = 'updated';
     //protected $deletedField  = 'usr_deleted_at';
 
     //protected $validationRules    = [];

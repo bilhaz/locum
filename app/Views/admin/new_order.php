@@ -59,8 +59,8 @@
                             
                             <div class="row mb-3">
                                 <div class="form-group col-md-6">
-                                    <label for="ord_speciality" class="control-label mb-1">Speciality</label>
-                                    <select id="ord_speciality" name="ord_speciality" class="form-control select2" required="" data-parsley-trigger="change">
+                                    <label for="ord_speciality" class="control-label mb-1">Required Speciality</label>
+                                    <select id="ord_speciality" name="ord_speciality" class="form-control select2"  data-parsley-trigger="change">
                                         <option value="">Select Speciality</option>
                                         <?php foreach($sp_row as $srow):?>
                                         <option value="<?= $srow['spec_id']?>" <?= set_select('ord_speciality',$srow['spec_id'], ( !empty($fieldType) && $fieldType == $srow['spec_id'] ? TRUE : FALSE )); ?>><?= $srow['spec_name']?></option>
@@ -68,8 +68,8 @@
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                <label for="ord_grade" class="control-label mb-1">Grade</label>
-                                    <select id="ord_grade" name="ord_grade"  class="form-control select2" required="" data-parsley-trigger="change">
+                                <label for="ord_grade" class="control-label mb-1">Required Grade</label>
+                                    <select id="ord_grade" name="ord_grade"  class="form-control select2"  data-parsley-trigger="change">
                                         <option value="">Select Grade</option>
                                         <?php foreach($gr_row as $grow):?>
                                         <option value="<?= $grow['grade_id']?>" <?= set_select('ord_grade',$grow['grade_id'], ( !empty($fieldType) && $fieldType == $grow['grade_id'] ? TRUE : FALSE )); ?>><?= $grow['grade_name']?></option>
@@ -79,8 +79,8 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="form-group col-md-6">
-                                    <label for="cl_id" class="control-label mb-1">Medical Personnel</label>
-                                    <select id="cl_id" name="cl_id" class="select2 form-control" required="" data-parsley-trigger="change">
+                                    <label for="cl_id" class="control-label mb-1">Order From</label>
+                                    <select id="cl_id" name="cl_id" class="select2 form-control"  data-parsley-trigger="change">
                                         <option value="">Select Client</option>
                                         <?php foreach($cli_row as $crow):?>
                                         <option value="<?= $crow['cl_id']?>" <?= set_select('cl_id',$crow['cl_id'], ( !empty($fieldType) && $fieldType == $crow['cl_id'] ? TRUE : FALSE )); ?>><?= $crow['cl_cont_name'].' ('.$crow['cl_h_name'].')'?></option>
@@ -88,8 +88,8 @@
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                <label for="emp_id" class="control-label mb-1">Doctor</label>
-                                    <select id="emp_id" name="emp_id"  class="form-control select2" data-parsley-trigger="change" required="">
+                                <label for="emp_id" class="control-label mb-1">Doctor Assigned to</label>
+                                    <select id="emp_id" name="emp_id"  class="form-control select2" data-parsley-trigger="change" >
                                         <option value="">Select Employee</option>
                                         <?php foreach($emp_row as $erow):?>
                                         <option value="<?= $erow['emp_id']?>" <?= set_select('emp_id',$erow['emp_id'], ( !empty($fieldType) && $fieldType == $erow['emp_id'] ? TRUE : FALSE )); ?>><?= $erow['emp_fname'] .' '.$erow['emp_lname']?></option>
@@ -100,81 +100,81 @@
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
                                     <label for="ord_required_from" class="ord_required_from-label mb-1">Locum Required From</label>
-                                    <input id="ord_required_from" name="ord_required_from" type="datetime-local" class="form-control" required="" value="<?= set_value('ord_required_from') ?>">
+                                    <input id="ord_required_from" name="ord_required_from" type="datetime-local" class="form-control"  value="<?= set_value('ord_required_from') ?>">
                                 </div>
                                 <div class="form-group col-md-6 ">
                                     <label for="ord_required_to" class="control-label mb-1">Locum Required To</label>
-                                    <input id="ord_required_to" name="ord_required_to" type="datetime-local" class="form-control" required="" value="<?= set_value('ord_required_to') ?>">
+                                    <input id="ord_required_to" name="ord_required_to" type="datetime-local" class="form-control"  value="<?= set_value('ord_required_to') ?>">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
                                     <label for="ord_process_date" class="control-label mb-1">Process Date</label>
-                                    <input id="ord_process_date" name="ord_process_date" type="Date" class="form-control" required="" value="<?= set_value('ord_process_date') ?>">
+                                    <input id="ord_process_date" name="ord_process_date" type="Date" class="form-control"  value="<?= set_value('ord_process_date') ?>">
                                 </div>
                                 <div class="form-group col-md-6 ">
                                     <label for="ord_confirmation_date" class="control-label mb-1">Confirmation Date</label>
-                                    <input id="ord_confirmation_date" name="ord_confirmation_date" type="Date" class="form-control" required="" value="<?= set_value('ord_confirmation_date') ?>">
+                                    <input id="ord_confirmation_date" name="ord_confirmation_date" type="Date" class="form-control"  value="<?= set_value('ord_confirmation_date') ?>">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
-                                    <label for="ord_process_details_from" class="control-label mb-1">Process Details From</label>
-                                    <input id="ord_process_details_from" name="ord_process_details_from" type="datetime-local" class="form-control" required="" value="<?= set_value('ord_process_details_from') ?>">
+                                    <label for="ord_process_details_from" class="control-label mb-1">Locum Process From</label>
+                                    <input id="ord_process_details_from" name="ord_process_details_from" type="datetime-local" class="form-control"  value="<?= set_value('ord_process_details_from') ?>">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="ord_process_details_to" class="control-label mb-1">Process Details To</label>
-                                    <input id="ord_process_details_to" name="ord_process_details_to" type="datetime-local" class="form-control" required="" value="<?= set_value('ord_process_details_to') ?>">
+                                    <label for="ord_process_details_to" class="control-label mb-1">Locum Process To</label>
+                                    <input id="ord_process_details_to" name="ord_process_details_to" type="datetime-local" class="form-control"  value="<?= set_value('ord_process_details_to') ?>">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
-                                    <label for="ord_normal_hrs" class="control-label mb-1">Normal Hours</label>
-                                    <input id="ord_normal_hrs" oninput="calculate()" name="ord_normal_hrs" type="number" class="form-control" required="" value="<?= set_value('ord_normal_hrs') ?>">
+                                    <label for="ord_normal_hrs" class="control-label mb-1">No of Normal Hours</label>
+                                    <input id="ord_normal_hrs" oninput="calculate()" name="ord_normal_hrs" type="number" class="form-control"  value="<?= set_value('ord_normal_hrs') ?>">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="ord_on_call_hrs" class="control-label mb-1">On Call Hours</label>
-                                    <input id="ord_on_call_hrs" oninput="calculate()" name="ord_on_call_hrs" type="number" class="form-control" required="" value="<?= set_value('ord_on_call_hrs') ?>">
+                                    <label for="ord_on_call_hrs" class="control-label mb-1">No of On Call Hours</label>
+                                    <input id="ord_on_call_hrs" oninput="calculate()" name="ord_on_call_hrs" type="number" class="form-control"  value="<?= set_value('ord_on_call_hrs') ?>">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
                                     <label for="total" class="control-label mb-1">Total Hours</label>
-                                    <input id="total" name="ord_total_hrs" type="number" class="form-control" required="" value="<?= set_value('ord_total_hrs') ?>" >
+                                    <input id="total" name="ord_total_hrs" type="number" class="form-control"  value="<?= set_value('ord_total_hrs') ?>" >
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="ord_invoice_id" class="control-label mb-1">Invoice Id</label>
-                                    <input id="ord_invoice_id" name="ord_invoice_id" type="text" class="form-control" required="" value="<?= set_value('ord_invoice_id') ?>">
+                                    <input id="ord_invoice_id" name="ord_invoice_id" type="text" class="form-control"  value="<?= set_value('ord_invoice_id') ?>">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
                                     <label for="ord_approx_cost" class="control-label mb-1">Approximate Cost</label>
-                                    <input id="ord_approx_cost" name="ord_approx_cost" type="text" class="form-control" required="" value="<?= set_value('ord_approx_cost') ?>">
+                                    <input id="ord_approx_cost" name="ord_approx_cost" type="text" class="form-control"  value="<?= set_value('ord_approx_cost') ?>">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="ord_pay_to_dr" class="control-label mb-1">Pay to Dr.</label>
-                                    <input id="ord_pay_to_dr" name="ord_pay_to_dr" type="text" class="form-control" required="" value="<?= set_value('ord_pay_to_dr') ?>">
+                                    <input id="ord_pay_to_dr" name="ord_pay_to_dr" type="text" class="form-control"  value="<?= set_value('ord_pay_to_dr') ?>">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
                                     <label for="ord_admin_charges" class="control-label mb-1">Admin Charges</label>
-                                    <input id="ord_admin_charges" name="ord_admin_charges" type="text" class="form-control" required="" value="<?= set_value('ord_admin_charges') ?>">
+                                    <input id="ord_admin_charges" name="ord_admin_charges" type="text" class="form-control"  value="<?= set_value('ord_admin_charges') ?>">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="ord_diff_profit_admin" class="control-label mb-1">Diff (Profit) + Admin Charges</label>
-                                    <input id="ord_diff_profit_admin" name="ord_diff_profit_admin" type="text" class="form-control" required="" value="<?= set_value('ord_diff_profit_admin') ?>">
+                                    <input id="ord_diff_profit_admin" name="ord_diff_profit_admin" type="text" class="form-control"  value="<?= set_value('ord_diff_profit_admin') ?>">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
                                     <label for="ord_time_sheet_rcvd" class="control-label mb-1">Time Sheet received</label>
-                                    <input id="ord_time_sheet_rcvd" name="ord_time_sheet_rcvd" type="Date" class="form-control" required="" value="<?= set_value('ord_diff_profit_admin') ?>">
+                                    <input id="ord_time_sheet_rcvd" name="ord_time_sheet_rcvd" type="Date" class="form-control"  value="<?= set_value('ord_diff_profit_admin') ?>">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="ord_time_sheet_mode" class="control-label mb-1">Time Sheet Mode</label>
-                                    <select id="ord_time_sheet_mode" name="ord_time_sheet_mode" class="form-control select2" required="" data-parsley-trigger="change">
+                                    <select id="ord_time_sheet_mode" name="ord_time_sheet_mode" class="form-control select2"  data-parsley-trigger="change">
                                         <option value="">Select Mode</option>
                                         <option value="whatsapp" <?= set_select('ord_time_sheet_mode','whatsapp', ( !empty($fieldType) && $fieldType == "whatsapp" ? TRUE : FALSE )); ?>>whatsapp</option>
                                         <option value="email" <?= set_select('ord_time_sheet_mode','email', ( !empty($fieldType) && $fieldType == "email" ? TRUE : FALSE )); ?>>email</option>
@@ -184,12 +184,12 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
-                                    <label for="ord_time_sheet_process" class="control-label mb-1">Time Sheet Process</label>
-                                    <input id="ord_time_sheet_process" name="ord_time_sheet_process" type="date" class="form-control" required="" value="<?= set_value('ord_time_sheet_process') ?>">
+                                    <label for="ord_time_sheet_process" class="control-label mb-1">Time Sheet Processed</label>
+                                    <input id="ord_time_sheet_process" name="ord_time_sheet_process" type="date" class="form-control"  value="<?= set_value('ord_time_sheet_process') ?>">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="ord_time_sheet_approved" class="control-label mb-1">Time Sheet Status</label>
-                                    <select id="ord_time_sheet_approved" name="ord_time_sheet_approved" type="text" class="form-control select2" required="" data-parsley-trigger="change">
+                                    <select id="ord_time_sheet_approved" name="ord_time_sheet_approved" type="text" class="form-control select2"  data-parsley-trigger="change">
                                         <option value="">Select Status</option>
                                         <option value="Approved" <?= set_select('ord_time_sheet_approved','Approved', ( !empty($fieldType) && $fieldType == "Approved" ? TRUE : FALSE )); ?>>Approved</option>
                                         <option value="Not-Approved" <?= set_select('ord_time_sheet_approved','Not-Approved', ( !empty($fieldType) && $fieldType == "Not-Approved" ? TRUE : FALSE )); ?>>Not-Approved</option>
@@ -203,45 +203,45 @@
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
                                     <label for="ord_invoice_refer" class="control-label mb-1">Invoice Reference</label>
-                                    <input id="ord_invoice_refer" name="ord_invoice_refer" type="text" class="form-control" required="" value="<?= set_value('ord_invoice_refer') ?>">
+                                    <input id="ord_invoice_refer" name="ord_invoice_refer" type="text" class="form-control"  value="<?= set_value('ord_invoice_refer') ?>">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="ord_ord_invoice_datetime_sheet_approved" class="control-label mb-1">Invoice Date</label>
-                                    <input id="ord_invoice_date" name="ord_invoice_date" type="date" class="form-control" required="" value="<?= set_value('ord_invoice_date') ?>">
+                                    <input id="ord_invoice_date" name="ord_invoice_date" type="date" class="form-control"  value="<?= set_value('ord_invoice_date') ?>">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
                                     <label for="ord_invoice_by" class="control-label mb-1">Invoice By</label>
-                                    <input id="ord_invoice_by" name="ord_invoice_by" type="text" class="form-control" required="" value="<?= set_value('ord_invoice_by') ?>">
+                                    <input id="ord_invoice_by" name="ord_invoice_by" type="text" class="form-control"  value="<?= set_value('ord_invoice_by') ?>">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="ord_sage_refer_no" class="control-label mb-1">Sage Reference No.</label>
-                                    <input id="ord_sage_refer_no" name="ord_sage_refer_no" type="date" class="form-control" required="" value="<?= set_value('ord_sage_refer_no') ?>">
+                                    <input id="ord_sage_refer_no" name="ord_sage_refer_no" type="text" class="form-control"  value="<?= set_value('ord_sage_refer_no') ?>">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
                                     <label for="ord_paymnt_rcvd_date" class="control-label mb-1">Payment Received Date</label>
-                                    <input id="ord_paymnt_rcvd_date" name="ord_paymnt_rcvd_date" type="date" class="form-control" required="" value="<?= set_value('ord_paymnt_rcvd_date') ?>">
+                                    <input id="ord_paymnt_rcvd_date" name="ord_paymnt_rcvd_date" type="date" class="form-control"  value="<?= set_value('ord_paymnt_rcvd_date') ?>">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="ord_pay_to_dr_date" class="control-label mb-1">Paid to Dr.</label>
-                                    <input id="ord_pay_to_dr_date" name="ord_pay_to_dr_date" type="date" class="form-control" required="" value="<?= set_value('ord_pay_to_dr_date') ?>">
+                                    <label for="ord_pay_to_dr_date" class="control-label mb-1">Paid to Employee Date</label>
+                                    <input id="ord_pay_to_dr_date" name="ord_pay_to_dr_date" type="date" class="form-control"  value="<?= set_value('ord_pay_to_dr_date') ?>">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
                                     <label for="ord_case_status" class="control-label mb-1">Case Status</label>
-                                    <select id="ord_case_status" name="ord_case_status" class="form-control select2" required="" data-parsley-trigger="change">
+                                    <select id="ord_case_status" name="ord_case_status" class="form-control select2"  data-parsley-trigger="change">
                                         <option value="">Select status</option>
                                         <option value="Closed" <?= set_select('ord_case_status','Closed', ( !empty($fieldType) && $fieldType == "Closed" ? TRUE : FALSE )); ?>>Closed</option>
                                         <option value="Pending" <?= set_select('ord_case_status','Pending', ( !empty($fieldType) && $fieldType == "Pending" ? TRUE : FALSE )); ?>>Pending</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="ord_payment_status" class="control-label mb-1">Payment Status</label>
-                                    <select id="ord_payment_status" name="ord_payment_status" class="form-control select2" required="" data-parsley-trigger="change">
+                                    <label for="ord_payment_status" class="control-label mb-1">Employee Payment Status</label>
+                                    <select id="ord_payment_status" name="ord_payment_status" class="form-control select2"  data-parsley-trigger="change">
                                         <option value="">Select status</option>
                                         <option value="Paid" <?= set_select('ord_payment_status','Paid', ( !empty($fieldType) && $fieldType == "Paid" ? TRUE : FALSE )); ?>>Paid</option>
                                         <option value="Pending" <?= set_select('ord_payment_status','Pending', ( !empty($fieldType) && $fieldType == "Pending" ? TRUE : FALSE )); ?>>Pending</option>
@@ -250,22 +250,20 @@
                             </div>
 
                             <div class="row mb-3">
-                                <label for="ord_comment2" class="control-label mb-1">Comment</label>
+                                <label for="ord_comment2" class="control-label mb-1">Payment Remarks</label>
                                 <textarea id="ord_comment2" name="ord_comment2" type="text" class="form-control" ><?= set_value('ord_comment2') ?></textarea>
                             </div>
                             
 
                             
 
-                            <div>
+                            <div> 
                                 <button id="payment-button" type="submit" class="btn btn-lg btn-primary btn-block">
                                     <span id="payment-button-amount">Save Order</span>
                                 </button>
-                            </div>
-                            <br>
-                            <div>
-                                <a id="payment-button" href="<?= base_url('backend/orders') ?>" class="btn btn-lg btn-dark btn-block">
 
+                                <a style="float:right !important;" id="payment-button" href="<?= base_url('backend/orders') ?>"
+                                    class="btn btn-lg btn-dark text-light btn-block">
                                     <span id="payment-button-amount">Cancel</span>
                                 </a>
                             </div>

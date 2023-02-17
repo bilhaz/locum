@@ -68,63 +68,66 @@
                                     <label for="cl_h_name" class="control-label mb-1">Hospital Name</label>
                                     <input id="cl_h_name" name="cl_h_name" type="text" class="form-control" required="">
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="cl_gender" class="control-label mb-1">Gender</label>
-                                    <select id="cl_gender" name="cl_gender" class="form-control select2"  data-parsley-trigger="change" required="">
-                                        <option value="">Select Gender</option>
-                                        <option value="M" <?= set_select('cl_gender','M', ( !empty($fieldType) && $fieldType == 'M' ? TRUE : FALSE )); ?> >Male</option>
-                                        <option value="F" <?= set_select('cl_gender','F', ( !empty($fieldType) && $fieldType == 'F' ? TRUE : FALSE )); ?> >Female</option>
-                                       
-                                    </select>                                 
-                                 </div>
+                               
+                                <div class="col-md-6 ">
+                                
+                                <label for="cl_address" class="control-label mb-1">Address</label>
+                                <input id="cl_address" name="cl_address" type="text" class="form-control" required="">
+                        </div>   
                             </div>
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
-                                    <label for="cl_cont_desig" class="control-label mb-1">Contact Personnel Designation</label>
-                                    <input id="cl_cont_desig" name="cl_cont_desig" type="text" class="form-control" required="">
+                                <label for="cl_eircode" class="control-label mb-1">Eircode</label>
+                                    <input id="cl_eircode" name="cl_eircode" type="text" class="form-control" required="">
+                                    
                                 </div>
                                 <div class="form-group col-md-6 ">
-                                    <label for="cl_eircode" class="control-label mb-1">Eircode</label>
-                                    <input id="cl_eircode" name="cl_eircode" type="number" class="form-control"
-                                        required="">
+                                <label for="cl_county" class="control-label mb-1">County</label>
+                                    <input id="cl_county" name="cl_county" type="text" class="form-control" required="">
+                                        
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
-                                    <label for="cl_cont_name" class="control-label mb-1">Contact Personnel Name</label>
+                                    <label for="cl_cont_name" class="control-label mb-1">Personnel Name</label>
                                     <input id="cl_cont_name" name="cl_cont_name" type="text" class="form-control" required="">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="cl_cont_phone" class="control-label mb-1">Contact Number</label>
-                                    <input id="cl_cont_phone" name="cl_cont_phone" type="number" class="form-control" required="">
+                                <label for="cl_gender" class="control-label mb-1">Personnel Gender</label>
+                                <select id="cl_gender" name="cl_gender" class="form-control select2"  data-parsley-trigger="change" required="">
+                                        <option value="">Select Gender</option>
+                                        <option value="M" <?= set_select('cl_gender','M', ( !empty($fieldType) && $fieldType == 'M' ? TRUE : FALSE )); ?> >Male</option>
+                                        <option value="F" <?= set_select('cl_gender','F', ( !empty($fieldType) && $fieldType == 'F' ? TRUE : FALSE )); ?> >Female</option>
+                                        <option value="O" <?= set_select('cl_gender','O', ( !empty($fieldType) && $fieldType == 'O' ? TRUE : FALSE )); ?> >Other</option>
+                                    </select> 
                                 </div>
                             </div>
                             <div class="row mb-3">
                             <div class="form-group col-md-6 ">
-                                
-                                    <label for="cl_address" class="control-label mb-1">Address</label>
-                                    <input id="cl_address" name="cl_address" type="text" class="form-control" required="">
+                            <label for="cl_cont_phone" class="control-label mb-1">Personnel Contact Number</label>
+                                    <input id="cl_cont_phone" name="cl_cont_phone" type="number" class="form-control" required="">
+                            
+                                      
                             </div>
                                     <div class="form-group col-md-6 ">
-                                    <label for="cl_county" class="control-label mb-1">County</label>
-                                    <input id="cl_county" name="cl_county" type="text" class="form-control" required="">
+                                    <label for="cl_cont_desig" class="control-label mb-1">Personnel Designation</label>
+                                    <input id="cl_cont_desig" name="cl_cont_desig" type="text" class="form-control" required="">
                                 </div>
                                 </div>
                             
 
-                            <div>
+                            <div> 
                                 <button id="payment-button" type="submit" class="btn btn-lg btn-primary btn-block">
                                     <span id="payment-button-amount">Save Record</span>
                                 </button>
-                            </div>
-                            <br>
-                            <div>
-                                <a id="payment-button" href="<?= base_url('backend/clients') ?>"
-                                    class="btn btn-lg btn-dark btn-block">
 
+                                <a style="float:right !important;" id="payment-button" href="<?= base_url('backend/clients') ?>"
+                                    class="btn btn-lg btn-dark text-light btn-block">
                                     <span id="payment-button-amount">Cancel</span>
                                 </a>
                             </div>
+                            <br>
+                            
                         </form>
                     </div>
                 </div>

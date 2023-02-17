@@ -75,6 +75,9 @@ class Backend extends BEBaseController
 		'edit-user' => ['super_admin'],
 		'b-userp' => ['super_admin'],
 		'change_doctor_cancelled_order' => ['super_admin','admin'],
+		'formula' => ['super_admin'],
+		'edit-formula' => ['super_admin'],
+
 
 
 
@@ -160,7 +163,7 @@ class Backend extends BEBaseController
 		$data['o_pro'] = $model->where('ord_status', '2')->countAllResults();
 		$data['o_con'] = $model->where('ord_status', '3')->countAllResults();
 		$data['o_end'] = $model->where('ord_status', '4')->countAllResults();
-		$data['o_exp'] = $model->where('ord_required_to <=', $dt)->where('ord_required_to', $dt)->countAllResults();
+		$data['o_exp'] = $model->where('ord_required_to <=', $dt)->where('ord_status', '1')->countAllResults();
 
 
 
@@ -309,7 +312,7 @@ class Backend extends BEBaseController
 				];
 				$model->update($bid, $newData);
 				$session = session();
-				$session->setFlashdata('success', 'Password Updated Successful');
+				$session->setFlashdata('success', 'Password Updated Successfully');
 				return redirect()->to('backend/users');
 			}
 		}
@@ -350,7 +353,7 @@ class Backend extends BEBaseController
 				];
 				$model->update($usrid, $newData);
 				$session = session();
-				$session->setFlashdata('success', 'Password Updation Successful');
+				$session->setFlashdata('success', 'Password Updated Successfully');
 				return redirect()->to('backend/pwdupd');
 			}
 		}
@@ -410,7 +413,7 @@ class Backend extends BEBaseController
 				$model->save($newData);
 				$id = $model->insertID;
 				$session = session();
-				$session->setFlashdata('success', 'Registration successful');
+				$session->setFlashdata('success', 'Doctor Registered, Complete the Registration Form');
 				return redirect()->to('backend/emp_details/' . encryptIt($id));
 			}
 		}
@@ -445,12 +448,8 @@ class Backend extends BEBaseController
 				'emp_imcr_no' => ['label' => 'IMCR No.', 'rules' => 'required|numeric'],
 				'emp_cv' => ['label' => 'CV', 'rules' => 'uploaded[emp_cv]|ext_in[emp_cv,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_cv,2048]'],
 				'emp_imc_cert' => ['label' => 'IMC Certificate', 'rules' => 'uploaded[emp_imc_cert]|ext_in[emp_imc_cert,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_imc_cert,2048]'],
-				'emp_gv_cert' => ['label' => 'Garda Vetting', 'rules' => 'uploaded[emp_gv_cert]|ext_in[emp_gv_cert,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_gv_cert,2048]'],
-				'emp_rec_refer' => ['label' => 'Recent Reference', 'rules' => 'uploaded[emp_rec_refer]|ext_in[emp_rec_refer,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_rec_refer,2048]'],
-				'emp_passport' => ['label' => 'Passport', 'rules' => 'uploaded[emp_passport]|ext_in[emp_passport,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_passport,2048]'],
-				'emp_occup_health' => ['label' => 'Occupational Health', 'rules' => 'uploaded[emp_occup_health]|ext_in[emp_occup_health,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_occup_health,2048]'],
-				'emp_work_permit' => ['label' => 'Work Permit', 'rules' => 'uploaded[emp_work_permit]|ext_in[emp_work_permit,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_work_permit,2048]'],
 				'emp_gender' => ['label' => 'Gender', 'rules' => 'required'],
+				
 			];
 
 			$errors = [
@@ -614,7 +613,7 @@ class Backend extends BEBaseController
 				];
 				$model->update($id, $newData);
 				$session = session();
-				$session->setFlashdata('success', 'Record Successful Saved');
+				$session->setFlashdata('success', 'Record Successfully Saved');
 				return redirect()->to('backend/employees');
 			}
 		}
@@ -647,11 +646,6 @@ class Backend extends BEBaseController
 				'emp_imcr_no' => ['label' => 'IMCR No.', 'rules' => 'required|numeric'],
 				'emp_cv' => ['label' => 'CV', 'rules' => 'ext_in[emp_cv,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_cv,2048]'],
 				'emp_imc_cert' => ['label' => 'IMC Certificate', 'rules' => 'ext_in[emp_imc_cert,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_imc_cert,2048]'],
-				'emp_gv_cert' => ['label' => 'Garda Vetting', 'rules' => 'ext_in[emp_gv_cert,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_gv_cert,2048]'],
-				'emp_rec_refer' => ['label' => 'Recent Reference', 'rules' => 'ext_in[emp_rec_refer,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_rec_refer,2048]'],
-				'emp_passport' => ['label' => 'Passport', 'rules' => 'ext_in[emp_passport,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_passport,2048]'],
-				'emp_occup_health' => ['label' => 'Occupational Health', 'rules' => 'ext_in[emp_occup_health,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_occup_health,2048]'],
-				'emp_work_permit' => ['label' => 'Work Permit', 'rules' => 'ext_in[emp_work_permit,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_work_permit,2048]'],
 				'emp_gender' => ['label' => 'Gender', 'rules' => 'required'],
 			];
 
@@ -816,7 +810,7 @@ class Backend extends BEBaseController
 				];
 				$model->update($id, $newData);
 				$session = session();
-				$session->setFlashdata('success', 'Record Successful Updated');
+				$session->setFlashdata('success', 'Record Successfully Updated');
 				return redirect()->to('backend/emp_edit/' . encryptIt($id));
 			}
 		}
@@ -852,7 +846,7 @@ class Backend extends BEBaseController
 				];
 				$model->update($emid, $newData);
 				$session = session();
-				$session->setFlashdata('success', 'Password Updated Successful for ' . $data['e_up']['emp_email']);
+				$session->setFlashdata('success', 'Password Updated Successfully for ' . $data['e_up']['emp_email']);
 				return redirect()->to('backend/employees');
 			}
 		}
@@ -978,7 +972,7 @@ class Backend extends BEBaseController
 				$model->save($newData);
 				$id = $model->insertID;
 				$session = session();
-				$session->setFlashdata('success', 'Registration successful');
+				$session->setFlashdata('success', 'Client Registered, Complete the Registration Form');
 				return redirect()->to('backend/client_details/' . encryptIt($id));
 			}
 		}
@@ -1002,7 +996,7 @@ class Backend extends BEBaseController
 				'cl_h_name' => ['label' => 'Hospital Name', 'rules' => 'required'],
 				'cl_reg_as' => ['label' => 'Register As', 'rules' => 'required'],
 				'cl_county' => ['label' => 'County', 'rules' => 'required'],
-				'cl_eircode' => ['label' => 'Eircode', 'rules' => 'required|numeric'],
+				'cl_eircode' => ['label' => 'Eircode', 'rules' => 'required'],
 				'cl_cont_name' => ['label' => 'Contact Personnel Name', 'rules' => 'required'],
 				'cl_cont_phone' => ['label' => 'Contact No.', 'rules' => 'required|numeric'],
 				'cl_address' => ['label' => 'Address', 'rules' => 'required'],
@@ -1032,7 +1026,7 @@ class Backend extends BEBaseController
 				];
 				$model->update($id, $newData);
 				$session = session();
-				$session->setFlashdata('success', 'Record Successful Saved');
+				$session->setFlashdata('success', 'Record Successfully Saved');
 				return redirect()->to('backend/clients');
 			}
 		}
@@ -1056,7 +1050,7 @@ class Backend extends BEBaseController
 				'cl_h_name' => ['label' => 'Hospital Name', 'rules' => 'required'],
 				'cl_reg_as' => ['label' => 'Register As', 'rules' => 'required'],
 				'cl_county' => ['label' => 'County', 'rules' => 'required'],
-				'cl_eircode' => ['label' => 'Eircode', 'rules' => 'required|numeric'],
+				'cl_eircode' => ['label' => 'Eircode', 'rules' => 'required'],
 				'cl_cont_name' => ['label' => 'Contact Personnel Name', 'rules' => 'required'],
 				'cl_cont_phone' => ['label' => 'Contact No.', 'rules' => 'required|numeric'],
 				'cl_address' => ['label' => 'Address', 'rules' => 'required'],
@@ -1088,7 +1082,7 @@ class Backend extends BEBaseController
 				];
 				$model->update($id, $newData);
 				$session = session();
-				$session->setFlashdata('success', 'Record Successful Saved');
+				$session->setFlashdata('success', 'Record Successfully Saved');
 				return redirect()->to('backend/clients');
 			}
 		}
@@ -1124,7 +1118,7 @@ class Backend extends BEBaseController
 				];
 				$model->update($ccid, $newData);
 				$session = session();
-				$session->setFlashdata('success', 'Password Updated Successful for ' . $data['p_up']['cl_cont_email']);
+				$session->setFlashdata('success', 'Password Updated Successfully for ' . $data['p_up']['cl_cont_email']);
 				return redirect()->to('backend/clients');
 			}
 		}
@@ -1201,7 +1195,7 @@ class Backend extends BEBaseController
 		$dt = date('Y-m-d H:i:s', $timestamp);
 		helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->where('ord_required_to>=', $dt)->orderBy('ord_created', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->where('ord_required_to>=', $dt)->orderBy('orders.ord_created', 'DESC')->findAll();
 
 		return $this->LoadView('admin/orders', $data);
 	}
@@ -1224,44 +1218,11 @@ class Backend extends BEBaseController
 
 		if ($this->request->getMethod() == 'post') {
 			//let's do the validation here
-			$rules = [
+			
 
-				'ord_speciality' => ['label' => 'Speciality', 'rules' => 'required'],
-				'ord_grade' => ['label' => 'Grade', 'rules' => 'required'],
-				'cl_id' => ['label' => 'Client', 'rules' => 'required'],
-				'emp_id' => ['label' => 'Employee', 'rules' => 'required'],
-				'ord_required_from' => ['label' => 'Required From', 'rules' => 'required'],
-				'ord_required_to' => ['label' => 'Required To', 'rules' => 'required'],
-				'ord_process_date' => ['label' => 'Process Date', 'rules' => 'required'],
-				'ord_process_details_from' => ['label' => 'Process Details From', 'rules' => 'required'],
-				'ord_process_details_to' => ['label' => 'Process Details To', 'rules' => 'required'],
-				'ord_confirmation_date' => ['label' => 'Confirmation Date', 'rules' => 'required'],
-				'ord_invoice_id' => ['label' => 'invoice Details', 'rules' => 'required'],
-				'ord_normal_hrs' => ['label' => 'Normal Hrs', 'rules' => 'required'],
-				'ord_on_call_hrs' => ['label' => 'On Call Hrs', 'rules' => 'required'],
-				'ord_total_hrs' => ['label' => 'Total Hrs', 'rules' => 'required'],
-				'ord_approx_cost' => ['label' => 'Approximate Cost', 'rules' => 'required'],
-				'ord_pay_to_dr' => ['label' => 'Pay to Dr.', 'rules' => 'required'],
-				'ord_admin_charges' => ['label' => 'Admin Charges', 'rules' => 'required'],
-				'ord_diff_profit_admin' => ['label' => 'Diff(Profit) + Admin Charges', 'rules' => 'required'],
-				'ord_time_sheet_rcvd' => ['label' => 'Time Sheet Received', 'rules' => 'required'],
-				'ord_time_sheet_mode' => ['label' => 'Time Sheet Mode', 'rules' => 'required'],
-				'ord_time_sheet_process' => ['label' => 'Time Sheet Process', 'rules' => 'required'],
-				'ord_time_sheet_approved' => ['label' => 'Time Sheet Approved', 'rules' => 'required'],
-				'ord_invoice_refer' => ['label' => 'Invoice Reference', 'rules' => 'required'],
-				'ord_invoice_date' => ['label' => 'Invoive Date', 'rules' => 'required'],
-				'ord_invoice_by' => ['label' => 'Invoice by', 'rules' => 'required'],
-				'ord_sage_refer_no' => ['label' => 'Stage Reference', 'rules' => 'required'],
-				'ord_paymnt_rcvd_date' => ['label' => 'Payment Received Date', 'rules' => 'required'],
-				'ord_pay_to_dr_date' => ['label' => 'Paid Date to Dr.', 'rules' => 'required'],
-				'ord_case_status' => ['label' => 'Case Status', 'rules' => 'required'],
-				'ord_payment_status' => ['label' => 'Payment Status', 'rules' => 'required'],
+				
 
-			];
-
-			if (!$this->validate($rules)) {
-				$data['validation'] = $this->validator;
-			} else {
+			
 
 
 				//store this to database
@@ -1301,14 +1262,15 @@ class Backend extends BEBaseController
 					'ord_case_status' => $this->request->getVar('ord_case_status'),
 					'ord_payment_status' => $this->request->getVar('ord_payment_status'),
 					'ord_comment2' => $this->request->getVar('ord_comment2'),
+					'ord_status' => $this->request->getVar('ord_status'),
 
 
 				];
 				$model->insert($newData);
 				$session = session();
-				$session->setFlashdata('success', 'Order Successful Added');
+				$session->setFlashdata('success', 'Order Successfully Added');
 				return redirect()->to('backend/orders');
-			}
+			
 		}
 
 
@@ -1334,44 +1296,9 @@ class Backend extends BEBaseController
 
 		if ($this->request->getMethod() == 'post') {
 			//let's do the validation here
-			$rules = [
+			
 
-				'ord_speciality' => ['label' => 'Speciality', 'rules' => 'required'],
-				'ord_grade' => ['label' => 'Grade', 'rules' => 'required'],
-				'cl_id' => ['label' => 'Client', 'rules' => 'required'],
-				'emp_id' => ['label' => 'Employee', 'rules' => 'required'],
-				'ord_required_from' => ['label' => 'Required From', 'rules' => 'required'],
-				'ord_required_to' => ['label' => 'Required To', 'rules' => 'required'],
-				'ord_process_date' => ['label' => 'Process Date', 'rules' => 'required'],
-				'ord_process_details_from' => ['label' => 'Process Details From', 'rules' => 'required'],
-				'ord_process_details_to' => ['label' => 'Process Details To', 'rules' => 'required'],
-				'ord_confirmation_date' => ['label' => 'Confirmation Date', 'rules' => 'required'],
-				'ord_invoice_id' => ['label' => 'invoice Details', 'rules' => 'required'],
-				'ord_normal_hrs' => ['label' => 'Normal Hrs', 'rules' => 'required'],
-				'ord_on_call_hrs' => ['label' => 'On Call Hrs', 'rules' => 'required'],
-				'ord_total_hrs' => ['label' => 'Total Hrs', 'rules' => 'required'],
-				'ord_approx_cost' => ['label' => 'Approximate Cost', 'rules' => 'required'],
-				'ord_pay_to_dr' => ['label' => 'Pay to Dr.', 'rules' => 'required'],
-				'ord_admin_charges' => ['label' => 'Admin Charges', 'rules' => 'required'],
-				'ord_diff_profit_admin' => ['label' => 'Diff(Profit) + Admin Charges', 'rules' => 'required'],
-				'ord_time_sheet_rcvd' => ['label' => 'Time Sheet Received', 'rules' => 'required'],
-				'ord_time_sheet_mode' => ['label' => 'Time Sheet Mode', 'rules' => 'required'],
-				'ord_time_sheet_process' => ['label' => 'Time Sheet Process', 'rules' => 'required'],
-				'ord_time_sheet_approved' => ['label' => 'Time Sheet Approved', 'rules' => 'required'],
-				'ord_invoice_refer' => ['label' => 'Invoice Reference', 'rules' => 'required'],
-				'ord_invoice_date' => ['label' => 'Invoive Date', 'rules' => 'required'],
-				'ord_invoice_by' => ['label' => 'Invoice by', 'rules' => 'required'],
-				'ord_sage_refer_no' => ['label' => 'Stage Reference', 'rules' => 'required'],
-				'ord_paymnt_rcvd_date' => ['label' => 'Payment Received Date', 'rules' => 'required'],
-				'ord_pay_to_dr_date' => ['label' => 'Paid Date to Dr.', 'rules' => 'required'],
-				'ord_case_status' => ['label' => 'Case Status', 'rules' => 'required'],
-				'ord_payment_status' => ['label' => 'Payment Status', 'rules' => 'required'],
-
-			];
-
-			if (!$this->validate($rules)) {
-				$data['validation'] = $this->validator;
-			} else {
+			
 
 				$DA = $this->request->getFile('ord_assignment');
 
@@ -1431,9 +1358,9 @@ class Backend extends BEBaseController
 				];
 				$model->update($eid, $newData);
 				$session = session();
-				$session->setFlashdata('success', 'Order Successful Updated');
+				$session->setFlashdata('success', 'Order Successfully Updated');
 				return redirect()->to('backend/order_edit/' . encryptIt($eid));
-			}
+			
 		}
 
 
@@ -1535,7 +1462,7 @@ class Backend extends BEBaseController
 		$dt = date('Y-m-d H:i:s', $timestamp);
 		helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->where('ord_required_to<=', $dt)->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->where('ord_required_to<=', $dt)->where('ord_status', '1')->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('admin/expired_orders', $data);
 	}
@@ -1596,7 +1523,7 @@ class Backend extends BEBaseController
 				];
 				$model->insert($newData);
 				$session = session();
-				$session->setFlashdata('success', 'Speciality Successful Added');
+				$session->setFlashdata('success', 'Speciality Successfully Added');
 				return redirect()->to('backend/speciality');
 			}
 
@@ -1635,7 +1562,7 @@ class Backend extends BEBaseController
 				];
 				$smodel->update($sid, $newData);
 				$session = session();
-				$session->setFlashdata('success', 'Speciality Successful Updated');
+				$session->setFlashdata('success', 'Speciality Successfully Updated');
 				return redirect()->to('backend/speciality');
 			}
 
@@ -1652,7 +1579,7 @@ class Backend extends BEBaseController
 		$data['sp_row'] = $Smodel->where('spec_id', $ssid)->delete();
 
 		$session = session();
-		$session->setFlashdata('error', 'Speciality Successful Deleted');
+		$session->setFlashdata('error', 'Speciality Successfully Deleted');
 		return redirect()->to('backend/speciality');
 	}
 
@@ -1695,7 +1622,7 @@ class Backend extends BEBaseController
 				];
 				$model->insert($newData);
 				$session = session();
-				$session->setFlashdata('success', 'Grade Successful Added');
+				$session->setFlashdata('success', 'Grade Successfully Added');
 				return redirect()->to('backend/grade');
 			}
 
@@ -1733,7 +1660,7 @@ class Backend extends BEBaseController
 				];
 				$model->update($gid, $newData);
 				$session = session();
-				$session->setFlashdata('success', 'Grade Successful Updated');
+				$session->setFlashdata('success', 'Grade Successfully Updated');
 				return redirect()->to('backend/grade');
 			}
 
@@ -1752,7 +1679,7 @@ class Backend extends BEBaseController
 		$data['gr_row'] = $Smodel->where('grade_id', $gid)->delete();
 
 		$session = session();
-		$session->setFlashdata('error', 'Grade Successful Deleted');
+		$session->setFlashdata('error', 'Grade Successfully Deleted');
 		return redirect()->to('backend/grade');
 	}
 
@@ -1794,7 +1721,7 @@ class Backend extends BEBaseController
 				];
 				$model->insert($newData);
 				$session = session();
-				$session->setFlashdata('success', 'Category Successful Added');
+				$session->setFlashdata('success', 'Category Successfully Added');
 				return redirect()->to('backend/cat');
 			}
 
@@ -1832,7 +1759,7 @@ class Backend extends BEBaseController
 				];
 				$model->update($idcl, $newData);
 				$session = session();
-				$session->setFlashdata('success', 'Category Successful Updated');
+				$session->setFlashdata('success', 'Category Successfully Updated');
 				return redirect()->to('backend/cat');
 			}
 
@@ -1851,7 +1778,7 @@ class Backend extends BEBaseController
 		$data['gr_row'] = $Smodel->where('reg_cat_id', $cid)->delete();
 
 		$session = session();
-		$session->setFlashdata('error', 'Category Successful Deleted');
+		$session->setFlashdata('error', 'Category Successfully Deleted');
 		return redirect()->to('backend/cat');
 	}
 
@@ -2044,6 +1971,54 @@ class Backend extends BEBaseController
 		return redirect()->to('backend/t-view/' . encryptIt($data['e_ord']['ord_id']));
 
 
+	}
+	public function formula()
+	{
+
+		$data = [];
+		helper(['form']);
+		$model = new formulaModel();
+		$data['form'] = $model->findAll();
+
+		return $this->LoadView('admin/formula', $data);
+	}
+
+	public function edit_formula($id = null)
+	{
+		$id = decryptIt($id);
+		$data = [];
+		helper(['form']);
+		$model = new formulaModel();
+		$data['form'] = $model->where('id', $id)->first();
+		if ($this->request->getMethod() == 'post') {
+			$rules = [
+				'formula' => ['label' => 'Formula', 'rules' => 'required'],
+
+			];
+
+			if (!$this->validate($rules)) {
+				$data['validation'] = $this->validator;
+			} else {
+
+
+				//store this to database
+
+
+				$newData = [
+					'formula' => $this->request->getVar('formula'),
+
+
+				];
+				$model->update($id, $newData);
+				$session = session();
+				$session->setFlashdata('success', 'Formula Successfully Updated');
+				return redirect()->to('backend/formula');
+			}
+
+
+		}
+
+		return $this->LoadView('admin/edit_formula', $data);
 	}
 
 

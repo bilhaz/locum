@@ -64,6 +64,7 @@
                                         <option value="">Select Gender</option>
                                         <option value="M" <?php if ($ed_emp['emp_gender'] == "M") { ?> echo selected="selected" <?php } ?>>Male</option>
                                         <option value="F" <?php if ($ed_emp['emp_gender'] == "F") { ?> echo selected="selected" <?php } ?>>Female</option>
+                                        <option value="O" <?php if ($ed_emp['emp_gender'] == "O") { ?> echo selected="selected" <?php } ?>>Other</option>
                                     </select>                               
                                  </div>
                             </div>
@@ -89,7 +90,7 @@
                                 </div>
                                 <div class="row mb-3">
                                     <div class="form-group col-md-6 ">
-                                        <label for="cemp_spec2" class="control-label mb-1">Speciality 2</label>
+                                        <label for="cemp_spec2" class="control-label mb-1">Speciality 2<small>&nbsp;(Optional)</small></label>
                                         <select id="emp_spec2" name="emp_spec2" class="form-control select2"  data-parsley-trigger="change">
                                         <option value="">Select Speciality</option>
                                         <?php foreach($spec as $srow):?>
@@ -97,7 +98,7 @@
                                         <?php endforeach; ?>
                                     </select>                                    </div>
                                     <div class="form-group col-md-6">
-                                        <label for="emp_grade2" class="control-label mb-1">Grade 2</label>
+                                        <label for="emp_grade2" class="control-label mb-1">Grade 2<small>&nbsp;(Optional)</small></label>
                                         <select id="emp_grade2" name="emp_grade2" class="form-control select2"  data-parsley-trigger="change">
                                         <option value="">Select Grade</option>
                                         <?php foreach($grade as $grow):?>
@@ -107,7 +108,7 @@
                                 </div>
                                 <div class="row mb-3">
                                     <div class="form-group col-md-6 ">
-                                        <label for="emp_spec3" class="control-label mb-1">Speciality 3</label>
+                                        <label for="emp_spec3" class="control-label mb-1">Speciality 3<small>&nbsp;(Optional)</small></label>
                                         <select id="emp_spec3" name="emp_spec3" class="form-control select2"  data-parsley-trigger="change">
                                         <option value="">Select Speciality</option>
                                         <?php foreach($spec as $srow):?>
@@ -115,7 +116,7 @@
                                         <?php endforeach; ?>
                                     </select>                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label for="emp_grade3" class="control-label mb-1">Grade 3</label>
+                                        <label for="emp_grade3" class="control-label mb-1">Grade 3<small>&nbsp;(Optional)</small></label>
                                         <select id="emp_grade3" name="emp_grade3" class="form-control select2"  data-parsley-trigger="change">
                                         <option value="">Select Grade</option>
                                         <?php foreach($grade as $grow):?>
@@ -230,19 +231,16 @@
                             </div>
 
 
-                                <div>
-                                    <button id="payment-button" type="submit" class="btn btn-lg btn-primary btn-block">
-                                        
-                                        <span id="payment-button-amount">Update Record</span>
-                                    </button>
-                                </div>
-                                <br>
-                                <div>
-                                    <a id="payment-button" href="<?= base_url('backend/employees') ?>" class="btn btn-lg btn-dark btn-block">
+                            <div> 
+                                <button id="payment-button" type="submit" class="btn btn-lg btn-primary btn-block">
+                                    <span id="payment-button-amount">Update Employee</span>
+                                </button>
 
-                                        <span id="payment-button-amount">Cancel</span>
-                                    </a>
-                                </div>
+                                <a style="float:right !important;" id="payment-button" href="<?= base_url('backend/employees') ?>"
+                                    class="btn btn-lg btn-dark text-light btn-block">
+                                    <span id="payment-button-amount">Cancel</span>
+                                </a>
+                            </div>
                             </form>
                         </div>
                     </div>
