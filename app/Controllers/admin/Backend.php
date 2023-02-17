@@ -157,10 +157,10 @@ class Backend extends BEBaseController
 		$dt = date('Y-m-d H:i:s', $timestamp);
 		$model = new ordersModel();
 		$data['o_pen'] = $model->where('ord_status', '1')->where('ord_required_to >=', $dt)->countAllResults();
-		$data['o_pro'] = $model->where('ord_status', '2')->where('ord_required_to >=', $dt)->countAllResults();
-		$data['o_con'] = $model->where('ord_status', '3')->where('ord_required_to >=', $dt)->countAllResults();
-		$data['o_end'] = $model->where('ord_status', '4')->where('ord_required_to >=', $dt)->countAllResults();
-		$data['o_exp'] = $model->where('ord_required_to <=', $dt)->countAllResults();
+		$data['o_pro'] = $model->where('ord_status', '2')->countAllResults();
+		$data['o_con'] = $model->where('ord_status', '3')->countAllResults();
+		$data['o_end'] = $model->where('ord_status', '4')->countAllResults();
+		$data['o_exp'] = $model->where('ord_required_to <=', $dt)->where('ord_required_to', $dt)->countAllResults();
 
 
 
