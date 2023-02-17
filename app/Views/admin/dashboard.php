@@ -33,7 +33,7 @@
 <div class="card chart-color121">
 <div class="card-body p-lg-4 text-light">
 <h3><strong><?= $o_con ?></strong></h3>
-<span>Confirm Orders</span>
+<span>Confirmed Orders</span>
 </div>
 </a>
 </div>
