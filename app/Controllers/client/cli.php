@@ -168,27 +168,35 @@ class cli extends CLIBaseController
 	public function  canc_ord($coid = null)
 
 	{
-		$coid = decryptIt($coid);
+		// $coid = decryptIt($coid);
 		$model = new ordersModel();
 		$del = $model->where('ord_id', $coid)->first();
+		helper(['form']);
+		if ($this->request->getMethod() == 'post') {
+			//let's do the validation here
+			$rules = [
+				'ord_cl_cremarks' => ['label' => 'Reason', 'rules' => 'required'],
+			];
 
-
-
-		
+			if (!$this->validate($rules)) {
+				
+				$data['validation'] = $this->validator;
+			} else {
 
 			$newData = [
 				'ord_cancel_bcl' => 1,
+				'ord_cl_cremarks' => $this->request->getVar('ord_cl_cremarks'),
 
 			];
 
-
-
+		}
 			$model->update($coid, $newData);
 			$session = session();
 			$session->setFlashdata('success', 'Order Cancelled');
 			return redirect()->to('client/orders');
 		
 	}
+}
 
 	public function timesheet($ord_id = null)
 	{

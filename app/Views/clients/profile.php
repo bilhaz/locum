@@ -77,27 +77,23 @@
                                     <?php endif; ?>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="cl_gender" class="control-label mb-1">Gender</label>
-                                    <select id="cl_gender" name="cl_gender" class="form-control select2"  data-parsley-trigger="change" required="">
-                                    <?php if(empty($cli['cl_reg_as'])) : ?>    
-                                    <option value="">Select Gender</option>
-                                        <option value="M" <?= set_select('cl_gender','M', ( !empty($fieldType) && $fieldType == 'M' ? TRUE : FALSE )); ?> >Male</option>
-                                        <option value="F" <?= set_select('cl_gender','F', ( !empty($fieldType) && $fieldType == 'F' ? TRUE : FALSE )); ?> >Female</option>
-                                       <?php else: ?>
-                                        <option value="">Select Gender</option>
-                                        <option value="M" <?php if ($cli['cl_gender'] == "M") { ?> echo selected="selected" <?php } ?>>Male</option>
-                                        <option value="F" <?php if ($cli['cl_gender'] == "F") { ?> echo selected="selected" <?php } ?>>Female</option>
+                                <label for="cl_address" class="control-label mb-1">Address</label>
+                                    <?php if(empty($cli['cl_address'])) : ?>
+                                    <input id="cl_address" name="cl_address" type="text" class="form-control" required="">
+                                    <?php else: ?>
+                                    <input id="cl_address" name="cl_address" type="text" class="form-control" required="" value="<?= $cli['cl_address'] ?>">
                                         <?php endif; ?>
-                                    </select>                                 
+
+                                                                  
                                  </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
-                                    <label for="cl_cont_desig" class="control-label mb-1">Contact Personnel Designation</label>
-                                    <?php if(empty($cli['cl_cont_desig'])) : ?> 
-                                    <input id="cl_cont_desig" name="cl_cont_desig" type="text" class="form-control" required="">
+                                <label for="cl_county" class="control-label mb-1">County</label>
+                                    <?php if(empty($cli['cl_county'])) : ?>
+                                    <input id="cl_county" name="cl_county" type="text" class="form-control" required="">
                                     <?php else: ?>
-                                    <input id="cl_cont_desig" name="cl_cont_desig" type="text" class="form-control" required="" value="<?= $cli['cl_cont_desig'] ?>">
+                                    <input id="cl_county" name="cl_county" type="text" class="form-control" required="" value="<?= $cli['cl_county'] ?>">
                                         <?php endif; ?>
                                 </div>
                                 <div class="form-group col-md-6 ">
@@ -121,31 +117,44 @@
                                         <?php endif; ?>
                                 </div>
                                 <div class="form-group col-md-6">
+                                <label for="cl_gender" class="control-label mb-1">Gender</label>
+                                    <select id="cl_gender" name="cl_gender" class="form-control select2"  data-parsley-trigger="change" required="">
+                                    <?php if(empty($cli['cl_reg_as'])) : ?>    
+                                    <option value="">Select Gender</option>
+                                        <option value="M" <?= set_select('cl_gender','M', ( !empty($fieldType) && $fieldType == 'M' ? TRUE : FALSE )); ?> >Male</option>
+                                        <option value="F" <?= set_select('cl_gender','F', ( !empty($fieldType) && $fieldType == 'F' ? TRUE : FALSE )); ?> >Female</option>
+                                        <option value="O" <?= set_select('cl_gender','O', ( !empty($fieldType) && $fieldType == 'O' ? TRUE : FALSE )); ?> >Other</option>
+                                       <?php else: ?>
+                                        <option value="">Select Gender</option>
+                                        <option value="M" <?php if ($cli['cl_gender'] == "M") { ?> echo selected="selected" <?php } ?>>Male</option>
+                                        <option value="F" <?php if ($cli['cl_gender'] == "F") { ?> echo selected="selected" <?php } ?>>Female</option>
+                                        <option value="O" <?php if ($cli['cl_gender'] == "O") { ?> echo selected="selected" <?php } ?>>Other</option>
+                                        <?php endif; ?>
+                                    </select>   
+
+                                    
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                            <div class="form-group col-md-6 ">
+                            <label for="cl_cont_desig" class="control-label mb-1">Contact Personnel Designation</label>
+                                    <?php if(empty($cli['cl_cont_desig'])) : ?> 
+                                    <input id="cl_cont_desig" name="cl_cont_desig" type="text" class="form-control" required="">
+                                    <?php else: ?>
+                                    <input id="cl_cont_desig" name="cl_cont_desig" type="text" class="form-control" required="" value="<?= $cli['cl_cont_desig'] ?>">
+                                        <?php endif; ?>    
+
+                                    
+                            </div>
+                                    <div class="form-group col-md-6 ">
                                     <label for="cl_cont_phone" class="control-label mb-1">Contact Number</label>
                                     <?php if(empty($cli['cl_cont_phone'])) : ?>
                                     <input id="cl_cont_phone" name="cl_cont_phone" type="number" class="form-control" required="">
                                     <?php else: ?>
                                     <input id="cl_cont_phone" name="cl_cont_phone" type="number" class="form-control" required="" value="<?= $cli['cl_cont_phone'] ?>">
                                         <?php endif; ?>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                            <div class="form-group col-md-6 ">
-                                
-                                    <label for="cl_address" class="control-label mb-1">Address</label>
-                                    <?php if(empty($cli['cl_address'])) : ?>
-                                    <input id="cl_address" name="cl_address" type="text" class="form-control" required="">
-                                    <?php else: ?>
-                                    <input id="cl_address" name="cl_address" type="text" class="form-control" required="" value="<?= $cli['cl_address'] ?>">
-                                        <?php endif; ?>
-                            </div>
-                                    <div class="form-group col-md-6 ">
-                                    <label for="cl_county" class="control-label mb-1">County</label>
-                                    <?php if(empty($cli['cl_county'])) : ?>
-                                    <input id="cl_county" name="cl_county" type="text" class="form-control" required="">
-                                    <?php else: ?>
-                                    <input id="cl_county" name="cl_county" type="text" class="form-control" required="" value="<?= $cli['cl_county'] ?>">
-                                        <?php endif; ?>
+
+                                    
                                 </div>
                                 </div>
                             

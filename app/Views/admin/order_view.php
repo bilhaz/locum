@@ -119,6 +119,32 @@
                                 </div>
 
                                     <div class="col-md-12">
+                                    <div class="row mb-3">
+                                    <?php if($ordr_row['ord_cancel_bdr'] == "1") :?>
+                                            <div class="form-group col-md-6">
+                                                <h6 class="control-label ">Employee Reason for Canceling</h6>
+                                                <hr class="primary">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <span><?= $ordr_row['ord_dr_cremarks'] ?></span>
+                                                        
+                                                        <hr class="primary">
+                                            </div>
+                                        </div>
+                                        <?php endif; ?>
+                                        <div class="row mb-3">
+                                    <?php if($ordr_row['ord_cancel_bcl'] == "1") :?>
+                                            <div class="form-group col-md-6">
+                                                <h6 class="control-label ">Client Reason for Canceling</h6>
+                                                <hr class="primary">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <span><?= $ordr_row['ord_cl_cremarks'] ?></span>
+                                                        
+                                                        <hr class="primary">
+                                            </div>
+                                        </div>
+                                        <?php endif; ?>
                                         <?php if(!empty($ordr_row['ord_assignment'])) :?>
                                         <div class="row mb-3">
                                             <div class="form-group col-md-6">

@@ -110,7 +110,7 @@
 <?php } else {
     header("Location: profile");
     $session = session();
-    $session->setFlashdata('error', 'First Fill this Form');
+    $session->setFlashdata('error', 'First Complete your Profile');
     exit();
   exit();
  } ?>

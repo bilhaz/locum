@@ -84,7 +84,22 @@
                                     </select>
                                 </div>
                             </div>
-
+                            <div class="row mb-3">
+                                <?php if($eord_row['ord_cancel_bdr'] == "1"): ?>
+                                <div class="form-group col-md-4">
+                                <label for="ord_status" class="control-label mb-1">Employee remarks</label>
+                                <input type="text" class="form-control" value="<?= $eord_row['ord_dr_cremarks'] ?>" disabled>
+                                </div>
+                                <?php endif; ?>
+                          
+                                <?php if($eord_row['ord_cancel_bcl'] == "1"): ?>
+                                <div class="form-group col-md-4">
+                                <label for="ord_status" class="control-label mb-1">Client remarks</label>
+                                <input type="text" class="form-control" value="<?= $eord_row['ord_cl_cremarks'] ?>" disabled>
+                                </div>
+                                <?php endif; ?>
+                            </div>
+                                            <hr>
                             <div class="row mb-3">
                                 <div class="form-group col-md-6">
                                     <label for="ord_speciality" class="control-label mb-1">Required Speciality</label>

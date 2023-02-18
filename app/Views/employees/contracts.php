@@ -88,7 +88,8 @@
                                             <td>
                                             <a type="button" href="<?= base_url('employee/ord-view/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View" data-type="confirm"><i class="fa fa-eye"></i></a>
                                             <?php if($row['ord_cancel_bdr'] <> 1): ?>
-                                            <a type="button" href="<?= base_url('employee/canc-ord/'.encryptIt($row['ord_id']))?>" class="btn btn-sm btn-outline-danger js-sweetalert" title="Cancel" Onclick="return confirm('Are You sure?');" data-type="confirm"><i class="fa fa-ban"></i></a>
+                                            <!-- <a type="button" href="<?php // base_url('employee/canc-ord/'.encryptIt($row['ord_id']))?>" class="btn btn-sm btn-outline-danger js-sweetalert" title="Cancel" Onclick="return confirm('Are You sure?');" data-type="confirm"><i class="fa fa-ban"></i></a> -->
+                                            <button type="button" class="btn btn-sm btn-outline-danger js-sweetalert" onClick="setOrderId(<?= $row['ord_id'] ?>);" data-bs-toggle="modal" data-bs-target="#canc_order" title="Cancel"  data-type="confirm"><i class="fa fa-ban"></i></button>
                                                 <?php endif; ?>
                                                 
                                         </td>
@@ -104,10 +105,51 @@
     </div>
 </div>
 </div>
+<!-- Cancel Modal -->
+<div class="modal fade" id="canc_order" tabindex="-1" aria-labelledby="canc_order" aria-hidden="true">
+<div class="modal-dialog">
+<form data-parsley-validate="" id="cancelOrderForms" method="post" action="">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="defaultModalLabel">Cancel Order</h5>
+</div>
+<div class="modal-body">
+
+<div class="row g-2">
+<div class="col-md-12">
+<label for="ord_speciality" class="control-label mb-1">Reason</label>
+<input type="text"  class="form-control" placeholder="Type Your Reason here" required="" name="ord_dr_cremarks">
+<input type="hidden"  id="orderId">
+</div>
+</div>
+<div class="modal-footer">
+<button type="submit" class="btn btn-primary">Submit</button>
+<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+    function setOrderId(orderId) {
+  document.getElementById("orderId").value = orderId;
+//   var encryptedOrderId = "<?php // encryptIt("orderId") ?>";
+  document.getElementById("cancelOrderForms").setAttribute("action", "<?= base_url('employee/canc-ord/') ?>/" + document.getElementById("orderId").value);
+}
+
+
+</script>
+
+
+
+
+
+
+
+
 <?php } else {
     header("Location: profile");
     $session = session();
-    $session->setFlashdata('error', 'First Fill this Form');
+    $session->setFlashdata('error', 'First Complete your Profile');
     exit();
   exit();
  } ?>

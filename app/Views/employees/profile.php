@@ -79,11 +79,13 @@
                                     <select id="emp_gender" name="emp_gender" class="form-control select2"  data-parsley-trigger="change" required="">
                                         <option value="">Select Gender</option>
                                         <?php if(empty($emp['emp_gender'])) : ?>
-                                        <option value="M" <?= set_select('cl_gender','M', ( !empty($fieldType) && $fieldType == 'M' ? TRUE : FALSE )); ?> >Male</option>
-                                        <option value="F" <?= set_select('cl_gender','F', ( !empty($fieldType) && $fieldType == 'F' ? TRUE : FALSE )); ?> >Female</option>
+                                        <option value="M" <?= set_select('emp_gender','M', ( !empty($fieldType) && $fieldType == 'M' ? TRUE : FALSE )); ?> >Male</option>
+                                        <option value="F" <?= set_select('emp_gender','F', ( !empty($fieldType) && $fieldType == 'F' ? TRUE : FALSE )); ?> >Female</option>
+                                        <option value="O" <?= set_select('emp_gender','O', ( !empty($fieldType) && $fieldType == 'F' ? TRUE : FALSE )); ?> >Other</option>
                                        <?php else: ?>
                                         <option value="M" <?php if ($emp['emp_gender'] == "M") { ?> echo selected="selected" <?php } ?>>Male</option>
                                         <option value="F" <?php if ($emp['emp_gender'] == "F") { ?> echo selected="selected" <?php } ?>>Female</option>
+                                        <option value="O" <?php if ($emp['emp_gender'] == "O") { ?> echo selected="selected" <?php } ?>>Other</option>
                                         <?php endif; ?>
                                     </select>                                 
                                  </div>

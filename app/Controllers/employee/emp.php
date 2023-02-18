@@ -222,21 +222,34 @@ class emp extends EMPBaseController
 	public function  canc_ord($coid = null)
 
 	{
-		$coid = decryptIt($coid);
+		// $coid = decryptIt($coid);
 		$model = new ordersModel();
 		$del = $model->where('ord_id', $coid)->first();
+		helper(['form']);
+		if ($this->request->getMethod() == 'post') {
+			//let's do the validation here
+			$rules = [
+				'ord_dr_cremarks' => ['label' => 'Reason', 'rules' => 'required'],
+			];
+
+			if (!$this->validate($rules)) {
+				
+				$data['validation'] = $this->validator;
+			} else {
 
 			$newData = [
 				'ord_cancel_bdr' => 1,
+				'ord_dr_cremarks' => $this->request->getVar('ord_dr_cremarks'),
 
 			];
-
+		}
 			$model->update($coid, $newData);
 			$session = session();
 			$session->setFlashdata('success', 'Order Cancelled');
 			return redirect()->to('employee/orders');
 		
 	}
+}
 
 	public function timesheet($tid = null)
 	{
