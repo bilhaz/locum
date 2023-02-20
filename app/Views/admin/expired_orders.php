@@ -70,7 +70,7 @@
                                         <td><?= $row['ord_created'] ?></td>
                                         <td>
                                         <?php if ($row['ord_status'] == "1") : ?>
-                                                <span class="badge bg-danger">Pending</span>
+                                                <span class="badge badge chart-color123">Pending</span>
                                             <?php elseif ($row['ord_status'] == "2") : ?>
                                                 <span class="badge bg-warning text-dark">Processed</span>
                                             <?php elseif ($row['ord_status'] == "3") : ?>
