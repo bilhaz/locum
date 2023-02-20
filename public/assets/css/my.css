@@ -129,4 +129,6 @@ padding-left: 1rem;
         opacity: 0.5;
         text-decoration: none;
     }
-
+    input[type=file]{
+    padding-left: 1rem !important;
+}
