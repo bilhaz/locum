@@ -114,15 +114,16 @@
                                 </div>
                             
 
-                                <div> 
-                                <button id="payment-button" type="submit" class="btn btn-lg btn-primary btn-block">
-                                    <span id="payment-button-amount">Update Client</span>
-                                </button>
-
-                                <a style="float:right !important;" id="payment-button" href="<?= base_url('backend/clients') ?>"
+                                <div style="float:right !important;"> 
+                                <a  id="payment-button" href="<?= base_url('backend/clients') ?>"
                                     class="btn btn-lg btn-dark text-light btn-block">
                                     <span id="payment-button-amount">Cancel</span>
                                 </a>
+                                &nbsp; &nbsp;
+                                
+                                <button id="payment-button" type="submit" class="btn btn-lg btn-primary btn-block">
+                                    <span id="payment-button-amount">Update Client</span>
+                                </button>
                             </div>
                         </form>
                     </div>

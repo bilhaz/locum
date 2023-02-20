@@ -36,14 +36,16 @@
 
 
                                 <br>
-                                <div>
+                                <div style="float:right !important;">
+                                    
+                                    <a id="payment-button" href="<?= base_url('backend/grade') ?>" class="btn btn-lg btn-dark text-light btn-block">
+                                        <span id="payment-button-amount">Cancel</span>
+                                    </a>
+                                    &nbsp; &nbsp;
                                     <button id="payment-button" type="submit" class="btn btn-lg btn-primary btn-block">
                                         <span id="payment-button-amount">Add New</span>
                                     </button>
 
-                                    <a style="float:right !important;" id="payment-button" href="<?= base_url('backend/garde') ?>" class="btn btn-lg btn-dark text-light btn-block">
-                                        <span id="payment-button-amount">Cancel</span>
-                                    </a>
                                 </div>
                             </form>
                         </div>
