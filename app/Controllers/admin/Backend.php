@@ -1854,9 +1854,9 @@ class Backend extends BEBaseController
 
 
 		$model = new ordersModel();
-		$data['t_order'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')
+		$data['t_order'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')
 			->Join('timesheets', 'timesheets.order_id = orders.ord_id', 'LEFT')
-			->groupBy('orders.ord_id')
+			->groupBy('orders.ord_id')->orderBy('orders.ord_id', 'DESC')
 			->findAll();
 
 
