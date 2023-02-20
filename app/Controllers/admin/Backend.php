@@ -1195,7 +1195,7 @@ class Backend extends BEBaseController
 		$dt = date('Y-m-d H:i:s', $timestamp);
 		helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->where('ord_required_to>=', $dt)->orderBy('orders.ord_created', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->orderBy('orders.ord_created', 'DESC')->findAll();
 
 		return $this->LoadView('admin/orders', $data);
 	}
@@ -1405,7 +1405,7 @@ class Backend extends BEBaseController
 		$data = [];
 		helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->where('ord_status', '2')->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->where('ord_status', '2')->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('admin/processed_order', $data);
 	}
@@ -1418,7 +1418,8 @@ class Backend extends BEBaseController
 		$dt = date('Y-m-d H:i:s', $timestamp);
 		helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->where('ord_status', '1')->where('ord_required_to >=', $dt)->orderBy('ord_updated', 'DESC')->findAll();
+		$data['o_pen'] = $model->where('ord_status', '1')->where('ord_required_to >=', $dt)->countAllResults();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->where('ord_status', '1')->where('ord_required_to >=', $dt)->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('admin/pending_order', $data);
 	}
@@ -1440,7 +1441,7 @@ class Backend extends BEBaseController
 		$data = [];
 		helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->where('ord_status', '4')->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->where('ord_status', '4')->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('admin/ended_order', $data);
 	}
@@ -1451,7 +1452,7 @@ class Backend extends BEBaseController
 		$data = [];
 		helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->where('ord_status', '3')->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->where('ord_status', '3')->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('admin/confirm_order', $data);
 	}
