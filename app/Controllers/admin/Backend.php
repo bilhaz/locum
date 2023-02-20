@@ -1423,16 +1423,16 @@ class Backend extends BEBaseController
 		return $this->LoadView('admin/pending_order', $data);
 	}
 
-	public function closed_order()
-	{
+	// public function closed_order()
+	// {
 
-		$data = [];
-		helper(['form']);
-		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->where('ord_case_status', 'Closed')->orderBy('ord_updated', 'DESC')->findAll();
+	// 	$data = [];
+	// 	helper(['form']);
+	// 	$model = new ordersModel();
+	// 	$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->where('ord_case_status', 'Closed')->orderBy('ord_updated', 'DESC')->findAll();
 
-		return $this->LoadView('admin/closed_order', $data);
-	}
+	// 	return $this->LoadView('admin/closed_order', $data);
+	// }
 
 	public function ended_order()
 	{

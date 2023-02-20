@@ -68,7 +68,7 @@
 </td>
 <td><span><?= $row['emp_fname'].' '. $row['emp_lname']?></span></td>
 <td><?= $row['ord_created']?></td>
-<td><span class="badge bg-danger">Pending</span></td>
+<td><span class="badge chart-color123">Pending</span></td>
 <td>
   
 <a type="button" href="<?= base_url('backend/order_view/'.encryptIt($row['ord_id']))?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View"  data-type="confirm"><i class="fa fa-eye"></i></a>
