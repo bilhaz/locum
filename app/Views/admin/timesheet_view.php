@@ -91,7 +91,7 @@
                                                    <?php if($r['dutyTime'] == $i && date('Y-m-d',strtotime($tmp_Startdate2)) == $r['dutyDate']):
                                                         $count[$tmp_Startdate2][$i]++; 
                                                      if($r['siteStatus'] == "1"): ?>
-                                                        <b class="col<?=$x?> offsite<?=$x?>">OnSite</b> 
+                                                        <b class="col<?=$x?> onsite<?=$x?>">OnSite</b> 
                                                         <?php elseif($r['siteStatus'] == "2"): ?>
                                                             <b class="col<?=$x?> offsite<?=$x?>">OffSite</b>
                                                             
