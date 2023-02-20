@@ -72,7 +72,7 @@
                                         while (strtotime($tmp_Startdate2) <= strtotime($end_date)) { ?>
                                             <td>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" onclick="handleCheck(this)" value="<?=$tmp_Startdate2.','.$i?>,1" type="checkbox"
+                                                    <input onchange="updateCalc()" class="form-check-input col<?=$x?> onsite<?=$x?>" onclick="handleCheck(this)" value="<?=$tmp_Startdate2.','.$i?>,1" type="checkbox"
                                                         name="status[value<?=$stsCounter?>]"
                                                         id="flexRadioDefault<?= $stsCounter ?>">
                                                     <label class="form-check-label" for="flexRadioDefault<?= $stsCounter ?>">
@@ -80,7 +80,7 @@
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" onclick="handleCheck(this)" value="<?=$tmp_Startdate2.','.$i?>,2" type="checkbox" name="status[value<?=$stsCounter?>]"
+                                                    <input onchange="updateCalc()" class="form-check-input col<?=$x?> offsite<?=$x?>" onclick="handleCheck(this)" value="<?=$tmp_Startdate2.','.$i?>,2" type="checkbox" name="status[value<?=$stsCounter?>]"
                                                         id="flexRadioDefault<?= $stsCounter + 1000 ?>">
                                                     <label class="form-check-label"
                                                         for="flexRadioDefault<?= $stsCounter + 2000 ?>">
@@ -97,6 +97,64 @@
                                     </tr>
                                 <?php endfor; ?>
 
+                                 <!-- totling -->
+
+                                 <tr>
+                                        
+                                        <td>
+
+                                            <b>OnSite</b>
+                                        </td>
+
+                                        <?php
+                                        $x=1;
+                                        $tmp_Startdate2 = $start_date;
+                                        while (strtotime($tmp_Startdate2) <= strtotime($end_date)) { ?>
+                                            <td id="onsite<?=$x?>">
+                                            </td>
+                                            <?php 
+                                            $tmp_Startdate2 = date("Y-m-d", strtotime("+1 days", strtotime($tmp_Startdate2))); $x++;
+                                        }
+                                        ?>
+                                    </tr>
+                                    <tr>
+                                        
+                                        <td>
+
+                                            <b>OffSite</b>
+                                        </td>
+
+                                        <?php
+                                        $x=1;
+                                        $tmp_Startdate2 = $start_date;
+                                        while (strtotime($tmp_Startdate2) <= strtotime($end_date)) { ?>
+                                            <td id="offsite<?=$x?>">
+                                            </td>
+                                            <?php 
+                                            $tmp_Startdate2 = date("Y-m-d", strtotime("+1 days", strtotime($tmp_Startdate2))); $x++;
+                                        }
+                                        ?>
+                                    </tr>
+                                    <tr>
+                                        
+                                        <td>
+
+                                            <b>Total</b>
+                                        </td>
+
+                                        <?php
+                                        $x=1;
+                                        $tmp_Startdate2 = $start_date;
+                                        while (strtotime($tmp_Startdate2) <= strtotime($end_date)) { ?>
+                                            <td id="col<?=$x?>">
+                                            </td>
+                                            <?php 
+                                            $tmp_Startdate2 = date("Y-m-d", strtotime("+1 days", strtotime($tmp_Startdate2)));$x++;
+                                        }
+                                        ?>
+                                    </tr>
+
+                                <!-- end totling -->
 
 
                             </tbody>
@@ -118,6 +176,8 @@
         </div>
     </div>
 </div>
+
+
 <script>
       function handleCheck(checkbox) {
         const td = checkbox.closest("td");
@@ -128,4 +188,18 @@
           }
         });
       }
+
+      $(document).ready(function() {
+        updateCalc();
+        });
+    
+        function updateCalc(){
+      <?php for($i=0;$i < $x; $i++){ ?>
+        $("#offsite<?=$i?>").html($('input.offsite<?=$i?>:checked').length);
+        $("#onsite<?=$i?>").html($('input.onsite<?=$i?>:checked').length);
+        $("#col<?=$i?>").html($('input.col<?=$i?>:checked').length);
+
+      <?php } ?>
+        }
+
     </script>
