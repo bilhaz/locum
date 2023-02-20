@@ -221,8 +221,9 @@
         });
       }
       $(document).ready(function() {
+        updateCalc();
         });
-    updateCalc();
+    
         function updateCalc(){
       <?php for($i=0;$i < $x; $i++){ ?>
         $("#offsite<?=$i?>").html($('input.offsite<?=$i?>:checked').length);
