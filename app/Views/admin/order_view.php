@@ -50,7 +50,7 @@
     <div class="container-fluid">
         <div class="block-header py-lg-4 py-3">
             <div class="row g-3">
-                <div class="col-md-6 col-sm-12">
+                <div class="col-md-6 col-sm-12 d-print-none">
                     <h2 class="m-0 fs-5"><a href="javascript:void(0);"
                             class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i
                                 class="fa fa-arrow-left"></i></a>View Order</h2>
@@ -67,7 +67,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h6 class="card-title"></h6>
-                        <ul class="header-dropdown">
+                        <ul class="header-dropdown d-print-none">
                             <li class="dropdown">
                                 <button onclick="printSection('printthis')" class="btn btn-outline-secondary"><i
                                         class="fa fa-print"></i></button>
