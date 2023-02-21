@@ -160,7 +160,12 @@
                             </tbody>
                         </table>
                         <br>
-                        <div>
+                        <div style="float:right;">
+                        <a id="payment-button" href="<?= base_url('employee/ord-view/'. encryptIt($e_ord['ord_id'])) ?>"
+                                    class="btn btn-lg btn-dark text-light btn-block">
+                                    <span id="payment-button-amount">Cancel</span>
+                                </a>
+                        &nbsp; &nbsp;
                             <button id="payment-button" type="submit" class="btn btn-lg btn-primary btn-block">
                                 <span id="payment-button-amount">Save Data</span>
                             </button>

@@ -77,17 +77,17 @@
                                     <input id="ord_required_to" name="ord_required_to" type="datetime-local" class="form-control" required="" value="<?= $e_ord['ord_required_to'] ?>">
                                 </div>
                             </div>
-                            <div>
+                            <div style="float:right;">
+                            <a id="payment-button" href="<?= base_url('client/orders') ?>" class="btn btn-lg btn-dark btn-block">
+
+<span id="payment-button-amount">Cancel</span>
+</a>
+&nbsp; &nbsp;
                                 <button id="payment-button" type="submit" class="btn btn-lg btn-primary btn-block">
                                     <span id="payment-button-amount">Update Order</span>
                                 </button>
-                            </div>
-                            <br>
-                            <div>
-                                <a id="payment-button" href="<?= base_url('client/orders') ?>" class="btn btn-lg btn-dark btn-block">
-
-                                    <span id="payment-button-amount">Cancel</span>
-                                </a>
+                            
+                                
                             </div>
                         </form>
                     </div>

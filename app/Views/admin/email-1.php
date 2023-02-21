@@ -35,11 +35,11 @@
                                <h6>Dear <?php 
                                if($em_1['cl_gender']== "M"):?>
                                Mr.
-                               <?php else: ?>
+                               <?php elseif($em_1['cl_gender']== "F"): ?>
                                 Ms.
                                 <?php endif; ?>
                                 <?php $lname = explode(' ',$em_1['cl_cont_name']) ?>
-                                <?= $lname[1]?></h6>
+                                <?php if(!empty($lname[1])): echo $lname[1]; endif;?></h6>
                                 <br>
                                 <p>Thank you for requesting a doctor through SRA Locum Service. We can confirm receiving your locum order. Process of sourcing a locum Doctor for you has already been initiated.</p>
                                 <p class="text-danger">If the order details are correct, you do not need to reply to this email.</p>

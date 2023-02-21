@@ -85,17 +85,17 @@
 
                             
 
-                            <div>
+                            <div style="float:right;">
+                            <a id="payment-button" href="<?= base_url('client/orders') ?>" class="btn btn-lg btn-dark btn-block">
+
+<span id="payment-button-amount">Cancel</span>
+</a>
+&nbsp; &nbsp;
                                 <button id="payment-button" type="submit" class="btn btn-lg btn-primary btn-block">
                                     <span id="payment-button-amount">Save Order</span>
                                 </button>
-                            </div>
-                            <br>
-                            <div>
-                                <a id="payment-button" href="<?= base_url('client/orders') ?>" class="btn btn-lg btn-dark btn-block">
-
-                                    <span id="payment-button-amount">Cancel</span>
-                                </a>
+                            
+                                
                             </div>
                         </form>
                     </div>

@@ -154,7 +154,7 @@ class cli extends CLIBaseController
 		$data['t_order'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')
     ->Join('timesheets', 'timesheets.order_id = orders.ord_id','LEFT')
     ->where('orders.cl_id', session()->cl_id)
-    ->groupBy('orders.ord_id')
+    ->groupBy('orders.ord_id')->orderBy('orders.ord_id','DESC')
     ->find();
 		// dd($data['t_order']);
 		// $data['ord_id'] = $data['t_order']['ord_id'];

@@ -171,7 +171,13 @@
                             </tbody>
                         </table>
                         <br>
-
+                        <br>
+                        <div style="float:right;padding-right:2rem;">
+                        <a id="payment-button" href="<?= base_url('employee/ord-view/'. encryptIt($e_ord['ord_id'])) ?>"
+                                    class="btn btn-lg btn-dark text-light btn-block">
+                                    <span id="payment-button-amount">Go Back</span>
+                                </a>
+                        </div>
 
                     </form>
 

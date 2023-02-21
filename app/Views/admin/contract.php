@@ -431,7 +431,7 @@
             </td>
             <td style="width:367pt;border-left-style:solid;border-left-width:1pt;border-left-color:#9BBA58">
                 <p class="s2" style="padding-left: 4pt;text-indent: 0pt;line-height: 13pt;text-align: left;"><?= $cont['spec_name'].'  &nbsp;'. $cont['grade_name'] ?></p>
-                <p class="s2" style="padding-left: 4pt;text-indent: 0pt;text-align: left;"><?= $cont['ord_process_details_from']. ' - ' .$cont['ord_process_details_to'] ?></p>
+                <p class="s2" style="padding-left: 4pt;text-indent: 0pt;text-align: left;"><?= $cont['ord_required_from']. ' - ' .$cont['ord_required_to'] ?></p>
             </td>
         </tr>
         <tr style="height:27pt">
@@ -441,7 +441,7 @@
             <td style="width:367pt;border-left-style:solid;border-left-width:1pt;border-left-color:#9BBA58" bgcolor="#C2D59B">
                 <p class="s4" style="padding-left: 4pt;text-indent: 0pt;text-align: left;">€ <?= $cont['ord_pay_to_dr']?>/hr <span class="s5">(Limited Company Rate)</span></p>
                 <?php $form = $forml['formula']; $pay = $cont['ord_pay_to_dr']; ?>
-                <p class="s4" style="padding-left: 4pt;text-indent: 0pt;text-align: left;">€ <?php echo number_format($pay * $form/100,2); ?>  /hr <span class="s5">(PAYE Rate)</span></p>
+                <p class="s4" style="padding-left: 4pt;text-indent: 0pt;text-align: left;">€ <?php if(!empty($pay)): echo number_format($pay * $form/100,2); endif; ?>  /hr <span class="s5">(PAYE Rate)</span></p>
             </td>
         </tr>
         <tr style="height:14pt">

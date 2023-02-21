@@ -91,9 +91,9 @@
                                                    <?php if($r['dutyTime'] == $i && date('Y-m-d',strtotime($tmp_Startdate2)) == $r['dutyDate']):
                                                         $count[$tmp_Startdate2][$i]++; 
                                                      if($r['siteStatus'] == "1"): ?>
-                                                        <b>OnSite</b> 
+                                                        <b class="col<?=$x?> onsite<?=$x?>">OnSite</b> 
                                                         <?php elseif($r['siteStatus'] == "2"): ?>
-                                                            <b>OffSite</b>
+                                                            <b class="col<?=$x?> offsite<?=$x?>">OffSite</b>
                                                             
                                                                 <?php endif;
                                                                 endif; 
@@ -113,18 +113,64 @@
                                     </tr>
                                    
                                 <?php endfor; ?>
-                                <tr style="background-color: #28a745; ">
-      <td style="color:white;"><b>Total Hours</b></td>
-      <?php
-      foreach($count as $date => $counts) {
-        $total = 0;
-        foreach($counts as $count) {
-          $total += $count;
-        }
-        echo "<td style='color:white;'>" . $total . "</td>";
-      }
-      ?>
-    </tr>
+                                <!-- totling -->
+
+                                <tr>
+                                        
+                                        <td>
+
+                                            <b>OnSite</b>
+                                        </td>
+
+                                        <?php
+                                        $x=1;
+                                        $tmp_Startdate2 = $start_date;
+                                        while (strtotime($tmp_Startdate2) <= strtotime($end_date)) { ?>
+                                            <td id="onsite<?=$x?>">
+                                            </td>
+                                            <?php 
+                                            $tmp_Startdate2 = date("Y-m-d", strtotime("+1 days", strtotime($tmp_Startdate2))); $x++;
+                                        }
+                                        ?>
+                                    </tr>
+                                    <tr>
+                                        
+                                        <td>
+
+                                            <b>OffSite</b>
+                                        </td>
+
+                                        <?php
+                                        $x=1;
+                                        $tmp_Startdate2 = $start_date;
+                                        while (strtotime($tmp_Startdate2) <= strtotime($end_date)) { ?>
+                                            <td id="offsite<?=$x?>">
+                                            </td>
+                                            <?php 
+                                            $tmp_Startdate2 = date("Y-m-d", strtotime("+1 days", strtotime($tmp_Startdate2))); $x++;
+                                        }
+                                        ?>
+                                    </tr>
+                                    <tr>
+                                        
+                                        <td>
+
+                                            <b>Total</b>
+                                        </td>
+
+                                        <?php
+                                        $x=1;
+                                        $tmp_Startdate2 = $start_date;
+                                        while (strtotime($tmp_Startdate2) <= strtotime($end_date)) { ?>
+                                            <td id="col<?=$x?>">
+                                            </td>
+                                            <?php 
+                                            $tmp_Startdate2 = date("Y-m-d", strtotime("+1 days", strtotime($tmp_Startdate2)));$x++;
+                                        }
+                                        ?>
+                                    </tr>
+
+                                <!-- end totling -->
 
 
 
@@ -146,3 +192,19 @@
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<script>
+      $(document).ready(function() {
+        updateCalc();
+        });
+   
+        function updateCalc(){
+      <?php for($i=0;$i < $x; $i++){ ?>
+        $("#offsite<?=$i?>").html($('.offsite<?=$i?>').length);
+        $("#onsite<?=$i?>").html($('.onsite<?=$i?>').length);
+        $("#col<?=$i?>").html($('.col<?=$i?>').length);
+
+      <?php } ?>
+        }
+    
+    </script>

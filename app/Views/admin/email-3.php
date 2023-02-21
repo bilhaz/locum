@@ -34,11 +34,11 @@
                                <h6>Dear <?php 
                                if($em_3['cl_gender']== "M"):?>
                                Mr.
-                               <?php else: ?>
+                               <?php elseif($em_3['cl_gender']== "F"): ?>
                                 Ms.
                                 <?php endif; ?>
                                 <?php $lname = explode(' ',$em_3['cl_cont_name']) ?>
-                                <?= $lname[1]?></h6>
+                                <?php if(!empty($lname[1])): echo $lname[1]; endif; ?></h6>
                                 <br>
                                 <p>At SRA Locum Service we are pleased to confirm you the following doctor.</p>
                                 <p><strong>Your Order Details are;</strong></p>
