@@ -1,0 +1,10 @@
+CRITICAL - 2023-02-20 13:44:03 --> syntax error, unexpected end of file
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('employees/times...', Array, true)
+#2 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('employees/times...', Array)
+#3 C:\wamp64\www\locum\app\Controllers\employee\emp.php(335): App\Controllers\employee\EMPBaseController->LoadView('employees/times...', Array)
+#4 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->timesheet_view('3')
+#5 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}

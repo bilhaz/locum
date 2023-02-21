@@ -1,0 +1,139 @@
+CRITICAL - 2023-02-03 09:37:39 --> Invalid file: employee/upl_asses.php
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(198): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('employee/upl_as...')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('employee/upl_as...', Array, true)
+#2 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('employee/upl_as...', Array)
+#3 C:\wamp64\www\locum\app\Controllers\employee\emp.php(212): App\Controllers\employee\EMPBaseController->LoadView('employee/upl_as...', Array)
+#4 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->upl_asses('1')
+#5 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-02-03 09:38:35 --> Invalid file: employee/upl_asses.php
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(198): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('employee/upl_as...')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('employee/upl_as...', Array, true)
+#2 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('employee/upl_as...', Array)
+#3 C:\wamp64\www\locum\app\Controllers\employee\emp.php(212): App\Controllers\employee\EMPBaseController->LoadView('employee/upl_as...', Array)
+#4 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->upl_asses('1')
+#5 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+ERROR - 2023-02-03 10:18:20 --> Unknown column 'ord_id' in 'where clause'
+CRITICAL - 2023-02-03 10:18:20 --> Unknown column 'ord_id' in 'where clause'
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(280): mysqli->query('SELECT *\nFROM `...')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Database\BaseConnection.php(663): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Database\BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Model.php(210): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\BaseModel.php(622): CodeIgniter\Model->doFirst()
+#6 C:\wamp64\www\locum\app\Controllers\employee\emp.php(218): CodeIgniter\BaseModel->first()
+#7 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->canc_ord('MWxjeU4rNTgwMGJ...')
+#8 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#9 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2023-02-03 10:19:04 --> There is no data to update.
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\BaseModel.php(846): CodeIgniter\Database\Exceptions\DataException::forEmptyDataset('update')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Model.php(646): CodeIgniter\BaseModel->update(Array, Array)
+#2 C:\wamp64\www\locum\app\Controllers\employee\emp.php(231): CodeIgniter\Model->update('MWxjeU4rNTgwMGJ...', Array)
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->canc_ord('MWxjeU4rNTgwMGJ...')
+#4 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#5 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#6 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#7 {main}
+CRITICAL - 2023-02-03 10:19:47 --> There is no data to update.
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\BaseModel.php(846): CodeIgniter\Database\Exceptions\DataException::forEmptyDataset('update')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Model.php(646): CodeIgniter\BaseModel->update(Array, Array)
+#2 C:\wamp64\www\locum\app\Controllers\employee\emp.php(231): CodeIgniter\Model->update('MWxjeU4rNTgwMGJ...', Array)
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->canc_ord('MWxjeU4rNTgwMGJ...')
+#4 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#5 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#6 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#7 {main}
+CRITICAL - 2023-02-03 12:04:06 --> Undefined variable: ord_row
+#0 C:\wamp64\www\locum\app\Views\employees\timesheet.php(56): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\l...', 56, Array)
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(214): include('C:\\wamp64\\www\\l...')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('employees/times...', Array, true)
+#4 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('employees/times...', Array)
+#5 C:\wamp64\www\locum\app\Controllers\employee\emp.php(256): App\Controllers\employee\EMPBaseController->LoadView('employees/times...', Array)
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->timesheet('3')
+#7 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#8 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-02-03 18:23:08 --> Class 'App\Controllers\employee\CLIBaseController' not found
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Autoloader\Autoloader.php(264): include_once()
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Autoloader\Autoloader.php(241): CodeIgniter\Autoloader\Autoloader->includeFile('C:\\wamp64\\www\\l...')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Autoloader\Autoloader.php(219): CodeIgniter\Autoloader\Autoloader->loadInNamespace('App\\Controllers...')
+#3 [internal function]: CodeIgniter\Autoloader\Autoloader->loadClass('App\\Controllers...')
+#4 [internal function]: spl_autoload_call('App\\Controllers...')
+#5 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(767): class_exists('\\App\\Controller...', true)
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(386): CodeIgniter\CodeIgniter->startController()
+#7 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 {main}
+CRITICAL - 2023-02-03 18:32:15 --> Undefined index: cl_h_lname
+#0 C:\wamp64\www\locum\app\Controllers\client\cli.php(75): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', 'C:\\wamp64\\www\\l...', 75, Array)
+#1 C:\wamp64\www\locum\app\Controllers\client\cli.php(60): App\Controllers\client\cli->setUserSession(Array)
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\client\cli->login()
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\client\cli))
+#4 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#5 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#6 {main}
+CRITICAL - 2023-02-03 19:11:37 --> Invalid file: client/new_order.php
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(198): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('client/new_orde...')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('client/new_orde...', Array, true)
+#2 C:\wamp64\www\locum\app\Controllers\client\CLIBaseController.php(72): view('client/new_orde...', Array)
+#3 C:\wamp64\www\locum\app\Controllers\client\cli.php(315): App\Controllers\client\CLIBaseController->LoadView('client/new_orde...', Array)
+#4 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\client\cli->new_order()
+#5 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\client\cli))
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-02-03 19:12:47 --> Invalid file: client/new_order.php
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(198): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('client/new_orde...')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('client/new_orde...', Array, true)
+#2 C:\wamp64\www\locum\app\Controllers\client\CLIBaseController.php(72): view('client/new_orde...', Array)
+#3 C:\wamp64\www\locum\app\Controllers\client\cli.php(315): App\Controllers\client\CLIBaseController->LoadView('client/new_orde...', Array)
+#4 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\client\cli->new_order()
+#5 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\client\cli))
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-02-03 20:42:20 --> Function name must be a string
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(214): include()
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('clients/order_e...', Array, true)
+#3 C:\wamp64\www\locum\app\Controllers\client\CLIBaseController.php(72): view('clients/order_e...', Array)
+#4 C:\wamp64\www\locum\app\Controllers\client\cli.php(303): App\Controllers\client\CLIBaseController->LoadView('clients/order_e...', Array)
+#5 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\client\cli->order_edit('2')
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\client\cli))
+#7 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 {main}
+CRITICAL - 2023-02-03 20:52:35 --> Function name must be a string
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(214): include()
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('clients/order_e...', Array, true)
+#3 C:\wamp64\www\locum\app\Controllers\client\CLIBaseController.php(72): view('clients/order_e...', Array)
+#4 C:\wamp64\www\locum\app\Controllers\client\cli.php(304): App\Controllers\client\CLIBaseController->LoadView('clients/order_e...', Array)
+#5 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\client\cli->order_edit('2')
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\client\cli))
+#7 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 {main}
+ERROR - 2023-02-03 21:27:59 --> Unknown column 'orders.ord_createdf' in 'order clause'
+CRITICAL - 2023-02-03 21:27:59 --> Unknown column 'orders.ord_createdf' in 'order clause'
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(280): mysqli->query('SELECT *\nFROM `...')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Database\BaseConnection.php(663): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Database\BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Model.php(183): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\BaseModel.php(584): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\wamp64\www\locum\app\Controllers\client\cli.php(154): CodeIgniter\BaseModel->findAll()
+#7 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\client\cli->contracts()
+#8 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\client\cli))
+#9 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}

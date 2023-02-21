@@ -1,0 +1,36 @@
+CRITICAL - 2023-02-04 13:31:44 --> Undefined index: cl_h_name
+#0 C:\wamp64\www\locum\app\Views\clients\new_order.php(1): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', 'C:\\wamp64\\www\\l...', 1, Array)
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(214): include('C:\\wamp64\\www\\l...')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('clients/new_ord...', Array, true)
+#4 C:\wamp64\www\locum\app\Controllers\client\CLIBaseController.php(72): view('clients/new_ord...', Array)
+#5 C:\wamp64\www\locum\app\Controllers\client\cli.php(250): App\Controllers\client\CLIBaseController->LoadView('clients/new_ord...', Array)
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\client\cli->new_order()
+#7 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\client\cli))
+#8 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+ERROR - 2023-02-04 13:34:12 --> Unknown column 'cl_id' in 'where clause'
+CRITICAL - 2023-02-04 13:34:12 --> Unknown column 'cl_id' in 'where clause'
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(280): mysqli->query('SELECT *\nFROM `...')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Database\BaseConnection.php(663): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Database\BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Model.php(210): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\BaseModel.php(622): CodeIgniter\Model->doFirst()
+#6 C:\wamp64\www\locum\app\Controllers\client\cli.php(205): CodeIgniter\BaseModel->first()
+#7 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\client\cli->new_order()
+#8 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\client\cli))
+#9 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2023-02-04 21:00:21 --> syntax error, unexpected end of file
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('clients/profile', Array, true)
+#2 C:\wamp64\www\locum\app\Controllers\client\CLIBaseController.php(72): view('clients/profile', Array)
+#3 C:\wamp64\www\locum\app\Controllers\client\cli.php(360): App\Controllers\client\CLIBaseController->LoadView('clients/profile', Array)
+#4 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\client\cli->profile()
+#5 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\client\cli))
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}

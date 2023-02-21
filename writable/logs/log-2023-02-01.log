@@ -1,0 +1,10 @@
+CRITICAL - 2023-02-01 08:52:53 --> Invalid file: templates\footer.php
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(198): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('templates\\foote...')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('templates\\foote...', Array, true)
+#2 C:\wamp64\www\locum\app\Controllers\BaseController.php(71): view('templates\\foote...')
+#3 C:\wamp64\www\locum\app\Controllers\usersAuth.php(50): App\Controllers\BaseController->LoadView('employees/login', Array)
+#4 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\usersAuth->login()
+#5 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\usersAuth))
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}

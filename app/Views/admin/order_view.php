@@ -43,6 +43,7 @@
   .col-md-12 {
     width: 100%;
   }
+}
 
 </style>
 

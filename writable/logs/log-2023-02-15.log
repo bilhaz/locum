@@ -1,0 +1,19 @@
+CRITICAL - 2023-02-15 22:11:21 --> Undefined index: status
+#0 C:\wamp64\www\locum\app\Controllers\admin\Backend.php(1918): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', 'C:\\wamp64\\www\\l...', 1918, Array)
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\admin\Backend->timesheet_save('1')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\admin\Backend))
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2023-02-15 22:42:00 --> Undefined index: grp_role
+#0 C:\wamp64\www\locum\app\Views\admin\users.php(61): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', 'C:\\wamp64\\www\\l...', 61, Array)
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(214): include('C:\\wamp64\\www\\l...')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('admin/users', Array, true)
+#4 C:\wamp64\www\locum\app\Controllers\admin\BEBaseController.php(73): view('admin/users', Array)
+#5 C:\wamp64\www\locum\app\Controllers\admin\Backend.php(174): App\Controllers\admin\BEBaseController->LoadView('admin/users', Array)
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\admin\Backend->users()
+#7 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\admin\Backend))
+#8 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}

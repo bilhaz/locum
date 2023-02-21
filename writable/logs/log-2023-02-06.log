@@ -1,0 +1,63 @@
+CRITICAL - 2023-02-06 13:55:15 --> Undefined index: ord_L_E_date
+#0 C:\wamp64\www\locum\app\Views\employees\contracts.php(73): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', 'C:\\wamp64\\www\\l...', 73, Array)
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(214): include('C:\\wamp64\\www\\l...')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('employees/contr...', Array, true)
+#4 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('employees/contr...', Array)
+#5 C:\wamp64\www\locum\app\Controllers\employee\emp.php(154): App\Controllers\employee\EMPBaseController->LoadView('employees/contr...', Array)
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->contracts()
+#7 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#8 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-02-06 13:55:24 --> Undefined index: ord_L_E_date
+#0 C:\wamp64\www\locum\app\Views\employees\contracts.php(73): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', 'C:\\wamp64\\www\\l...', 73, Array)
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(214): include('C:\\wamp64\\www\\l...')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('employees/contr...', Array, true)
+#4 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('employees/contr...', Array)
+#5 C:\wamp64\www\locum\app\Controllers\employee\emp.php(154): App\Controllers\employee\EMPBaseController->LoadView('employees/contr...', Array)
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->contracts()
+#7 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#8 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-02-06 13:55:26 --> Undefined index: ord_L_E_date
+#0 C:\wamp64\www\locum\app\Views\employees\contracts.php(73): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', 'C:\\wamp64\\www\\l...', 73, Array)
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(214): include('C:\\wamp64\\www\\l...')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('employees/contr...', Array, true)
+#4 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('employees/contr...', Array)
+#5 C:\wamp64\www\locum\app\Controllers\employee\emp.php(154): App\Controllers\employee\EMPBaseController->LoadView('employees/contr...', Array)
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->contracts()
+#7 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#8 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-02-06 13:56:41 --> Undefined index: ord_process_date_from
+#0 C:\wamp64\www\locum\app\Views\employees\contracts.php(73): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', 'C:\\wamp64\\www\\l...', 73, Array)
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(214): include('C:\\wamp64\\www\\l...')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('employees/contr...', Array, true)
+#4 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('employees/contr...', Array)
+#5 C:\wamp64\www\locum\app\Controllers\employee\emp.php(154): App\Controllers\employee\EMPBaseController->LoadView('employees/contr...', Array)
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->contracts()
+#7 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#8 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+ERROR - 2023-02-06 13:58:06 --> Unknown column 'createdAt' in 'field list'
+CRITICAL - 2023-02-06 13:58:06 --> Unknown column 'createdAt' in 'field list'
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(280): mysqli->query('INSERT INTO `ti...')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Database\BaseConnection.php(663): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `ti...')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Database\BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `ti...')
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1733): CodeIgniter\Database\BaseConnection->query('INSERT INTO `ti...', Array, false)
+#4 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Model.php(239): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\BaseModel.php(738): CodeIgniter\Model->doInsert(Array)
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Model.php(620): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\wamp64\www\locum\app\Controllers\employee\emp.php(265): CodeIgniter\Model->insert(Array)
+#8 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->timesheet_save('3')
+#9 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#10 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#12 {main}

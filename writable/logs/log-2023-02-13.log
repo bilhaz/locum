@@ -1,0 +1,24 @@
+ERROR - 2023-02-13 12:37:29 --> Unknown column 'ord_pstatus' in 'where clause'
+CRITICAL - 2023-02-13 12:37:29 --> Unknown column 'ord_pstatus' in 'where clause'
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(280): mysqli->query('SELECT *\nFROM `...')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Database\BaseConnection.php(663): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Database\BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Model.php(183): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\BaseModel.php(584): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\wamp64\www\locum\app\Controllers\admin\Backend.php(1443): CodeIgniter\BaseModel->findAll()
+#7 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\admin\Backend->confirm_order()
+#8 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\admin\Backend))
+#9 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2023-02-13 12:40:47 --> Invalid file: admin/pending_payment.php
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(198): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('admin/pending_p...')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('admin/pending_p...', Array, true)
+#2 C:\wamp64\www\locum\app\Controllers\admin\BEBaseController.php(73): view('admin/pending_p...', Array)
+#3 C:\wamp64\www\locum\app\Controllers\admin\Backend.php(1434): App\Controllers\admin\BEBaseController->LoadView('admin/pending_p...', Array)
+#4 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\admin\Backend->pending_payment()
+#5 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\admin\Backend))
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}

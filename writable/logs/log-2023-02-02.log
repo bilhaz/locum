@@ -1,0 +1,384 @@
+CRITICAL - 2023-02-02 08:39:13 --> Invalid file: templates\footer.php
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(198): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('templates\\foote...')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('templates\\foote...', Array, true)
+#2 C:\wamp64\www\locum\app\Controllers\BaseController.php(71): view('templates\\foote...')
+#3 C:\wamp64\www\locum\app\Controllers\usersAuth.php(50): App\Controllers\BaseController->LoadView('employees/login', Array)
+#4 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\usersAuth->login()
+#5 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\usersAuth))
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-02-02 10:10:58 --> noauth filter must have a matching alias defined.
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Filters\Filters.php(338): CodeIgniter\Filters\Exceptions\FilterException::forNoAlias('noauth')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(366): CodeIgniter\Filters\Filters->enableFilter('noauth', 'before')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 {main}
+CRITICAL - 2023-02-02 10:11:22 --> Class 'App\Filters\noauth' not found
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(374): CodeIgniter\Filters\Filters->run('employee/login', 'before')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#2 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#3 {main}
+CRITICAL - 2023-02-02 10:11:32 --> Class 'App\Filters\noauth' not found
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(374): CodeIgniter\Filters\Filters->run('employee/login', 'before')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#2 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#3 {main}
+CRITICAL - 2023-02-02 10:11:49 --> Class 'Config\E_noauth' not found
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(374): CodeIgniter\Filters\Filters->run('employee/login', 'before')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#2 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#3 {main}
+CRITICAL - 2023-02-02 10:12:35 --> Class 'Config\E_noauth' not found
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(374): CodeIgniter\Filters\Filters->run('employee/login', 'before')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#2 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#3 {main}
+CRITICAL - 2023-02-02 10:12:37 --> Class 'Config\E_noauth' not found
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(374): CodeIgniter\Filters\Filters->run('employee/login', 'before')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#2 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#3 {main}
+CRITICAL - 2023-02-02 10:14:39 --> Class 'Config\E_noauth' not found
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(374): CodeIgniter\Filters\Filters->run('employee/login', 'before')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#2 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#3 {main}
+CRITICAL - 2023-02-02 11:15:07 --> Class 'Config\E_noauth' not found
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(374): CodeIgniter\Filters\Filters->run('employee/login', 'before')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#2 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#3 {main}
+CRITICAL - 2023-02-02 11:15:46 --> E_Aauth filter must have a matching alias defined.
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Filters\Filters.php(338): CodeIgniter\Filters\Exceptions\FilterException::forNoAlias('E_Aauth')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(366): CodeIgniter\Filters\Filters->enableFilter('E_Aauth', 'before')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 {main}
+CRITICAL - 2023-02-02 11:15:59 --> Class 'Config\E_Auth' not found
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(374): CodeIgniter\Filters\Filters->run('employee/login', 'before')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#2 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#3 {main}
+CRITICAL - 2023-02-02 11:17:14 --> Class 'Config\E_Auth' not found
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(374): CodeIgniter\Filters\Filters->run('employee/login', 'before')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#2 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#3 {main}
+CRITICAL - 2023-02-02 11:17:30 --> E_Auth filter must have a matching alias defined.
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Filters\Filters.php(338): CodeIgniter\Filters\Exceptions\FilterException::forNoAlias('E_Auth')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(366): CodeIgniter\Filters\Filters->enableFilter('E_Auth', 'before')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 {main}
+CRITICAL - 2023-02-02 11:17:42 --> Class 'Config\E_Auth' not found
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(374): CodeIgniter\Filters\Filters->run('employee/login', 'before')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#2 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#3 {main}
+CRITICAL - 2023-02-02 11:38:28 --> Undefined variable: o_exp
+#0 C:\wamp64\www\locum\app\Views\admin\dashboard.php(46): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\l...', 46, Array)
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(214): include('C:\\wamp64\\www\\l...')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('admin/dashboard', Array, true)
+#4 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('admin/dashboard', Array)
+#5 C:\wamp64\www\locum\app\Controllers\employee\emp.php(97): App\Controllers\employee\EMPBaseController->LoadView('admin/dashboard', Array)
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->dashboard()
+#7 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#8 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-02-02 11:38:59 --> Undefined variable: o_exp
+#0 C:\wamp64\www\locum\app\Views\admin\dashboard.php(46): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\l...', 46, Array)
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(214): include('C:\\wamp64\\www\\l...')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('admin/dashboard', Array, true)
+#4 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('admin/dashboard', Array)
+#5 C:\wamp64\www\locum\app\Controllers\employee\emp.php(97): App\Controllers\employee\EMPBaseController->LoadView('admin/dashboard', Array)
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->dashboard()
+#7 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#8 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-02-02 11:39:15 --> Undefined variable: o_exp
+#0 C:\wamp64\www\locum\app\Views\admin\dashboard.php(46): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\l...', 46, Array)
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(214): include('C:\\wamp64\\www\\l...')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('admin/dashboard', Array, true)
+#4 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('admin/dashboard', Array)
+#5 C:\wamp64\www\locum\app\Controllers\employee\emp.php(97): App\Controllers\employee\EMPBaseController->LoadView('admin/dashboard', Array)
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->dashboard()
+#7 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#8 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-02-02 11:39:32 --> Undefined variable: o_exp
+#0 C:\wamp64\www\locum\app\Views\admin\dashboard.php(46): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\l...', 46, Array)
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(214): include('C:\\wamp64\\www\\l...')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('admin/dashboard', Array, true)
+#4 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('admin/dashboard', Array)
+#5 C:\wamp64\www\locum\app\Controllers\employee\emp.php(97): App\Controllers\employee\EMPBaseController->LoadView('admin/dashboard', Array)
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->dashboard()
+#7 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#8 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-02-02 11:39:59 --> Invalid file: employee/dashboard.php
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(198): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('employee/dashbo...')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('employee/dashbo...', Array, true)
+#2 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('employee/dashbo...', Array)
+#3 C:\wamp64\www\locum\app\Controllers\employee\emp.php(97): App\Controllers\employee\EMPBaseController->LoadView('employee/dashbo...', Array)
+#4 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->dashboard()
+#5 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-02-02 11:40:02 --> Invalid file: employee/dashboard.php
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(198): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('employee/dashbo...')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('employee/dashbo...', Array, true)
+#2 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('employee/dashbo...', Array)
+#3 C:\wamp64\www\locum\app\Controllers\employee\emp.php(97): App\Controllers\employee\EMPBaseController->LoadView('employee/dashbo...', Array)
+#4 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->dashboard()
+#5 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-02-02 11:40:03 --> Invalid file: employee/dashboard.php
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(198): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('employee/dashbo...')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('employee/dashbo...', Array, true)
+#2 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('employee/dashbo...', Array)
+#3 C:\wamp64\www\locum\app\Controllers\employee\emp.php(97): App\Controllers\employee\EMPBaseController->LoadView('employee/dashbo...', Array)
+#4 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->dashboard()
+#5 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-02-02 12:57:48 --> Invalid file: employees/contracts.php
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(198): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('employees/contr...')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('employees/contr...', Array, true)
+#2 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('employees/contr...', Array)
+#3 C:\wamp64\www\locum\app\Controllers\employee\emp.php(157): App\Controllers\employee\EMPBaseController->LoadView('employees/contr...', Array)
+#4 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->contracts()
+#5 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-02-02 13:00:14 --> Invalid file: employees/contracts.php
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(198): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('employees/contr...')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('employees/contr...', Array, true)
+#2 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('employees/contr...', Array)
+#3 C:\wamp64\www\locum\app\Controllers\employee\emp.php(151): App\Controllers\employee\EMPBaseController->LoadView('employees/contr...', Array)
+#4 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->contracts()
+#5 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-02-02 13:01:09 --> Invalid file: employees/contracts.php
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(198): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('employees/contr...')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('employees/contr...', Array, true)
+#2 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('employees/contr...', Array)
+#3 C:\wamp64\www\locum\app\Controllers\employee\emp.php(151): App\Controllers\employee\EMPBaseController->LoadView('employees/contr...', Array)
+#4 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->contracts()
+#5 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-02-02 13:01:25 --> Invalid file: employees/contracts.php
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(198): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('employees/contr...')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('employees/contr...', Array, true)
+#2 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('employees/contr...', Array)
+#3 C:\wamp64\www\locum\app\Controllers\employee\emp.php(151): App\Controllers\employee\EMPBaseController->LoadView('employees/contr...', Array)
+#4 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->contracts()
+#5 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-02-02 13:02:07 --> Invalid file: employees/contracts.php
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(198): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('employees/contr...')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('employees/contr...', Array, true)
+#2 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('employees/contr...', Array)
+#3 C:\wamp64\www\locum\app\Controllers\employee\emp.php(151): App\Controllers\employee\EMPBaseController->LoadView('employees/contr...', Array)
+#4 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->contracts()
+#5 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-02-02 13:02:36 --> Invalid file: employees/contracts.php
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(198): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('employees/contr...')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('employees/contr...', Array, true)
+#2 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('employees/contr...', Array)
+#3 C:\wamp64\www\locum\app\Controllers\employee\emp.php(150): App\Controllers\employee\EMPBaseController->LoadView('employees/contr...', Array)
+#4 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->contracts()
+#5 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-02-02 13:04:34 --> Invalid file: employees/contracts.php
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(198): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('employees/contr...')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('employees/contr...', Array, true)
+#2 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('employees/contr...', Array)
+#3 C:\wamp64\www\locum\app\Controllers\employee\emp.php(150): App\Controllers\employee\EMPBaseController->LoadView('employees/contr...', Array)
+#4 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->contracts()
+#5 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 {main}
+CRITICAL - 2023-02-02 13:04:52 --> Undefined index: cl_h_name
+#0 C:\wamp64\www\locum\app\Views\employees\contracts.php(67): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', 'C:\\wamp64\\www\\l...', 67, Array)
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(214): include('C:\\wamp64\\www\\l...')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('employees/contr...', Array, true)
+#4 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('employees/contr...', Array)
+#5 C:\wamp64\www\locum\app\Controllers\employee\emp.php(150): App\Controllers\employee\EMPBaseController->LoadView('employees/contr...', Array)
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->contracts()
+#7 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#8 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-02-02 13:05:55 --> Undefined index: cl_h_name
+#0 C:\wamp64\www\locum\app\Views\employees\contracts.php(67): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', 'C:\\wamp64\\www\\l...', 67, Array)
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(214): include('C:\\wamp64\\www\\l...')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('employees/contr...', Array, true)
+#4 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('employees/contr...', Array)
+#5 C:\wamp64\www\locum\app\Controllers\employee\emp.php(150): App\Controllers\employee\EMPBaseController->LoadView('employees/contr...', Array)
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->contracts()
+#7 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#8 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+ERROR - 2023-02-02 13:07:01 --> Column 'emp_id' in where clause is ambiguous
+CRITICAL - 2023-02-02 13:07:01 --> Column 'emp_id' in where clause is ambiguous
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(280): mysqli->query('SELECT *\nFROM `...')
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Database\BaseConnection.php(663): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Database\BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1428): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Model.php(183): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\BaseModel.php(584): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\wamp64\www\locum\app\Controllers\employee\emp.php(148): CodeIgniter\BaseModel->findAll()
+#7 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->contracts()
+#8 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#9 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#11 {main}
+CRITICAL - 2023-02-02 13:36:15 --> Undefined variable: ordr_row
+#0 C:\wamp64\www\locum\app\Views\admin\order_view.php(32): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\l...', 32, Array)
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(214): include('C:\\wamp64\\www\\l...')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('admin/order_vie...', Array, true)
+#4 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('admin/order_vie...', Array)
+#5 C:\wamp64\www\locum\app\Controllers\employee\emp.php(160): App\Controllers\employee\EMPBaseController->LoadView('admin/order_vie...', Array)
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->order_view('1')
+#7 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#8 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-02-02 13:36:30 --> Undefined variable: ordr_row
+#0 C:\wamp64\www\locum\app\Views\admin\order_view.php(32): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\l...', 32, Array)
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(214): include('C:\\wamp64\\www\\l...')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('admin/order_vie...', Array, true)
+#4 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('admin/order_vie...', Array)
+#5 C:\wamp64\www\locum\app\Controllers\employee\emp.php(160): App\Controllers\employee\EMPBaseController->LoadView('admin/order_vie...', Array)
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->order_view('1')
+#7 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#8 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-02-02 13:38:02 --> Undefined variable: cont
+#0 C:\wamp64\www\locum\app\Views\employees\contracts.php(401): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\l...', 401, Array)
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(214): include('C:\\wamp64\\www\\l...')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('employees/contr...', Array, true)
+#4 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('employees/contr...', Array)
+#5 C:\wamp64\www\locum\app\Controllers\employee\emp.php(150): App\Controllers\employee\EMPBaseController->LoadView('employees/contr...', Array)
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->contracts()
+#7 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#8 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-02-02 13:38:09 --> Undefined variable: cont
+#0 C:\wamp64\www\locum\app\Views\employees\contracts.php(401): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\l...', 401, Array)
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(214): include('C:\\wamp64\\www\\l...')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('employees/contr...', Array, true)
+#4 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('employees/contr...', Array)
+#5 C:\wamp64\www\locum\app\Controllers\employee\emp.php(150): App\Controllers\employee\EMPBaseController->LoadView('employees/contr...', Array)
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->contracts()
+#7 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#8 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-02-02 13:38:48 --> Undefined variable: ordr_row
+#0 C:\wamp64\www\locum\app\Views\admin\order_view.php(32): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\l...', 32, Array)
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(214): include('C:\\wamp64\\www\\l...')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('admin/order_vie...', Array, true)
+#4 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('admin/order_vie...', Array)
+#5 C:\wamp64\www\locum\app\Controllers\employee\emp.php(160): App\Controllers\employee\EMPBaseController->LoadView('admin/order_vie...', Array)
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->order_view('1')
+#7 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#8 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-02-02 13:39:30 --> Undefined variable: ordr_row
+#0 C:\wamp64\www\locum\app\Views\admin\order_view.php(32): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\l...', 32, Array)
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(214): include('C:\\wamp64\\www\\l...')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('admin/order_vie...', Array, true)
+#4 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('admin/order_vie...', Array)
+#5 C:\wamp64\www\locum\app\Controllers\employee\emp.php(160): App\Controllers\employee\EMPBaseController->LoadView('admin/order_vie...', Array)
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->order_view('1')
+#7 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#8 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-02-02 13:39:37 --> Undefined variable: ordr_row
+#0 C:\wamp64\www\locum\app\Views\admin\order_view.php(32): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\l...', 32, Array)
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(214): include('C:\\wamp64\\www\\l...')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('admin/order_vie...', Array, true)
+#4 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('admin/order_vie...', Array)
+#5 C:\wamp64\www\locum\app\Controllers\employee\emp.php(160): App\Controllers\employee\EMPBaseController->LoadView('admin/order_vie...', Array)
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->order_view('1')
+#7 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#8 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-02-02 13:40:48 --> Undefined variable: ordr_row
+#0 C:\wamp64\www\locum\app\Views\admin\order_view.php(32): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\l...', 32, Array)
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(214): include('C:\\wamp64\\www\\l...')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('admin/order_vie...', Array, true)
+#4 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('admin/order_vie...', Array)
+#5 C:\wamp64\www\locum\app\Controllers\employee\emp.php(160): App\Controllers\employee\EMPBaseController->LoadView('admin/order_vie...', Array)
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->order_view('1')
+#7 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#8 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-02-02 13:51:34 --> Use of undefined constant ord_id - assumed 'ord_id' (this will throw an Error in a future version of PHP)
+#0 C:\wamp64\www\locum\app\Views\employees\order_view.php(367): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Use of undefine...', 'C:\\wamp64\\www\\l...', 367, Array)
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(214): include('C:\\wamp64\\www\\l...')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('employees/order...', Array, true)
+#4 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('employees/order...', Array)
+#5 C:\wamp64\www\locum\app\Controllers\employee\emp.php(160): App\Controllers\employee\EMPBaseController->LoadView('employees/order...', Array)
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->order_view('1')
+#7 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#8 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}
+CRITICAL - 2023-02-02 13:59:09 --> Undefined index: spec_id
+#0 C:\wamp64\www\locum\app\Views\employees\contracts.php(85): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined index...', 'C:\\wamp64\\www\\l...', 85, Array)
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(214): include('C:\\wamp64\\www\\l...')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\View\View.php(217): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Common.php(1092): CodeIgniter\View\View->render('employees/contr...', Array, true)
+#4 C:\wamp64\www\locum\app\Controllers\employee\EMPBaseController.php(72): view('employees/contr...', Array)
+#5 C:\wamp64\www\locum\app\Controllers\employee\emp.php(150): App\Controllers\employee\EMPBaseController->LoadView('employees/contr...', Array)
+#6 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\employee\emp->contracts()
+#7 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\employee\emp))
+#8 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#10 {main}

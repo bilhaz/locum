@@ -1,0 +1,9 @@
+CRITICAL - 2023-02-16 08:28:40 --> Undefined variable: totalTime
+#0 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Debug\Toolbar\Views\toolbar.tpl.php(40): CodeIgniter\Debug\Exceptions->errorHandler(8, 'Undefined varia...', 'C:\\wamp64\\www\\l...', 40, Array)
+#1 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Debug\Toolbar.php(413): include('C:\\wamp64\\www\\l...')
+#2 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Debug\Toolbar.php(375): CodeIgniter\Debug\Toolbar->format(Array, 'html')
+#3 C:\wamp64\www\locum\app\Config\Events.php(48): CodeIgniter\Debug\Toolbar->respond()
+#4 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\Events\Events.php(149): CodeIgniter\Events\Events::Config\{closure}()
+#5 C:\wamp64\www\locum\vendor\codeigniter4\framework\system\CodeIgniter.php(299): CodeIgniter\Events\Events::trigger('pre_system')
+#6 C:\wamp64\www\locum\index.php(37): CodeIgniter\CodeIgniter->run()
+#7 {main}
