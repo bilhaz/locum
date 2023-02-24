@@ -1349,8 +1349,8 @@ ZW50SUQAQTM4NzFBMzMyNkNENjU3NzkzNzUxRjlEOEI4M0YwNzdgGcdFAAAAAElFTkSuQmCC" />
                                             <li class="nav-item"><a class="nav-link" href="<?= base_url('backend/orders') ?>"><i class="fa fa-list-ul"></i>All Orders</a></li>
                                             <li class="nav-item"><a class="nav-link" href="<?= base_url('backend/pending_order') ?>"><i class="fa fa-list-ul"></i>Pending Orders</a></li>
                                             <li class="nav-item"><a class="nav-link" href="<?= base_url('backend/processed_order') ?>"><i class="fa fa-list-ul"></i>Processed Orders</a></li>
-                                            <li class="nav-item"><a class="nav-link" href="<?= base_url('backend/confirm_order') ?>"><i class="fa fa-list-ul"></i>Confirm Payment</a></li>
-                                            <li class="nav-item"><a class="nav-link" href="<?= base_url('backend/ended_order') ?>"><i class="fa fa-list-ul"></i>Ended Payment</a></li>
+                                            <li class="nav-item"><a class="nav-link" href="<?= base_url('backend/confirm_order') ?>"><i class="fa fa-list-ul"></i>Confirmed Orders</a></li>
+                                            <li class="nav-item"><a class="nav-link" href="<?= base_url('backend/ended_order') ?>"><i class="fa fa-list-ul"></i>Ended Orders</a></li>
                                             <li class="nav-item"><a class="nav-link" href="<?= base_url('backend/expired-orders') ?>"><i class="fa fa-list-ul"></i>Expired Orders</a></li>
                                         </ul>
                                     </li>
