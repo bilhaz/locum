@@ -78,6 +78,7 @@ class Backend extends BEBaseController
 		'change_doctor_cancelled_order' => ['super_admin','admin'],
 		'formula' => ['super_admin'],
 		'edit-formula' => ['super_admin'],
+		'get_notif' => ['super_admin']
 
 
 
@@ -2038,8 +2039,18 @@ class Backend extends BEBaseController
 		// fetch live data from the database and store it in $data
 		$data = $model->where('status','0')->find(); // your database query here
 	
+		foreach($data as $row){
+			echo '<li class="d-flex">
+			<div class="feeds-left"><i class="fa fa-thumbs-o-up"></i></div>
+			<div class="feeds-body flex-grow-1">
+			<h6 class="mb-1" id="notifications">7 New Feedback <small class="float-end text-muted small">Today</small></h6>
+			<span class="text-muted">It will give a smart finishing to your site</span>
+			</div>
+			</li>';
+		}
+
 		// return the data as JSON
-		return $this->response->setJSON($data);
+		// return $this->response->setJSON($data);
 	}
 	public function notif_seen($id)
 	{

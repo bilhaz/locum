@@ -16,7 +16,7 @@ $(document).ready(function() {
             url: '<?php echo base_url('backend/notif-get'); ?>',
             method: 'POST',
             success: function(response) {
-                $('#notifications').html(response);
+                $('#notif').html(response);
             }
         });
     }
