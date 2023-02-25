@@ -6,7 +6,7 @@
                 <div class="col-md-6 col-sm-12">
                     <h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a>Emails</h2>
                     <ul class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a target="_blank" href="<?= base_url('backend/dashboard') ?>">SRA Locum</a></li>
+
 
                     </ul>
                 </div>
@@ -62,7 +62,7 @@
      </tr>
      <tr>
         <th style="border: 1px solid black;"><strong>Covering Date & Time:</strong></th>
-        <td style="border: 1px solid black;"><strong><?= $em_3['ord_required_from']. ' - ' .$em_3['ord_required_to'] ?></strong></td>
+        <td style="border: 1px solid black;"><strong><?= date("d-m-y  h:i:s a", strtotime($em_3['ord_required_from'])). ' - ' .date("d-m-y  h:i:s a", strtotime($em_3['ord_required_to'])) ?></strong></td>
       </tr> 
       <tr>
         <th style="border: 1px solid black;"><strong>Rate:</strong></th>
@@ -91,11 +91,11 @@
 <hr class="primary">
 <p><strong>Order status:</strong>
 <ol>
-   <li>Order confirmation.</li>
-   <li>Order processing initiated.</li>
-   <li>Proposal of locum to you.</li>
-   <li>Acceptance or declining a locum.</li>
-   <li>Locum Confirmation.</li>
+   <li><b>Order confirmation.</b></li>
+   <li><b>Order processing initiated.</b></li>
+   <li><b>Proposal of locum to you.</b></li>
+   <li><b>Acceptance or declining a locum.</b></li>
+   <li><b>Locum Confirmation.</b></li>
 </ol>
 </p>
 

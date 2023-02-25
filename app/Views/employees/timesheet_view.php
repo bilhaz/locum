@@ -1,3 +1,55 @@
+<style>
+    @media print {
+
+  
+  /* Adjust the table to fit on one page */
+  table {
+    padding-top: 0px;
+    table-layout: fixed;
+    width: 100%;
+  }
+  
+  tbody tr {
+    page-break-inside: avoid;
+  }
+  
+  /* Adjust the font size and line height */
+  body {
+    
+    font-size: 10pt;
+    /* line-height: 1.5; */
+    margin-right: 2rem;
+  }
+  
+ 
+  
+  /* Center the table headings */
+  table th {
+    text-align: center;
+  }
+  table td {
+   margin: 0px !important;
+    height: 2rem !important;
+    padding: 1px !important;
+    width: 5% !important;
+  }
+  
+
+  /* Adjust the form-check */
+  .form-check {
+    margin-bottom: 0;
+  }
+  
+  /* Adjust the font weight of the hours */
+  td:first-child {
+    font-weight: bold;
+  }
+.times{
+    width: 17% !important;
+    height: 2rem !important;
+}
+}
+</style>
 <div id="main-content">
     <div class="container-fluid">
         <div class="block-header py-lg-4 py-3 d-print-none">
@@ -5,8 +57,7 @@
                 <div class="col-md-6 col-sm-12">
                     <h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a>View Time Sheet</h2>
                     <ul class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a target="_blank" href="https://www.sralocum.com">SRA Locum</a>
-                        </li>
+                        
 
                     </ul>
                 </div>
@@ -17,8 +68,15 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
                     <div class="card-header">
-                        <h4 class="card-title text-center">Time Sheet</h4>
-
+                        <h4 class="card-title text-center">Time Sheet (<?= $e_ord['cl_h_name'] ?>)</h4>
+                        <ul class="header-dropdown">
+                            <li>
+                            <?php if($e_ord['ord_time_sheet_approved'] == "Approved"): ?>
+                               
+                            <span class="badge h3 chart-color122">Timesheet is Approved</span>
+                            <?php endif; ?>
+                            </li>
+                        </ul>
                     </div>
                     <?php if (isset($validation)) : ?>
                         <div class="alert alert-danger" role="alert">
@@ -42,7 +100,7 @@
                         <table class="table table-striped table-bordered border-primary" style="border: 1px #28a745;">
                             <thead>
                                 <tr>
-                                    <th style="border: solid #28a745;">Date</th>
+                                    <th style="border: solid #28a745;" class="times">Date</th>
                                     <?php $days = 1;
                                     $tmp_Startdate = $start_date;
                                     while (strtotime($tmp_Startdate) <= strtotime($end_date)) {
@@ -60,7 +118,7 @@
 
                                     <tr>
 
-                                        <td>
+                                        <td class="times">
 
                                             <?= ($i) . '.00 to ' . ($i + 1) ?>.00hr
                                         </td>

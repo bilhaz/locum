@@ -14,6 +14,7 @@ use App\Models\clRegModel;
 use App\Models\formulaModel;
 use App\Models\usrgrpModel;
 use App\Models\timesheetModel;
+use App\Models\notificationModel;
 
 class Backend extends BEBaseController
 {
@@ -367,7 +368,7 @@ class Backend extends BEBaseController
 		$data = [];
 		helper(['form']);
 		$model = new EmpModel();
-		$data['emp_row'] = $model->where('emp_status', 1)->find();
+		$data['emp_row'] = $model->join('emp_speciality','emp_speciality.spec_id = employee.emp_spec1','LEFT')->where('emp_status', 1)->find();
 
 		return $this->LoadView('admin/employees', $data);
 	}
@@ -929,7 +930,7 @@ class Backend extends BEBaseController
 		$data = [];
 		helper(['form']);
 		$model = new ClientModel();
-		$data['cl_row'] = $model->where('cl_status', 1)->find();
+		$data['cl_row'] = $model->where('cl_status', 1)->orderBy('cl_created','DESC')->find();
 
 		return $this->LoadView('admin/clients', $data);
 	}
@@ -945,6 +946,7 @@ class Backend extends BEBaseController
 			//let's do the validation here
 			$rules = [
 				'cl_cont_email' => ['label' => 'Email', 'rules' => 'required|min_length[8]|max_length[50]|valid_email|is_unique[clients.cl_cont_email]'],
+				'cl_usr' => ['label' => 'Username', 'rules' => 'required|min_length[8]|max_length[50]|is_unique[clients.cl_usr]'],
 				'cl_cont_pwd' => ['label' => 'password', 'rules' => 'required|min_length[8]|max_length[25]'],
 				'cnfrm_pwd' => ['label' => 'Confirm Password', 'rules' => 'matches[cl_cont_pwd]'],
 
@@ -969,6 +971,7 @@ class Backend extends BEBaseController
 				$model = new ClientModel();
 				$newData = [
 					'cl_cont_email' => $this->request->getVar('cl_cont_email'),
+					'cl_usr' => $this->request->getVar('cl_usr'),
 					'cl_cont_pwd' => $this->request->getVar('cl_cont_pwd'),
 					'cl_status' => 1,
 
@@ -1470,7 +1473,7 @@ class Backend extends BEBaseController
 		$dt = date('Y-m-d H:i:s', $timestamp);
 		helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->where('ord_required_to <=', $dt)->where('ord_status', '1')->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->where('ord_required_to <=', $dt)->where('ord_status', '1')->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('admin/expired_orders', $data);
 	}
@@ -1877,7 +1880,7 @@ class Backend extends BEBaseController
 		helper(['form']);
 
 		$model = new ordersModel();
-		$data['e_ord'] = $model->where('ord_id', $tid)->first();
+		$data['e_ord'] = $model->join('clients','clients.cl_id = orders.cl_id','LEFT')->where('ord_id', $tid)->first();
 
 		$data['start_date'] = $data['e_ord']['ord_process_details_from'];
 		$data['end_date'] = $data['e_ord']['ord_process_details_to'];
@@ -1908,7 +1911,7 @@ class Backend extends BEBaseController
 		$data['t_view'] = $model->where('order_id', $ord_id)->find();
 
 		$model = new ordersModel();
-		$data['e_ord'] = $model->where('ord_id', $ord_id)->first();
+		$data['e_ord'] = $model->join('clients','clients.cl_id = orders.cl_id','LEFT')->where('ord_id', $ord_id)->first();
 
 		$data['start_date'] = $data['e_ord']['ord_process_details_from'];
 		$data['end_date'] = $data['e_ord']['ord_process_details_to'];
@@ -1948,7 +1951,7 @@ class Backend extends BEBaseController
 		$data['t_view'] = $model->where('order_id', $ord_id)->find();
 
 		$model = new ordersModel();
-		$data['e_ord'] = $model->where('ord_id', $ord_id)->first();
+		$data['e_ord'] = $model->join('clients','clients.cl_id = orders.cl_id','LEFT')->where('ord_id', $ord_id)->first();
 
 		$data['start_date'] = $data['e_ord']['ord_process_details_from'];
 		$data['end_date'] = $data['e_ord']['ord_process_details_to'];
@@ -2028,6 +2031,28 @@ class Backend extends BEBaseController
 
 		return $this->LoadView('admin/edit_formula', $data);
 	}
+	public function get_notif()
+	{
+		$data = [];
+		$model = new notificationModel();
+		// fetch live data from the database and store it in $data
+		$data = $model->where('status','0')->find(); // your database query here
+	
+		// return the data as JSON
+		return $this->response->setJSON($data);
+	}
+	public function notif_seen($id)
+	{
+		$data = [];
+		$model = new notificationModel();
+		
+		$newdata = [
+			'status' => '1',
+		];
 
+		$model->update($id,$newdata);
+		// return the data as JSON
+		
+	}
 
 }

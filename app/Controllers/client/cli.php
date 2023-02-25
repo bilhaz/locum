@@ -26,19 +26,19 @@ class cli extends CLIBaseController
 		helper(['form']);
 		$validation = \Config\Services::validation();
 		$model = new ClientModel();
-		$data['cli_user'] = $model->where('cl_cont_email', $this->request->getVar('cl_cont_email'))
+		$data['cli_user'] = $model->where('cl_usr', $this->request->getVar('cl_usr'))
 		->first();
 
 		if ($this->request->getMethod() == 'post') {
 			//let's do the validation here
 			$rules = [
-				'cl_cont_email' => ['label' => 'Email', 'rules' => 'required|valid_email'],
-				'cl_cont_pwd' => ['label' => 'Password', 'rules' => 'required|validateCli[cl_cont_email,cl_cont_pwd]'],
+				'cl_usr' => ['label' => 'Username', 'rules' => 'required'],
+				'cl_cont_pwd' => ['label' => 'Password', 'rules' => 'required|validateCli[cl_usr,cl_cont_pwd]'],
 			];
 
 			$errors = [
 				'cl_cont_pwd' => [
-					'validateCli' => 'Email or Password don\'t match'
+					'validateCli' => 'Username or Password don\'t match'
 				],
 				
 			];
@@ -58,7 +58,7 @@ class cli extends CLIBaseController
 			} else {
 				
 
-				$cliuser = $model->where('cl_cont_email', $this->request->getVar('cl_cont_email'))
+				$cliuser = $model->where('cl_usr', $this->request->getVar('cl_usr'))
 					->first();
 
 				$this->setUserSession($cliuser);
@@ -75,6 +75,7 @@ class cli extends CLIBaseController
 		$data = [
 			'cl_id' => $cliuser['cl_id'],
 			'cl_cont_email' => $cliuser['cl_cont_email'],
+			'cl_usr' => $cliuser['cl_usr'],
 			'cl_cont_name' => $cliuser['cl_cont_name'],
 			'cl_h_name' => $cliuser['cl_h_name'],
 			'CliLoggedIn' => true,
@@ -208,7 +209,7 @@ class cli extends CLIBaseController
 		$data['t_view'] = $model->where('order_id',$ord_id)->find();
 
 		$model = new ordersModel();
-		$data['e_ord'] = $model->where('ord_id', $ord_id)->first();
+		$data['e_ord'] = $model->join('clients','clients.cl_id = orders.cl_id','LEFT')->where('ord_id', $ord_id)->first();
 
 		$data['start_date'] = $data['e_ord']['ord_process_details_from'];
 		$data['end_date'] = $data['e_ord']['ord_process_details_to'];

@@ -5,7 +5,6 @@
 <div class="col-md-6 col-sm-12">
 <h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a>Blocked Employee</h2>
 <ul class="breadcrumb mb-0">
-<li class="breadcrumb-item"><a target="_blank" href="<?= base_url('backend/dashboard') ?>">SRA Locum</a></li>
 
 </ul>
 </div>
@@ -64,7 +63,7 @@
 <h6 class="mb-0"><?= $row['emp_fname'] . ' ' . $row['emp_lname'] ?></h6>
 </td>
 <td><span><?= $row['emp_email']?></span></td>
-<td><?= $row['emp_created']?></td>
+<td><?= date("d-m-y  h:i:s a", strtotime($row['emp_created']))?></td>
 <td>
   
 <a type="button" href="<?= base_url('backend/emp_unblock/'.encryptIt($row['emp_id']))?>" class="btn btn-sm btn-outline-danger js-sweetalert" Onclick="return confirm('Are You sure?');" title="Unblock" data-type="confirm"><i class="fa fa-unlock"></i></a>

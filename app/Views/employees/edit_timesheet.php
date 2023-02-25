@@ -3,10 +3,9 @@
         <div class="block-header py-lg-4 py-3 d-print-none">
             <div class="row g-3">
                 <div class="col-md-6 col-sm-12">
-                    <h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a>Fill Time Sheet</h2>
+                    <h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a>Edit Time Sheet</h2>
                     <ul class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a target="_blank" href="https://www.sralocum.com">SRA Locum</a>
-                        </li>
+                       
 
                     </ul>
                 </div>
@@ -17,7 +16,7 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
                     <div class="card-header">
-                        <h4 class="card-title text-center">Time Sheet</h4>
+                        <h4 class="card-title text-center">Time Sheet (<?= $e_ord['cl_h_name'] ?>)</h4>
 
                     </div>
                     <?php if (isset($validation)) : ?>

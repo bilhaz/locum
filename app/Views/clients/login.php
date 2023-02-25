@@ -1260,8 +1260,8 @@ ZW50SUQAQTM4NzFBMzMyNkNENjU3NzkzNzUxRjlEOEI4M0YwNzdgGcdFAAAAAElFTkSuQmCC" />
                                 </div>
                             <?php endif; ?>
                             <div class="form-floating mb-1">
-                                <input type="email" class="form-control" name="cl_cont_email"  value="<?= set_value('cl_cont_email') ?>">
-                                <label>Email address</label>
+                                <input type="text" class="form-control" name="cl_usr"  value="<?= set_value('cl_usr') ?>">
+                                <label>Username</label>
                             </div>
                             <div class="form-floating">
                                 <input type="password" class="form-control" name="cl_cont_pwd" >

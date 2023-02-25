@@ -7,8 +7,6 @@
                             class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a>
                         Client Edit</h2>
                     <ul class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a target="_blank" href="<?= base_url('backend/dashboard') ?>">SRA Locum</a>
-                        </li>
 
                     </ul>
                 </div>
@@ -48,12 +46,17 @@
                             autocomplete="off" enctype="multipart/form-data" accept-charset="utf-8"
                             data-parsley-validate="" id="forma">
                             <div class="row mb-3">
-                            <div class="form-group col-md-6 ">
-                                <label for="emp_email" class="control-label mb-1">Email</label>
-                                <input id="emp_email" name="cl_cont_email" type="email" class="form-control"
+                            <div class="form-group col-md-4 ">
+                                <label for="cl_cont_email" class="control-label mb-1">Email</label>
+                                <input id="cl_cont_email" name="cl_cont_email" type="email" class="form-control"
                                     value="<?= $cli['cl_cont_email'] ?>" disabled>
                             </div>
-                            <div class="form-group col-md-6 ">
+                                    <div class="form-group col-md-4 ">
+                                <label for="cl_usr" class="control-label mb-1">Email</label>
+                                <input id="cl_usr" name="cl_usr" type="email" class="form-control"
+                                    value="<?= $cli['cl_usr'] ?>" disabled>
+                            </div>
+                            <div class="form-group col-md-4 ">
                             <label for="cl_reg_as" class="control-label mb-1">Register As</label>
                                     <select id="cl_reg_as" name="cl_reg_as" class="form-control select2"  data-parsley-trigger="change" required="">
                                         <option value="">Select Category</option>

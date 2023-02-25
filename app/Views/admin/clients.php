@@ -5,7 +5,7 @@
                 <div class="col-md-6 col-sm-12">
                     <h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> Client List</h2>
                     <ul class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a target="_blank" href="<?= base_url('backend/dashboard') ?>">SRA Locum</a></li>
+
 
                     </ul>
                 </div>
@@ -46,6 +46,7 @@
                                     <th>SNo.</th>
                                     <th>Hospital Name</th>
                                     <th>Email</th>
+                                    <th>Username</th>
                                     <th>Registration Date</th>
                                     <th>Action</th>
                                 </tr>
@@ -65,7 +66,8 @@
                                             <h6 class="mb-0"><?= $row['cl_h_name'] ?></h6>
                                         </td>
                                         <td><span><?= $row['cl_cont_email'] ?></span></td>
-                                        <td><?= $row['cl_created'] ?></td>
+                                        <td><span><?= $row['cl_usr'] ?></span></td>
+                                        <td><?= date("d-m-y  h:i:s a", strtotime($row['cl_created'])) ?></td>
                                         <td>
                                             <?php if (!empty($row['cl_h_name'])) : ?>
                                                 <a type="button" href="<?= base_url('backend/client_edit/' . encryptIt($row['cl_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>

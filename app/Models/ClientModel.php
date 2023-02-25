@@ -12,7 +12,7 @@ class ClientModel extends Model
     //protected $returnType     = 'array';
     //protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['cl_reg_as', 'cl_h_name', 'cl_county','cl_cont_desig', 'cl_eircode','cl_cont_name','cl_gender','cl_cont_email','cl_cont_pwd', 'cl_cont_phone','cl_address','cl_status'];
+    protected $allowedFields = ['cl_reg_as', 'cl_h_name', 'cl_county','cl_cont_desig', 'cl_eircode','cl_cont_name','cl_gender','cl_cont_email','cl_usr','cl_cont_pwd', 'cl_cont_phone','cl_address','cl_status'];
     protected $beforeInsert = ['beforeInsert'];
     protected $beforeUpdate = ['beforeUpdate'];
 

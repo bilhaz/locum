@@ -21,7 +21,7 @@ class LoginRules {
     }
     public function validateCli(string $str, string $fields, array $data) {
         $model = new ClientModel();
-        $user = $model->where('cl_cont_email',$data['cl_cont_email'])
+        $user = $model->where('cl_usr',$data['cl_usr'])
                       -> first();
 
         if(!$user)

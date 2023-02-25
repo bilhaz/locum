@@ -6,7 +6,7 @@
                 <div class="col-md-6 col-sm-12">
                     <h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a>Emails</h2>
                     <ul class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a target="_blank" href="<?= base_url('backend/dashboard') ?>">SRA Locum</a></li>
+
 
                     </ul>
                 </div>
@@ -37,7 +37,8 @@
                                 <p style="color:#157DED">Congratulations and thank you for taking up this Locum assignment with SRA Locum. Please find attached the confirmation of your booking.</p>
                                 <h5 style="color:#157DED">Attachment</h5>
                                 <ul class="spbull" style="line-height: 2em;">
-                                    <li style="color:#157DED">Attached is the Confirmation of Locum Details with Term & Conditions, Timesheet and Assessment form.</li>
+                                    <li style="color:#157DED">Attached is the Confirmation of Locum Details with Term & Conditions, Timesheet and Assessment form.<br>
+                                        <a type="button" href="<?= base_url('public/uploads/SRAL-timesheet.pdf')?>" class="btn" style="background-color:#157DED;color:white;">Click to Download Timesheet</a></li>
                                     <li style="color:#157DED">Timesheet you are required to complete and get signed by your consultant when you have finished the shifts.</li>
                                     <li style="color:#157DED">Kindly ensure that you get your timesheet signed off at the end of the assignment. This is to make sure that you receive your payment promptly SRA Locum will only pay once Time sheet(s) is confirmed and the Client has paid SRA Locum (T&C applies).</li>
                                     <li style="color:#157DED">Please also submit the attached assessment form to the consultant/ GP whilst you are working as this will enable us to book you out easier in the future.</li>

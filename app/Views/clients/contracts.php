@@ -6,7 +6,7 @@
                 <div class="col-md-6 col-sm-12">
                     <h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> Orders List</h2>
                     <ul class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a target="_blank" href="https://www.sralocum.com">SRA Locum</a></li>
+                        
 
                     </ul>
                 </div>
@@ -49,6 +49,7 @@
                                     <th>Hospital Name</th>
                                     <th>Processed till</th>
                                     <th>Timesheet</th>
+                                    <th>Payment Date</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -69,12 +70,19 @@
                                         </td>
                                         
                                         
-                                        <td><?= $row['ord_process_details_to'] ?></td>
+                                        <td><?= date("d-m-y  h:i:s a", strtotime($row['ord_created'])) ?></td>
                                         <td>
                                         <?php if(!empty($row['order_id'])): ?>
                                             <a type="button" href="<?= base_url('client/timesheet/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-info" title="TimeSheet"><i class="fa fa-eye"></i> View</a>
                                             <?php else: ?>
                                                 <span class="badge bg-danger">No Submitted</span>
+                                                <?php endif; ?>
+                                        </td>
+                                        <td>
+                                        <?php if(!empty($row['ord_paymnt_rcvd_date']) && $row['ord_paymnt_rcvd_date'] > "0000-00-00" ): ?>
+                                                <?= $row['ord_paymnt_rcvd_date'] ?>
+                                            <?php else: ?>
+                                                <span class="badge bg-warning text-dark">Due</span>
                                                 <?php endif; ?>
                                         </td>
                                         <td>

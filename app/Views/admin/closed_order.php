@@ -5,7 +5,6 @@
 <div class="col-md-6 col-sm-12">
 <h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> Orders List</h2>
 <ul class="breadcrumb mb-0">
-<li class="breadcrumb-item"><a target="_blank" href="<?= base_url('backend/dashboard') ?>">SRA Locum</a></li>
 
 </ul>
 </div>
@@ -64,10 +63,9 @@
 
 <td>
 <h6 class="mb-0"><?= $row['cl_h_name']?></h6>
-<!-- <span><a href="https://wrraptheme.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="771a1605041f161b1b5a1937101a161e1b5914181a">[email&#160;protected]</a></span> -->
 </td>
 <td><span><?= $row['emp_fname'].' '. $row['emp_lname']?></span></td>
-<td><?= $row['ord_created']?></td>
+<td><?= date("d-m-y  h:i:s a", strtotime($row['ord_created'])) ?></td>
 <td><span class="badge bg-success"><?= $row['ord_case_status']?></span></td>
 <td>
   

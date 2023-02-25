@@ -8,8 +8,51 @@
 <script src="<?= base_url('public/assets/js/my.js')?>"></script>
 
 <script src="<?=  base_url('public/assets/bundles/mainscripts.bundle.js')?>"></script>
+<script>
+$(document).ready(function() {
+    // Fetch notifications
+    function fetchNotifications() {
+        $.ajax({
+            url: '<?php echo base_url('backend/notif-get'); ?>',
+            method: 'POST',
+            success: function(response) {
+                $('#notifications').html(response);
+            }
+        });
+    }
+    
+    // Display details of notification and mark it as seen
+    $(document).on('click', '.notification', function() {
+        var notification_id = $(this).data('id');
+        $.ajax({
+            url: '<?php echo base_url('notifications/get_details'); ?>',
+            method: 'POST',
+            data: {id: notification_id},
+            success: function(response) {
+                // Display notification details in a modal
+                $('#notification-details').html(response);
+                $('#notification-details-modal').modal('show');
+                
+                // Update notification status to 'seen'
+                $.ajax({
+                    url: '<?php echo base_url('backend/notif-seen'); ?>',
+                    method: 'POST',
+                    data: {id: notification_id},
+                    success: function(response) {
+                        // Update notification count in header
+                        $('#notification-count').text(response);
+                    }
+                });
+            }
+        });
+    });
+    
+    // Fetch notifications every 5 seconds
+    setInterval(fetchNotifications, 5000);
+});
 
 
+</script>
 <script>
     $(document).ready(function () {
         $('#employee_List')

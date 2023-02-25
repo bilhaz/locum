@@ -11,6 +11,7 @@ use App\Models\ordersModel;
 use App\Models\specialityModel;
 use App\Models\timesheetModel;
 use App\Models\formulaModel;
+use App\Models\notificationModel;
 use DateTimeZone;
 
 class emp extends EMPBaseController
@@ -258,7 +259,7 @@ class emp extends EMPBaseController
 		helper(['form']);	
 
 		$model = new ordersModel();
-		$data['e_ord'] = $model->where('ord_id', $tid)->first();
+		$data['e_ord'] = $model->join('clients','clients.cl_id = orders.cl_id','LEFT')->where('ord_id', $tid)->first();
 
 		$data['start_date'] = $data['e_ord']['ord_process_details_from'];
 		$data['end_date'] = $data['e_ord']['ord_process_details_to'];	
@@ -269,12 +270,22 @@ class emp extends EMPBaseController
 	public function timesheet_save($ord_id){
 		
 		$ord_id = decryptIt($ord_id);
+		$eid = session()->emp_id;
 		$model = new timesheetModel();
+		$Nmodel = new notificationModel();
 		foreach($_POST['status'] as $row=>$key){
 			
 			$model->insert(array('order_id'=>$ord_id,'dutyDate' => explode(',', $key)[0], 'dutyTime' => explode(',', $key)[1], 'siteStatus' => explode(',', $key)[2]));
 			
 		}
+		$newData = [
+			'ord_id' => $ord_id,
+			'emp_id' =>$eid,
+			'notification' => "New Timesheet submitted",
+			'status' => "0",
+		];
+		
+		$Nmodel->save($newData);
 		$session = session();
 			$session->setFlashdata('success', 'TimeSheet Saved');
 			return redirect()->to('employee/ord-view/' . encryptIt($ord_id));
@@ -288,7 +299,7 @@ class emp extends EMPBaseController
 		$data['t_view'] = $model->where('order_id',$ord_id)->find();
 
 		$model = new ordersModel();
-		$data['e_ord'] = $model->where('ord_id', $ord_id)->first();
+		$data['e_ord'] = $model->join('clients','clients.cl_id = orders.cl_id','LEFT')->where('ord_id', $ord_id)->first();
 
 		$data['start_date'] = $data['e_ord']['ord_process_details_from'];
 		$data['end_date'] = $data['e_ord']['ord_process_details_to'];	
@@ -326,7 +337,7 @@ class emp extends EMPBaseController
 		$data['t_view'] = $model->where('order_id',$ord_id)->find();
 
 		$model = new ordersModel();
-		$data['e_ord'] = $model->where('ord_id', $ord_id)->first();
+		$data['e_ord'] = $model->join('clients','clients.cl_id = orders.cl_id','LEFT')->where('ord_id', $ord_id)->first();
 
 		$data['start_date'] = $data['e_ord']['ord_process_details_from'];
 		$data['end_date'] = $data['e_ord']['ord_process_details_to'];	

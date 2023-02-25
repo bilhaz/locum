@@ -1296,7 +1296,23 @@ ZW50SUQAQTM4NzFBMzMyNkNENjU3NzkzNzUxRjlEOEI4M0YwNzdgGcdFAAAAAElFTkSuQmCC" />
                             </div>
                             <div class="flex-grow-1">
                                 <ul class="nav navbar-nav flex-row justify-content-end align-items-center">
-
+                                <li class="dropdown">
+<a class="dropdown-toggle icon-menu" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+<i class="fa fa-bell"></i>
+<span class="notification-dot"></span>
+</a>
+<div class="dropdown-menu dropdown-menu-end p-0 shadow notification">
+<ul class="list-unstyled feeds_widget">
+<li class="d-flex">
+<div class="feeds-left"><i class="fa fa-thumbs-o-up"></i></div>
+<div class="feeds-body flex-grow-1">
+<h6 class="mb-1" id="notifications">7 New Feedback <small class="float-end text-muted small">Today</small></h6>
+<span class="text-muted">It will give a smart finishing to your site</span>
+</div>
+</li>
+</ul>
+</div>
+                                </li>
                                     <li><a href="<?= base_url('backend/destroy') ?>" class="icon-menu"><i class="fa fa-sign-out"></i></a></li>
                                 </ul>
                             </div>

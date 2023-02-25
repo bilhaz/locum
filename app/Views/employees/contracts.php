@@ -7,7 +7,7 @@
                 <div class="col-md-6 col-sm-12">
                     <h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> Orders List</h2>
                     <ul class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a target="_blank" href="https://www.sralocum.com">SRA Locum</a></li>
+                        
 
                     </ul>
                 </div>
@@ -45,6 +45,7 @@
                                     <th>Hospital Name</th>
                                     <th>Payemnt</th>
                                     <th>Work till</th>
+                                    <th>Created Date</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -70,7 +71,8 @@
                                                 <span class="badge bg-success">Paid</span>
                                             <?php endif; ?>
                                         </td>
-                                        <td><?= $row['ord_process_date'] ?></td>
+                                        <td><?= date("d-m-y  h:i:s a", strtotime($row['ord_process_date'])) ?></td>
+                                        <td><?= date("d-m-y", strtotime($row['ord_created'])) ?></td>
                                         <td>
                                             <?php if($row['ord_cancel_bdr'] == 1): ?>
                                                 <span class="badge bg-danger">You Cancelled</span>

@@ -6,7 +6,7 @@
                 <div class="col-md-6 col-sm-12">
                     <h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> Time Sheet</h2>
                     <ul class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a target="_blank" href="<?= base_url('backend/dashboard') ?>">SRA Locum</a></li>
+
 
                     </ul>
                 </div>
@@ -17,7 +17,7 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
                     <div class="card-header">
-                        <h6 class="card-title">All Orders</h6>
+                        <h6 class="card-title">Timesheet for all Orders</h6>
                         
                     </div>
                     <?php if (isset($validation)) : ?>
@@ -81,7 +81,7 @@
                                                 <span class="badge bg-danger">No Submitted</span>
                                                 <?php endif; ?>
                                         </td>
-                                        <td><?= $row['ord_created'] ?></td>
+                                        <td><?= date("d-m-y  h:i:s a", strtotime($row['ord_created'])) ?></td>
                                         
                                     </tr>
                                 <?php endforeach; ?>

@@ -5,7 +5,6 @@
 <div class="col-md-6 col-sm-12">
 <h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> Grade List</h2>
 <ul class="breadcrumb mb-0">
-<li class="breadcrumb-item"><a target="_blank" href="<?= base_url('backend/dashboard') ?>">SRA Locum</a></li>
 
 </ul>
 </div>
@@ -63,7 +62,7 @@
 <td>
 <h6 class="mb-0"><?= $row['grade_name']?></h6>
 </td>
-<td><span><?= $row['grade_created']?></span></td>
+<td><span><?= date("d-m-y  h:i:s a", strtotime($row['grade_created']))?></span></td>
 <td>
   
 <a type="button" href="<?= base_url('backend/edit_grade/'. encryptIt($row['grade_id']))?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>

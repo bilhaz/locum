@@ -5,7 +5,7 @@
                 <div class="col-md-6 col-sm-12">
                     <h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a>Orders List</h2>
                     <ul class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a target="_blank" href="<?= base_url('backend/dashboard') ?>">SRA Locum</a></li>
+
 
                     </ul>
                 </div>
@@ -66,8 +66,8 @@
                                             <h6 class="mb-0"><?= $row['cl_h_name'] ?></h6>
                                         </td>
                                         <td><span><?= $row['emp_fname'] . ' ' . $row['emp_lname'] ?></span></td>
-                                        <td><?= date("y-m-d", strtotime($row['ord_required_to'])) ?></td>
-                                        <td><?= $row['ord_created'] ?></td>
+                                        <td><?= date("d-m-y  h:i:s a", strtotime($row['ord_required_to'])) ?></td>
+                                        <td><?= date("d-m-y  h:i:s a", strtotime($row['ord_created'])) ?></td>
                                         <td>
                                         <?php if ($row['ord_status'] == "1") : ?>
                                                 <span class="badge badge chart-color123">Pending</span>

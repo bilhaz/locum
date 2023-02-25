@@ -25,6 +25,10 @@
                                 <input type="email" class="form-control" name="cl_cont_email" id="cl_cont_email" placeholder="name@example.com" required="">
                                 <label>Email address</label>
                             </div>
+                            <div class="form-floating mb-1">
+                                <input type="text" class="form-control" name="cl_usr" id="cl_usr" placeholder="john.ellen" required="">
+                                <label>Username</label>
+                            </div>
                             <div class="form-floating">
                                 <input type="password" class="form-control" name="cl_cont_pwd" id="cl_cont_pwd" placeholder="Password" required="">
                                 <label>Password</label>
