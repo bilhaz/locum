@@ -588,6 +588,7 @@ class Backend extends BEBaseController
 				//store this to database
 
 				$model = new EmpModel();
+				
 				$newData = [
 					'emp_fname' => $this->request->getVar('emp_fname'),
 					'emp_lname' => $this->request->getVar('emp_lname'),
@@ -603,14 +604,18 @@ class Backend extends BEBaseController
 					'emp_imcr_no' => $this->request->getVar('emp_imcr_no'),
 					'emp_cv' => $cvname,
 					'emp_imc_cert' => $emp_imc_cert_name,
-					'emp_gv_cert' => $emp_gv_cert_name,
-					'emp_rec_refer' => $emp_rec_refer_name,
-					'emp_passport' => $emp_passport_name,
-					'emp_occup_health' => $emp_occup_health_name,
-					'emp_work_permit' => $emp_work_permit_name,
-
-
+					'emp_gv_cert' => isset($emp_gv_cert_name) ? $emp_gv_cert_name : $this->request->getVar('emp_gv_cert_hidden'),
+				'emp_rec_refer' => isset($emp_rec_refer_name) ? $emp_rec_refer_name : $this->request->getVar('emp_rec_refer_hidden'),
+				'emp_passport' => isset($emp_passport_name) ? $emp_passport_name : $this->request->getVar('emp_passport_hidden'),
+				'emp_occup_health' => isset($emp_occup_health_name) ? $emp_occup_health_name : $this->request->getVar('emp_occup_health_hidden'),
+				'emp_work_permit' => isset($emp_work_permit_name) ? $emp_work_permit_name : $this->request->getVar('emp_work_permit_hidden'),
+					// 'emp_gv_cert' => $emp_gv_cert_name,
+					// 'emp_rec_refer' => $emp_rec_refer_name,
+					// 'emp_passport' => $emp_passport_name,
+					// 'emp_occup_health' => $emp_occup_health_name,
+					// 'emp_work_permit' => $emp_work_permit_name,
 				];
+
 				$model->update($id, $newData);
 				$session = session();
 				$session->setFlashdata('success', 'Record Successfully Saved');
