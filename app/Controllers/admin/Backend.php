@@ -78,7 +78,9 @@ class Backend extends BEBaseController
 		'change_doctor_cancelled_order' => ['super_admin','admin'],
 		'formula' => ['super_admin'],
 		'edit-formula' => ['super_admin'],
-		'get_notif' => ['super_admin']
+		'get_notif' => ['super_admin', 'admin', 'user'],
+		'notif-seen' => ['super_admin', 'admin', 'user'],
+		'notif-count' => ['super_admin', 'admin', 'user'],
 
 
 
@@ -2037,32 +2039,54 @@ class Backend extends BEBaseController
 		$data = [];
 		$model = new notificationModel();
 		// fetch live data from the database and store it in $data
-		$data = $model->where('status','0')->find(); // your database query here
-	
-		foreach($data as $row){
+		$data = $model->orderBy('created_at','DESC')->findAll(); // your database query here
+		// fetch the count of unseen notifications
+		$count = $model->where('status', 0)->countAllResults();
+		
+		foreach ($data as $row) {
+			$url = base_url('backend/t-view/'.encryptIt($row['ord_id']));
 			echo '<li class="d-flex">
-			<div class="feeds-left"><i class="fa fa-thumbs-o-up"></i></div>
-			<div class="feeds-body flex-grow-1">
-			<h6 class="mb-1" id="notifications">7 New Feedback <small class="float-end text-muted small">Today</small></h6>
-			<span class="text-muted">It will give a smart finishing to your site</span>
-			</div>
+				<div class="feeds-left"><i class="fa fa-calendar"></i></div>
+				<div class="feeds-body flex-grow-1">
+					<h6 class="mb-1 notification" data-id="'.$row['ord_id'].'">'.$row['notification'].'<small class="float-end text-muted small">'.date("d-m-y", strtotime($row['created_at'])).'</small><br></h6>
+					<span class="text-muted"><a class="notification" data-id="'.$row['ord_id'].'" href="'.$url.'">Click here to view Timesheet</a> <b style="float:right;">'.($row['status'] == 1 ? 'Seen' : '').'</b></span>
+				</div>
 			</li>';
 		}
 
 		// return the data as JSON
-		// return $this->response->setJSON($data);
+		// return $this->response->setJSON(['count' => $count]);
 	}
-	public function notif_seen($id)
+	public function get_notifcount()
 	{
 		$data = [];
 		$model = new notificationModel();
+		// fetch the count of unseen notifications
+		$count = $model->where('status', 0)->countAllResults();
+		echo $count;
+		// return the count as JSON
+		// return $this->response->setJSON(['count' => $count]);
+	}
+	public function notif_seen()
+	{
 		
+		$data = [];
+		$id = $this->request->getPost('id');
+		$model = new notificationModel();
+		$data['notif_id'] = $model->where('ord_id',$id)->first;
+		$notid = $data['notif_id']['id'];
 		$newdata = [
 			'status' => '1',
 		];
 
-		$model->update($id,$newdata);
+		$model->update($notid,$newdata);
 		// return the data as JSON
+
+		
+		
+    // $model = new NotificationModel();
+    // $model->update($id, ['status' => 1]);
+    return json_encode(['success' => true]); // return JSON response
 		
 	}
 

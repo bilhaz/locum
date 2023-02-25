@@ -16,43 +16,59 @@ $(document).ready(function() {
             url: '<?php echo base_url('backend/notif-get'); ?>',
             method: 'POST',
             success: function(response) {
+              
                 $('#notif').html(response);
             }
         });
     }
     
-    // Display details of notification and mark it as seen
-    $(document).on('click', '.notification', function() {
-        var notification_id = $(this).data('id');
-        $.ajax({
-            url: '<?php echo base_url('notifications/get_details'); ?>',
-            method: 'POST',
-            data: {id: notification_id},
-            success: function(response) {
-                // Display notification details in a modal
-                $('#notification-details').html(response);
-                $('#notification-details-modal').modal('show');
-                
-                // Update notification status to 'seen'
-                $.ajax({
-                    url: '<?php echo base_url('backend/notif-seen'); ?>',
-                    method: 'POST',
-                    data: {id: notification_id},
-                    success: function(response) {
-                        // Update notification count in header
-                        $('#notification-count').text(response);
-                    }
-                });
-            }
-        });
-    });
-    
+
     // Fetch notifications every 5 seconds
-    setInterval(fetchNotifications, 5000);
+    setInterval(fetchNotifications, 2000);
 });
 
+</script>
+<script>
+$(document).ready(function() {
+    // Fetch notifications
+    function fetchNotificationscount() {
+        $.ajax({
+            url: '<?php echo base_url('backend/notif-count'); ?>',
+            method: 'POST',
+            success: function(response) {
+      $('#notif-count').html(response);
+                
+            }
+        });
+    }
+    
+
+    // Fetch notifications every 5 seconds
+    setInterval(fetchNotificationscount, 2000);
+    // Fetch notification count on page load
+    fetchNotificationscount();
+});
 
 </script>
+
+<script>
+  $(document).on('click', '.notification', function() {
+    var id = $(this).data('id');
+    $.ajax({
+        url: '<?php echo base_url('backend/notif-seen'); ?>',
+        type: 'post',
+        data: {id: id},
+        success: function(response) {
+            console.log(response); // you can log the response for debugging
+            // update the UI if needed
+        },
+        error: function() {
+            console.log('error'); // handle error if any
+        }
+    });
+});
+  </script>
+
 <script>
     $(document).ready(function () {
         $('#employee_List')

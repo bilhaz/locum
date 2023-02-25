@@ -1299,7 +1299,7 @@
                                     <li class="dropdown">
                                         <a class="dropdown-toggle icon-menu" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="fa fa-bell"></i>
-                                        <span class="notification-dot"></span>
+                                        <span id="notif-count" class="badge bg-danger"></span>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-end p-0 shadow notification">
                                         <ul class="list-unstyled feeds_widget" id="notif">
