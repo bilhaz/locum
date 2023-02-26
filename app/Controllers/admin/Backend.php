@@ -2073,7 +2073,7 @@ class Backend extends BEBaseController
 		$data = [];
 		$id = $this->request->getPost('id');
 		$model = new notificationModel();
-		$data['notif_id'] = $model->where('ord_id',$id)->first;
+		$data['notif_id'] = $model->where('ord_id',$id)->first();
 		$notid = $data['notif_id']['id'];
 		$newdata = [
 			'status' => '1',

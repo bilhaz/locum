@@ -54,6 +54,7 @@ $(document).ready(function() {
 <script>
   $(document).on('click', '.notification', function() {
     var id = $(this).data('id');
+    alert(id);
     $.ajax({
         url: '<?php echo base_url('backend/notif-seen'); ?>',
         type: 'post',
