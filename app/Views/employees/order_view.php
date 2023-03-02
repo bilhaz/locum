@@ -471,7 +471,7 @@
             </td>
             <td style="width:367pt;border-left-style:solid;border-left-width:1pt;border-left-color:#9BBA58">
                 <p class="s2" style="padding-left: 4pt;text-indent: 0pt;line-height: 13pt;text-align: left;"><?= $cont['spec_name'].'  &nbsp;'. $cont['grade_name'] ?></p>
-                <p class="s2" style="padding-left: 4pt;text-indent: 0pt;text-align: left;"><?= date("d-m-y  h:i:s a", strtotime($cont['ord_required_from'])). ' - ' .date("d-m-y  h:i:s a", strtotime($cont['ord_required_to'])) ?></p>
+                <p class="s2" style="padding-left: 4pt;text-indent: 0pt;text-align: left;"><?= $cont['ord_datetime_detail'] ?></p>
             </td>
         </tr>
         <tr style="height:27pt">
