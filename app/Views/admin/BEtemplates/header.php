@@ -1311,7 +1311,7 @@
                                         </ul>
                                         </div>
                                     </li>
-                                        <li><a href="<?= base_url('backend/destroy') ?>" class="icon-menu"><i class="fa fa-sign-out"></i></a></li>
+                                        <li><a href="<?= base_url('backend/destroy') ?>" class="icon-menu text-dark">Logout &nbsp;<i class="fa fa-sign-out"></i></a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -1321,8 +1321,8 @@
                     <div id="left-sidebar" class="sidebar d-print-none">
                         <div class="user-account p-3 mb-3">
                             <div class="d-flex mb-3 pb-3 border-bottom align-items-center">
-                                <img src="<?= base_url('public/images/user.png') ?>" class="avatar lg rounded me-3" alt="User Profile Picture">
-                                <div class="dropdown flex-grow-1">
+                                <!-- <img src="<?php // base_url('public/images/user.png') ?>" class="avatar lg rounded me-3" alt="User Profile Picture"> -->
+                                <div class="dropdown flex-grow-1 text-center fs-6">
                                     <span class="d-block">Welcome,</span>
                                     <a href="#" class="dropdown-toggle user-name" data-bs-toggle="dropdown"><strong><?= session()->get('usr_name') ?></strong></a>
                                     <ul class="dropdown-menu p-2 shadow-sm">

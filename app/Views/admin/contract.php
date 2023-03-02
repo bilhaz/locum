@@ -175,14 +175,14 @@
             font-size: 11pt;
         }
 
-        a {
+        /* a {
             color: #00F;
             font-family: Calibri, sans-serif;
             font-style: normal;
             font-weight: bold;
             text-decoration: underline;
             font-size: 11pt;
-        }
+        } */
 
         .s18 {
             color: #CD0000;
@@ -382,7 +382,7 @@
             <td><u class="text-dark"><a href="<?= base_url('backend/dashboard') ?>">W: www.sralocum.com</a></u></td>
         </tr>
         <tr>
-            <td><p class="mb-0"><u><a href="mailto:info@shamrockassist.com">E: info@shamrockassist.com</a></u></p></td>
+            <td><p class="mb-0"><u><a href="mailto:contact@sralocum.com">E: contact@sralocum.com</a></u></p></td>
         </tr>
         <tr>
             <td><p class="mb-0"><u><a href="tel:016854700">P: 01-6854700</a>&nbsp;<b>&</b>&nbsp;<a href="tel:016994321">01-6994321</a></u></p></td>
@@ -431,7 +431,7 @@
             </td>
             <td style="width:367pt;border-left-style:solid;border-left-width:1pt;border-left-color:#9BBA58">
                 <p class="s2" style="padding-left: 4pt;text-indent: 0pt;line-height: 13pt;text-align: left;"><?= $cont['spec_name'].'  &nbsp;'. $cont['grade_name'] ?></p>
-                <p class="s2" style="padding-left: 4pt;text-indent: 0pt;text-align: left;"><?= $cont['ord_required_from']. ' - ' .$cont['ord_required_to'] ?></p>
+                <p class="s2" style="padding-left: 4pt;text-indent: 0pt;text-align: left;"><?= $cont['ord_datetime_detail']?></p>
             </td>
         </tr>
         <tr style="height:27pt">
@@ -474,7 +474,7 @@
     <p class="s15" style="padding-left: 7pt;text-indent: 0pt;text-align: left;"><a href="mailto:info@sralocum.com" style=" color: black; font-family:Calibri, sans-serif; font-style: normal; font-weight: normal; text-decoration: none; font-size: 9pt;" target="_blank">We operate a comprehensive 24-hour on call service manned by senior members of staff who can assist you on: </a><span style=" color: #00F; font-family:Calibri, sans-serif; font-style: normal; font-weight: normal; text-decoration: underline; font-size: 9pt;">info@sralocum.com</span> <span style=" color: #000;">OR 01-6854700 &amp; 01-6994321 Dublin or .020-33182900 This is not a emergency service.</span></p>
     <p class="s13" style="padding-left: 7pt;text-indent: 0pt;text-align: left;">You agree that you as Locum if decide to take a short term or permanent position with this client either during the assignment or within 6 months of leaving the post arranged by SRA Locum, an introduction fee will automatically become due for payment by the you and client.</p>
     <p class="s16" style="padding-top: 6pt;padding-left: 7pt;text-indent: 0pt;text-align: left;">We hope you enjoyed your placement with SRA Locum and if we can be of any further assistance please do not hesitate to contact us.</p>
-    <p style="padding-top: 6pt;padding-left: 7pt;text-indent: 0pt;text-align: left;"><a href="https://sralocum.com/web/new2/public/uploads/files/termsandconditions.pdf" style=" color: #1F487C; font-family:Calibri, sans-serif; font-style: normal; font-weight: bold; text-decoration: none; font-size: 11pt;" target="_blank">I hereby agree to accept the above booking &amp; I agree fully to SRA Locum terms and conditions. </a><a href="https://sralocum.com/web/new2/public/uploads/files/termsandconditions.pdf" target="_blank">SRA Terms & Conditions</a></p>
+    <p style="padding-top: 6pt;padding-left: 7pt;text-indent: 0pt;text-align: left;"><a href="https://sralocum.com/web/new2/public/uploads/files/termsandconditions.pdf" style=" color: #1F487C; font-family:Calibri, sans-serif; font-style: normal; font-weight: bold; text-decoration: none; font-size: 11pt;" target="_blank">I hereby agree to accept the above booking &amp; I agree fully to SRA Locum terms and conditions. </a><a href="https://sralocum.com/public/uploads/files/termsandconditions.pdf" target="_blank">SRA Terms & Conditions</a></p>
     <h3 style="padding-top: 6pt;padding-left: 7pt;text-indent: 0pt;text-align: left;">I the above named person confirm the above details to be correct and therefore I wish to proceed as being engaged as Locum:</h3>
     <h3 style="padding-left: 7pt;text-indent: 0pt;line-height: 215%;text-align: left;">Signed: <u>__________________</u> <br>
         <br>
@@ -503,7 +503,7 @@
                     <td><u class="text-dark"><a href="<?= base_url('backend/dashboard') ?>">W: www.sralocum.com</a></u></td>
                 </tr>
                 <tr>
-                    <td><p class="mb-0"><u><a href="mailto:info@shamrockassist.com">E: info@shamrockassist.com</a></u></p></td>
+                    <td><p class="mb-0"><u><a href="mailto:contact@sralocum.com">E: contact@sralocum.com</a></u></p></td>
                 </tr>
                 <tr>
                     <td><p class="mb-0"><u><a href="tel:016854700">P: 01-6854700</a>&nbsp;<b>&</b>&nbsp;<a href="tel:016994321">01-6994321</a></u></p></td>
@@ -765,7 +765,7 @@
     <p style="padding-left: 7pt;text-indent: 0pt;text-align: left;">Once completed please scan and email us.</p>
     <p style="padding-left: 7pt;text-indent: 0pt;text-align: left;">Or Fax to: <span style=" color: #C10000;">01 685 2538</span></p>
     <p style="padding-left: 7pt;text-indent: 0pt;text-align: left;">SRA Locum – 13 Upper Baggot St, 2<span class="s32">nd</span> floor, Dublin 4.</p>
-    <p style="padding-left: 7pt;text-indent: 0pt;text-align: left;"> Email: info@sralocum.com</a></p>
+    <p style="padding-left: 7pt;text-indent: 0pt;text-align: left;"> Email: contact@sralocum.com</a></p>
     <div class="page-break-line"></div>    
 </div>
 

@@ -12,7 +12,7 @@
 <div class="card chart-color123">
 <div class="card-body p-lg-4 text-light">
 <h3><strong><?= $o_pen ?></strong></h3>
-<span>Pending Orders</span>
+<span>Pending Assignments</span>
 </div>
 </div>
 </div>
@@ -20,7 +20,7 @@
 <div class="card chart-color122">
 <div class="card-body p-lg-4 text-light">
 <h3><strong><?= $o_pro ?></strong></h3>
-<span>Processed Orders</span>
+<span>Processed Assignments</span>
 </div>
 </div>
 </div>
@@ -28,7 +28,7 @@
 <div class="card chart-color121 text-light">
 <div class="card-body p-lg-4">
 <h3><strong><?= $o_con ?></h3></strong>
-<span>Confirmed Orders</span>
+<span>Confirmed Assignments</span>
 </div>
 </div>
 </div>
@@ -36,7 +36,7 @@
 <div class="card chart-color120">
 <div class="card-body p-lg-4 text-light">
 <h3><strong><?= $o_end ?></strong></h3>
-<span>Completed Orders</span>
+<span>Completed Assignments</span>
 </div>
 </div>
 </div>

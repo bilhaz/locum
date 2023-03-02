@@ -42,7 +42,7 @@
 
 
                         <div class="card-title">
-                            <h3 class="text-center title-2">Enter Details</h3>
+                            <h3 class="text-center title-2">My Details</h3>
                         </div>
                         <hr>
                         <form action="<?= base_url('employee/profile') ?>" method="post"
@@ -174,7 +174,7 @@
                                 <div class="form-group col-md-6 ">
                                     <label for="emp_pps_no" class="control-label mb-1">PPS No.</label>
                                     <?php if(empty($emp['emp_grade3'])) : ?>
-                                    <input id="emp_pps_no" name="emp_pps_no" type="number" class="form-control"
+                                    <input id="emp_pps_no" name="emp_pps_no" type="text" class="form-control"
                                         required="">
                                         <?php else: ?>
                                         <input id="emp_pps_no" name="emp_pps_no" type="number" class="form-control" value="<?= $emp['emp_pps_no'] ?>" required="">

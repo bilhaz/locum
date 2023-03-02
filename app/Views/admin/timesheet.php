@@ -69,7 +69,7 @@
                                         <td><?php if($row['ord_time_sheet_approved'] == "Approved" ): ?> <span class="badge bg-success">Approved</span> <?php else: ?><span class="badge bg-danger">Not-Approved</span><?php endif; ?></td>
                                         <td>
                                         <?php if(!isset($row['order_id'])):?>
-                            <a type="button" href="<?= base_url('backend/t-fill/' .encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-primary d-print-none"><i class="fa fa-calendar text-light">&nbsp;</i>Fill TimeSheet</a>
+                            <a type="button" href="<?= base_url('backend/t-fill/' .encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-primary d-print-none"><i class="fa fa-calendar text-light">&nbsp;</i>TimeSheet</a>
                                             <?php else: ?>
                             <a type="button" href="<?= base_url('backend/t-edit/' .encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-warning d-print-none"><i class="fa fa-calendar text-dark">&nbsp;</i>Update TimeSheet</a>
                                                 <?php endif; ?>

@@ -148,7 +148,7 @@ class emp extends EMPBaseController
 		$emodel = new EmpModel();
 		$data['e_doc'] = $emodel->where('emp_id', $id)->first();
 		$model = new ordersModel();
-		$data['order'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->where('orders.emp_id', session()->emp_id)->orderBy('ord_created', 'DESC')->findAll();
+		$data['order'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->Join('timesheets', 'timesheets.order_id = orders.ord_id','LEFT')->where('orders.emp_id', session()->emp_id)->orderBy('ord_created', 'DESC')->findAll();
 		
 		return $this->LoadView('employees/contracts', $data);
 	}
@@ -220,37 +220,7 @@ class emp extends EMPBaseController
 		return $this->LoadView('employees/upl_asses', $data);
 	}
 
-	public function  canc_ord($coid = null)
-
-	{
-		// $coid = decryptIt($coid);
-		$model = new ordersModel();
-		$del = $model->where('ord_id', $coid)->first();
-		helper(['form']);
-		if ($this->request->getMethod() == 'post') {
-			//let's do the validation here
-			$rules = [
-				'ord_dr_cremarks' => ['label' => 'Reason', 'rules' => 'required'],
-			];
-
-			if (!$this->validate($rules)) {
-				
-				$data['validation'] = $this->validator;
-			} else {
-
-			$newData = [
-				'ord_cancel_bdr' => 1,
-				'ord_dr_cremarks' => $this->request->getVar('ord_dr_cremarks'),
-
-			];
-		}
-			$model->update($coid, $newData);
-			$session = session();
-			$session->setFlashdata('success', 'Order Cancelled');
-			return redirect()->to('employee/orders');
-		
-	}
-}
+	
 
 	public function timesheet($tid = null)
 	{
@@ -271,6 +241,7 @@ class emp extends EMPBaseController
 		
 		$ord_id = decryptIt($ord_id);
 		$eid = session()->emp_id;
+		$link = "backend/t-view";
 		$model = new timesheetModel();
 		$Nmodel = new notificationModel();
 		foreach($_POST['status'] as $row=>$key){
@@ -281,6 +252,7 @@ class emp extends EMPBaseController
 		$newData = [
 			'ord_id' => $ord_id,
 			'emp_id' =>$eid,
+			'link'	=> $link,
 			'notification' => "New Timesheet submitted",
 			'status' => "0",
 		];
@@ -313,8 +285,10 @@ class emp extends EMPBaseController
 		$data = [];
 		
 		$ord_id = decryptIt($ord_id);
+		$eid = session()->emp_id;
+		$link = "backend/t-view";
 		$model = new timesheetModel();
-		
+		$Nmodel = new notificationModel();
 			// Delete all existing timesheet data for this order
 			$model->where(['order_id' => $ord_id])->delete();
 		
@@ -322,7 +296,14 @@ class emp extends EMPBaseController
 			foreach($_POST['status'] as $row => $key){
 				$model->insert(['order_id' => $ord_id, 'dutyDate' => explode(',', $key)[0], 'dutyTime' => explode(',', $key)[1], 'siteStatus' => explode(',', $key)[2]]);
 			}
-		
+			$newData = [
+				'ord_id' => $ord_id,
+				'emp_id' =>$eid,
+				'link'	=> $link,
+				'notification' => "Timesheet was Updated",
+				'status' => "0",
+			];
+			$Nmodel->save($newData);
 			$session = session();
 				$session->setFlashdata('success', 'TimeSheet Updated');
 				return redirect()->to('employee/t-edit/' . encryptIt($ord_id));
@@ -370,17 +351,17 @@ class emp extends EMPBaseController
 				'emp_lname' => ['label' => 'Last Name', 'rules' => 'required'],
 				'emp_spec1' => ['label' => 'Speciality 1', 'rules' => 'required'],
 				'emp_grade1' => ['label' => 'Grade 1', 'rules' => 'required'],
-				'emp_pps_no' => ['label' => 'PPS No.', 'rules' => 'required|numeric'],
+				'emp_pps_no' => ['label' => 'PPS No.', 'rules' => 'required'],
 				'emp_phone' => ['label' => 'Phone No.', 'rules' => 'required|numeric'],
 				'emp_imcr_no' => ['label' => 'IMCR No.', 'rules' => 'required|numeric'],
-				'emp_cv' => ['label' => 'CV', 'rules' => 'uploaded[emp_cv]|ext_in[emp_cv,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_cv,2048]'],
-				'emp_imc_cert' => ['label' => 'IMC Certificate', 'rules' => 'uploaded[emp_imc_cert]|ext_in[emp_imc_cert,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_imc_cert,2048]'],
-				'emp_gv_cert' => ['label' => 'Garda Vetting', 'rules' => 'uploaded[emp_gv_cert]|ext_in[emp_gv_cert,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_gv_cert,2048]'],
-				'emp_rec_refer' => ['label' => 'Recent Reference', 'rules' => 'uploaded[emp_rec_refer]|ext_in[emp_rec_refer,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_rec_refer,2048]'],
-				'emp_passport' => ['label' => 'Passport', 'rules' => 'uploaded[emp_passport]|ext_in[emp_passport,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_passport,2048]'],
-				'emp_occup_health' => ['label' => 'Occupational Health', 'rules' => 'uploaded[emp_occup_health]|ext_in[emp_occup_health,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_occup_health,2048]'],
-				'emp_work_permit' => ['label' => 'Work Permit', 'rules' => 'uploaded[emp_work_permit]|ext_in[emp_work_permit,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_work_permit,2048]'],
-					'emp_gender'=> ['label' => 'Gender', 'rules' => 'required'],
+				'emp_cv' => ['label' => 'CV', 'rules' => 'uploaded[emp_cv]|ext_in[emp_cv,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_cv,2048]'],
+				'emp_imc_cert' => ['label' => 'IMC Certificate', 'rules' => 'uploaded[emp_imc_cert]|ext_in[emp_imc_cert,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_imc_cert,2048]'],
+				'emp_gv_cert' => ['label' => 'Garda Vetting', 'rules' => 'uploaded[emp_gv_cert]|ext_in[emp_gv_cert,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_gv_cert,2048]'],
+				'emp_rec_refer' => ['label' => 'Recent Reference', 'rules' => 'uploaded[emp_rec_refer]|ext_in[emp_rec_refer,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_rec_refer,2048]'],
+				'emp_passport' => ['label' => 'Passport', 'rules' => 'uploaded[emp_passport]|ext_in[emp_passport,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_passport,2048]'],
+				'emp_occup_health' => ['label' => 'Occupational Health', 'rules' => 'uploaded[emp_occup_health]|ext_in[emp_occup_health,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_occup_health,2048]'],
+				'emp_work_permit' => ['label' => 'Work Permit', 'rules' => 'uploaded[emp_work_permit]|ext_in[emp_work_permit,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_work_permit,2048]'],
+				'emp_gender'=> ['label' => 'Gender', 'rules' => 'required'],
 			];
 		} else {
 			$rules = [

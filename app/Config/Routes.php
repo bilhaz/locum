@@ -150,6 +150,7 @@ $routes->match(['get' , 'post'], 'client/ord-view/(:any)', 'client\cli::order_vi
 $routes->match(['get' , 'post'], 'client/canc-ord/(:any)', 'client\cli::canc_ord/$1',['filter' => 'C_Auth']);
 $routes->match(['get' , 'post'], 'client/timesheet/(:any)', 'client\cli::timesheet/$1',['filter' => 'C_Auth']);
 $routes->match(['get' , 'post'], 'client/timesheet-approve/(:any)', 'client\cli::timesheet_approve/$1',['filter' => 'C_Auth']);
+$routes->match(['get' , 'post'], 'client/ord-status/(:any)', 'client\cli::order_status/$1',['filter' => 'C_Auth']);
 $routes->get('client/logout', 'client\cli::logout');
 
 

@@ -81,7 +81,7 @@
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
                                 <label for="cl_eircode" class="control-label mb-1">Eircode</label>
-                                    <input id="cl_eircode" name="cl_eircode" type="text" class="form-control" required="">
+                                    <input id="cl_eircode" name="cl_eircode" type="text" class="form-control eircode" required="">
                                     
                                 </div>
                                 <div class="form-group col-md-6 ">
@@ -96,26 +96,18 @@
                                     <input id="cl_cont_name" name="cl_cont_name" type="text" class="form-control" required="">
                                 </div>
                                 <div class="form-group col-md-6">
-                                <label for="cl_gender" class="control-label mb-1">Personnel Gender</label>
-                                <select id="cl_gender" name="cl_gender" class="form-control select2"  data-parsley-trigger="change" required="">
-                                        <option value="">Select Gender</option>
-                                        <option value="M" <?= set_select('cl_gender','M', ( !empty($fieldType) && $fieldType == 'M' ? TRUE : FALSE )); ?> >Male</option>
-                                        <option value="F" <?= set_select('cl_gender','F', ( !empty($fieldType) && $fieldType == 'F' ? TRUE : FALSE )); ?> >Female</option>
-                                        <option value="O" <?= set_select('cl_gender','O', ( !empty($fieldType) && $fieldType == 'O' ? TRUE : FALSE )); ?> >Other</option>
-                                    </select> 
+                                <label for="cl_cont_phone" class="control-label mb-1">Personnel Contact Number</label>
+                                    <input id="cl_cont_phone" name="cl_cont_phone" type="number" class="form-control" required="">
+                            
                                 </div>
                             </div>
                             <div class="row mb-3">
                             <div class="form-group col-md-6 ">
-                            <label for="cl_cont_phone" class="control-label mb-1">Personnel Contact Number</label>
-                                    <input id="cl_cont_phone" name="cl_cont_phone" type="number" class="form-control" required="">
-                            
+                            <label for="cl_cont_desig" class="control-label mb-1">Personnel Designation</label>
+                                    <input id="cl_cont_desig" name="cl_cont_desig" type="text" class="form-control" required="">
                                       
                             </div>
-                                    <div class="form-group col-md-6 ">
-                                    <label for="cl_cont_desig" class="control-label mb-1">Personnel Designation</label>
-                                    <input id="cl_cont_desig" name="cl_cont_desig" type="text" class="form-control" required="">
-                                </div>
+                                   
                                 </div>
                             
 

@@ -62,7 +62,7 @@
      </tr>
      <tr>
         <th style="border: 1px solid black;"><strong>Covering Date & Time:</strong></th>
-        <td style="border: 1px solid black;"><strong><?= date("d-m-y  h:i:s a", strtotime($em_3['ord_required_from'])). ' - ' .date("d-m-y  h:i:s a", strtotime($em_3['ord_required_to'])) ?></strong></td>
+        <td style="border: 1px solid black;"><strong><?= $em_3['ord_datetime_detail'] ?></strong></td>
       </tr> 
       <tr>
         <th style="border: 1px solid black;"><strong>Rate:</strong></th>

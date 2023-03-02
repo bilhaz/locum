@@ -2,11 +2,13 @@
 <div class="container-fluid">
 <div class="block-header py-lg-4 py-3">
 <div class="row g-3">
-<div class="col-md-6 col-sm-12">
+<div class="col-md-7 col-sm-12">
 <h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> Dashboard</h2>
+<p class="mb-0 text-justify text-success"><strong>This is your dashboard. Click on the tab to view your chosen options.</strong></p>
 </div>
 </div>
 </div>
+
 <div class="row g-2 row-deck mb-2">
 <div class="col-lg-3 col-md-6 col-sm-6 text-center">
 <a href="<?= base_url('client/orders') ?>">

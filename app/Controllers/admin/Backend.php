@@ -371,7 +371,7 @@ class Backend extends BEBaseController
 		$data = [];
 		helper(['form']);
 		$model = new EmpModel();
-		$data['emp_row'] = $model->join('emp_speciality','emp_speciality.spec_id = employee.emp_spec1','LEFT')->where('emp_status', 1)->find();
+		$data['emp_row'] = $model->join('emp_speciality','emp_speciality.spec_id = employee.emp_spec1','LEFT')->find();
 
 		return $this->LoadView('admin/employees', $data);
 	}
@@ -447,11 +447,11 @@ class Backend extends BEBaseController
 				'emp_lname' => ['label' => 'Last Name', 'rules' => 'required'],
 				'emp_spec1' => ['label' => 'Speciality 1', 'rules' => 'required'],
 				'emp_grade1' => ['label' => 'Grade 1', 'rules' => 'required'],
-				'emp_pps_no' => ['label' => 'PPS No.', 'rules' => 'required|numeric'],
+				'emp_pps_no' => ['label' => 'PPS No.', 'rules' => 'required'],
 				'emp_phone' => ['label' => 'Phone No.', 'rules' => 'required|numeric'],
 				'emp_imcr_no' => ['label' => 'IMCR No.', 'rules' => 'required|numeric'],
-				'emp_cv' => ['label' => 'CV', 'rules' => 'uploaded[emp_cv]|ext_in[emp_cv,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_cv,2048]'],
-				'emp_imc_cert' => ['label' => 'IMC Certificate', 'rules' => 'uploaded[emp_imc_cert]|ext_in[emp_imc_cert,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_imc_cert,2048]'],
+				'emp_cv' => ['label' => 'CV', 'rules' => 'uploaded[emp_cv]|ext_in[emp_cv,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_cv,2048]'],
+				'emp_imc_cert' => ['label' => 'IMC Certificate', 'rules' => 'uploaded[emp_imc_cert]|ext_in[emp_imc_cert,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_imc_cert,2048]'],
 				'emp_gender' => ['label' => 'Gender', 'rules' => 'required'],
 				
 			];
@@ -650,11 +650,11 @@ class Backend extends BEBaseController
 				'emp_lname' => ['label' => 'Last Name', 'rules' => 'required'],
 				'emp_spec1' => ['label' => 'Speciality 1', 'rules' => 'required'],
 				'emp_grade1' => ['label' => 'Grade 1', 'rules' => 'required'],
-				'emp_pps_no' => ['label' => 'PPS No.', 'rules' => 'required|numeric'],
+				'emp_pps_no' => ['label' => 'PPS No.', 'rules' => 'required'],
 				'emp_phone' => ['label' => 'Phone No.', 'rules' => 'required|numeric'],
 				'emp_imcr_no' => ['label' => 'IMCR No.', 'rules' => 'required|numeric'],
-				'emp_cv' => ['label' => 'CV', 'rules' => 'ext_in[emp_cv,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_cv,2048]'],
-				'emp_imc_cert' => ['label' => 'IMC Certificate', 'rules' => 'ext_in[emp_imc_cert,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_imc_cert,2048]'],
+				'emp_cv' => ['label' => 'CV', 'rules' => 'ext_in[emp_cv,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_cv,2048]'],
+				'emp_imc_cert' => ['label' => 'IMC Certificate', 'rules' => 'ext_in[emp_imc_cert,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_imc_cert,2048]'],
 				'emp_gender' => ['label' => 'Gender', 'rules' => 'required'],
 			];
 
@@ -933,7 +933,7 @@ class Backend extends BEBaseController
 		$data = [];
 		helper(['form']);
 		$model = new ClientModel();
-		$data['cl_row'] = $model->where('cl_status', 1)->orderBy('cl_created','DESC')->find();
+		$data['cl_row'] = $model->orderBy('cl_created','DESC')->find();
 
 		return $this->LoadView('admin/clients', $data);
 	}
@@ -1274,6 +1274,7 @@ class Backend extends BEBaseController
 					'ord_payment_status' => $this->request->getVar('ord_payment_status'),
 					'ord_comment2' => $this->request->getVar('ord_comment2'),
 					'ord_status' => $this->request->getVar('ord_status'),
+					'ord_datetime_detail' => $this->request->getVar('ord_datetime_detail'),
 
 
 				];
@@ -1364,6 +1365,7 @@ class Backend extends BEBaseController
 					'ord_status' => $this->request->getVar('ord_status'),
 					'ord_cancel_bdr' => $this->request->getVar('ord_cancel_bdr'),
 					'ord_cancel_bcl' => $this->request->getVar('ord_cancel_bcl'),
+					'ord_datetime_detail' => $this->request->getVar('ord_datetime_detail'),
 
 
 				];
@@ -1383,7 +1385,7 @@ class Backend extends BEBaseController
 		$data = [];
 		$oid = decryptIt($oid);
 		$model = new ordersModel();
-		$data['ordr_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade')->where('ord_id', $oid)->first();
+		$data['ordr_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_id', $oid)->first();
 		// $data['ordr_row'] = $model->where('ord_id',$oid)->findAll();
 
 		return $this->LoadView('admin/order_view', $data);
@@ -1802,7 +1804,7 @@ class Backend extends BEBaseController
 		$data = [];
 		helper(['form']);
 		$model = new ordersModel();
-		$data['em_1'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade')->where('ord_id', $e1id)->first();
+		$data['em_1'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_id', $e1id)->first();
 
 
 		return $this->LoadView('admin/email-1', $data);
@@ -1814,7 +1816,7 @@ class Backend extends BEBaseController
 		$data = [];
 
 		$e2model = new ordersModel();
-		$data['em_2'] = $e2model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade')->where('ord_id', $e2id)->first();
+		$data['em_2'] = $e2model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_id', $e2id)->first();
 
 
 		return $this->LoadView('admin/email-2', $data);
@@ -1826,7 +1828,7 @@ class Backend extends BEBaseController
 		$data = [];
 
 		$e3mdoel = new ordersModel();
-		$data['em_3'] = $e3mdoel->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade')->where('ord_id', $e3id)->first();
+		$data['em_3'] = $e3mdoel->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_id', $e3id)->first();
 
 
 		return $this->LoadView('admin/email-3', $data);
@@ -1838,7 +1840,7 @@ class Backend extends BEBaseController
 		$data = [];
 
 		$e3mdoel = new ordersModel();
-		$data['em_4'] = $e3mdoel->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade')->where('ord_id', $e4id)->first();
+		$data['em_4'] = $e3mdoel->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_id', $e4id)->first();
 
 
 		return $this->LoadView('admin/email-4', $data);
@@ -2044,12 +2046,12 @@ class Backend extends BEBaseController
 		$count = $model->where('status', 0)->countAllResults();
 		
 		foreach ($data as $row) {
-			$url = base_url('backend/t-view/'.encryptIt($row['ord_id']));
+			$url = base_url($row['link'].'/'.encryptIt($row['ord_id']));
 			echo '<li class="d-flex">
 				<div class="feeds-left"><i class="fa fa-calendar"></i></div>
 				<div class="feeds-body flex-grow-1">
 					<h6 class="mb-1 notification" data-id="'.$row['ord_id'].'">'.$row['notification'].'<small class="float-end text-muted small">'.date("d-m-y", strtotime($row['created_at'])).'</small><br></h6>
-					<span class="text-muted"><a class="notification" data-id="'.$row['ord_id'].'" href="'.$url.'">Click here to view Timesheet</a> <b style="float:right;">'.($row['status'] == 1 ? 'Seen' : '').'</b></span>
+					<span class="text-muted"><a class="notification" data-id="'.$row['ord_id'].'" href="'.$url.'">Click here to view</a> <b style="float:right;">'.($row['status'] == 1 ? 'Seen' : '').'</b></span>
 				</div>
 			</li>';
 		}

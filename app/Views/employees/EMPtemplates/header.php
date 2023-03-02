@@ -1297,7 +1297,7 @@ ZW50SUQAQTM4NzFBMzMyNkNENjU3NzkzNzUxRjlEOEI4M0YwNzdgGcdFAAAAAElFTkSuQmCC" />
 <div class="flex-grow-1">
 <ul class="nav navbar-nav flex-row justify-content-end align-items-center">
 
-<li><a href="<?= base_url('employee/logout') ?>" class="icon-menu"><i class="fa fa-sign-out"></i></a></li>
+<li><a href="<?= base_url('employee/logout') ?>" class="icon-menu text-dark">Logout &nbsp;<i class="fa fa-sign-out"></i></a></li>
 </ul>
 </div>
 </div>
@@ -1307,8 +1307,8 @@ ZW50SUQAQTM4NzFBMzMyNkNENjU3NzkzNzUxRjlEOEI4M0YwNzdgGcdFAAAAAElFTkSuQmCC" />
 <div id="left-sidebar" class="sidebar d-print-none">
 <div class="user-account p-3 mb-3">
 <div class="d-flex mb-3 pb-3 border-bottom align-items-center">
-<img src="<?= base_url('public/images/user.png') ?>" class="avatar lg rounded me-3" alt="User Profile Picture">
-<div class="dropdown flex-grow-1">
+<!-- <img src="<?= base_url('public/images/user.png') ?>" class="avatar lg rounded me-3" alt="User Profile Picture"> -->
+<div class="dropdown flex-grow-1 text-center fs-6">
 <span class="d-block">Welcome,</span>
 <a href="#" class="dropdown-toggle user-name" data-bs-toggle="dropdown"><strong><?= session()->get('emp_lname')?></strong></a>
 <ul class="dropdown-menu p-2 shadow-sm">
@@ -1333,7 +1333,7 @@ ZW50SUQAQTM4NzFBMzMyNkNENjU3NzkzNzUxRjlEOEI4M0YwNzdgGcdFAAAAAElFTkSuQmCC" />
 <ul class="main-menu cust metismenu list-unstyled">
 <li class="nav-item"><a class="nav-link" href="<?= base_url('employee/dashboard') ?>"><i class="fa fa-tachometer"></i><span>Dashboard</span></a></li>
 <li class="nav-item"><a href="<?= base_url('employee/profile') ?>"><i class="fa fa-user-circle-o"></i>Profile</a></li>
-<li class="nav-item"><a href="<?= base_url('employee/orders') ?>"><i class="fa fa-user-md"></i>Orders</a></li>
+<li class="nav-item"><a href="<?= base_url('employee/orders') ?>"><i class="fa fa-user-md"></i>Assignments</a></li>
 
 </ul>
 </nav>

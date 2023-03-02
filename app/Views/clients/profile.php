@@ -40,7 +40,7 @@
                                 </div>
                             <?php endif; ?>
                         <div class="card-title">
-                            <h3 class="text-center title-2">Enter Details</h3>
+                            <h3 class="text-center title-2">Profile Details</h3>
                         </div>
                         <hr>
                         <form action="<?= base_url('client/profile') ?>" method="post"
@@ -48,14 +48,15 @@
                             data-parsley-validate="" id="forma">
                             <div class="row mb-3">
                             <div class="form-group col-md-4 ">
-                                <label for="cl_cont_email" class="control-label mb-1">Email</label>
-                                <input id="cl_cont_email" name="cl_cont_email" type="email" class="form-control"
-                                    value="<?= $cli['cl_cont_email'] ?>" disabled>
+                            <label for="cl_usr" class="control-label mb-1">Username</label>
+                                <input id="cl_usr" name="cl_usr" type="text" class="form-control"
+                                    value="<?= $cli['cl_usr'] ?>" disabled>
+                                
                             </div>
                             <div class="form-group col-md-4 ">
-                                <label for="cl_usr" class="control-label mb-1">Email</label>
-                                <input id="cl_usr" name="cl_usr" type="email" class="form-control"
-                                    value="<?= $cli['cl_usr'] ?>" disabled>
+                            <label for="cl_cont_email" class="control-label mb-1">Email</label>
+                                <input id="cl_cont_email" name="cl_cont_email" type="email" class="form-control"
+                                    value="<?= $cli['cl_cont_email'] ?>">
                             </div>
                             <div class="form-group col-md-4 ">
                             <label for="cl_reg_as" class="control-label mb-1">Register As</label>
@@ -103,10 +104,10 @@
                                 <div class="form-group col-md-6 ">
                                     <label for="cl_eircode" class="control-label mb-1">Eircode</label>
                                     <?php if(empty($cli['cl_eircode'])) : ?> 
-                                    <input id="cl_eircode" name="cl_eircode" type="number" class="form-control"
+                                    <input id="cl_eircode"  name="cl_eircode" type="text" class="form-control eircode"
                                         required="">
                                         <?php else: ?>
-                                            <input id="cl_eircode" name="cl_eircode" type="number" class="form-control"
+                                            <input id="cl_eircode" name="cl_eircode" type="text"  class="form-control eircode"
                                         required="" value="<?= $cli['cl_eircode'] ?>">
                                             <?php endif; ?>
                                 </div>
@@ -121,21 +122,12 @@
                                         <?php endif; ?>
                                 </div>
                                 <div class="form-group col-md-6">
-                                <label for="cl_gender" class="control-label mb-1">Gender</label>
-                                    <select id="cl_gender" name="cl_gender" class="form-control select2"  data-parsley-trigger="change" required="">
-                                    <?php if(empty($cli['cl_reg_as'])) : ?>    
-                                    <option value="">Select Gender</option>
-                                        <option value="M" <?= set_select('cl_gender','M', ( !empty($fieldType) && $fieldType == 'M' ? TRUE : FALSE )); ?> >Male</option>
-                                        <option value="F" <?= set_select('cl_gender','F', ( !empty($fieldType) && $fieldType == 'F' ? TRUE : FALSE )); ?> >Female</option>
-                                        <option value="O" <?= set_select('cl_gender','O', ( !empty($fieldType) && $fieldType == 'O' ? TRUE : FALSE )); ?> >Other</option>
-                                       <?php else: ?>
-                                        <option value="">Select Gender</option>
-                                        <option value="M" <?php if ($cli['cl_gender'] == "M") { ?> echo selected="selected" <?php } ?>>Male</option>
-                                        <option value="F" <?php if ($cli['cl_gender'] == "F") { ?> echo selected="selected" <?php } ?>>Female</option>
-                                        <option value="O" <?php if ($cli['cl_gender'] == "O") { ?> echo selected="selected" <?php } ?>>Other</option>
+                                <label for="cl_cont_phone" class="control-label mb-1">Contact Number</label>
+                                    <?php if(empty($cli['cl_cont_phone'])) : ?>
+                                    <input id="cl_cont_phone" name="cl_cont_phone" type="number" class="form-control" required="">
+                                    <?php else: ?>
+                                    <input id="cl_cont_phone" name="cl_cont_phone" type="number" class="form-control" required="" value="<?= $cli['cl_cont_phone'] ?>">
                                         <?php endif; ?>
-                                    </select>   
-
                                     
                                 </div>
                             </div>
@@ -150,16 +142,7 @@
 
                                     
                             </div>
-                                    <div class="form-group col-md-6 ">
-                                    <label for="cl_cont_phone" class="control-label mb-1">Contact Number</label>
-                                    <?php if(empty($cli['cl_cont_phone'])) : ?>
-                                    <input id="cl_cont_phone" name="cl_cont_phone" type="number" class="form-control" required="">
-                                    <?php else: ?>
-                                    <input id="cl_cont_phone" name="cl_cont_phone" type="number" class="form-control" required="" value="<?= $cli['cl_cont_phone'] ?>">
-                                        <?php endif; ?>
-
                                     
-                                </div>
                                 </div>
                             
 
@@ -171,7 +154,7 @@
                                 </a>
                                 &nbsp; &nbsp;
                                 <button id="payment-button" type="submit" class="btn btn-lg btn-primary btn-block">
-                                    <span id="payment-button-amount">Save Record</span>
+                                    <span id="payment-button-amount">Save</span>
                                 </button>
                            
                                 
