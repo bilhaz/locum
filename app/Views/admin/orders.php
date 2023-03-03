@@ -70,7 +70,9 @@
                                         <td><?= date("d-m-y  h:i:s a", strtotime($row['ord_created'])) ?></td>
                                         <td>
                                         <?php if($row['ord_cancel_bcl'] == 1): ?>
-                                                <span class="badge bg-danger">Cancelled By Client</span>
+                                                <span class="badge bg-danger">Cancelled By Client</span><br>
+                                                <span class="badge bg-warning text-dark"><?= $row['ord_cl_cremarks']?></span>
+
                                                 <?php else: ?>
                                         <?php if($row['ord_cancel_bdr'] == 1): ?>
                                                 <span class="badge bg-danger">Cancelled By Dr.</span>
