@@ -6,6 +6,12 @@
 <h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> Dashboard</h2>
 <p class="mb-0 text-justify text-success"><strong>This is your dashboard. Click on the tab to view your chosen options.</strong></p>
 </div>
+<div class="col-md-5 col-sm-12">
+<ul class="header-dropdown" style="float:right;">
+                            
+                                <a type="button" href="<?= base_url('client/new-order') ?>" class="btn btn-sm btn-primary">Add  New Order/Locum</a>
+                           
+                        </ul>
 </div>
 </div>
 

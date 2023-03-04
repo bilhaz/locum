@@ -234,7 +234,9 @@ class cli extends CLIBaseController
 	{
         $id = decryptIt($id);
 		$data = [];
-		
+		$cid = session()->cl_id;
+		$link = "backend/t-view";
+		$Nmodel = new notificationModel();
 		$model = new ordersModel();
 		$data['e_ord'] = $model->where('ord_id', $id)->first();
 
@@ -242,10 +244,17 @@ class cli extends CLIBaseController
 			'ord_time_sheet_approved' => "Approved",
 
 		];
+		$newdata2 = [
+			'ord_id' => $id,
+		'emp_id' =>$cid,
+		'link'	=> $link,
+		'notification' => "Timsheet Approved by Client",
+		'status' => "0",
+		];
 
 
-
-		$model->update($id, $newData);
+	$model->update($id, $newData);
+	$Nmodel->insert($newdata2);
 		$session = session();
 		$session->setFlashdata('success', 'Timesheet Approved');
 		return redirect()->to('client/timesheet/'.encryptIt($data['e_ord']['ord_id']));
@@ -448,14 +457,41 @@ class cli extends CLIBaseController
 	public function order_status($oid = null)
 	{
 		$oid = decryptIt($oid);
+		
 		$data = [];
-
+		
 		$e2model = new ordersModel();
 		$data['em_2'] = $e2model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_id', $oid)->first();
 
 
 		return $this->LoadView('clients/order_status', $data);
 	}
+	public function order_confirm($oid = null)
+	{
+		$oid = decryptIt($oid);
+		$id = session()->cl_id;
+		$link = "backend/order_view";
+		$data = [];
 
+		$e2model = new ordersModel();
+		$Nmodel = new notificationModel();
+		$newData = [
+			'ord_status' => 3,
+		];
+		$newdata2 = [
+			'ord_id' => $oid,
+			'emp_id' =>$id,
+			'link'	=> $link,
+			'notification' => "Locum Confirmed by Client",
+			'status' => "0",
+		];
+		$e2model->update($oid, $newData);
+		$Nmodel->insert($newdata2);
+				$session = session();
+				$session->setFlashdata('success', 'Order Confirmed');
+				return redirect()->to('clients/orders');
+
+		
+	}
 
 }

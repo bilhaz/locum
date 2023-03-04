@@ -50,7 +50,14 @@ $(document).ready(function() {
 });
 
 </script>
-
+<script>
+  var inputs = document.querySelectorAll(".eircode");
+  inputs.forEach(function(input) {
+    input.addEventListener("input", function() {
+      this.value = this.value.toUpperCase();
+    });
+  });
+</script>
 <script>
   $(document).on('click', '.notification', function() {
     var id = $(this).data('id');

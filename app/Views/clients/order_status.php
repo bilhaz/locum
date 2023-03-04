@@ -6,7 +6,7 @@
                 <div class="col-md-6 col-sm-12">
                     <h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a>Order Status</h2>
                     <ul class="breadcrumb mb-0">
-
+                    <a href="javascript:history.go(-1)" class="btn btn-secondary"><i class="fa fa-arrow-left me-2"></i>Go Back</a>
 
                     </ul>
                 </div>
@@ -17,20 +17,33 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
                     <div class="card-header">
+                        
                     <div class="col-md-3 offset-md-5">
                     <span id="flash-message" class="alert alert-success"></span>
+                    
                         </div>
+                        
                         <h6 class="card-title">You Order Details</h6>
-                        <!-- <ul class="header-dropdown">
+                            
+
+                                <ul class="header-dropdown">
                             <li>
-                                <button type="button" onclick="CopyToClipboard()" class="btn btn-sm btn-outline-primary">Copy</button>
+                            
+                            <?php if($em_2['ord_cancel_bcl'] <> 1): ?>
+                                <?php if($em_2['ord_status'] > 1 && $em_2['ord_status'] < 3): ?>
+                                            <h6 class="mb-0"><a href="<?= base_url('client/ord-confirm/'.encryptIt($em_2['ord_id'])) ?>" class="btn btn-primary">Confirm</a></h6>
+                                            <?php elseif($em_2['ord_status'] > 2 ): ?>
+                                                <span class="badge bg-success">Confirmed</span>
+                                                <?php endif; ?>
+                                                <?php endif; ?>
                             </li>
-                        </ul> -->
+                            </ul>
                     </div>
                     <hr class="primary">
                     <div class="card-body">
                     <div class="row mb-3 " id="email">
-                               
+                    <h6>Dear<?php $fname = explode(' ',$em_2['cl_cont_name']) ?>
+                                <?php if(!empty($fname[0])): echo $fname[0]; endif;?></h6>
                                 <p>At SRA Locum Service we are pleased to offer you the following doctor. Please review and reply.</p>
                                 <p><strong>Your Order Details are;</strong></p>
                                 <div class="table-responsive">
