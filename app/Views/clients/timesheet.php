@@ -68,7 +68,7 @@
                             class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i
                                 class="fa fa-arrow-left"></i></a>View Time Sheet</h2>
                     <ul class="breadcrumb mb-0">
-                        
+                        <a href="javascript:history.go(-1)" class="btn btn-secondary"><i class="fa fa-arrow-left me-2"></i>Go Back</a>
 
                     </ul>
                 </div>
@@ -80,7 +80,7 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         <h4 class="card-title text-center">Time Sheet (<?= $e_ord['cl_h_name'] ?>)</h4>
-                        
+                        <h5 class="card-title text-center"><?= $e_ord['emp_fname'].' '. $e_ord['emp_lname'] .' ('.$e_ord['spec_name'].'-'.$e_ord['grade_name'].')' ?> </h5>
                         <ul class="header-dropdown d-print-none ">
                             <li>
                             <?php if($e_ord['ord_time_sheet_approved'] <> "Approved"): ?>

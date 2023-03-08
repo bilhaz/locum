@@ -30,14 +30,9 @@
                     <hr class="primary">
                     <div class="card-body">
                     <div class="row mb-3 " id="email" contenteditable="true">
-                               <h6>Dear <?php 
-                               if($em_2['cl_gender']== "M"):?>
-                               Mr.
-                               <?php elseif($em_2['cl_gender']== "F"): ?>
-                                Ms.
-                                <?php endif; ?>
+                               <h6>Dear 
                                 <?php $lname = explode(' ',$em_2['cl_cont_name']) ?>
-                                <?php if(!empty($lname[1])): echo $lname[1]; endif;?></h6>
+                                <?php if(!empty($lname[0])): echo $lname[0]; endif;?></h6>
                                 <br>
                                 <p>At SRA Locum Service we are pleased to offer you the following doctor. Please review and reply.</p>
                                 <p><strong>Your Order Details are;</strong></p>
@@ -45,7 +40,7 @@
   <table class="table table-bordered align-middle " style="border: 2px solid black;" >
       <tr>
         <th style="border: 1px solid black;"><strong>Hospital Name & Address:</strong></th>
-        <td style="border: 1px solid black;"><strong><?= $em_2['cl_h_name']. ', '. $em_2['cl_address'] ?></strong></td>
+        <td style="border: 1px solid black;"><strong><?= $em_2['cl_h_name']. ', '. $em_2['cl_address'].' | ' . $em_2['cl_eircode']  ?></strong></td>
       </tr>
       <tr>
         <th style="border: 1px solid black;"><strong>Client Contact Name:</strong></th>
@@ -61,11 +56,14 @@
      </tr>
      <tr>
         <th style="border: 1px solid black;"><strong>Covering Date & Time:</strong></th>
-        <td style="border: 1px solid black;"><strong><?= date("d-m-y  h:i:s a", strtotime($em_2['ord_required_from'])). ' - ' .date("d-m-y  h:i:s a", strtotime($em_2['ord_required_to'])) ?></strong></td>
+        <td style="border: 1px solid black;"><strong><?php $pros = explode(",",$em_2['ord_prosdatetime_detail']);
+                                        foreach($pros as $var): ?>
+                                       <?= $var ?> <br>
+                                       <?php endforeach; ?></strong></td>
       </tr> 
       <tr>
         <th style="border: 1px solid black;"><strong>Rate:</strong></th>
-        <td style="border: 1px solid black;"><strong> Euro /hr</strong></td>
+        <td style="border: 1px solid black;"><strong><?= $em_2['ord_approx_cost'] ?> Euro /hr</strong></td>
      </tr>
      <tr>
         <th style="border: 1px solid black;"><strong>Admin Charges:</strong></th>
@@ -76,20 +74,34 @@
 
 <p><strong>Find attached the relevant CV and other documents.</strong></p>
 
+    <?php if(!empty($em_2['emp_cv'])):?>
    <p class="mb-0"><strong>CV</strong></p>
-   <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_cv']) ?>"><?= base_url('public/uploads/employee_attach/'.$em_2['emp_cv']) ?></a>
+   <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_cv']) ?>">Click To View</a>
+   <?php endif; ?>
+   <?php if(!empty($em_2['emp_imc_cert'])):?>
    <p class="mb-0"><strong>IMC Certificate</strong></p>
-   <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_imc_cert']) ?>"><?= base_url('public/uploads/employee_attach/'.$em_2['emp_imc_cert']) ?></a>
+   <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_imc_cert']) ?>">Click To View</a>
+   <?php endif; ?>
+<?php if(!empty($em_2['emp_gv_cert'])):?>
    <p class="mb-0"><strong>Garda Vetting Certificate</strong></p>
-   <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_gv_cert']) ?>"><?= base_url('public/uploads/employee_attach/'.$em_2['emp_gv_cert']) ?></a>
+   <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_gv_cert']) ?>">Click To View</a>
+   <?php endif; ?>
+<?php if(!empty($em_2['emp_rec_refer'])):?>
    <p class="mb-0"><strong>Recent Reference</strong></p>
-   <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_rec_refer']) ?>"><?= base_url('public/uploads/employee_attach/'.$em_2['emp_rec_refer']) ?></a>
+   <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_rec_refer']) ?>">Click To View</a>
+   <?php endif; ?>
+<?php if(!empty($em_2['emp_passport'])):?>
    <p class="mb-0"><strong>Passport</strong></p>
-   <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_passport']) ?>"><?= base_url('public/uploads/employee_attach/'.$em_2['emp_passport']) ?></a>
+   <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_passport']) ?>">Click To View</a>
+   <?php endif; ?>
+<?php if(!empty($em_2['emp_occup_health'])):?>
    <p class="mb-0"><strong>Occupational Health</strong></p>
-   <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_occup_health']) ?>"><?= base_url('public/uploads/employee_attach/'.$em_2['emp_occup_health']) ?></a>
+   <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_occup_health']) ?>">Click To View</a>
+   <?php endif; ?>
+<?php if(!empty($em_2['emp_work_permit'])):?>
    <p class="mb-0"><strong>Work Permit</strong></p>
-   <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_work_permit']) ?>"><?= base_url('public/uploads/employee_attach/'.$em_2['emp_work_permit']) ?></a>
+   <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_work_permit']) ?>">Click To View</a>
+   <?php endif; ?>
 
 
 <br>

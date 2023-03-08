@@ -42,7 +42,9 @@
 
 
                         <div class="card-title">
-                            <h3 class="text-center title-2">Enter Details</h3>
+                            <h3 class="text-center title-2">My Details</h3>
+                            <span class="text-danger">Document should be less than 2MB</span><br>
+                            <span class="text-danger">File format should be (pdf, jpg, png, docs, docx)</span>
                         </div>
                         <hr>
                         <form action="<?= base_url('employee/profile') ?>" method="post"
@@ -173,11 +175,11 @@
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
                                     <label for="emp_pps_no" class="control-label mb-1">PPS No.</label>
-                                    <?php if(empty($emp['emp_grade3'])) : ?>
-                                    <input id="emp_pps_no" name="emp_pps_no" type="number" class="form-control"
+                                    <?php if(empty($emp['emp_pps_no'])) : ?>
+                                    <input id="emp_pps_no" name="emp_pps_no" type="text" class="form-control"
                                         required="">
                                         <?php else: ?>
-                                        <input id="emp_pps_no" name="emp_pps_no" type="number" class="form-control" value="<?= $emp['emp_pps_no'] ?>" required="">
+                                        <input id="emp_pps_no" name="emp_pps_no" type="text" class="form-control" value="<?= $emp['emp_pps_no'] ?>" required="">
                                             <?php endif; ?>
                                 </div>
                                 <div class="form-group col-md-6">
@@ -193,17 +195,17 @@
                             <div class="row mb-3">
                                 <label for="emp_imcr_no" class="control-label mb-1">IMC No.</label>
                                 <?php if(empty($emp['emp_imcr_no'])) : ?>
-                                <input id="emp_imcr_no" name="emp_imcr_no" type="number" class="form-control"
+                                <input id="emp_imcr_no" name="emp_imcr_no" type="text" class="form-control"
                                     required="">
                                     <?php else: ?>
-                                    <input id="emp_imcr_no" name="emp_imcr_no" type="number" class="form-control" value="<?= $emp['emp_imcr_no'] ?>" required="">
+                                    <input id="emp_imcr_no" name="emp_imcr_no" type="text" class="form-control" value="<?= $emp['emp_imcr_no'] ?>" required="">
                                         <?php endif; ?>
                             </div>
 
                             <div class="row mb-3">
                                 <label for="formFile" class="form-label">CV</label>
                                 <input class="form-control" type="file" name="emp_cv" id="formFile"
-                                    data-parsley-max-file-size="2000" />
+                                    data-parsley-max-file-size="2000" data-parsley-fileextension="jpg,JPEG,pdf,PDF,png,PNG,doc,docx" />
                             </div>
                             <div class="row mb-3">
                                 <?php if (!empty($emp['emp_cv'])) : ?>
@@ -215,7 +217,7 @@
                             <div class="row mb-3">
                                 <label for="formFile" class="form-label">IMC Certificate</label>
                                 <input class="form-control" type="file" name="emp_imc_cert" id="formFile"
-                                    data-parsley-max-file-size="2000"  />
+                                    data-parsley-max-file-size="2000" data-parsley-fileextension="jpg,JPEG,pdf,PDF,png,PNG,doc,docx"  />
                             </div>
 
                             <div class="row mb-3">
@@ -229,7 +231,7 @@
                             <div class="row mb-3">
                                 <label for="formFile" class="form-label">Garda Vetting Certificate</label>
                                 <input class="form-control" type="file" name="emp_gv_cert" id="formFile"
-                                    data-parsley-max-file-size="2000"  />
+                                    data-parsley-max-file-size="2000" data-parsley-fileextension="jpg,JPEG,pdf,PDF,png,PNG,doc,docx" />
                             </div>
 
                             <div class="row mb-3">
@@ -242,7 +244,7 @@
                             <div class="row mb-3">
                                 <label for="formFile" class="form-label">Recent Reference</label>
                                 <input class="form-control" type="file" name="emp_rec_refer" id="formFile"
-                                    data-parsley-max-file-size="2000" />
+                                    data-parsley-max-file-size="2000" data-parsley-fileextension="jpg,JPEG,pdf,PDF,png,PNG,doc,docx" />
                             </div>
                             <div class="row mb-3">
                                 <?php if (!empty($emp['emp_rec_refer'])) : ?>
@@ -254,7 +256,7 @@
                             <div class="row mb-3">
                                 <label for="formFile" class="form-label">Passport</label>
                                 <input class="form-control" type="file" name="emp_passport" id="formFile"
-                                    data-parsley-max-file-size="2000" />
+                                    data-parsley-max-file-size="2000" data-parsley-fileextension="jpg,JPEG,pdf,PDF,png,PNG,doc,docx" />
                             </div>
 
                             <div class="row mb-3">
@@ -268,7 +270,7 @@
                             <div class="row mb-3">
                                 <label for="formFile" class="form-label">Occupational Health</label>
                                 <input class="form-control" type="file" name="emp_occup_health" id="formFile"
-                                    data-parsley-max-file-size="2000" />
+                                    data-parsley-max-file-size="2000" data-parsley-fileextension="jpg,JPEG,pdf,PDF,png,PNG,doc,docx" />
                             </div>
                             <div class="row mb-3">
                                 <?php if (!empty($emp['emp_occup_health'])) : ?>
@@ -281,7 +283,7 @@
                                 <div class="row mb-3">
                                 <label for="formFile" class="form-label">Work Permit</label>
                                 <input class="form-control" type="file" name="emp_work_permit" id="formFile"
-                                    data-parsley-max-file-size="2000"  />
+                                    data-parsley-max-file-size="2000" data-parsley-fileextension="jpg,JPEG,pdf,PDF,png,PNG,doc,docx" />
                             </div>
                             <div class="row mb-3">
                                 <?php if (!empty($emp['emp_work_permit'])) : ?>

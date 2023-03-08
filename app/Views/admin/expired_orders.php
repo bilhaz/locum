@@ -45,7 +45,7 @@
                                     <th>ID</th>
                                     <th>Hospital Name</th>
                                     <th>Employee</th>
-                                    <th>Required till</th>
+                                    <th>Order Date/Time</th>
                                     <th>Craeted Date</th>
                                     <th>Status</th>
                                     <th>View</th>
@@ -63,21 +63,22 @@
 
 
                                         <td>
-                                            <h6 class="mb-0"><?= $row['cl_h_name'] ?></h6>
+                                            <span><b><?= $row['cl_h_name'] ?></b></span><br>
+                                            <small><?= $row['spec_name'].'-'. $row['grade_name'] ?></small>
                                         </td>
-                                        <td><span><?= $row['emp_fname'] . ' ' . $row['emp_lname'] ?></span></td>
+                                        <td><span><?= $row['emp_fname'] . ' ' . $row['emp_lname'] ?></span><br>
+                                        <small><?= $row['emp_imcr_no'] ?></small></td>
+                                        <td><?php $pros = explode(",",$row['ord_prosdatetime_detail']);
+                                        foreach($pros as $var): ?>
+                                       <?= $var ?> <br>
+                                       <?php endforeach; ?></td>
+                                        </td>
                                         <td><?= date("d-m-y  h:i:s a", strtotime($row['ord_required_to'])) ?></td>
                                         <td><?= date("d-m-y  h:i:s a", strtotime($row['ord_created'])) ?></td>
                                         <td>
-                                        <?php if ($row['ord_status'] == "1") : ?>
-                                                <span class="badge badge chart-color123">Pending</span>
-                                            <?php elseif ($row['ord_status'] == "2") : ?>
-                                                <span class="badge bg-warning text-dark">Processed</span>
-                                            <?php elseif ($row['ord_status'] == "3") : ?>
-                                                <span class="badge bg-success">Confirmed</span>
-                                            <?php else : ?>
-                                                <span class="badge bg-dark">Ended</span>
-                                            <?php endif; ?>
+                                        
+                                                <span class="badge badge chart-color119">Expired</span>
+                                           
                                     </td>
                                         <td>
                                         <a type="button" href="<?= base_url('backend/order_edit/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>

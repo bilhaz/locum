@@ -44,6 +44,7 @@
 <th>ID</th>
 <th>Hospital Name</th>
 <th>Employee</th>
+<th>Order Date/Time</th>
 <th>Craeted Date</th>
 <th>Status</th>
 <th>View</th>
@@ -62,12 +63,18 @@
 
 
 <td>
-<h6 class="mb-0"><?= $row['cl_h_name']?></h6>
-<!-- <span><a href="https://wrraptheme.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="771a1605041f161b1b5a1937101a161e1b5914181a">[email&#160;protected]</a></span> -->
-</td>
-<td><span><?= $row['emp_fname'].' '. $row['emp_lname']?></span></td>
+                                            <span><b><?= $row['cl_h_name'] ?></b></span><br>
+                                            <small>(<?= $row['spec_name'].'-'. $row['grade_name'] ?>)</small>
+                                        </td>
+                                        <td><span><?= $row['emp_fname'] . ' ' . $row['emp_lname'] ?></span><br>
+                                        <small>(<?= $row['emp_imcr_no'] ?>)</small></td>
+                                        <td><?php $pros = explode(",",$row['ord_prosdatetime_detail']);
+                                        foreach($pros as $var): ?>
+                                       <?= $var ?> <br>
+                                       <?php endforeach; ?></td>
+                                        </td>
 <td><?= date("d-m-y  h:i:s a", strtotime($row['ord_created']))?></td>
-<td><span class="badge chart-color121 text-light">Confirm</span></td>
+<td><span class="badge chart-color121 text-light">Confirmed</span></td>
 <td>
   
 <a type="button" href="<?= base_url('backend/order_view/'.encryptIt($row['ord_id']))?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View"  data-type="confirm"><i class="fa fa-eye"></i></a>
@@ -76,10 +83,10 @@
 <td>
     <form action="<?= base_url('backend/ord_status/'.encryptIt( $row ['ord_id']) ) ?>" method="post">
     <select id="ord_status" name="ord_status" class="form-control" required="" data-parsley-trigger="change">
-                                        <option value="1" <?php if ($row ['ord_status'] == "Pending") { ?> echo selected="selected" <?php } ?>>Pending</option>
-                                        <option value="2" <?php if ($row ['ord_status'] == "Processed") { ?> echo selected="selected" <?php } ?>>Processed</option>
-                                        <option value="3" <?php if ($row ['ord_status'] == "Confirmed") { ?> echo selected="selected" <?php } ?>>Confirmed</option>
-                                        <option value="4" <?php if ($row ['ord_status'] == "Ended") { ?> echo selected="selected" <?php } ?>>Ended</option>
+                                        <option value="1" <?php if ($row ['ord_status'] == "1") { ?> echo selected="selected" <?php } ?>>Pending</option>
+                                        <option value="2" <?php if ($row ['ord_status'] == "2") { ?> echo selected="selected" <?php } ?>>Processed</option>
+                                        <option value="3" <?php if ($row ['ord_status'] == "3") { ?> echo selected="selected" <?php } ?>>Confirmed</option>
+                                        <option value="4" <?php if ($row ['ord_status'] == "4") { ?> echo selected="selected" <?php } ?>>Ended</option>
                                     </select>
                                     <button class="btn btn-sm btn-outline-primary btn-block" Onclick="return confirm('Are You sure?');" id="change" type="submit" value="Change"><span id="change">Change</span></button>
     </form>

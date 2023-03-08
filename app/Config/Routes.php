@@ -31,7 +31,7 @@ $routes->setAutoRoute(true);
  */
 // $routes->group('admin', ['filter' => 'b_auth'], function($routes)
 // {
-$routes->match(['get' , 'post'], 'backend', 'admin\backend::login' ,['filter' => 'B_noauth']);
+$routes->match(['get' , 'post'], 'backend', 'admin\Backend::dashboard' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/login', 'admin\Backend::login' ,['filter' => 'B_noauth']);
 $routes->match(['get' , 'post'], 'backend/forbidden', 'admin\Backend::forbidden');
 $routes->match(['get' , 'post'], 'backend/dashboard', 'admin\Backend::dashboard' ,['filter' => 'B_auth']);
@@ -126,6 +126,10 @@ $routes->match(['get' , 'post'], 'employee/t-edit/(:any)', 'employee\emp::edit_t
 $routes->match(['get' , 'post'], 'employee/t-upd/(:any)', 'employee\emp::timesheet_upd/$1',['filter' => 'E_Auth']);
 $routes->match(['get' , 'post'], 'employee/t-view/(:any)', 'employee\emp::timesheet_view/$1',['filter' => 'E_Auth']);
 $routes->match(['get' , 'post'], 'employee/timesheet_save/(:any)', 'employee\emp::timesheet_save/$1',['filter' => 'E_Auth']);
+$routes->match(['get' , 'post'], 'employee/Pending-assignments', 'employee\emp::pending_assign',['filter' => 'E_Auth']);
+$routes->match(['get' , 'post'], 'employee/processed-assignments', 'employee\emp::processed_assign',['filter' => 'E_Auth']);
+$routes->match(['get' , 'post'], 'employee/confirmed-assignments', 'employee\emp::confirmed_assign',['filter' => 'E_Auth']);
+$routes->match(['get' , 'post'], 'employee/completed-assignments', 'employee\emp::completed_assign',['filter' => 'E_Auth']);
 $routes->get('employee/logout', 'employee\emp::logout');
 
 
@@ -150,6 +154,12 @@ $routes->match(['get' , 'post'], 'client/ord-view/(:any)', 'client\cli::order_vi
 $routes->match(['get' , 'post'], 'client/canc-ord/(:any)', 'client\cli::canc_ord/$1',['filter' => 'C_Auth']);
 $routes->match(['get' , 'post'], 'client/timesheet/(:any)', 'client\cli::timesheet/$1',['filter' => 'C_Auth']);
 $routes->match(['get' , 'post'], 'client/timesheet-approve/(:any)', 'client\cli::timesheet_approve/$1',['filter' => 'C_Auth']);
+$routes->match(['get' , 'post'], 'client/ord-status/(:any)', 'client\cli::order_status/$1',['filter' => 'C_Auth']);
+$routes->match(['get' , 'post'], 'client/ord-confirm/(:any)', 'client\cli::order_confirm/$1',['filter' => 'C_Auth']);
+$routes->match(['get' , 'post'], 'client/new-orders', 'client\cli::pending_order',['filter' => 'C_Auth']);
+$routes->match(['get' , 'post'], 'client/cur-processed', 'client\cli::cur_processed',['filter' => 'C_Auth']);
+$routes->match(['get' , 'post'], 'client/confirm-orders', 'client\cli::confirmed_orders',['filter' => 'C_Auth']);
+$routes->match(['get' , 'post'], 'client/completed-orders', 'client\cli::completed_order',['filter' => 'C_Auth']);
 $routes->get('client/logout', 'client\cli::logout');
 
 

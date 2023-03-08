@@ -10,6 +10,7 @@ use App\Models\gradeModel;
 use App\Models\ordersModel;
 use App\Models\specialityModel;
 use App\Models\clRegModel;
+use App\Models\notificationModel;
 use DateTimeZone;
 
 class cli extends CLIBaseController
@@ -91,10 +92,10 @@ class cli extends CLIBaseController
 		$timestamp = \time();
 		$dt = date('Y-m-d H:i:s', $timestamp);
 		$model = new ordersModel();
-		$data['o_pen'] = $model->where('ord_status', '1')->where('cl_id', session()->cl_id)->countAllResults();
-		$data['o_pro'] = $model->where('ord_status', '2')->where('cl_id', session()->cl_id)->countAllResults();
-		$data['o_con'] = $model->where('ord_status', '3')->where('cl_id', session()->cl_id)->countAllResults();
-		$data['o_end'] = $model->where('ord_status', '4')->where('cl_id', session()->cl_id)->countAllResults();
+		$data['o_pen'] = $model->where('ord_status', '1')->where('cl_id', session()->cl_id)->where('ord_cancel_bcl', '0')->countAllResults();
+		$data['o_pro'] = $model->where('ord_status', '2')->where('cl_id', session()->cl_id)->where('ord_cancel_bcl', '0')->countAllResults();
+		$data['o_con'] = $model->where('ord_status', '3')->where('cl_id', session()->cl_id)->where('ord_cancel_bcl', '0')->countAllResults();
+		$data['o_end'] = $model->where('ord_status', '4')->where('cl_id', session()->cl_id)->where('ord_cancel_bcl', '0')->countAllResults();
 
 
 
@@ -153,6 +154,9 @@ class cli extends CLIBaseController
 		$model = new ordersModel();
 		// $data['t_order'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('timesheets', 'timesheets.order_id = orders.ord_id')->where('orders.cl_id', session()->cl_id)->distinct('timesheets.order_id')->findAll();
 		$data['t_order'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')
+		->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')
+		->Join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')
+		->Join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')
     ->Join('timesheets', 'timesheets.order_id = orders.ord_id','LEFT')
     ->where('orders.cl_id', session()->cl_id)
     ->groupBy('orders.ord_id')->orderBy('orders.ord_id','DESC')
@@ -170,8 +174,11 @@ class cli extends CLIBaseController
 
 	{
 		// $coid = decryptIt($coid);
+		$cid = session()->cl_id;
+		$link = "backend/order_view";
 		$model = new ordersModel();
 		$del = $model->where('ord_id', $coid)->first();
+		$Nmodel = new notificationModel();
 		helper(['form']);
 		if ($this->request->getMethod() == 'post') {
 			//let's do the validation here
@@ -189,9 +196,16 @@ class cli extends CLIBaseController
 				'ord_cl_cremarks' => $this->request->getVar('ord_cl_cremarks'),
 
 			];
-
+			$newdata2 = [
+				'ord_id' => $coid,
+			'emp_id' =>$cid,
+			'link'	=> $link,
+			'notification' => "Order Cancel by Client",
+			'status' => "0",
+			];
 		}
 			$model->update($coid, $newData);
+			$Nmodel->insert($newdata2);
 			$session = session();
 			$session->setFlashdata('success', 'Order Cancelled');
 			return redirect()->to('client/orders');
@@ -209,7 +223,7 @@ class cli extends CLIBaseController
 		$data['t_view'] = $model->where('order_id',$ord_id)->find();
 
 		$model = new ordersModel();
-		$data['e_ord'] = $model->join('clients','clients.cl_id = orders.cl_id','LEFT')->where('ord_id', $ord_id)->first();
+		$data['e_ord'] = $model->join('clients','clients.cl_id = orders.cl_id','LEFT')->join('employee','employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_id', $ord_id)->first();
 
 		$data['start_date'] = $data['e_ord']['ord_process_details_from'];
 		$data['end_date'] = $data['e_ord']['ord_process_details_to'];
@@ -219,8 +233,10 @@ class cli extends CLIBaseController
 	public function timesheet_approve($id = null)
 	{
         $id = decryptIt($id);
+        $cid = session()->cl_id;
+		$link = "backend/t-view";
 		$data = [];
-		
+		$Nmodel = new notificationModel();
 		$model = new ordersModel();
 		$data['e_ord'] = $model->where('ord_id', $id)->first();
 
@@ -228,10 +244,17 @@ class cli extends CLIBaseController
 			'ord_time_sheet_approved' => "Approved",
 
 		];
-
+        $newdata2 = [
+				'ord_id' => $id,
+			'emp_id' =>$cid,
+			'link'	=> $link,
+			'notification' => "Timsheet Approved by Client",
+			'status' => "0",
+			];
 
 
 		$model->update($id, $newData);
+		$Nmodel->insert($newdata2);
 		$session = session();
 		$session->setFlashdata('success', 'Timesheet Approved');
 		return redirect()->to('client/timesheet/'.encryptIt($data['e_ord']['ord_id']));
@@ -243,6 +266,7 @@ class cli extends CLIBaseController
 	public function new_order()
 	{
 		$id = session()->cl_id;
+		$link = "backend/order_view";
 		$data = [];
 		helper(['form']);
 		$Gmodel = new gradeModel();
@@ -251,6 +275,7 @@ class cli extends CLIBaseController
 		$data['sp_row'] = $Smodel->findAll();
 		$clmodel = new ClientModel();
 		$data['c_det'] = $clmodel->where('cl_id', $id)->first();
+		$nmodel = new notificationModel();
 		
 
 		$model = new ordersModel();
@@ -264,6 +289,7 @@ class cli extends CLIBaseController
 				'ord_grade' => ['label' => 'Grade', 'rules' => 'required'],
 				'ord_required_from' => ['label' => 'Required From', 'rules' => 'required'],
 				'ord_required_to' => ['label' => 'Required To', 'rules' => 'required'],
+				'ord_datetime_detail' => ['label' => 'Date & Time Details', 'rules' => 'required'],
 
 			];
 
@@ -281,13 +307,23 @@ class cli extends CLIBaseController
 					'ord_grade' => $this->request->getVar('ord_grade'),
 					'ord_required_from' => $this->request->getVar('ord_required_from'),
 					'ord_required_to' => $this->request->getVar('ord_required_to'),
+					'ord_datetime_detail' => $this->request->getVar('ord_datetime_detail'),
 					'ord_status' => 1,
 					'cl_id'=> session()->cl_id,
 					
-
-
 				];
 				$model->insert($newData);
+				$oid = $model->insertID;
+
+				$newdata2 = [
+					'ord_id' => $oid,
+					'emp_id' =>$id,
+					'link'	=> $link,
+					'notification' => "New Order Added by Client",
+					'status' => "0",
+					'ord_cancel_bcl' => "0",
+				];
+				$nmodel->insert($newdata2);
 				$session = session();
 				$session->setFlashdata('success', 'Order Successful Created');
 				return redirect()->to('client/orders');
@@ -302,13 +338,15 @@ class cli extends CLIBaseController
 	{
 		$eoid = decryptIt($eoid);
 		
-		 
+		$id = session()->cl_id;
+		$link = "backend/order_view";
 		$data = [];
 		helper(['form']);
 		$Gmodel = new gradeModel();
 		$data['gr_row'] = $Gmodel->findAll();
 		$Smodel = new specialityModel();
 		$data['sp_row'] = $Smodel->findAll();
+		$Nmodel = new notificationModel();
 		
 
 		$model = new ordersModel();
@@ -316,12 +354,15 @@ class cli extends CLIBaseController
 
 		if ($this->request->getMethod() == 'post') {
 			//let's do the validation here
+			
 			$rules = [
 				
 				'ord_speciality' => ['label' => 'Speciality', 'rules' => 'required'],
 				'ord_grade' => ['label' => 'Grade', 'rules' => 'required'],
 				'ord_required_from' => ['label' => 'Required From', 'rules' => 'required'],
 				'ord_required_to' => ['label' => 'Required To', 'rules' => 'required'],
+				'ord_datetime_detail' => ['label' => 'Date & Time Details', 'rules' => 'required'],
+
 
 			];
 
@@ -339,9 +380,18 @@ class cli extends CLIBaseController
 					'ord_grade' => $this->request->getVar('ord_grade'),
 					'ord_required_from' => $this->request->getVar('ord_required_from'),
 					'ord_required_to' => $this->request->getVar('ord_required_to'),
+					'ord_datetime_detail' => $this->request->getVar('ord_datetime_detail'),
 					
 				];
+				$newdata2 = [
+					'ord_id' => $eoid,
+					'emp_id' =>$id,
+					'link'	=> $link,
+					'notification' => "Order updated by Client",
+					'status' => "0",
+				];
 				$model->update($eoid,$newData);
+				$Nmodel->insert($newdata2);
 				$session = session();
 				$session->setFlashdata('success', 'Order Successful Updated');
 				return redirect()->to('client/orders');
@@ -367,12 +417,12 @@ class cli extends CLIBaseController
 				'cl_h_name' => ['label' => 'Hospital Name', 'rules' => 'required'],
 				'cl_reg_as' => ['label' => 'Register As', 'rules' => 'required'],
 				'cl_county' => ['label' => 'County', 'rules' => 'required'],
-				'cl_eircode' => ['label' => 'Eircode', 'rules' => 'required|numeric'],
+				'cl_eircode' => ['label' => 'Eircode', 'rules' => 'required'],
 				'cl_cont_name' => ['label' => 'Contact Personnel Name', 'rules' => 'required'],
 				'cl_cont_phone' => ['label' => 'Contact No.', 'rules' => 'required|numeric'],
 				'cl_address' => ['label' => 'Address', 'rules' => 'required'],
 				'cl_cont_desig' => ['label' => 'Designation', 'rules' => 'required'],
-				 'cl_gender' => ['label' => 'Gender', 'rules' => 'required'],
+				 'cl_cont_email' => ['label' => 'Email', 'rules' => 'required'],
 			];
 
 			if (!$this->validate($rules)) {
@@ -392,7 +442,7 @@ class cli extends CLIBaseController
 					'cl_cont_phone' => $this->request->getVar('cl_cont_phone'),
 					'cl_address' => $this->request->getVar('cl_address'),
 					'cl_cont_desig' => $this->request->getVar('cl_cont_desig'),
-					'cl_gender' => $this->request->getVar('cl_gender'),
+					'cl_cont_email' => $this->request->getVar('cl_cont_email'),
 
 				];
 				$model->update($id, $newData);
@@ -406,7 +456,94 @@ class cli extends CLIBaseController
 		return $this->LoadView('clients/profile', $data);
 	}
 
+	public function order_status($oid = null)
+	{
+		$oid = decryptIt($oid);
+		$data = [];
+
+		$e2model = new ordersModel();
+		$data['em_2'] = $e2model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_id', $oid)->first();
 
 
+		return $this->LoadView('clients/order_status', $data);
+	}
+
+public function order_confirm($oid = null)
+	{
+		$oid = decryptIt($oid);
+		$id = session()->cl_id;
+		$link = "backend/order_view";
+		$data = [];
+
+		$e2model = new ordersModel();
+		$Nmodel = new notificationModel();
+		$newData = [
+			'ord_status' => 3,
+		];
+		$newdata2 = [
+			'ord_id' => $oid,
+			'emp_id' =>$id,
+			'link'	=> $link,
+			'notification' => "Locum Confirmed by Client",
+			'status' => "0",
+		];
+		$e2model->update($oid, $newData);
+		$Nmodel->insert($newdata2);
+				$session = session();
+				$session->setFlashdata('success', 'Order Confirmed');
+				return redirect()->to('client/orders');
+
+		
+	}
+	
+	public function pending_order()
+	{
+
+		$data = [];
+		$id = session()->cl_id;
+		$timestamp = \time();
+		$dt = date('Y-m-d H:i:s', $timestamp);
+		helper(['form']);
+		$model = new ordersModel();
+		$data['o_pen'] = $model->where('ord_status', '1')->where('ord_required_to >=', $dt)->countAllResults();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->Join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->Join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('orders.ord_status', '1')->where('ord_cancel_bcl', '0')->where('clients.cl_id', session()->cl_id)->orderBy('ord_updated', 'DESC')->findAll();
+
+		return $this->LoadView('clients/new_orders', $data);
+	}
+	public function cur_processed()
+	{
+
+		$data = [];
+		$id = session()->cl_id;
+		helper(['form']);
+		$model = new ordersModel();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->Join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->Join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '2')->where('orders.ord_status', '2')->where('ord_cancel_bcl', '0')->where('clients.cl_id', session()->cl_id)->orderBy('ord_updated', 'DESC')->findAll();
+
+		return $this->LoadView('clients/cur_processed', $data);
+	}
+
+	public function confirmed_orders()
+	{
+
+		$data = [];
+		$id = session()->cl_id;
+		helper(['form']);
+		$model = new ordersModel();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->Join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->Join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '3')->where('ord_cancel_bcl', '0')->where('clients.cl_id', session()->cl_id)->orderBy('ord_updated', 'DESC')->findAll();
+
+		return $this->LoadView('clients/confirmed_orders', $data);
+	}
+
+	public function completed_order()
+	{
+
+		$data = [];
+		$id = session()->cl_id;
+		helper(['form']);
+		$model = new ordersModel();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->Join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->Join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '4')->where('ord_cancel_bcl', '0')->where('clients.cl_id', session()->cl_id)->orderBy('ord_updated', 'DESC')->findAll();
+
+		return $this->LoadView('clients/completed_order', $data);
+	}
 
 }

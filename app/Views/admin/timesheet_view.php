@@ -69,8 +69,12 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
                     <div class="card-header">
-                        <h4 class="card-title text-center">Time Sheet (<?= $e_ord['cl_h_name']?>)</h4>
-                        
+                        <h4 class="card-title text-center">Time Sheet <br>
+                        <?= $e_ord['cl_h_name'] ?></h4>
+                        <h4 class="card-title text-center">Time Sheet <br>
+                        <?= $e_ord['cl_h_name'] ?></h4>
+                        <h5 class="card-title text-center"><?= $e_ord['emp_fname'].' '. $e_ord['emp_lname'] .' '.$e_ord['emp_imcr_no'] ?> </h5>
+                        <h6 class="card-title text-center"><?= $e_ord['spec_name'].'-'.$e_ord['grade_name'] ?></h6>
                         <ul class="header-dropdown">
                             <li>
                             <?php if($e_ord['ord_time_sheet_approved'] <> "Approved"): ?>

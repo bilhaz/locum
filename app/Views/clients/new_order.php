@@ -40,7 +40,7 @@
                                 </div>
                             <?php endif; ?>
                         <div class="card-title">
-                            <h3 class="text-center title-2">Create New Order</h3>
+                            <h3 class="text-center title-2">You can creat a new order here</h3>
                         </div>
                         <hr>
                         <form action="<?= base_url('client/new-order') ?>" method="post" autocomplete="off" enctype="multipart/form-data" accept-charset="utf-8" data-parsley-validate="" id="forma">
@@ -70,14 +70,18 @@
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
                                     <label for="ord_required_from" class="ord_required_from-label mb-1">Locum Required From</label>
-                                    <input id="ord_required_from" name="ord_required_from" type="datetime-local" class="form-control" required="" value="<?= set_value('ord_required_from') ?>">
+                                    <input id="ord_required_from" name="ord_required_from" type="datetime-local" class="form-control" required="" placeholder="Click to enter date and time" title="Click to enter date and time" value="<?= set_value('ord_required_from') ?>">
                                 </div>
+                                
                                 <div class="form-group col-md-6 ">
                                     <label for="ord_required_to" class="control-label mb-1">Locum Required To</label>
-                                    <input id="ord_required_to" name="ord_required_to" type="datetime-local" class="form-control" required="" value="<?= set_value('ord_required_to') ?>">
+                                    <input id="ord_required_to" name="ord_required_to" type="datetime-local" class="form-control" required="" placeholder="Click to enter date and time" title="Click to enter date and time" value="<?= set_value('ord_required_to') ?>">
                                 </div>
                             </div>
-                            
+                            <div class="row mb-3">
+                            <label for="ord_datetime_detail" class="control-label mb-1">Locum Date & Time Details</label>
+                                <textarea id="ord_datetime_detail" name="ord_datetime_detail" class="form-control" placeholder="Use comma separation for putting multiple dates and time for e.g: ' 23-02-2024 to 23-03-2024 08 to 21, 28-02-2023 18 to 22' "></textarea>
+                            </div>
 
                             
                             

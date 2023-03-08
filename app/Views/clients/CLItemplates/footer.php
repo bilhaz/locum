@@ -6,8 +6,8 @@
 <!-- <script src="<?php // base_url('public/assets/bundles/libscripts.bundle.js')?>"></script> -->
 <script src="<?= base_url('public/assets/bundles/dataTables.bundle.js')?>"></script>
 <script src="<?= base_url('public/assets/js/my.js')?>"></script>
-
 <script src="<?=  base_url('public/assets/bundles/mainscripts.bundle.js')?>"></script>
+
 
 
 <script>
@@ -24,7 +24,14 @@
         });
     });
 </script>
-
+<script>
+  var inputs = document.querySelectorAll(".eircode");
+  inputs.forEach(function(input) {
+    input.addEventListener("input", function() {
+      this.value = this.value.toUpperCase();
+    });
+  });
+</script>
 
 <script type="text/javascript">
     $(function() {

@@ -1,7 +1,7 @@
 $('.select2').select2();
 
 
-
+// Total Hours Calculate
 		function calculate(){
 			var normal = document.getElementById("ord_normal_hrs").value;
 			var normal = parseInt(normal, 10);
@@ -10,6 +10,17 @@ $('.select2').select2();
 			var total = normal + call;
 			document.getElementById("total").value = total;
 		}
+		// Diff calculate
+		function calculatediff() {
+  var hosp = document.getElementById("ord_approx_cost").value;
+  var hospp = parseInt(hosp, 10);
+  var admin = document.getElementById("ord_admin_charges").value;
+  var adminn = parseInt(admin, 10);
+  var dr = document.getElementById("ord_pay_to_dr").value;
+  var drr = parseInt(dr, 10);
+  var diff = hospp + adminn - drr;
+  document.getElementById("diff").value = diff;
+}
 		// Print Section
 		function printSection(el){
 
@@ -19,6 +30,8 @@ $('.select2').select2();
 			window.print();
 			document.body.innerHTML = getFullContent;
 		  }
+		  
+
 
 		//   sideBar Active function
 
@@ -68,6 +81,55 @@ $('.select2').select2();
 		}
 
 		
+		function printSection() {
+			var section = document.getElementById("print-section");
+			window.print();
+		}
+	
 
+  $(function() {
+      
+       window.ParsleyValidator
+        .addValidator('fileextension', function (value, requirement) {
+        		var tagslistarr = requirement.split(',');
+            var fileExtension = value.split('.').pop();
+						var arr=[];
+						$.each(tagslistarr,function(i,val){
+   						 arr.push(val);
+						});
+				// 		console.log(arr);
+            if(jQuery.inArray(fileExtension, arr)!='-1') {
+            //   console.log("is in array");
+              return true;
+            } else {
+            //   console.log("is NOT in array");
+              return false;
+            }
+        }, 32)
+        .addMessage('en', 'fileextension', 'The extension doesn\'t match the required');
+      $('#forma').parsley().on('field:validated', function() {
+          var ok = $('.parsley-error').length === 0;
+          $('.bs-callout-info').toggleClass('hidden', !ok);
+          $('.bs-callout-warning').toggleClass('hidden', ok);
+        })
+        .on('form:submit', function() {
+          return true; // Don't submit form for this demo
+        });
+    });
+    window.Parsley.addValidator('maxFileSize', {
+      validateString: function(_value, maxSize, parsleyInstance) {
+        if (!window.FormData) {
+          alert('You are making all developpers in the world cringe. Upgrade your browser!');
+          return true;
+        }
+        var files = parsleyInstance.$element[0].files;
+        return files.length != 1 || files[0].size <= maxSize * 1024;
+      },
+      requirementType: 'integer',
+      messages: {
+        en: 'This file should not be larger than %s Kb',
+        fr: 'Ce fichier est plus grand que %s Kb.'
+      }
+    });
 
 			  

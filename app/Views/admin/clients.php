@@ -74,7 +74,11 @@
                                             <?php else : ?>
                                                 <a type="button" href="<?= base_url('backend/client_details/' . encryptIt($row['cl_id'])) ?>" class="btn btn-sm btn-outline-warning" title="Registration Form Pending"><i class="fa fa-wpforms"></i></a>
                                             <?php endif; ?>
+                                            <?php if($row['cl_status'] == 1): ?>
                                             <a type="button" href="<?= base_url('backend/client_block/' . encryptIt($row['cl_id'])) ?>" class="btn btn-sm btn-outline-danger js-sweetalert" title="Block" Onclick="return confirm('Are You sure?');" data-type="confirm"><i class="fa fa-ban"></i></a>
+                                            <?php elseif($row['cl_status'] == 0): ?>
+                                                <a type="button" href="<?= base_url('backend/client_unblock/'.encryptIt($row['cl_id']))?>" class="btn btn-sm btn-outline-danger js-sweetalert" title="Block" Onclick="return confirm('Are You sure?');" data-type="confirm"><i class="fa fa-unlock"></i></a>
+                                                <?php endif; ?>
                                             <?php if (session()->grp_id == 'super_admin'): ?>
                                             <a type="button" href="<?= base_url('backend/client-pwd/' . encryptIt($row['cl_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="Change Password" Onclick="return confirm('Are You sure?');" data-type="confirm"><i class="fa fa-key"></i></a>
                                             <?php endif; ?>

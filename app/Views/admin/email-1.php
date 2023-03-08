@@ -32,14 +32,9 @@
                     <hr class="primary">
                     <div class="card-body">
                     <div class="row mb-3 " id="email" contenteditable="true">
-                               <h6>Dear <?php 
-                               if($em_1['cl_gender']== "M"):?>
-                               Mr.
-                               <?php elseif($em_1['cl_gender']== "F"): ?>
-                                Ms.
-                                <?php endif; ?>
+                               <h6>Dear 
                                 <?php $lname = explode(' ',$em_1['cl_cont_name']) ?>
-                                <?php if(!empty($lname[1])): echo $lname[1]; endif;?></h6>
+                                <?php if(!empty($lname[0])): echo $lname[0]; endif;?></h6>
                                 <br>
                                 <p>Thank you for requesting a doctor through SRA Locum Service. We can confirm receiving your locum order. Process of sourcing a locum Doctor for you has already been initiated.</p>
                                 <p class="text-danger">If the order details are correct, you do not need to reply to this email.</p>
@@ -48,7 +43,7 @@
   <table class="table table-bordered align-middle " style="border: 2px solid black;" >
       <tr>
         <th style="border: 1px solid black;"><strong>Hospital Name & Address:</strong></th>
-        <td style="border: 1px solid black;"><strong><?= $em_1['cl_h_name']. ', '. $em_1['cl_address'] ?></strong></td>
+        <td style="border: 1px solid black;"><strong><?= $em_1['cl_h_name']. ', '. $em_1['cl_address'].' | ' . $em_1['cl_eircode']  ?></strong></td>
       </tr>
       <tr>
         <th style="border: 1px solid black;"><strong>Client Contact Name:</strong></th>
@@ -60,7 +55,10 @@
      </tr>
      <tr>
         <th style="border: 1px solid black;"><strong>Covering Date & Time:</strong></th>
-        <td style="border: 1px solid black;"><strong><?= date("d-m-y  h:i:s a", strtotime($em_1['ord_required_from'])). ' - ' .date("d-m-y  h:i:s a", strtotime($em_1['ord_required_to'])) ?></strong></td>
+        <td style="border: 1px solid black;"><strong><?php $pros = explode(",",$em_1['ord_datetime_detail']);
+                                        foreach($pros as $var): ?>
+                                       <?= $var ?> <br>
+                                       <?php endforeach; ?></strong></td>
       </tr>    
   </table>
 </div>

@@ -23,7 +23,7 @@ class B_auth implements FilterInterface
          $controller = $uri[0]??'backend';
          $action = $uri[1]??'index';
         // Get the allowed roles for the current resource
-        $allowedRoles = $this->getAllowedRolesForCurrentResource($controller, $action);
+        $allowedRoles = $this->getAllowedRolesForCurrentResource(ucfirst($controller), $action);
 
         // Check if the user's role is in the list of allowed roles
         if (!in_array($role, $allowedRoles)) {

@@ -74,9 +74,11 @@
 </td>
 <td>
     <form action="<?= base_url('backend/ord_status/'.encryptIt( $row ['ord_id']) ) ?>" method="post">
-    <select id="ord_case_status" name="ord_case_status" class="form-control" required="" data-parsley-trigger="change">
-                                        <option value="Closed" <?php if ($row ['ord_case_status'] == "Closed") { ?> echo selected="selected" <?php } ?>>Closed</option>
-                                        <option value="Pending" <?php if ($row ['ord_case_status'] == "Pending") { ?> echo selected="selected" <?php } ?>>Pending</option>
+    <select id="ord_status" name="ord_status" class="form-control" required="" data-parsley-trigger="change">
+                                         <option value="1" <?php if ($row ['ord_status'] == "1") { ?> echo selected="selected" <?php } ?>>Pending</option>
+                                        <option value="2" <?php if ($row ['ord_status'] == "2") { ?> echo selected="selected" <?php } ?>>Processed</option>
+                                        <option value="3" <?php if ($row ['ord_status'] == "3") { ?> echo selected="selected" <?php } ?>>Confirmed</option>
+                                        <option value="4" <?php if ($row ['ord_status'] == "4") { ?> echo selected="selected" <?php } ?>>Ended</option>
                                     </select>
                                     <button class="btn btn-sm btn-outline-primary btn-block" Onclick="return confirm('Are You sure?');" id="change" type="submit" value="Change"><span id="change">Change</span></button>
     </form>

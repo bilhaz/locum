@@ -43,9 +43,10 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Hospital Name</th>
-                                    <th>Status</th>
+                                    <th>Order Date/Time</th>
+                                    <th>Timesheet Status</th>
                                     <th>Fill Timesheet</th>
-                                    <th>View</th>
+                                    <th>View Timesheet</th>
                                     <th>Order Date</th>
                                     
                                 </tr>
@@ -62,14 +63,21 @@
                                         
 
                                         <td>
-                                            <h6 class="mb-0"><?= $row['cl_h_name'] ?></h6>
+                                            <span><b><?= $row['cl_h_name'] ?></b></span><br>
+                                            <small><?= $row['spec_name'].'-'. $row['grade_name'] ?></small>
+                                            
+                                        </td>
+                                         <td><?php $pros = explode(",",$row['ord_prosdatetime_detail']);
+                                        foreach($pros as $var): ?>
+                                       <?= $var ?> <br>
+                                       <?php endforeach; ?></td>
                                         </td>
                                         
                                         
-                                        <td><?php if($row['ord_time_sheet_approved'] == "Approved" ): ?> <span class="badge bg-success">Approved</span> <?php else: ?><span class="badge bg-danger">Not-Approved</span><?php endif; ?></td>
+                                        <td><?php if($row['ord_time_sheet_approved'] == "Due" ): ?> <span class="badge chart-color123">Due</span> <?php elseif($row['ord_time_sheet_approved'] == "Received"): ?><span class="badge chart-color122">Received</span><?php elseif($row['ord_time_sheet_approved'] == "Sent_for_verification"): ?><span class="badge bg-warning text-dark">Sent for verification</span><?php elseif($row['ord_time_sheet_approved'] == "Approved"): ?><span class="badge bg-success">Approved</span><?php endif; ?></td>
                                         <td>
                                         <?php if(!isset($row['order_id'])):?>
-                            <a type="button" href="<?= base_url('backend/t-fill/' .encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-primary d-print-none"><i class="fa fa-calendar text-light">&nbsp;</i>Fill TimeSheet</a>
+                            <a type="button" href="<?= base_url('backend/t-fill/' .encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-primary d-print-none"><i class="fa fa-calendar text-light">&nbsp;</i>TimeSheet</a>
                                             <?php else: ?>
                             <a type="button" href="<?= base_url('backend/t-edit/' .encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-warning d-print-none"><i class="fa fa-calendar text-dark">&nbsp;</i>Update TimeSheet</a>
                                                 <?php endif; ?>

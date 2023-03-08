@@ -19,6 +19,9 @@ use App\Models\notificationModel;
 class Backend extends BEBaseController
 {
 	public static $allowedRoles = [
+	    'index' => ['super_admin', 'admin', 'user'],
+	    'login' => ['super_admin', 'admin', 'user'],
+	    'backend' => ['super_admin', 'admin', 'user'],
 		'dashboard' => ['super_admin', 'admin', 'user'],
 		'destroy' => ['super_admin', 'admin', 'user'],
 		'pwdupd' => ['super_admin', 'admin', 'user'],
@@ -57,6 +60,7 @@ class Backend extends BEBaseController
 		't-fill' => ['super_admin', 'admin', 'user'],
 		't-edit' => ['super_admin', 'admin', 'user'],
 		't-view' => ['super_admin', 'admin', 'user'],
+		't-upd' => ['super_admin', 'admin', 'user'],
 		'timesheet_save' => ['super_admin', 'admin', 'user'],
 		'timesheet-approve' => ['super_admin', 'admin', 'user'],
 		'speciality' => ['super_admin', 'admin'],
@@ -371,7 +375,7 @@ class Backend extends BEBaseController
 		$data = [];
 		helper(['form']);
 		$model = new EmpModel();
-		$data['emp_row'] = $model->join('emp_speciality','emp_speciality.spec_id = employee.emp_spec1','LEFT')->where('emp_status', 1)->find();
+		$data['emp_row'] = $model->join('emp_speciality','emp_speciality.spec_id = employee.emp_spec1','LEFT')->find();
 
 		return $this->LoadView('admin/employees', $data);
 	}
@@ -447,85 +451,60 @@ class Backend extends BEBaseController
 				'emp_lname' => ['label' => 'Last Name', 'rules' => 'required'],
 				'emp_spec1' => ['label' => 'Speciality 1', 'rules' => 'required'],
 				'emp_grade1' => ['label' => 'Grade 1', 'rules' => 'required'],
-				'emp_pps_no' => ['label' => 'PPS No.', 'rules' => 'required|numeric'],
+				'emp_pps_no' => ['label' => 'PPS No.', 'rules' => 'required'],
 				'emp_phone' => ['label' => 'Phone No.', 'rules' => 'required|numeric'],
 				'emp_imcr_no' => ['label' => 'IMCR No.', 'rules' => 'required|numeric'],
-				'emp_cv' => ['label' => 'CV', 'rules' => 'uploaded[emp_cv]|ext_in[emp_cv,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_cv,2048]'],
-				'emp_imc_cert' => ['label' => 'IMC Certificate', 'rules' => 'uploaded[emp_imc_cert]|ext_in[emp_imc_cert,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_imc_cert,2048]'],
 				'emp_gender' => ['label' => 'Gender', 'rules' => 'required'],
+				'emp_cv' => ['label' => 'CV', 'rules' => 'uploaded[emp_cv]|ext_in[emp_cv,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_cv,2048]'],
+				'emp_imc_cert' => ['label' => 'IMC Certificate', 'rules' => 'uploaded[emp_imc_cert]|ext_in[emp_imc_cert,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_imc_cert,2048]'],
+				'emp_gv_cert' => ['label' => 'Garda Vetting', 'rules' => 'uploaded[emp_gv_cert]|ext_in[emp_gv_cert,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_gv_cert,2048]'],
+				'emp_rec_refer' => ['label' => 'Recent Reference', 'rules' => 'uploaded[emp_rec_refer]|ext_in[emp_rec_refer,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_rec_refer,2048]'],
+				'emp_passport' => ['label' => 'Passport', 'rules' => 'uploaded[emp_passport]|ext_in[emp_passport,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_passport,2048]'],
+				'emp_occup_health' => ['label' => 'Occupational Health', 'rules' => 'uploaded[emp_occup_health]|ext_in[emp_occup_health,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_occup_health,2048]'],
+				'emp_work_permit' => ['label' => 'Work Permit', 'rules' => 'uploaded[emp_work_permit]|ext_in[emp_work_permit,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_work_permit,2048]'],
 				
 			];
+			foreach (['emp_cv', 'emp_imc_cert', 'emp_gv_cert', 'emp_rec_refer', 'emp_passport', 'emp_occup_health', 'emp_work_permit'] as $field) {
+				if (empty($_FILES[$field]['name'])) {
+					unset($rules[$field]);
+				}
+			}
+	
 
 			$errors = [
 				'emp_cv' => [
-					'uploaded' => 'Can not upload not a valid file'
-				],
-				'emp_cv' => [
-					'ext_in' => 'File is not an image'
-				],
-				'emp_cv' => [
-					'max_size' => 'Image size is < than 2mb'
+					'uploaded' => 'Can not upload, not a valid file',
+					'max_size' => 'File size must be less than 2MB',
 				],
 
 				'emp_imc_cert' => [
-					'uploaded' => 'Can not upload not a valid file'
-				],
-				'emp_imc_cert' => [
-					'ext_in' => 'File is not an image'
-				],
-				'emp_imc_cert' => [
-					'max_size' => 'Image size is < than 2mb'
-				],
-
-				'emp_gv_cert' => [
-					'uploaded' => 'Can not upload not a valid file'
+					'uploaded' => 'Can not upload not a valid file',
+						'max_size' => 'File size must be less than 2MB'
 				],
 				'emp_gv_cert' => [
-					'ext_in' => 'File is not an image'
-				],
-				'emp_gv_cert' => [
-					'max_size' => 'Image size is < than 2mb'
-				],
-
-				'emp_rec_refer' => [
-					'uploaded' => 'Can not upload not a valid file'
+					'uploaded' => 'Can not upload not a valid file',
+					'max_size' => 'File size must be less than 2MB'
 				],
 				'emp_rec_refer' => [
-					'ext_in' => 'File is not an image'
-				],
-				'emp_rec_refer' => [
-					'max_size' => 'Image size is < than 2mb'
+					'uploaded' => 'Can not upload not a valid file',
+					'max_size' => 'File size must be less than 2MB'
 				],
 
 				'emp_passport' => [
-					'uploaded' => 'Can not upload not a valid file'
+					'uploaded' => 'Can not upload not a valid file',
+					'max_size' => 'File size must be less than 2MB'
 				],
-				'emp_passport' => [
-					'ext_in' => 'File is not an image'
-				],
-				'emp_passport' => [
-					'max_size' => 'Image size is < than 2mb'
-				],
-
+			
 				'emp_occup_health' => [
-					'uploaded' => 'Can not upload not a valid file'
+					'uploaded' => 'Can not upload not a valid file',
+					'max_size' => 'File size must be less than 2MB'
 				],
-				'emp_occup_health' => [
-					'ext_in' => 'File is not an image'
-				],
-				'emp_occup_health' => [
-					'max_size' => 'Image size is < than 2mb'
-				],
-
+			
 				'emp_work_permit' => [
-					'uploaded' => 'Can not upload not a valid file'
+					'uploaded' => 'Can not upload not a valid file',
+					'max_size' => 'File size must be less than 2MB'
 				],
-				'emp_work_permit' => [
-					'ext_in' => 'File is not an image'
-				],
-				'emp_work_permit' => [
-					'max_size' => 'Image size is < than 2mb'
-				],
+			
 			];
 
 			if (!$this->validate($rules, $errors)) {
@@ -650,63 +629,60 @@ class Backend extends BEBaseController
 				'emp_lname' => ['label' => 'Last Name', 'rules' => 'required'],
 				'emp_spec1' => ['label' => 'Speciality 1', 'rules' => 'required'],
 				'emp_grade1' => ['label' => 'Grade 1', 'rules' => 'required'],
-				'emp_pps_no' => ['label' => 'PPS No.', 'rules' => 'required|numeric'],
+				'emp_pps_no' => ['label' => 'PPS No.', 'rules' => 'required'],
 				'emp_phone' => ['label' => 'Phone No.', 'rules' => 'required|numeric'],
 				'emp_imcr_no' => ['label' => 'IMCR No.', 'rules' => 'required|numeric'],
-				'emp_cv' => ['label' => 'CV', 'rules' => 'ext_in[emp_cv,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_cv,2048]'],
-				'emp_imc_cert' => ['label' => 'IMC Certificate', 'rules' => 'ext_in[emp_imc_cert,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_imc_cert,2048]'],
 				'emp_gender' => ['label' => 'Gender', 'rules' => 'required'],
+				'emp_cv' => ['label' => 'CV', 'rules' => 'uploaded[emp_cv]|ext_in[emp_cv,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_cv,2048]'],
+				'emp_imc_cert' => ['label' => 'IMC Certificate', 'rules' => 'uploaded[emp_imc_cert]|ext_in[emp_imc_cert,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_imc_cert,2048]'],
+				'emp_gv_cert' => ['label' => 'Garda Vetting', 'rules' => 'uploaded[emp_gv_cert]|ext_in[emp_gv_cert,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_gv_cert,2048]'],
+				'emp_rec_refer' => ['label' => 'Recent Reference', 'rules' => 'uploaded[emp_rec_refer]|ext_in[emp_rec_refer,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_rec_refer,2048]'],
+				'emp_passport' => ['label' => 'Passport', 'rules' => 'uploaded[emp_passport]|ext_in[emp_passport,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_passport,2048]'],
+				'emp_occup_health' => ['label' => 'Occupational Health', 'rules' => 'uploaded[emp_occup_health]|ext_in[emp_occup_health,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_occup_health,2048]'],
+				'emp_work_permit' => ['label' => 'Work Permit', 'rules' => 'uploaded[emp_work_permit]|ext_in[emp_work_permit,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_work_permit,2048]'],
+				
 			];
+			foreach (['emp_cv', 'emp_imc_cert', 'emp_gv_cert', 'emp_rec_refer', 'emp_passport', 'emp_occup_health', 'emp_work_permit'] as $field) {
+				if (empty($_FILES[$field]['name'])) {
+					unset($rules[$field]);
+				}
+			}
+	
 
 			$errors = [
 				'emp_cv' => [
-					'ext_in' => 'File is not an image'
-				],
-				'emp_cv' => [
-					'max_size' => 'Image size is < than 2mb'
+					'uploaded' => 'Can not upload, not a valid file',
+					'max_size' => 'File size must be less than 2MB',
 				],
 
 				'emp_imc_cert' => [
-					'ext_in' => 'File is not an image'
-				],
-				'emp_imc_cert' => [
-					'max_size' => 'Image size is < than 2mb'
-				],
-
-				'emp_gv_cert' => [
-					'ext_in' => 'File is not an image'
+					'uploaded' => 'Can not upload not a valid file',
+						'max_size' => 'File size must be less than 2MB'
 				],
 				'emp_gv_cert' => [
-					'max_size' => 'Image size is < than 2mb'
-				],
-
-				'emp_rec_refer' => [
-					'ext_in' => 'File is not an image'
+					'uploaded' => 'Can not upload not a valid file',
+					'max_size' => 'File size must be less than 2MB'
 				],
 				'emp_rec_refer' => [
-					'max_size' => 'Image size is < than 2mb'
+					'uploaded' => 'Can not upload not a valid file',
+					'max_size' => 'File size must be less than 2MB'
 				],
 
 				'emp_passport' => [
-					'ext_in' => 'File is not an image'
+					'uploaded' => 'Can not upload not a valid file',
+					'max_size' => 'File size must be less than 2MB'
 				],
-				'emp_passport' => [
-					'max_size' => 'Image size is < than 2mb'
-				],
-
+			
 				'emp_occup_health' => [
-					'ext_in' => 'File is not an image'
+					'uploaded' => 'Can not upload not a valid file',
+					'max_size' => 'File size must be less than 2MB'
 				],
-				'emp_occup_health' => [
-					'max_size' => 'Image size is < than 2mb'
-				],
-
+			
 				'emp_work_permit' => [
-					'ext_in' => 'File is not an image'
+					'uploaded' => 'Can not upload not a valid file',
+					'max_size' => 'File size must be less than 2MB'
 				],
-				'emp_work_permit' => [
-					'max_size' => 'Image size is < than 2mb'
-				],
+			
 			];
 
 			if (!$this->validate($rules)) {
@@ -933,7 +909,7 @@ class Backend extends BEBaseController
 		$data = [];
 		helper(['form']);
 		$model = new ClientModel();
-		$data['cl_row'] = $model->where('cl_status', 1)->orderBy('cl_created','DESC')->find();
+		$data['cl_row'] = $model->orderBy('cl_created','DESC')->find();
 
 		return $this->LoadView('admin/clients', $data);
 	}
@@ -1012,7 +988,7 @@ class Backend extends BEBaseController
 				'cl_cont_phone' => ['label' => 'Contact No.', 'rules' => 'required|numeric'],
 				'cl_address' => ['label' => 'Address', 'rules' => 'required'],
 				'cl_cont_desig' => ['label' => 'Designation', 'rules' => 'required'],
-				'cl_gender' => ['label' => 'Gender', 'rules' => 'required'],
+				'cl_cont_email' => ['label' => 'Email', 'rules' => 'required'],
 			];
 
 			if (!$this->validate($rules)) {
@@ -1032,7 +1008,7 @@ class Backend extends BEBaseController
 					'cl_cont_phone' => $this->request->getVar('cl_cont_phone'),
 					'cl_address' => $this->request->getVar('cl_address'),
 					'cl_cont_desig' => $this->request->getVar('cl_cont_desig'),
-					'cl_gender' => $this->request->getVar('cl_gender'),
+					'cl_cont_email' => $this->request->getVar('cl_cont_email'),
 
 				];
 				$model->update($id, $newData);
@@ -1066,7 +1042,7 @@ class Backend extends BEBaseController
 				'cl_cont_phone' => ['label' => 'Contact No.', 'rules' => 'required|numeric'],
 				'cl_address' => ['label' => 'Address', 'rules' => 'required'],
 				'cl_cont_desig' => ['label' => 'Designation', 'rules' => 'required'],
-				'cl_gender' => ['label' => 'Gender', 'rules' => 'required'],
+				'cl_cont_email' => ['label' => 'Email', 'rules' => 'required'],
 			];
 
 			if (!$this->validate($rules)) {
@@ -1086,7 +1062,7 @@ class Backend extends BEBaseController
 					'cl_cont_phone' => $this->request->getVar('cl_cont_phone'),
 					'cl_address' => $this->request->getVar('cl_address'),
 					'cl_cont_desig' => $this->request->getVar('cl_cont_desig'),
-					'cl_gender' => $this->request->getVar('cl_gender'),
+					'cl_cont_email' => $this->request->getVar('cl_cont_email'),
 
 
 
@@ -1206,7 +1182,7 @@ class Backend extends BEBaseController
 		$dt = date('Y-m-d H:i:s', $timestamp);
 		helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->orderBy('orders.ord_created', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->orderBy('orders.ord_created', 'DESC')->findAll();
 
 		return $this->LoadView('admin/orders', $data);
 	}
@@ -1274,6 +1250,9 @@ class Backend extends BEBaseController
 					'ord_payment_status' => $this->request->getVar('ord_payment_status'),
 					'ord_comment2' => $this->request->getVar('ord_comment2'),
 					'ord_status' => $this->request->getVar('ord_status'),
+					'ord_datetime_detail' => $this->request->getVar('ord_datetime_detail'),
+					'ord_prosdatetime_detail' => $this->request->getVar('ord_prosdatetime_detail'),
+					'ord_cancel_bcl' => "0",
 
 
 				];
@@ -1364,13 +1343,15 @@ class Backend extends BEBaseController
 					'ord_status' => $this->request->getVar('ord_status'),
 					'ord_cancel_bdr' => $this->request->getVar('ord_cancel_bdr'),
 					'ord_cancel_bcl' => $this->request->getVar('ord_cancel_bcl'),
+					'ord_datetime_detail' => $this->request->getVar('ord_datetime_detail'),
+					'ord_prosdatetime_detail' => $this->request->getVar('ord_prosdatetime_detail'),
 
 
 				];
 				$model->update($eid, $newData);
 				$session = session();
 				$session->setFlashdata('success', 'Order Successfully Updated');
-				return redirect()->to('backend/order_edit/' . encryptIt($eid));
+				return redirect()->to('backend/orders');
 			
 		}
 
@@ -1383,7 +1364,7 @@ class Backend extends BEBaseController
 		$data = [];
 		$oid = decryptIt($oid);
 		$model = new ordersModel();
-		$data['ordr_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade')->where('ord_id', $oid)->first();
+		$data['ordr_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_id', $oid)->first();
 		// $data['ordr_row'] = $model->where('ord_id',$oid)->findAll();
 
 		return $this->LoadView('admin/order_view', $data);
@@ -1416,7 +1397,7 @@ class Backend extends BEBaseController
 		$data = [];
 		helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->where('ord_status', '2')->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '2')->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('admin/processed_order', $data);
 	}
@@ -1430,7 +1411,7 @@ class Backend extends BEBaseController
 		helper(['form']);
 		$model = new ordersModel();
 		$data['o_pen'] = $model->where('ord_status', '1')->where('ord_required_to >=', $dt)->countAllResults();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->where('ord_status', '1')->where('ord_required_to >=', $dt)->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '1')->where('ord_required_to >=', $dt)->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('admin/pending_order', $data);
 	}
@@ -1452,7 +1433,7 @@ class Backend extends BEBaseController
 		$data = [];
 		helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->where('ord_status', '4')->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '4')->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('admin/ended_order', $data);
 	}
@@ -1463,7 +1444,7 @@ class Backend extends BEBaseController
 		$data = [];
 		helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->where('ord_status', '3')->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '3')->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('admin/confirm_order', $data);
 	}
@@ -1476,7 +1457,7 @@ class Backend extends BEBaseController
 		$dt = date('Y-m-d H:i:s', $timestamp);
 		helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->where('ord_required_to <=', $dt)->where('ord_status', '1')->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_required_to <=', $dt)->where('ord_status', '1')->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('admin/expired_orders', $data);
 	}
@@ -1802,7 +1783,7 @@ class Backend extends BEBaseController
 		$data = [];
 		helper(['form']);
 		$model = new ordersModel();
-		$data['em_1'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade')->where('ord_id', $e1id)->first();
+		$data['em_1'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_id', $e1id)->first();
 
 
 		return $this->LoadView('admin/email-1', $data);
@@ -1814,7 +1795,7 @@ class Backend extends BEBaseController
 		$data = [];
 
 		$e2model = new ordersModel();
-		$data['em_2'] = $e2model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade')->where('ord_id', $e2id)->first();
+		$data['em_2'] = $e2model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_id', $e2id)->first();
 
 
 		return $this->LoadView('admin/email-2', $data);
@@ -1826,7 +1807,7 @@ class Backend extends BEBaseController
 		$data = [];
 
 		$e3mdoel = new ordersModel();
-		$data['em_3'] = $e3mdoel->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade')->where('ord_id', $e3id)->first();
+		$data['em_3'] = $e3mdoel->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_id', $e3id)->first();
 
 
 		return $this->LoadView('admin/email-3', $data);
@@ -1838,7 +1819,7 @@ class Backend extends BEBaseController
 		$data = [];
 
 		$e3mdoel = new ordersModel();
-		$data['em_4'] = $e3mdoel->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade')->where('ord_id', $e4id)->first();
+		$data['em_4'] = $e3mdoel->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_id', $e4id)->first();
 
 
 		return $this->LoadView('admin/email-4', $data);
@@ -1866,7 +1847,7 @@ class Backend extends BEBaseController
 
 		$model = new ordersModel();
 		$data['t_order'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')
-			->Join('timesheets', 'timesheets.order_id = orders.ord_id', 'LEFT')
+			->Join('timesheets', 'timesheets.order_id = orders.ord_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade')
 			->groupBy('orders.ord_id')->orderBy('orders.ord_id', 'DESC')
 			->findAll();
 
@@ -1883,7 +1864,7 @@ class Backend extends BEBaseController
 		helper(['form']);
 
 		$model = new ordersModel();
-		$data['e_ord'] = $model->join('clients','clients.cl_id = orders.cl_id','LEFT')->where('ord_id', $tid)->first();
+		$data['e_ord'] = $model->join('clients','clients.cl_id = orders.cl_id','LEFT')->join('employee','employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_id', $tid)->first();
 
 		$data['start_date'] = $data['e_ord']['ord_process_details_from'];
 		$data['end_date'] = $data['e_ord']['ord_process_details_to'];
@@ -1914,7 +1895,7 @@ class Backend extends BEBaseController
 		$data['t_view'] = $model->where('order_id', $ord_id)->find();
 
 		$model = new ordersModel();
-		$data['e_ord'] = $model->join('clients','clients.cl_id = orders.cl_id','LEFT')->where('ord_id', $ord_id)->first();
+		$data['e_ord'] = $model->join('clients','clients.cl_id = orders.cl_id','LEFT')->join('employee','employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_id', $ord_id)->first();
 
 		$data['start_date'] = $data['e_ord']['ord_process_details_from'];
 		$data['end_date'] = $data['e_ord']['ord_process_details_to'];
@@ -1954,7 +1935,7 @@ class Backend extends BEBaseController
 		$data['t_view'] = $model->where('order_id', $ord_id)->find();
 
 		$model = new ordersModel();
-		$data['e_ord'] = $model->join('clients','clients.cl_id = orders.cl_id','LEFT')->where('ord_id', $ord_id)->first();
+		$data['e_ord'] = $model->join('clients','clients.cl_id = orders.cl_id','LEFT')->join('employee','employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_id', $ord_id)->first();
 
 		$data['start_date'] = $data['e_ord']['ord_process_details_from'];
 		$data['end_date'] = $data['e_ord']['ord_process_details_to'];
@@ -2039,17 +2020,17 @@ class Backend extends BEBaseController
 		$data = [];
 		$model = new notificationModel();
 		// fetch live data from the database and store it in $data
-		$data = $model->orderBy('created_at','DESC')->findAll(); // your database query here
+		$data = $model->orderBy('status','ASC')->limit(8)->find(); // your database query here
 		// fetch the count of unseen notifications
 		$count = $model->where('status', 0)->countAllResults();
 		
 		foreach ($data as $row) {
-			$url = base_url('backend/t-view/'.encryptIt($row['ord_id']));
+			$url = base_url($row['link'].'/'.encryptIt($row['ord_id']));
 			echo '<li class="d-flex">
 				<div class="feeds-left"><i class="fa fa-calendar"></i></div>
 				<div class="feeds-body flex-grow-1">
-					<h6 class="mb-1 notification" data-id="'.$row['ord_id'].'">'.$row['notification'].'<small class="float-end text-muted small">'.date("d-m-y", strtotime($row['created_at'])).'</small><br></h6>
-					<span class="text-muted"><a class="notification" data-id="'.$row['ord_id'].'" href="'.$url.'">Click here to view Timesheet</a> <b style="float:right;">'.($row['status'] == 1 ? 'Seen' : '').'</b></span>
+					<h6 class="mb-1" >'.$row['notification'].'<small class="float-end text-muted small">'.date("d-m-y", strtotime($row['created_at'])).'</small><br></h6>
+					<span class="text-muted"><a class="notification" href="#!" onclick="seenaa('.$row['id'].',\''.$url.'\')" >Click here to view</a> <b style="float:right;">'.($row['status'] == 1 ? 'Seen' : '').'</b></span>
 				</div>
 			</li>';
 		}
@@ -2073,13 +2054,13 @@ class Backend extends BEBaseController
 		$data = [];
 		$id = $this->request->getPost('id');
 		$model = new notificationModel();
-		$data['notif_id'] = $model->where('ord_id',$id)->first();
-		$notid = $data['notif_id']['id'];
+		$data['notif_id'] = $model->where('id',$id)->first();
+// 		$notid = $data['notif_id']['id'];
 		$newdata = [
 			'status' => '1',
 		];
 
-		$model->update($notid,$newdata);
+		$model->update($id,$newdata);
 		// return the data as JSON
 
 		

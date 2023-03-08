@@ -31,14 +31,9 @@
                     <div class="card-body">
                     <div class="row mb-3 " id="email" contenteditable="true">
                         <h5 class="text-danger">LOCUM CONFIRMATION</h5>
-                               <h6>Dear <?php 
-                               if($em_3['cl_gender']== "M"):?>
-                               Mr.
-                               <?php elseif($em_3['cl_gender']== "F"): ?>
-                                Ms.
-                                <?php endif; ?>
+                               <h6>Dear 
                                 <?php $lname = explode(' ',$em_3['cl_cont_name']) ?>
-                                <?php if(!empty($lname[1])): echo $lname[1]; endif; ?></h6>
+                                <?php if(!empty($lname[0])): echo $lname[0]; endif; ?></h6>
                                 <br>
                                 <p>At SRA Locum Service we are pleased to confirm you the following doctor.</p>
                                 <p><strong>Your Order Details are;</strong></p>
@@ -46,7 +41,7 @@
   <table class="table table-bordered align-middle " style="border: 2px solid black;" >
       <tr>
         <th style="border: 1px solid black;"><strong>Hospital Name & Address:</strong></th>
-        <td style="border: 1px solid black;"><strong><?= $em_3['cl_h_name']. ', '. $em_3['cl_address'] ?></strong></td>
+        <td style="border: 1px solid black;"><strong><?= $em_3['cl_h_name']. ', '. $em_3['cl_address'].' | ' . $em_3['cl_eircode']  ?></strong></td>
       </tr>
       <tr>
         <th style="border: 1px solid black;"><strong>Client Contact Name:</strong></th>
@@ -62,11 +57,14 @@
      </tr>
      <tr>
         <th style="border: 1px solid black;"><strong>Covering Date & Time:</strong></th>
-        <td style="border: 1px solid black;"><strong><?= date("d-m-y  h:i:s a", strtotime($em_3['ord_required_from'])). ' - ' .date("d-m-y  h:i:s a", strtotime($em_3['ord_required_to'])) ?></strong></td>
+        <td style="border: 1px solid black;"><strong><?php $pros = explode(",",$em_3['ord_prosdatetime_detail']);
+                                        foreach($pros as $var): ?>
+                                       <?= $var ?> <br>
+                                       <?php endforeach; ?></strong></td>
       </tr> 
       <tr>
         <th style="border: 1px solid black;"><strong>Rate:</strong></th>
-        <td style="border: 1px solid black;"><strong> Euro /hr</strong></td>
+        <td style="border: 1px solid black;"><strong><?= $em_3['ord_approx_cost'] ?> Euro /hr</strong></td>
      </tr>
      <tr>
         <th style="border: 1px solid black;"><strong>Admin Charges:</strong></th>

@@ -46,8 +46,10 @@
                                     <th>ID</th>
                                     <th>Hospital Name</th>
                                     <th>Employee</th>
+                                    <th>Order Date/Time</th>
                                     <th>Craeted Date</th>
                                     <th>Status</th>
+                                    <th>Invoice ID</th>
                                     <th>Emails</th>
                                     <th>Action</th>
                                 </tr>
@@ -64,16 +66,25 @@
 
 
                                         <td>
-                                            <h6 class="mb-0"><?= $row['cl_h_name'] ?></h6>
+                                            <span><b><?= $row['cl_h_name'] ?></b></span><br>
+                                            <small><?= $row['spec_name'].'-'. $row['grade_name'] ?></small>
                                         </td>
-                                        <td><span><?= $row['emp_fname'] . ' ' . $row['emp_lname'] ?></span></td>
+                                        <td><span><?= $row['emp_fname'] . ' ' . $row['emp_lname'] ?></span><br>
+                                        <small><?= $row['emp_imcr_no'] ?></small></td>
+                                        <td><?php $pros = explode(",",$row['ord_prosdatetime_detail']);
+                                        foreach($pros as $var): ?>
+                                       <?= $var ?> <br>
+                                       <?php endforeach; ?></td>
+                                        </td>
                                         <td><?= date("d-m-y  h:i:s a", strtotime($row['ord_created'])) ?></td>
                                         <td>
                                         <?php if($row['ord_cancel_bcl'] == 1): ?>
-                                                <span class="badge bg-danger">Cancelled By Client</span>
+                                                <span class="badge bg-danger">Cancelled By Client</span><br>
+                                                <span class="badge bg-warning text-dark"><?= $row['ord_cl_cremarks']?></span>
                                                 <?php else: ?>
                                         <?php if($row['ord_cancel_bdr'] == 1): ?>
-                                                <span class="badge bg-danger">Cancelled By Dr.</span>
+                                                <span class="badge bg-danger">Cancelled By Dr.</span><br>
+                                                <span class="badge bg-warning text-dark"><?= $row['ord_dr_cremarks']?></span>
                                                 <?php else: ?>
                                             <?php if ($row['ord_status'] == "1") : ?>
                                                 <span class="badge chart-color123">Pending</span>
@@ -86,6 +97,10 @@
                                             <?php endif; ?>
                                             <?php endif; ?>
                                             <?php endif; ?>
+                                            </td>
+                                            <td>
+                                                <?= $row['ord_invoice_id'] ?>
+                                            </td>
                                         <td>
                                                 
                                         
@@ -105,7 +120,13 @@
                                         </td>
 
                                             <td>
+                                                <?php if (session()->grp_id == 'user' && $row['ord_status'] <4): ?>
                                             <a type="button" href="<?= base_url('backend/order_edit/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                            <?php elseif(session()->grp_id == 'admin' && $row['ord_status'] <4):?>
+                                            <a type="button" href="<?= base_url('backend/order_edit/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                            <?php elseif(session()->grp_id == 'super_admin'):?>
+                                            <a type="button" href="<?= base_url('backend/order_edit/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                            <?php endif; ?>
                                             <a type="button" href="<?= base_url('backend/order_view/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View" data-type="confirm"><i class="fa fa-eye"></i></a>
                                         </td>
                                     </tr>

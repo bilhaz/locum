@@ -3,7 +3,7 @@
     <div id="wrapper">
         <div class="d-flex h100vh align-items-center auth-main w-100">
             <div class="auth-box">
-                <div class="top mb-4">
+                <div class="top mb-3">
                     <div class="logo">
                        
                             <svg width="130px" height="40px" viewBox="0 0 85.5 50.9">  
@@ -1240,9 +1240,12 @@ ZW50SUQAQTM4NzFBMzMyNkNENjU3NzkzNzUxRjlEOEI4M0YwNzdgGcdFAAAAAElFTkSuQmCC" />
                         
                     </div>
                 </div>
-                <div class="card shadow p-lg-4">
+                <div class="card shadow p-lg-3">
                     <div class="card-header">
-                        <p class="fs-5 mb-0">Hospital Login</p>
+                        <p class="fs-5 mb-0">Client Login</p>
+                        <p style="font-size:9pt;text-justify: inter-word;" class="mb-0 alert alert-success">You can log into your account and view your current and previous orders. 
+Any changes you make to your order will be notified to us.  You can email us or call us to make any changes as well.</p>
+<p style="font-size:9pt;text-justify: inter-word;" class="mb-0 alert alert-success">Please login to your account with the Login and password here. </p>
                     </div>
                     <div class="card-body">
                         <form action="<?= base_url('client/login')?>" method="post">
@@ -1275,10 +1278,7 @@ ZW50SUQAQTM4NzFBMzMyNkNENjU3NzkzNzUxRjlEOEI4M0YwNzdgGcdFAAAAAElFTkSuQmCC" />
                             </div>
                             <button type="submit" class="btn btn-primary w-100 px-3 py-2">LOGIN</button>
                         </form>
-                        <div class="mt-3 pt-3 border-top">
-                            <!-- <p class="mb-1"><a href="page-forgot-password.html"><i class="fa fa-lock me-2"></i>Forgot password?</a></p> -->
-                            <!-- <span>Don't have an account? <a href="page-register.html">Register</a></span> -->
-                        </div>
+                        
                     </div>
                 </div>
             </div>

@@ -253,6 +253,19 @@
                                         </div>
                                         <div class="row mb-3">
                                             <div class="form-group col-md-6 ">
+                                                <h6 class="control-label" class="ord_required_from-label">Locum Required
+                                                    Date & Time Details:</h6>
+                                                <hr class="primary">
+                                            </div>
+                                            <div class="form-group col-md-6 ">
+                                                <span class="cview ">
+                                                    <?= $ordr_row['ord_datetime_detail'] ?>
+                                                </span>
+                                                <hr class="primary">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="form-group col-md-6 ">
                                                 <h6 class="control-label ">Process Date:</h6>
                                                 <hr class="primary">
                                             </div>
@@ -277,12 +290,24 @@
                                         </div>
                                         <div class="row mb-3">
                                             <div class="form-group col-md-6 ">
-                                                <h6 class="control-label ">Process Details From - To:</h6>
+                                                <h6 class="control-label ">Process Dates From - To:</h6>
                                                 <hr class="primary">
                                             </div>
                                             <div class="form-group col-md-6 ">
                                                 <span class="cview ">
                                                     <?= $ordr_row['ord_process_details_from']. ' - '.$ordr_row['ord_process_details_to']  ?>
+                                                </span>
+                                                <hr class="primary">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="form-group col-md-6 ">
+                                                <h6 class="control-label ">Process Date & Time Dtails:</h6>
+                                                <hr class="primary">
+                                            </div>
+                                            <div class="form-group col-md-6 ">
+                                                <span class="cview ">
+                                                    <?= $ordr_row['ord_prosdatetime_detail']?>
                                                 </span>
                                                 <hr class="primary">
                                             </div>
