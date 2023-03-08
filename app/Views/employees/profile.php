@@ -43,8 +43,6 @@
 
                         <div class="card-title">
                             <h3 class="text-center title-2">My Details</h3>
-                            <span class="text-danger">Document should be less than 2MB</span><br>
-                            <span class="text-danger">File format should be (pdf, jpg, png, docs, docx)</span>
                         </div>
                         <hr>
                         <form action="<?= base_url('employee/profile') ?>" method="post"
@@ -175,7 +173,7 @@
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
                                     <label for="emp_pps_no" class="control-label mb-1">PPS No.</label>
-                                    <?php if(empty($emp['emp_pps_no'])) : ?>
+                                    <?php if(empty($emp['emp_grade3'])) : ?>
                                     <input id="emp_pps_no" name="emp_pps_no" type="text" class="form-control"
                                         required="">
                                         <?php else: ?>

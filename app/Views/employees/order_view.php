@@ -407,7 +407,7 @@
                         <?php if(isset($ord['order_id']) && $cont['ord_time_sheet_approved'] <> "Approved"): ?>
                             <a type="button" href="<?= base_url('employee/t-edit/' .encryptIt($cont['ord_id'])) ?>" class="btn btn-sm btn-primary d-print-none"><i class="fa fa-calendar text-light">&nbsp;</i>Edit TimeSheet</a>
                             <?php endif; ?>
-                        <?php if(!isset($ord['order_id']) && $cont['ord_status'] > "2"): ?>
+                        <?php if(!isset($ord['order_id'])): ?>
                             <a type="button" href="<?= base_url('employee/timesheet/' .encryptIt($cont['ord_id'])) ?>" class="btn btn-sm btn-primary d-print-none"><i class="fa fa-calendar text-light">&nbsp;</i>Fill Time Sheet Online</a>
                             <?php elseif(isset($ord['order_id'])): ?>
                             <a type="button" href="<?= base_url('employee/t-view/' .encryptIt($cont['ord_id'])) ?>" class="btn btn-sm btn-warning d-print-none"><i class="fa fa-eye ">&nbsp;</i>View TimeSheet</a>
@@ -495,10 +495,7 @@
             </td>
             <td style="width:367pt;border-left-style:solid;border-left-width:1pt;border-left-color:#9BBA58">
                 <p class="s2" style="padding-left: 4pt;text-indent: 0pt;line-height: 13pt;text-align: left;"><?= $cont['spec_name'].'  &nbsp;'. $cont['grade_name'] ?></p>
-                <p class="s2" style="padding-left: 4pt;text-indent: 0pt;text-align: left;"><?php $pros = explode(",",$cont['ord_prosdatetime_detail']);
-                                        foreach($pros as $var): ?>
-                                       <?= $var ?> <br>
-                                       <?php endforeach; ?></p>
+                <p class="s2" style="padding-left: 4pt;text-indent: 0pt;text-align: left;"><?= $cont['ord_datetime_detail'] ?></p>
             </td>
         </tr>
         <tr style="height:27pt">
@@ -536,13 +533,13 @@
         </tr>
     </table>
     <p style="text-indent: 0pt;text-align: left;" ></p>
-    <p class="s12" style="padding-top: 7pt;padding-left: 7pt;text-indent: 0pt;text-align: justify;width:95%"><a href="http://www.sralocum.com/" style=" color: #F00; font-family:Calibri, sans-serif; font-style: normal; font-weight: bold; text-decoration: none; font-size: 9pt;" target="_blank">SRA Locum standard terms and conditions published on our website </a><span style=" color: #00F; font-family:Calibri, sans-serif; font-style: normal; font-weight: bold; text-decoration: underline; font-size: 9pt;"><a href="https://www.sralocum.com">www.sralocum.com</a></span> <span style=" color: #F00;">are applicable to the above assignment. For the avoidance of doubt, (a) the Locum acknowledges that they are being provided through the SRA Locum, and that all payments will be made to SRA Locum, and not directly from the ordering client. (b) the Locum acknowledges to us that their services are supplied to us as an independent locum and not as an employee, and that accordingly the responsibility of complying with all statutory and legal requirements relating to the Locum (including the payment of taxation) shall fall upon and be discharged wholly and exclusively by SRA Locum. Any placed personnel will be under the supervision, direction and control of the client</span></p>
-    <p class="s13" style="padding-top: 6pt;padding-left: 7pt;text-indent: 0pt;text-align: left;width:95%">We have included the client’s telephone number so should a problem arise; where you are going to be late or cannot fulfill the booking please notify SRA Locum OR the client immediately.</p>
-    <p class="s15" style="padding-left: 7pt;text-indent: 0pt;text-align: left;width:95%"><a href="mailto:contact@sralocum.com" style=" color: black; font-family:Calibri, sans-serif; font-style: normal; font-weight: normal; text-decoration: none; font-size: 9pt;" target="_blank">We operate a comprehensive 24-hour on call service manned by senior members of staff who can assist you on: </a><span style=" color: #00F; font-family:Calibri, sans-serif; font-style: normal; font-weight: normal; text-decoration: underline; font-size: 9pt;">contact@sralocum.com</span> <span style=" color: #000;">OR 01-6854700 &amp; 01-6994321 Dublin or .020-33182900 This is not a emergency service.</span></p>
-    <p class="s13" style="padding-left: 7pt;text-indent: 0pt;text-align: left;width:95%">You agree that you as Locum if decide to take a short term or permanent position with this client either during the assignment or within 6 months of leaving the post arranged by SRA Locum, an introduction fee will automatically become due for payment by the you and client.</p>
-    <p class="s16" style="padding-top: 6pt;padding-left: 7pt;text-indent: 0pt;text-align: left;width:95%">We hope you enjoyed your placement with SRA Locum and if we can be of any further assistance please do not hesitate to contact us.</p>
-    <p style="padding-top: 6pt;padding-left: 7pt;text-indent: 0pt;text-align: left;width:95%"><a href="https://sralocum.com/web/new2/public/uploads/files/termsandconditions.pdf" style=" color: #1F487C; font-family:Calibri, sans-serif; font-style: normal; font-weight: bold; text-decoration: none; font-size: 11pt;" target="_blank">I hereby agree to accept the above booking &amp; I agree fully to SRA Locum terms and conditions. </a><a href="https://sralocum.com/public/uploads/files/termsandconditions.pdf" target="_blank">SRA Terms & Conditions</a></p>
-    <h3 style="padding-top: 6pt;padding-left: 7pt;text-indent: 0pt;text-align: left;width:95%">I the above named person confirm the above details to be correct and therefore I wish to proceed as being engaged as Locum:</h3>
+    <p class="s12" style="padding-top: 7pt;padding-left: 7pt;text-indent: 0pt;text-align: justify;"><a href="http://www.sralocum.com/" style=" color: #F00; font-family:Calibri, sans-serif; font-style: normal; font-weight: bold; text-decoration: none; font-size: 9pt;" target="_blank">SRA Locum standard terms and conditions published on our website </a><span style=" color: #00F; font-family:Calibri, sans-serif; font-style: normal; font-weight: bold; text-decoration: underline; font-size: 9pt;"><a href="https://www.sralocum.com">www.sralocum.com</a></span> <span style=" color: #F00;">are applicable to the above assignment. For the avoidance of doubt, (a) the Locum acknowledges that they are being provided through the SRA Locum, and that all payments will be made to SRA Locum, and not directly from the ordering client. (b) the Locum acknowledges to us that their services are supplied to us as an independent locum and not as an employee, and that accordingly the responsibility of complying with all statutory and legal requirements relating to the Locum (including the payment of taxation) shall fall upon and be discharged wholly and exclusively by SRA Locum. Any placed personnel will be under the supervision, direction and control of the client</span></p>
+    <p class="s13" style="padding-top: 6pt;padding-left: 7pt;text-indent: 0pt;text-align: left;">We have included the client’s telephone number so should a problem arise; where you are going to be late or cannot fulfill the booking please notify SRA Locum OR the client immediately.</p>
+    <p class="s15" style="padding-left: 7pt;text-indent: 0pt;text-align: left;"><a href="mailto:contact@sralocum.com" style=" color: black; font-family:Calibri, sans-serif; font-style: normal; font-weight: normal; text-decoration: none; font-size: 9pt;" target="_blank">We operate a comprehensive 24-hour on call service manned by senior members of staff who can assist you on: </a><span style=" color: #00F; font-family:Calibri, sans-serif; font-style: normal; font-weight: normal; text-decoration: underline; font-size: 9pt;">contact@sralocum.com</span> <span style=" color: #000;">OR 01-6854700 &amp; 01-6994321 Dublin or .020-33182900 This is not a emergency service.</span></p>
+    <p class="s13" style="padding-left: 7pt;text-indent: 0pt;text-align: left;">You agree that you as Locum if decide to take a short term or permanent position with this client either during the assignment or within 6 months of leaving the post arranged by SRA Locum, an introduction fee will automatically become due for payment by the you and client.</p>
+    <p class="s16" style="padding-top: 6pt;padding-left: 7pt;text-indent: 0pt;text-align: left;">We hope you enjoyed your placement with SRA Locum and if we can be of any further assistance please do not hesitate to contact us.</p>
+    <p style="padding-top: 6pt;padding-left: 7pt;text-indent: 0pt;text-align: left;"><a href="https://sralocum.com/web/new2/public/uploads/files/termsandconditions.pdf" style=" color: #1F487C; font-family:Calibri, sans-serif; font-style: normal; font-weight: bold; text-decoration: none; font-size: 11pt;" target="_blank">I hereby agree to accept the above booking &amp; I agree fully to SRA Locum terms and conditions. </a><a href="https://sralocum.com/public/uploads/files/termsandconditions.pdf" target="_blank">SRA Terms & Conditions</a></p>
+    <h3 style="padding-top: 6pt;padding-left: 7pt;text-indent: 0pt;text-align: left;">I the above named person confirm the above details to be correct and therefore I wish to proceed as being engaged as Locum:</h3>
     <h3 style="padding-left: 7pt;text-indent: 0pt;line-height: 215%;text-align: left;">Signed: <u>__________________</u> <br>
         <br>
         Date: <u>___________________</u></h3>
@@ -835,7 +832,7 @@
     <p style="padding-left: 7pt;text-indent: 0pt;text-align: left;">Or Fax to: <span style=" color: #C10000;">01 685 2538</span></p>
     <p style="padding-left: 7pt;text-indent: 0pt;text-align: left;">SRA Locum – 13 Upper Baggot St, 2<span class="s32">nd</span> floor, Dublin 4.</p>
     <p style="padding-left: 7pt;text-indent: 0pt;text-align: left;"> Email: contact@sralocum.com</a></p>
-    
+    <div class="page-break-line"></div>    
 </div>
 
         </div>

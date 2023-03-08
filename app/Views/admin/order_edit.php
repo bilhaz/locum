@@ -56,7 +56,7 @@
                                     <label for="ord_status" class="control-label mb-1">Cancel By Client</label>
                                     <select id="ord_cancel_bcl" name="ord_cancel_bcl" class="form-control select2">
                                         <option value="1" <?php if ($eord_row['ord_cancel_bcl'] == "1") { ?> echo selected="selected" <?php } ?>>Cancel</option>
-                                        <option value="" <?php if ($eord_row['ord_cancel_bcl'] == "0") { ?> echo selected="selected" <?php } ?>>Active</option>
+                                        <option value="" <?php if ($eord_row['ord_cancel_bcl'] == "") { ?> echo selected="selected" <?php } ?>>Active</option>
 
                                     </select>
                                 </div>
@@ -145,6 +145,17 @@
                             <label for="ord_datetime_detail" class="control-label mb-1">Locum Date & Time Details</label>
                                 <textarea id="ord_datetime_detail" name="ord_datetime_detail" class="form-control" placeholder="Use comma separation for putting multiple dates and time for e.g: ' 23-02-2024 to 23-03-2024 08 to 21, 28-02-2023 18 to 22' "><?= $eord_row['ord_datetime_detail'] ?></textarea>
                             </div>
+                            <div class="row mb-3">
+                                <div class="form-group col-md-6 ">
+                                    <label for="ord_process_date" class="control-label mb-1">Process Date</label>
+                                    <input id="ord_process_date" name="ord_process_date" type="Date" title="Click to enter date" class="form-control" value="<?= $eord_row['ord_process_date'] ?>">
+                                </div>
+                                <div class="form-group col-md-6 ">
+                                    <label for="ord_confirmation_date" class="control-label mb-1">Confirmation
+                                        Date</label>
+                                    <input id="ord_confirmation_date" name="ord_confirmation_date" type="Date" title="Click to enter date" class="form-control" value="<?= $eord_row['ord_confirmation_date'] ?>">
+                                </div>
+                            </div>
                             
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
@@ -156,21 +167,6 @@
                                     <label for="ord_process_details_to" class="control-label mb-1">Locum Process
                                         To</label>
                                     <input id="ord_process_details_to" name="ord_process_details_to" type="datetime-local" title="Click to enter date and time" class="form-control" value="<?= $eord_row['ord_process_details_to'] ?>">
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                            <label for="ord_prosdatetime_detail" class="control-label mb-1">Locum Process Date & Time Details</label>
-                                <textarea id="ord_prosdatetime_detail" name="ord_prosdatetime_detail" class="form-control" placeholder="Use comma separation for putting multiple dates and time for e.g: ' 23-02-2024 to 23-03-2024 08 to 21, 28-02-2023 18 to 22' "><?= $eord_row['ord_prosdatetime_detail'] ?></textarea>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="form-group col-md-6 ">
-                                    <label for="ord_process_date" class="control-label mb-1">Processed Date</label>
-                                    <input id="ord_process_date" name="ord_process_date" type="Date" title="Click to enter date" class="form-control" value="<?= $eord_row['ord_process_date'] ?>">
-                                </div>
-                                <div class="form-group col-md-6 ">
-                                    <label for="ord_confirmation_date" class="control-label mb-1">Confirmation
-                                        Date</label>
-                                    <input id="ord_confirmation_date" name="ord_confirmation_date" type="Date" title="Click to enter date" class="form-control" value="<?= $eord_row['ord_confirmation_date'] ?>">
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -189,18 +185,29 @@
                                     <input id="total" name="ord_total_hrs" type="text" class="form-control" value="<?= $eord_row['ord_total_hrs'] ?>">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="ord_approx_cost" class="control-label mb-1">Hospital Rate</label>
-                                    <input id="ord_approx_cost" oninput="calculatediff()" name="ord_approx_cost" type="text" class="form-control" value="<?= $eord_row['ord_approx_cost'] ?>">
+                                    <label for="ord_invoice_id" class="control-label mb-1">Invoice Id</label>
+                                    <input id="ord_invoice_id" name="ord_invoice_id" type="text" class="form-control" value="<?= $eord_row['ord_invoice_id'] ?>">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
-                                    <label for="ord_pay_to_dr" class="control-label mb-1">Pay to Dr.</label>
-                                    <input id="ord_pay_to_dr" oninput="calculatediff()" name="ord_pay_to_dr" type="text" class="form-control" value="<?= $eord_row['ord_pay_to_dr'] ?>">
+                                    <label for="ord_approx_cost" class="control-label mb-1">Approximate Cost</label>
+                                    <input id="ord_approx_cost" name="ord_approx_cost" type="text" class="form-control" value="<?= $eord_row['ord_approx_cost'] ?>">
                                 </div>
                                 <div class="form-group col-md-6">
+                                    <label for="ord_pay_to_dr" class="control-label mb-1">Pay to Dr.</label>
+                                    <input id="ord_pay_to_dr" name="ord_pay_to_dr" type="text" class="form-control" value="<?= $eord_row['ord_pay_to_dr'] ?>">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="form-group col-md-6 ">
                                     <label for="ord_admin_charges" class="control-label mb-1">Admin Charges</label>
-                                    <input id="ord_admin_charges" oninput="calculatediff()" name="ord_admin_charges" type="text" class="form-control" value="<?= $eord_row['ord_admin_charges'] ?>">
+                                    <input id="ord_admin_charges" name="ord_admin_charges" type="text" class="form-control" value="<?= $eord_row['ord_admin_charges'] ?>">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="ord_diff_profit_admin" class="control-label mb-1">Diff (Profit) + Admin
+                                        Charges</label>
+                                    <input id="ord_diff_profit_admin" name="ord_diff_profit_admin" type="text" class="form-control" value="<?= $eord_row['ord_diff_profit_admin'] ?>">
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -230,9 +237,7 @@
                                         Processed</label>
                                     <input id="ord_time_sheet_process" name="ord_time_sheet_process" type="date" title="Click to enter date" class="form-control" value="<?= $eord_row['ord_time_sheet_process'] ?>">
                                 </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="form-group col-md-6 ">
+                                <div class="form-group col-md-6">
                                     <label for="ord_time_sheet_approved" class="control-label mb-1">Time Sheet
                                         Status</label>
                                     <select id="ord_time_sheet_approved" name="ord_time_sheet_approved" type="text" class="form-control select2" data-parsley-trigger="change">
@@ -243,21 +248,14 @@
                                         <option value="Approved" <?php if ($eord_row['ord_time_sheet_approved'] == "Approved") { ?> echo selected="selected" <?php } ?>>Approved</option>
                                     </select>
                                 </div>
-                                <div class="form-group col-md-6">
-                                   <label for="ord_comment1" class="control-label mb-1">Comment</label>
-                                <textarea id="ord_comment1" name="ord_comment1" type="text" class="form-control"><?= $eord_row['ord_comment1'] ?></textarea> 
-                                </div>
                             </div>
-                           
                             <div class="row mb-3">
-                                <div class="form-group col-md-6 ">
-                            <label for="ord_invoice_id" class="control-label mb-1">Invoice Reference</label>
-                            <input id="ord_invoice_id" name="ord_invoice_id" type="text" class="form-control" value="<?= $eord_row['ord_invoice_id'] ?>">
-                            </div>
+                                <label for="ord_comment1" class="control-label mb-1">Comment</label>
+                                <textarea id="ord_comment1" name="ord_comment1" type="text" class="form-control"><?= $eord_row['ord_comment1'] ?></textarea>
                             </div>
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
-                                    <label for="ord_invoice_refer" class="control-label mb-1">Invoice Detail </label>
+                                    <label for="ord_invoice_refer" class="control-label mb-1">Invoice Reference</label>
                                     <input id="ord_invoice_refer" name="ord_invoice_refer" type="text" class="form-control" value="<?= $eord_row['ord_invoice_refer'] ?>">
                                 </div>
                                 <div class="form-group col-md-6">

@@ -54,8 +54,6 @@
                                     <th>Employee</th>
                                     <th>Locum Confirmation</th>
                                     <th>Order date/time</th>
-                                    <th>Created Date</th>
-                                    <th>Status</th>
                                     <th>Timesheet</th>
                                     <th>Payment Date</th>
                                     <th>Action</th>
@@ -76,22 +74,34 @@
                                             <h6 class="mb-0"><?= $row['spec_name'] .' - '. $row['grade_name'] ?></h6>
                                         </td>
                                         
-                                        <td><span><?= $row['emp_fname'] . ' ' . $row['emp_lname'] ?></span><br>
-                                        <small><?= $row['emp_imcr_no'] ?></small></td>
-                                        <td> <?php if($row['ord_cancel_bcl'] <> 1): ?>
+                                        <td>
+                                            <h6 class="mb-0"><?= $row['emp_fname'].' '. $row['emp_lname'] ?></h6>
+                                        </td>
+                                        <td>
+                                        <?php if($row['ord_cancel_bcl'] <> 1): ?>
                                             <?php if($row['ord_status'] > 1 && $row['ord_status'] < 3): ?>
-                                            <h6 class="mb-0"><a href="<?= base_url('client/ord-confirm/'.encryptIt($row['ord_id'])) ?>" class="btn btn-primary">Click to Confirm</a></h6>
+                                            <h6 class="mb-0"><a href="<?= base_url('client/ord-confirm/'.encryptIt($row['ord_id'])) ?>" class="btn btn-primary">Confirm</a></h6>
                                             <?php elseif($row['ord_status'] > 2 ): ?>
                                                 <span class="badge bg-success">Confirmed</span>
                                                 <?php endif; ?>
                                                 <?php endif; ?>
-                                                <td><?php $pros = explode(",",$row['ord_prosdatetime_detail']);
-                                        foreach($pros as $var): ?>
-                                       <?= $var ?> <br>
-                                       <?php endforeach; ?></td>
                                         </td>
                                         <td><?= date("d-m-y  h:i:s a", strtotime($row['ord_created'])) ?></td>
                                         
+                                        <td>
+                                        <?php if(!empty($row['order_id'])): ?>
+                                            <a type="button" href="<?= base_url('client/timesheet/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-info" title="TimeSheet"><i class="fa fa-eye"></i> View</a>
+                                            <?php else: ?>
+                                                <span class="badge bg-danger">No Submitted</span>
+                                                <?php endif; ?>
+                                        </td>
+                                        <td>
+                                        <?php if(!empty($row['ord_paymnt_rcvd_date']) && $row['ord_paymnt_rcvd_date'] > "0000-00-00" ): ?>
+                                                <?= $row['ord_paymnt_rcvd_date'] ?>
+                                            <?php else: ?>
+                                                <span class="badge bg-warning text-dark">Due</span>
+                                                <?php endif; ?>
+                                        </td>
                                         <td>
                                         <?php if($row['ord_cancel_bdr'] == 1): ?>
                                                 <span class="badge bg-danger">Dr. Cancelled</span>
@@ -110,23 +120,8 @@
                                             <?php endif; ?>
                                             <?php endif; ?>
                                             <?php endif; ?>
-                                            </td>
                                             <td>
-                                        <?php if(!empty($row['order_id'])): ?>
-                                            <a type="button" href="<?= base_url('client/timesheet/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-info" title="TimeSheet"><i class="fa fa-eye"></i> View</a>
-                                            <?php else: ?>
-                                                <span class="badge bg-danger">Not Submitted</span>
-                                                <?php endif; ?>
-                                        </td>
-                                        <td>
-                                        <?php if(!empty($row['ord_paymnt_rcvd_date']) && $row['ord_paymnt_rcvd_date'] > "0000-00-00" ): ?>
-                                                <?= date("d-m-y ", strtotime($row['ord_paymnt_rcvd_date'])) ?>
-                                            <?php else: ?>
-                                                <span class="badge bg-warning text-dark">Due</span>
-                                                <?php endif; ?>
-                                        </td>
-                                            <td>
-                                            <?php if($row['ord_status'] == 1 && $row['ord_cancel_bcl'] <> 1 ): ?>
+                                            <?php if($row['ord_status'] == 1): ?>
                                             <a type="button" href="<?= base_url('client/edit-order/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit your order"><i class="fa fa-edit"></i></a>
                                             <?php endif; ?>
                                             <a type="button" href="<?= base_url('client/ord-status/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-info" title="View your order"><i class="fa fa-eye"></i></a>

@@ -43,11 +43,11 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Hospital Name</th>
-                                    <th>Timesheet Status</th>
-                                    <th>Order Date/Time</th>
+                                    <th>Timesheet</th>
+                                    <th>Work till</th>
                                     <th>Created Date</th>
                                     <th>Status</th>
-                                     <th>Payemnt</th>
+                                    <th>Payemnt</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -66,12 +66,19 @@
                                             <span><b><?= $row['cl_h_name'] ?></b></span><br>
                                             <small><?= $row['spec_name'].'-'. $row['grade_name'] ?></small>
                                         </td>
-                                        <td><?php if($row['ord_time_sheet_approved'] == "Due" ): ?> <span class="badge chart-color123">Due</span> <?php elseif($row['ord_time_sheet_approved'] == "Received"): ?><span class="badge chart-color122">Received</span><?php elseif($row['ord_time_sheet_approved'] == "Sent_for_verification"): ?><span class="badge bg-warning text-dark">Sent for verification</span><?php elseif($row['ord_time_sheet_approved'] == "Approved"): ?><span class="badge bg-success">Approved</span><?php else: ?><span class="badge chart-color123">Due</span><?php endif; ?></td>
-                                        
-                                        <td><?php $pros = explode(",",$row['ord_prosdatetime_detail']);
-                                        foreach($pros as $var): ?>
-                                       <?= $var ?> <br>
-                                       <?php endforeach; ?>
+                                        <td>
+                                        <?php if(!isset($row['order_id'])): ?>
+                                            <span class="badge bg-danger">Pending</span>
+                                            <?php elseif(isset($row['order_id'])): ?>
+                                                <span class="badge bg-success">Submitted</span>
+                                <?php endif; ?>
+                                        </td>
+                                        <td>
+                                        <?php if ($row['ord_payment_status'] == "Paid") : ?>
+                                                <span class="badge bg-success">Paid</span>
+                                                <?php else: ?>
+                                                    <span class="badge bg-warning">Not Processed</span>
+                                            <?php endif; ?>
                                         </td>
                                         
                                         <td><?= date("d-m-y H:m:s a", strtotime($row['ord_created'])) ?></td>
