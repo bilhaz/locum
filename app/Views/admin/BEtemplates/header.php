@@ -144,10 +144,11 @@
                                                 <li class="nav-item"><a class="nav-link" href="<?= base_url('backend/speciality') ?>"><i class="fa fa-stethoscope"></i>Specialities</a></li>
                                                 <li class="nav-item"><a class="nav-link" href="<?= base_url('backend/grade') ?>"><i class="fa fa-star"></i>Grades</a></li>
                                                 <li class="nav-item"><a class="nav-link" href="<?= base_url('backend/cat') ?>"><i class="fa fa-th-large"></i>Client Category</a></li>
+                                                <li class="nav-item"><a class="nav-link" href="<?= base_url('backend/formula') ?>"><i class="fa fa-calculator"></i>Formulae</a></li>
+
                                         <?php endif; ?>
                                         <?php if (session()->grp_id == 'super_admin'): ?>
-                                                <li class="nav-item"><a class="nav-link" href="<?= base_url('backend/formula') ?>"><i class="fa fa-calculator"></i>Formulae</a></li>
-                                                <li class="nav-item"><a class="nav-link" href="<?= base_url('backend/users') ?>"><i class="fa fa-user-plus"></i>Users</a></li>
+                                                    <li class="nav-item"><a class="nav-link" href="<?= base_url('backend/users') ?>"><i class="fa fa-user-plus"></i>Users</a></li>
                                         <?php endif; ?>
 
                                     </ul>

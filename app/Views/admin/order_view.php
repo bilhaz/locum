@@ -350,12 +350,24 @@
                                         </div>
                                         <div class="row mb-3">
                                             <div class="form-group col-md-6">
-                                                <h6 class="control-label ">Approximate Cost:</h6>
+                                                <h6 class="control-label ">Hospital Rate:</h6>
                                                 <hr class="primary">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <span class="cview ">
                                                     <?= $ordr_row['ord_approx_cost']?>€
+                                                </span>
+                                                <hr class="primary">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="form-group col-md-6">
+                                                <h6 class="control-label ">Total Earning from Hospital :</h6>
+                                                <hr class="primary">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <span class="cview ">
+                                                    <?= $ordr_row['ord_hosp_earn']?>€
                                                 </span>
                                                 <hr class="primary">
                                             </div>
@@ -374,12 +386,36 @@
                                         </div>
                                         <div class="row mb-3">
                                             <div class="form-group col-md-6 ">
+                                                <h6 class="control-label ">Paying to Dr. :</h6>
+                                                <hr class="primary">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <span class="cview ">
+                                                    <?= $ordr_row['ord_paying_to_dr']?>€
+                                                </span>
+                                                <hr class="primary">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="form-group col-md-6 ">
                                                 <h6 class="control-label ">Admin Charges:</h6>
                                                 <hr class="primary">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <span class="cview ">
                                                     <?= $ordr_row['ord_admin_charges']?>%
+                                                </span>
+                                                <hr class="primary">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="form-group col-md-6 ">
+                                                <h6 class="control-label ">Total of Admin Charges:</h6>
+                                                <hr class="primary">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <span class="cview ">
+                                                    <?= $ordr_row['ord_adminchrg_intern']?>%
                                                 </span>
                                                 <hr class="primary">
                                             </div>
@@ -454,7 +490,7 @@
 
                                         <div class="row mb-3">
                                             <div class="form-group col-md-6">
-                                                <h6 class="control-label ">Invoice Reference:</h6>
+                                                <h6 class="control-label ">Invoice Detail:</h6>
                                                 <hr class="primary">
                                             </div>
                                             <div class="form-group col-md-6">

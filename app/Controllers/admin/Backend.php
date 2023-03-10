@@ -80,8 +80,8 @@ class Backend extends BEBaseController
 		'edit-user' => ['super_admin'],
 		'b-userp' => ['super_admin'],
 		'change_doctor_cancelled_order' => ['super_admin','admin'],
-		'formula' => ['super_admin'],
-		'edit-formula' => ['super_admin'],
+		'formula' => ['super_admin', 'admin'],
+		'edit-formula' => ['super_admin', 'admin'],
 		'get_notif' => ['super_admin', 'admin', 'user'],
 		'notif-seen' => ['super_admin', 'admin', 'user'],
 		'notif-count' => ['super_admin', 'admin', 'user'],
@@ -167,11 +167,11 @@ class Backend extends BEBaseController
 		$timestamp = \time();
 		$dt = date('Y-m-d H:i:s', $timestamp);
 		$model = new ordersModel();
-		$data['o_pen'] = $model->where('ord_status', '1')->where('ord_required_to >=', $dt)->countAllResults();
-		$data['o_pro'] = $model->where('ord_status', '2')->countAllResults();
-		$data['o_con'] = $model->where('ord_status', '3')->countAllResults();
-		$data['o_end'] = $model->where('ord_status', '4')->countAllResults();
-		$data['o_exp'] = $model->where('ord_required_to <=', $dt)->where('ord_status', '1')->countAllResults();
+		$data['o_pen'] = $model->where('ord_status', '1')->where('ord_required_to >=', $dt)->where('ord_cancel_bcl', '0')->countAllResults();
+		$data['o_pro'] = $model->where('ord_status', '2')->where('ord_cancel_bcl', '0')->countAllResults();
+		$data['o_con'] = $model->where('ord_status', '3')->where('ord_cancel_bcl', '0')->countAllResults();
+		$data['o_end'] = $model->where('ord_status', '4')->where('ord_cancel_bcl', '0')->countAllResults();
+		$data['o_exp'] = $model->where('ord_required_to <=', $dt)->where('ord_status', '1')->where('ord_cancel_bcl', '0')->countAllResults();
 
 
 
@@ -1253,6 +1253,17 @@ class Backend extends BEBaseController
 					'ord_datetime_detail' => $this->request->getVar('ord_datetime_detail'),
 					'ord_prosdatetime_detail' => $this->request->getVar('ord_prosdatetime_detail'),
 					'ord_cancel_bcl' => "0",
+<<<<<<< HEAD
+					'ord_ref_no' => $this->request->getVar('ord_ref_no'),
+					'ord_vat_sale' => $this->request->getVar('ord_vat_sale'),
+					'ord_vat_purch' => $this->request->getVar('ord_vat_purch'),
+					'ord_vat_save' => $this->request->getVar('ord_vat_save'),
+					'ord_hosp_earn' => $this->request->getVar('ord_hosp_earn'),
+					'ord_paying_to_dr' => $this->request->getVar('ord_paying_to_dr'),
+					'ord_adminchrg_intern' => $this->request->getVar('ord_adminchrg_intern'),
+
+=======
+>>>>>>> parent of bca7c50 (last upd march-08-23)
 
 
 				];
@@ -1345,7 +1356,17 @@ class Backend extends BEBaseController
 					'ord_cancel_bcl' => $this->request->getVar('ord_cancel_bcl'),
 					'ord_datetime_detail' => $this->request->getVar('ord_datetime_detail'),
 					'ord_prosdatetime_detail' => $this->request->getVar('ord_prosdatetime_detail'),
+<<<<<<< HEAD
+					'ord_ref_no' => $this->request->getVar('ord_ref_no'),
+					'ord_vat_sale' => $this->request->getVar('ord_vat_sale'),
+					'ord_vat_purch' => $this->request->getVar('ord_vat_purch'),
+					'ord_vat_save' => $this->request->getVar('ord_vat_save'),
+                    'ord_hosp_earn' => $this->request->getVar('ord_hosp_earn'),
+					'ord_paying_to_dr' => $this->request->getVar('ord_paying_to_dr'),
+					'ord_adminchrg_intern' => $this->request->getVar('ord_adminchrg_intern'),
+=======
 
+>>>>>>> parent of bca7c50 (last upd march-08-23)
 
 				];
 				$model->update($eid, $newData);
@@ -1397,7 +1418,7 @@ class Backend extends BEBaseController
 		$data = [];
 		helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '2')->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '2')->where('ord_cancel_bcl', '0')->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('admin/processed_order', $data);
 	}
@@ -1411,7 +1432,7 @@ class Backend extends BEBaseController
 		helper(['form']);
 		$model = new ordersModel();
 		$data['o_pen'] = $model->where('ord_status', '1')->where('ord_required_to >=', $dt)->countAllResults();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '1')->where('ord_required_to >=', $dt)->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '1')->where('ord_required_to >=', $dt)->where('ord_cancel_bcl', '0')->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('admin/pending_order', $data);
 	}
@@ -1433,7 +1454,7 @@ class Backend extends BEBaseController
 		$data = [];
 		helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '4')->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '4')->where('ord_cancel_bcl', '0')->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('admin/ended_order', $data);
 	}
@@ -1444,7 +1465,7 @@ class Backend extends BEBaseController
 		$data = [];
 		helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '3')->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '3')->where('ord_cancel_bcl', '0')->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('admin/confirm_order', $data);
 	}
@@ -1457,7 +1478,7 @@ class Backend extends BEBaseController
 		$dt = date('Y-m-d H:i:s', $timestamp);
 		helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_required_to <=', $dt)->where('ord_status', '1')->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_required_to <=', $dt)->where('ord_status', '1')->where('ord_cancel_bcl', '0')->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('admin/expired_orders', $data);
 	}
@@ -1847,8 +1868,13 @@ class Backend extends BEBaseController
 
 		$model = new ordersModel();
 		$data['t_order'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')
+<<<<<<< HEAD
+			->Join('timesheets', 'timesheets.order_id = orders.ord_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')
+			->where('ord_status >','2')->where('ord_cancel_bcl','0')->where('ord_cancel_bdr','0')->groupBy('orders.ord_id')->orderBy('orders.ord_id', 'DESC')
+=======
 			->Join('timesheets', 'timesheets.order_id = orders.ord_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade')
 			->groupBy('orders.ord_id')->orderBy('orders.ord_id', 'DESC')
+>>>>>>> parent of bca7c50 (last upd march-08-23)
 			->findAll();
 
 

@@ -10,6 +10,42 @@ $('.select2').select2();
 			var total = normal + call;
 			document.getElementById("total").value = total;
 		}
+<<<<<<< HEAD
+//  Calculating Total admin charges
+
+function calculateTa() {
+  var hosp = parseFloat(document.getElementById("ord_hosp_earn").value);
+  var admin = parseFloat(document.getElementById("ord_admin_charges").value);
+ 
+  var ta = hosp * admin / 100;
+document.getElementById("Tadmin").value = ta.toFixed(2);  
+  
+}
+// Calculate diff + profit
+function calculateDiff() {
+  var hosp = parseFloat(document.getElementById("ord_hosp_earn").value);
+  var tadmin = parseFloat(document.getElementById("Tadmin").value);
+  var dr = parseFloat(document.getElementById("ord_paying_to_dr").value);
+  
+  var diff = hosp + tadmin - dr;
+  document.getElementById("diff").value = diff.toFixed(2);
+}
+// Paying to doctor 
+function payingdoc() {
+  var totalh = parseFloat(document.getElementById("total").value);
+  var p2d = parseFloat(document.getElementById("ord_pay_to_dr").value);
+ 
+  var pay = totalh * p2d;
+  document.getElementById("ord_paying_to_dr").value = pay.toFixed(2);
+}
+
+// Vat Calculate
+function calculatevat() {
+  var vs = parseFloat(document.getElementById("ord_vat_sale").value);
+  var vp = parseFloat(document.getElementById("ord_vat_purch").value);
+  var vat = vs - vp;
+  document.getElementById("vat").value = vat.toFixed(2);
+=======
 		// Diff calculate
 		function calculatediff() {
   var hosp = document.getElementById("ord_approx_cost").value;
@@ -20,6 +56,7 @@ $('.select2').select2();
   var drr = parseInt(dr, 10);
   var diff = hospp + adminn - drr;
   document.getElementById("diff").value = diff;
+>>>>>>> parent of bca7c50 (last upd march-08-23)
 }
 		// Print Section
 		function printSection(el){

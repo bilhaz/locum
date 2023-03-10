@@ -68,7 +68,11 @@
                             class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i
                                 class="fa fa-arrow-left"></i></a>View Time Sheet</h2>
                     <ul class="breadcrumb mb-0">
+<<<<<<< HEAD
+                        <a href="javascript:history.go(-1)" class="btn btn-secondary d-print-none"><i class="fa fa-arrow-left me-2"></i>Go Back</a>
+=======
                     <a href="javascript:history.go(-1)" class="btn btn-secondary"><i class="fa fa-arrow-left me-2"></i>Go Back</a>
+>>>>>>> parent of bca7c50 (last upd march-08-23)
 
                     </ul>
                 </div>
@@ -79,8 +83,10 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
                     <div class="card-header">
-                        <h4 class="card-title text-center">Time Sheet (<?= $e_ord['cl_h_name'] ?>)</h4>
-                        <h5 class="card-title text-center"><?= $e_ord['emp_fname'].' '. $e_ord['emp_lname'] .' ('.$e_ord['spec_name'].'-'.$e_ord['grade_name'].')' ?> </h5>
+                        <<h4 class="card-title text-center">Time Sheet <br>
+                        <?= $e_ord['cl_h_name'] ?></h4>
+                        <h5 class="card-title text-center"><?= $e_ord['emp_fname'].' '. $e_ord['emp_lname'] .' '.$e_ord['emp_imcr_no'] ?> </h5>
+                        <h6 class="card-title text-center"><?= $e_ord['spec_name'].'-'.$e_ord['grade_name'] ?></h6>
                         <ul class="header-dropdown d-print-none ">
                             <li>
                             <?php if($e_ord['ord_time_sheet_approved'] <> "Approved"): ?>

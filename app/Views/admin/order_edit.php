@@ -182,8 +182,36 @@
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
                                     <label for="total" class="control-label mb-1">Total Hours</label>
-                                    <input id="total" name="ord_total_hrs" type="text" class="form-control" value="<?= $eord_row['ord_total_hrs'] ?>">
+                                    <input id="total" name="ord_total_hrs" oninput="payingdoc()" type="text" class="form-control" value="<?= $eord_row['ord_total_hrs'] ?>">
                                 </div>
+<<<<<<< HEAD
+                                <div class="form-group col-md-3">
+                                    <label for="ord_approx_cost" class="control-label mb-1">Hospital Rate</label>
+                                    <input id="ord_approx_cost"  name="ord_approx_cost" type="text" class="form-control" value="<?= $eord_row['ord_approx_cost'] ?>">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="ord_hosp_earn" class="control-label mb-1">Total Earning from Hospital&nbsp;<small class="text-danger">(Office use only)</small></label>
+                                    <input id="ord_hosp_earn" oninput="calculateTa();calculateDiff();" name="ord_hosp_earn" type="text" class="form-control" value="<?= $eord_row['ord_hosp_earn'] ?>">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="form-group col-md-3 ">
+                                    <label for="ord_pay_to_dr" class="control-label mb-1">Pay to Dr.</label>
+                                    <input id="ord_pay_to_dr" oninput="payingdoc()" name="ord_pay_to_dr" type="text" class="form-control" value="<?= $eord_row['ord_pay_to_dr'] ?>">
+                                </div>
+                                <div class="form-group col-md-3 ">
+                                    <label for="ord_paying_to_dr" class="control-label mb-1">Paying to Dr.&nbsp;<small class="text-danger">(Office use only)</small></label>
+                                    <input id="ord_paying_to_dr"  name="ord_paying_to_dr" oninput="calculateDiff()" type="text" class="form-control" value="<?= $eord_row['ord_paying_to_dr'] ?>">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="ord_admin_charges" class="control-label mb-1">Admin Charges</label>
+                                    <input id="ord_admin_charges" oninput="calculateTa()" name="ord_admin_charges" type="text" class="form-control" value="<?= $eord_row['ord_admin_charges'] ?>">
+                                </div>
+                                
+                                <div class="form-group col-md-3 ">
+                                    <label for="ord_adminchrg_intern" class="control-label mb-1">Total of Admin Charges&nbsp;<small class="text-danger">(Office use only)</small></label>
+                                    <input id="Tadmin" name="ord_adminchrg_intern" oninput="calculateDiff()" type="text" class="form-control" value="<?= $eord_row['ord_adminchrg_intern'] ?>">
+=======
                                 <div class="form-group col-md-6">
                                     <label for="ord_invoice_id" class="control-label mb-1">Invoice Id</label>
                                     <input id="ord_invoice_id" name="ord_invoice_id" type="text" class="form-control" value="<?= $eord_row['ord_invoice_id'] ?>">
@@ -208,6 +236,7 @@
                                     <label for="ord_diff_profit_admin" class="control-label mb-1">Diff (Profit) + Admin
                                         Charges</label>
                                     <input id="ord_diff_profit_admin" name="ord_diff_profit_admin" type="text" class="form-control" value="<?= $eord_row['ord_diff_profit_admin'] ?>">
+>>>>>>> parent of bca7c50 (last upd march-08-23)
                                 </div>
                             </div>
                             <div class="row mb-3">

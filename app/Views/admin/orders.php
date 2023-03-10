@@ -120,9 +120,9 @@
                                         </td>
 
                                             <td>
-                                                <?php if (session()->grp_id == 'user' && $row['ord_status'] <4): ?>
+                                            <?php if (session()->grp_id == 'user' && $row['ord_case_status'] <>"Closed"): ?>
                                             <a type="button" href="<?= base_url('backend/order_edit/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
-                                            <?php elseif(session()->grp_id == 'admin' && $row['ord_status'] <4):?>
+                                            <?php elseif(session()->grp_id == 'admin' && $row['ord_status'] <>"Closed"):?>
                                             <a type="button" href="<?= base_url('backend/order_edit/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
                                             <?php elseif(session()->grp_id == 'super_admin'):?>
                                             <a type="button" href="<?= base_url('backend/order_edit/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
