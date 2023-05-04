@@ -1253,7 +1253,6 @@ class Backend extends BEBaseController
 					'ord_datetime_detail' => $this->request->getVar('ord_datetime_detail'),
 					'ord_prosdatetime_detail' => $this->request->getVar('ord_prosdatetime_detail'),
 					'ord_cancel_bcl' => "0",
-<<<<<<< HEAD
 					'ord_ref_no' => $this->request->getVar('ord_ref_no'),
 					'ord_vat_sale' => $this->request->getVar('ord_vat_sale'),
 					'ord_vat_purch' => $this->request->getVar('ord_vat_purch'),
@@ -1262,8 +1261,6 @@ class Backend extends BEBaseController
 					'ord_paying_to_dr' => $this->request->getVar('ord_paying_to_dr'),
 					'ord_adminchrg_intern' => $this->request->getVar('ord_adminchrg_intern'),
 
-=======
->>>>>>> parent of bca7c50 (last upd march-08-23)
 
 
 				];
@@ -1356,7 +1353,6 @@ class Backend extends BEBaseController
 					'ord_cancel_bcl' => $this->request->getVar('ord_cancel_bcl'),
 					'ord_datetime_detail' => $this->request->getVar('ord_datetime_detail'),
 					'ord_prosdatetime_detail' => $this->request->getVar('ord_prosdatetime_detail'),
-<<<<<<< HEAD
 					'ord_ref_no' => $this->request->getVar('ord_ref_no'),
 					'ord_vat_sale' => $this->request->getVar('ord_vat_sale'),
 					'ord_vat_purch' => $this->request->getVar('ord_vat_purch'),
@@ -1364,9 +1360,6 @@ class Backend extends BEBaseController
                     'ord_hosp_earn' => $this->request->getVar('ord_hosp_earn'),
 					'ord_paying_to_dr' => $this->request->getVar('ord_paying_to_dr'),
 					'ord_adminchrg_intern' => $this->request->getVar('ord_adminchrg_intern'),
-=======
-
->>>>>>> parent of bca7c50 (last upd march-08-23)
 
 				];
 				$model->update($eid, $newData);
