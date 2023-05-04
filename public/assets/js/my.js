@@ -4,13 +4,12 @@ $('.select2').select2();
 // Total Hours Calculate
 		function calculate(){
 			var normal = document.getElementById("ord_normal_hrs").value;
-			var normal = parseInt(normal, 10);
+			var normal = parseFloat(normal, 10);
 			var call = document.getElementById("ord_on_call_hrs").value;
-			var call = parseInt(call, 10);
+			var call = parseFloat(call, 10);
 			var total = normal + call;
-			document.getElementById("total").value = total;
+			document.getElementById("total").value = total.toFixed(2);
 		}
-<<<<<<< HEAD
 //  Calculating Total admin charges
 
 function calculateTa() {
@@ -45,18 +44,6 @@ function calculatevat() {
   var vp = parseFloat(document.getElementById("ord_vat_purch").value);
   var vat = vs - vp;
   document.getElementById("vat").value = vat.toFixed(2);
-=======
-		// Diff calculate
-		function calculatediff() {
-  var hosp = document.getElementById("ord_approx_cost").value;
-  var hospp = parseInt(hosp, 10);
-  var admin = document.getElementById("ord_admin_charges").value;
-  var adminn = parseInt(admin, 10);
-  var dr = document.getElementById("ord_pay_to_dr").value;
-  var drr = parseInt(dr, 10);
-  var diff = hospp + adminn - drr;
-  document.getElementById("diff").value = diff;
->>>>>>> parent of bca7c50 (last upd march-08-23)
 }
 		// Print Section
 		function printSection(el){
