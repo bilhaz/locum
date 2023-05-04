@@ -97,6 +97,7 @@
                         <h3>Order ID: <strong class="text-primary">
                                 <?= $ordr_row['ord_id'] ?>
                             </strong></h3>
+                            <h5 class="text-primary"><?= $ordr_row['ord_ref_no'] ?></h5>
                         
                         
 
@@ -428,6 +429,42 @@
                                             <div class="form-group col-md-6">
                                                 <span class="cview ">
                                                     <?= $ordr_row['ord_diff_profit_admin']?>
+                                                </span>
+                                                <hr class="primary">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="form-group col-md-6">
+                                                <h6 class="control-label ">VAT on Sales:</h6>
+                                                <hr class="primary">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <span class="cview ">
+                                                    <?= $ordr_row['ord_vat_sale']?>
+                                                </span>
+                                                <hr class="primary">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="form-group col-md-6">
+                                                <h6 class="control-label ">VAT on Purchase:</h6>
+                                                <hr class="primary">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <span class="cview ">
+                                                    <?= $ordr_row['ord_vat_purch']?>
+                                                </span>
+                                                <hr class="primary">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="form-group col-md-6">
+                                                <h6 class="control-label ">VAT Saved:</h6>
+                                                <hr class="primary">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <span class="cview ">
+                                                    <?= $ordr_row['ord_vat_save']?>
                                                 </span>
                                                 <hr class="primary">
                                             </div>

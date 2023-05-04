@@ -67,7 +67,7 @@
 <div class="flex-grow-1">
 <ul class="nav navbar-nav flex-row justify-content-end align-items-center">
 
-<li><a href="<?= base_url('client/logout') ?>" class="icon-menu text-dark">Exit &nbsp;<i class="fa fa-sign-out"></i></a></li>
+<li><a href="<?= base_url('client/logout') ?>" class="icon-menu text-dark">Logout &nbsp;<i class="fa fa-sign-out"></i></a></li>
 </ul>
 </div>
 </div>
@@ -79,7 +79,7 @@
 <div class="d-flex mb-3 pb-3 border-bottom align-items-center">
 <!-- <img src="<?= base_url('public/images/user.png') ?>" class="avatar lg rounded me-3" alt="User Profile Picture"> -->
 <div class="dropdown flex-grow-1 text-center fs-6">
-<span class="d-block">Welcome,</span>
+<span class="d-block">Welcome</span>
 <a href="#" class="dropdown-toggle user-name" data-bs-toggle="dropdown"><strong><?= session()->get('cl_cont_name')?></strong></a>
 <ul class="dropdown-menu p-2 shadow-sm">
 

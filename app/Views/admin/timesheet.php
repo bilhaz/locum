@@ -43,11 +43,12 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Hospital Name</th>
+                                    <th>Employee</th>
                                     <th>Order Date/Time</th>
                                     <th>Timesheet Status</th>
                                     <th>Fill Timesheet</th>
                                     <th>View Timesheet</th>
-                                    <th>Order Date</th>
+                                    <th>Created Date</th>
                                     
                                 </tr>
                             </thead>
@@ -66,6 +67,10 @@
                                             <span><b><?= $row['cl_h_name'] ?></b></span><br>
                                             <small><?= $row['spec_name'].'-'. $row['grade_name'] ?></small>
                                             
+                                        </td>
+                                        <td>
+                                            <span><?= $row['emp_fname'] . ' ' . $row['emp_lname'] ?></span><br>
+                                        <small><?= $row['emp_imcr_no'] ?></small>
                                         </td>
                                          <td><?php $pros = explode(",",$row['ord_prosdatetime_detail']);
                                         foreach($pros as $var): ?>
@@ -86,7 +91,7 @@
                                         <?php if(!empty($row['order_id'])): ?>
                                             <a type="button" href="<?= base_url('backend/t-view/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-info" title="TimeSheet"><i class="fa fa-eye"></i> View</a>
                                             <?php else: ?>
-                                                <span class="badge bg-danger">No Submitted</span>
+                                                <span class="badge bg-danger">Not Submitted</span>
                                                 <?php endif; ?>
                                         </td>
                                         <td><?= date("d-m-y  h:i:s a", strtotime($row['ord_created'])) ?></td>

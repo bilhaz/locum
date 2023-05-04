@@ -17,19 +17,13 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
                     <div class="card-header">
-                        
                     <div class="col-md-3 offset-md-5">
                     <span id="flash-message" class="alert alert-success"></span>
-                    
                         </div>
-                        
                         <h6 class="card-title">You Order Details</h6>
-                            
-
-                                <ul class="header-dropdown">
+                         <ul class="header-dropdown">
                             <li>
-                            
-                            <?php if($em_2['ord_cancel_bcl'] <> 1): ?>
+                               <?php if($em_2['ord_cancel_bcl'] <> 1): ?>
                                 <?php if($em_2['ord_status'] > 1 && $em_2['ord_status'] < 3): ?>
                                             <h6 class="mb-0"><a href="<?= base_url('client/ord-confirm/'.encryptIt($em_2['ord_id'])) ?>" class="btn btn-primary">Confirm</a></h6>
                                             <?php elseif($em_2['ord_status'] > 2 ): ?>
@@ -37,12 +31,12 @@
                                                 <?php endif; ?>
                                                 <?php endif; ?>
                             </li>
-                            </ul>
+                        </ul>
                     </div>
                     <hr class="primary">
                     <div class="card-body">
                     <div class="row mb-3 " id="email">
-                    <h6>Dear<?php $fname = explode(' ',$em_2['cl_cont_name']) ?>
+                               <h6>Dear<?php $fname = explode(' ',$em_2['cl_cont_name']) ?>
                                 <?php if(!empty($fname[0])): echo $fname[0]; endif;?></h6>
                                 <p>At SRA Locum Service we are pleased to offer you the following doctor. Please review and reply.</p>
                                 <p><strong>Your Order Details are;</strong></p>
@@ -50,7 +44,7 @@
   <table class="table table-bordered align-middle " style="border: 2px solid black;" >
       <tr>
         <th style="border: 1px solid black;"><strong>Hospital Name & Address:</strong></th>
-        <td style="border: 1px solid black;"><strong><?= $em_2['cl_h_name']. ', '. $em_2['cl_address'] ?></strong></td>
+        <td style="border: 1px solid black;"><strong><?= $em_2['cl_h_name']. ', '. $em_2['cl_address'].' | ' . $em_2['cl_eircode'] ?></strong></td>
       </tr>
       <tr>
         <th style="border: 1px solid black;"><strong>Client Contact Name:</strong></th>
@@ -66,11 +60,14 @@
      </tr>
      <tr>
         <th style="border: 1px solid black;"><strong>Covering Date & Time:</strong></th>
-        <td style="border: 1px solid black;"><strong><?= $em_2['ord_datetime_detail']?></strong></td>
+        <td style="border: 1px solid black;"><strong><?php $pros = explode(",",$em_2['ord_prosdatetime_detail']);
+                                        foreach($pros as $var): ?>
+                                       <?= $var ?> <br>
+                                       <?php endforeach; ?></strong></td>
       </tr> 
       <tr>
         <th style="border: 1px solid black;"><strong>Rate:</strong></th>
-        <td style="border: 1px solid black;"><strong><?= $em_2['ord_pay_to_dr'] ?> Euro /hr</strong></td>
+        <td style="border: 1px solid black;"><strong><?= $em_2['ord_approx_cost'] ?> Euro /hr</strong></td>
      </tr>
      <tr>
         <th style="border: 1px solid black;"><strong>Admin Charges:</strong></th>

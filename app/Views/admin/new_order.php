@@ -43,7 +43,11 @@
                         <hr>
                         <form action="<?= base_url('backend/new_order') ?>" method="post" autocomplete="off" enctype="multipart/form-data" accept-charset="utf-8" data-parsley-validate="" id="forma">
                         <div class="row mb-3">
-                                <div class="form-group col-md-4 offset-md-8">
+                            <div class="form-group col-md-4 ">
+                                <label for="ord_ref_no" class="control-label mb-1">Locum Reference No.</label>
+                        <input type="text" id="ord_ref_no" name="ord_ref_no" class="form-control" placeholder="Locum Reference Number" value="<?= set_value('ord_ref_no') ?>">
+                                </div>
+                                <div class="form-group col-md-4 offset-md-4">
                                 <label for="ord_status" class="control-label mb-1">Order Status</label>
                         <select id="ord_status" name="ord_status"  class="form-control select2">
                                         <option value="1" <?= set_select('ord_status','1', ( !empty($fieldType) && $fieldType == '1' ? TRUE : FALSE )); ?> >Pending</option>
@@ -107,7 +111,7 @@
                             </div>
                             <div class="row mb-3">
                             <label for="ord_datetime_detail" class="control-label mb-1">Locum Date & Time Details</label>
-                                <textarea id="ord_datetime_detail" name="ord_datetime_detail" class="form-control" placeholder="Use comma separation for putting multiple dates and time for e.g: ' 23-02-2024 to 23-03-2024 08 to 21, 28-02-2023 18 to 22' "></textarea>
+                                <textarea id="ord_datetime_detail" name="ord_datetime_detail" class="form-control" placeholder="Use comma separation for putting multiple dates and time for e.g: ' 23-02-2024 to 23-03-2024 08 to 21, 28-02-2023 18 to 22' "><?= set_value('ord_datetime_detail') ?></textarea>
                             </div>
                             
                             <div class="row mb-3">
@@ -122,7 +126,7 @@
                             </div>
                              <div class="row mb-3">
                             <label for="ord_prosdatetime_detail" class="control-label mb-1">Locum Process Date & Time Details</label>
-                                <textarea id="ord_prosdatetime_detail" name="ord_prosdatetime_detail" class="form-control" placeholder="Use comma separation for putting multiple dates and time for e.g: ' 23-02-2024 to 23-03-2024 08 to 21, 28-02-2023 18 to 22' "></textarea>
+                                <textarea id="ord_prosdatetime_detail" name="ord_prosdatetime_detail" class="form-control" placeholder="Use comma separation for putting multiple dates and time for e.g: ' 23-02-2024 to 23-03-2024 08 to 21, 28-02-2023 18 to 22' "><?= set_value('ord_prosdatetime_detail') ?></textarea>
                             </div>
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
@@ -222,8 +226,21 @@
                                 <textarea id="ord_comment1" name="ord_comment1" type="text" class="form-control"><?= set_value('ord_comment1') ?></textarea> 
                                 </div>
                             </div>
-                           
+                           <div class="row mb-3">
+                                <div class="form-group col-md-6 ">
+                                    <label for="ord_vat_save" class="control-label mb-1">VAT on Sale</label>
+                            <input id="ord_vat_sale" name="ord_vat_sale" oninput="calculatevat()" type="text" class="form-control" value="<?= set_value('ord_vat_sale') ?>">
+                                    </div>
+                                     <div class="form-group col-md-6 ">
+                            <label for="ord_invoice_id" class="control-label mb-1">VAT on Purchase</label>
+                            <input id="ord_vat_purch" name="ord_vat_purch" oninput="calculatevat()" type="text" class="form-control" value="<?= set_value('ord_vat_purch') ?>">
+                            </div>
+                            </div>
                             <div class="row mb-3">
+                                <div class="form-group col-md-6 ">
+                                    <label for="vat" class="control-label mb-1">VAT SAVED</label>
+                            <input id="vat" name="ord_vat_save" type="text" class="form-control" value="<?= set_value('ord_vat_save') ?>">
+                                    </div>
                                 <div class="form-group col-md-6 ">
                             <label for="ord_invoice_id" class="control-label mb-1">Invoice Reference</label>
                             <input id="ord_invoice_id" name="ord_invoice_id" type="text" class="form-control" value="<?= set_value('ord_invoice_id') ?>">
@@ -231,7 +248,7 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="form-group col-md-6 ">
-                                    <label for="ord_invoice_refer" class="control-label mb-1">Invoice Reference</label>
+                                    <label for="ord_invoice_refer" class="control-label mb-1">Invoice Detail</label>
                                     <input id="ord_invoice_refer" name="ord_invoice_refer" type="text" class="form-control"  value="<?= set_value('ord_invoice_refer') ?>">
                                 </div>
                                 <div class="form-group col-md-6">

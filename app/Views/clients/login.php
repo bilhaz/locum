@@ -1242,7 +1242,7 @@ ZW50SUQAQTM4NzFBMzMyNkNENjU3NzkzNzUxRjlEOEI4M0YwNzdgGcdFAAAAAElFTkSuQmCC" />
                 </div>
                 <div class="card shadow p-lg-3">
                     <div class="card-header">
-                        <p class="fs-5 mb-0">Hospital Login</p>
+                        <p class="fs-5 mb-0">Client Login</p>
                         <p style="font-size:9pt;text-justify: inter-word;" class="mb-0 alert alert-success">You can log into your account and view your current and previous orders. 
 Any changes you make to your order will be notified to us.  You can email us or call us to make any changes as well.</p>
 <p style="font-size:9pt;text-justify: inter-word;" class="mb-0 alert alert-success">Please login to your account with the Login and password here. </p>

@@ -47,7 +47,7 @@
                                     <th>Hospital Name</th>
                                     <th>Employee</th>
                                     <th>Order Date/Time</th>
-                                    <th>Craeted Date</th>
+                                    <th>Created Date</th>
                                     <th>Status</th>
                                     <th>Invoice ID</th>
                                     <th>Emails</th>
@@ -120,7 +120,7 @@
                                         </td>
 
                                             <td>
-                                            <?php if (session()->grp_id == 'user' && $row['ord_case_status'] <>"Closed"): ?>
+                                                <?php if (session()->grp_id == 'user' && $row['ord_case_status'] <>"Closed"): ?>
                                             <a type="button" href="<?= base_url('backend/order_edit/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
                                             <?php elseif(session()->grp_id == 'admin' && $row['ord_status'] <>"Closed"):?>
                                             <a type="button" href="<?= base_url('backend/order_edit/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>

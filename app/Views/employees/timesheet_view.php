@@ -57,7 +57,7 @@
                 <div class="col-md-6 col-sm-12">
                     <h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a>View Time Sheet</h2>
                     <ul class="breadcrumb mb-0">
-                        <a href="javascript:history.go(-1)" class="btn btn-secondary d-print-none"><i class="fa fa-arrow-left me-2"></i>Go Back</a>                         
+                        <a href="javascript:history.go(-1)" class="btn btn-secondary"><i class="fa fa-arrow-left me-2"></i>Go Back</a>                         
 
                     </ul>
                 </div>

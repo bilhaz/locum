@@ -38,7 +38,7 @@
                                 <p>At SRA Locum Service we are pleased to confirm you the following doctor.</p>
                                 <p><strong>Your Order Details are;</strong></p>
                                 <div class="table-responsive">
-  <table class="table table-bordered align-middle " style="border: 2px solid black;" >
+  <table class="table table-bordered align-middle d-inline"  >
       <tr>
         <th style="border: 1px solid black;"><strong>Hospital Name & Address:</strong></th>
         <td style="border: 1px solid black;"><strong><?= $em_3['cl_h_name']. ', '. $em_3['cl_address'].' | ' . $em_3['cl_eircode']  ?></strong></td>

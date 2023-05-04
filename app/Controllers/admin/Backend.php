@@ -167,11 +167,11 @@ class Backend extends BEBaseController
 		$timestamp = \time();
 		$dt = date('Y-m-d H:i:s', $timestamp);
 		$model = new ordersModel();
-		$data['o_pen'] = $model->where('ord_status', '1')->where('ord_required_to >=', $dt)->where('ord_cancel_bcl', '0')->countAllResults();
-		$data['o_pro'] = $model->where('ord_status', '2')->where('ord_cancel_bcl', '0')->countAllResults();
-		$data['o_con'] = $model->where('ord_status', '3')->where('ord_cancel_bcl', '0')->countAllResults();
-		$data['o_end'] = $model->where('ord_status', '4')->where('ord_cancel_bcl', '0')->countAllResults();
-		$data['o_exp'] = $model->where('ord_required_to <=', $dt)->where('ord_status', '1')->where('ord_cancel_bcl', '0')->countAllResults();
+		$data['o_pen'] = $model->where('ord_status', '1')->where('ord_required_to >=', $dt)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
+		$data['o_pro'] = $model->where('ord_status', '2')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
+		$data['o_con'] = $model->where('ord_status', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
+		$data['o_end'] = $model->where('ord_status', '4')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
+		$data['o_exp'] = $model->where('ord_required_to <=', $dt)->where('ord_status', '1')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
 
 
 
@@ -1411,7 +1411,7 @@ class Backend extends BEBaseController
 		$data = [];
 		helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '2')->where('ord_cancel_bcl', '0')->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '2')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('admin/processed_order', $data);
 	}
@@ -1425,7 +1425,7 @@ class Backend extends BEBaseController
 		helper(['form']);
 		$model = new ordersModel();
 		$data['o_pen'] = $model->where('ord_status', '1')->where('ord_required_to >=', $dt)->countAllResults();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '1')->where('ord_required_to >=', $dt)->where('ord_cancel_bcl', '0')->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '1')->where('ord_required_to >=', $dt)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('admin/pending_order', $data);
 	}
@@ -1447,7 +1447,7 @@ class Backend extends BEBaseController
 		$data = [];
 		helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '4')->where('ord_cancel_bcl', '0')->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '4')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('admin/ended_order', $data);
 	}
@@ -1458,7 +1458,7 @@ class Backend extends BEBaseController
 		$data = [];
 		helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '3')->where('ord_cancel_bcl', '0')->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('admin/confirm_order', $data);
 	}
@@ -1471,7 +1471,7 @@ class Backend extends BEBaseController
 		$dt = date('Y-m-d H:i:s', $timestamp);
 		helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_required_to <=', $dt)->where('ord_status', '1')->where('ord_cancel_bcl', '0')->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_required_to <=', $dt)->where('ord_status', '1')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('admin/expired_orders', $data);
 	}
@@ -1861,14 +1861,10 @@ class Backend extends BEBaseController
 
 		$model = new ordersModel();
 		$data['t_order'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')
-<<<<<<< HEAD
 			->Join('timesheets', 'timesheets.order_id = orders.ord_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')
 			->where('ord_status >','2')->where('ord_cancel_bcl','0')->where('ord_cancel_bdr','0')->groupBy('orders.ord_id')->orderBy('orders.ord_id', 'DESC')
-=======
-			->Join('timesheets', 'timesheets.order_id = orders.ord_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade')
-			->groupBy('orders.ord_id')->orderBy('orders.ord_id', 'DESC')
->>>>>>> parent of bca7c50 (last upd march-08-23)
 			->findAll();
+
 
 
 
@@ -2039,7 +2035,7 @@ class Backend extends BEBaseController
 		$data = [];
 		$model = new notificationModel();
 		// fetch live data from the database and store it in $data
-		$data = $model->orderBy('status','ASC')->limit(8)->find(); // your database query here
+		$data = $model->orderBy('status','ASC')->orderBy('created_at','DESC')->limit(8)->find(); // your database query here
 		// fetch the count of unseen notifications
 		$count = $model->where('status', 0)->countAllResults();
 		

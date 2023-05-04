@@ -46,7 +46,7 @@
                                     <th>Hospital Name</th>
                                     <th>Employee</th>
                                     <th>Order Date/Time</th>
-                                    <th>Craeted Date</th>
+                                    <th>Created Date</th>
                                     <th>Status</th>
                                     <th>View</th>
                                 </tr>

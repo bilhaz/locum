@@ -79,8 +79,8 @@
 <div class="d-flex mb-3 pb-3 border-bottom align-items-center">
 <!-- <img src="<?= base_url('public/images/user.png') ?>" class="avatar lg rounded me-3" alt="User Profile Picture"> -->
 <div class="dropdown flex-grow-1 text-center fs-6">
-<span class="d-block">Welcome,</span>
-<a href="#" class="dropdown-toggle user-name" data-bs-toggle="dropdown"><strong><?= session()->get('emp_lname')?></strong></a>
+<span class="d-block">Welcome</span>
+<a href="#" class="dropdown-toggle user-name" data-bs-toggle="dropdown"><strong><?= session()->get('emp_fname').' '.session()->get('emp_lname') ?></strong></a>
 <ul class="dropdown-menu p-2 shadow-sm">
 
 <li><a href="<?= base_url('employee/pwdupd') ?>"><i class="fa fa-cog me-2"></i>Password</a></li>
@@ -103,7 +103,7 @@
 <ul class="main-menu cust metismenu list-unstyled">
 <li class="nav-item"><a class="nav-link" href="<?= base_url('employee/dashboard') ?>"><i class="fa fa-tachometer"></i><span>Dashboard</span></a></li>
 <li class="nav-item"><a href="<?= base_url('employee/profile') ?>"><i class="fa fa-user-circle-o"></i>Profile</a></li>
-<li class="nav-item"><a href="<?= base_url('employee/orders') ?>"><i class="fa fa-user-md"></i>Assignments</a></li>
+<li class="nav-item"><a href="<?= base_url('employee/orders') ?>"><i class="fa fa-user-md"></i>My Assignments</a></li>
 
 </ul>
 </nav>

@@ -92,10 +92,10 @@ class cli extends CLIBaseController
 		$timestamp = \time();
 		$dt = date('Y-m-d H:i:s', $timestamp);
 		$model = new ordersModel();
-		$data['o_pen'] = $model->where('ord_status', '1')->where('cl_id', session()->cl_id)->where('ord_cancel_bcl', '0')->countAllResults();
-		$data['o_pro'] = $model->where('ord_status', '2')->where('cl_id', session()->cl_id)->where('ord_cancel_bcl', '0')->countAllResults();
-		$data['o_con'] = $model->where('ord_status', '3')->where('cl_id', session()->cl_id)->where('ord_cancel_bcl', '0')->countAllResults();
-		$data['o_end'] = $model->where('ord_status', '4')->where('cl_id', session()->cl_id)->where('ord_cancel_bcl', '0')->countAllResults();
+		$data['o_pen'] = $model->where('ord_status', '1')->where('cl_id', session()->cl_id)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
+		$data['o_pro'] = $model->where('ord_status', '2')->where('cl_id', session()->cl_id)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
+		$data['o_con'] = $model->where('ord_status', '3')->where('cl_id', session()->cl_id)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
+		$data['o_end'] = $model->where('ord_status', '4')->where('cl_id', session()->cl_id)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
 
 
 
@@ -506,7 +506,7 @@ public function order_confirm($oid = null)
 		helper(['form']);
 		$model = new ordersModel();
 		$data['o_pen'] = $model->where('ord_status', '1')->where('ord_required_to >=', $dt)->countAllResults();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->Join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->Join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('orders.ord_status', '1')->where('ord_cancel_bcl', '0')->where('clients.cl_id', session()->cl_id)->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->Join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->Join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('orders.ord_status', '1')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('clients.cl_id', session()->cl_id)->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('clients/new_orders', $data);
 	}
@@ -517,7 +517,7 @@ public function order_confirm($oid = null)
 		$id = session()->cl_id;
 		helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->Join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->Join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '2')->where('orders.ord_status', '2')->where('ord_cancel_bcl', '0')->where('clients.cl_id', session()->cl_id)->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->Join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->Join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '2')->where('orders.ord_status', '2')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('clients.cl_id', session()->cl_id)->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('clients/cur_processed', $data);
 	}
@@ -529,7 +529,7 @@ public function order_confirm($oid = null)
 		$id = session()->cl_id;
 		helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->Join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->Join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '3')->where('ord_cancel_bcl', '0')->where('clients.cl_id', session()->cl_id)->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->Join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->Join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('clients.cl_id', session()->cl_id)->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('clients/confirmed_orders', $data);
 	}
@@ -541,7 +541,7 @@ public function order_confirm($oid = null)
 		$id = session()->cl_id;
 		helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->Join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->Join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '4')->where('ord_cancel_bcl', '0')->where('clients.cl_id', session()->cl_id)->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->Join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->Join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '4')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('clients.cl_id', session()->cl_id)->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('clients/completed_order', $data);
 	}

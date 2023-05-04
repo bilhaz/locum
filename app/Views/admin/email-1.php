@@ -39,8 +39,7 @@
                                 <p>Thank you for requesting a doctor through SRA Locum Service. We can confirm receiving your locum order. Process of sourcing a locum Doctor for you has already been initiated.</p>
                                 <p class="text-danger">If the order details are correct, you do not need to reply to this email.</p>
                                 <p><strong>Your Order Details are;</strong></p>
-                                <div class="table-responsive">
-  <table class="table table-bordered align-middle " style="border: 2px solid black;" >
+  <table class="table align-middle table-responsive table-hover d-inline"  >
       <tr>
         <th style="border: 1px solid black;"><strong>Hospital Name & Address:</strong></th>
         <td style="border: 1px solid black;"><strong><?= $em_1['cl_h_name']. ', '. $em_1['cl_address'].' | ' . $em_1['cl_eircode']  ?></strong></td>
@@ -61,8 +60,6 @@
                                        <?php endforeach; ?></strong></td>
       </tr>    
   </table>
-</div>
-
 <p><strong>Order status:</strong>
 <ol>
    <li><b>Order confirmation.</b></li>
