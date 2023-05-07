@@ -130,7 +130,7 @@
                                         
                                         <td>
 
-                                            <b>OnSite</b>
+                                            <b>Total Onsite hours</b>
                                         </td>
 
                                         <?php
@@ -148,7 +148,7 @@
                                         
                                         <td>
 
-                                            <b>OffSite</b>
+                                            <b>Total Offsite hours</b>
                                         </td>
 
                                         <?php
@@ -166,7 +166,7 @@
                                         
                                         <td>
 
-                                            <b>Total</b>
+                                            <b>Grand Total</b>
                                         </td>
 
                                         <?php

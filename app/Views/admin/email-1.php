@@ -18,13 +18,29 @@
                 <div class="card mb-4">
                     <div class="card-header">
                         <div class="col-md-3 offset-md-5">
-                    <span id="flash-message" class="alert alert-success "></span>
+                        <?php if (isset($validation)) : ?>
+                            <div class="alert alert-danger" role="alert">
+                                <?= $validation->listErrors() ?>
+                            </div>
+                        <?php endif; ?>
+                        <?php if (session()->get('success')) : ?>
+                                <div class="alert alert-success" role="alert">
+                                    <?= session()->get('success') ?>
+                                </div>
+                            <?php endif; ?>
+
+                            <?php if (session()->get('error')) : ?>
+                                <div class="alert alert-danger" role="alert">
+                                    <?= session()->get('error') ?>
+                                </div>
+                            <?php endif; ?>
                         </div>
-                        <h6 class="card-title">Email 1</h6>
+                        <h6 class="card-title">First Response</h6>
                         <ul class="header-dropdown">
 
                             <li>
-                                <button type="button" onclick="CopyToClipboard()" class="btn btn-sm btn-outline-primary">Copy</button>
+                                
+                            
                             </li>
                         </ul>
 
@@ -32,6 +48,7 @@
                     <hr class="primary">
                     <div class="card-body">
                     <div class="row mb-3 " id="email" contenteditable="true">
+                    <form action="<?= base_url('backend/sFirstR/'.encryptIt($em_1['ord_id'])) ?>)?>" method="post">
                                <h6>Dear 
                                 <?php $lname = explode(' ',$em_1['cl_cont_name']) ?>
                                 <?php if(!empty($lname[0])): echo $lname[0]; endif;?></h6>
@@ -69,9 +86,15 @@
 <li style="opacity:0.5;">Locum Confirmation.</li>
 </ol>
 </p>
-
+                                
+<div class="offset-4 col-md-3">
+                    <button type="submit"  class="btn btn-sm btn-outline-primary">Send Mail</button>
+                                        </div>
+                                        </form>
                                 </div>
+                                
                     </div>
+                   
                 </div>
             </div>
         </div>

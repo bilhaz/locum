@@ -50,7 +50,7 @@
 </div>
 <div class="col-lg-3 col-md-6 col-sm-6 text-center">
 <a href="<?= base_url('backend/expired-orders') ?>">
-<div class="card chart-color119">
+<div class="card chart-color125">
 <div class="card-body p-lg-4 text-light">
 <h3><strong><?= $o_exp ?></h3></strong>
 <span>Expired Orders</span>
@@ -58,6 +58,15 @@
 </a>
 </div>
 </div>
+<div class="col-lg-3 col-md-6 col-sm-6 text-center">
+    <a href="<?= base_url('backend/cancelled_order') ?>">
+    <div class="card chart-color119">
+    <div class="card-body p-lg-4 text-light">
+    <h3><strong><?= $o_canc ?></h3></strong>
+    <span>Cancelled Orders</span>
+    </div>
+    </a>
+    </div>
 
 
 </div>

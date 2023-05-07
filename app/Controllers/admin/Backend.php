@@ -43,6 +43,8 @@ class Backend extends BEBaseController
 		'client-pwd' => ['super_admin'],
 		'orders' => ['super_admin', 'admin', 'user'],
 		'new_order' => ['super_admin', 'admin', 'user'],
+		'order-s1' => ['super_admin', 'admin', 'user'],
+		'sFirstR' => ['super_admin', 'admin', 'user'],
 		'order_view' => ['super_admin', 'admin', 'user'],
 		'order_edit' => ['super_admin', 'admin', 'user'],
 		'ord_status' => ['super_admin', 'admin', 'user'],
@@ -52,9 +54,10 @@ class Backend extends BEBaseController
 		'email-4' => ['super_admin', 'admin', 'user'],
 		'contract' => ['super_admin', 'admin', 'user'],
 		'pending_order' => ['super_admin', 'admin', 'user'],
-		'processed_order' => ['super_admin', 'admin', 'user'],
+		'cancelled_order' => ['super_admin', 'admin', 'user'],
 		'confirm_order' => ['super_admin', 'admin', 'user'],
 		'ended_order' => ['super_admin', 'admin', 'user'],
+		'expired-orders' => ['super_admin', 'admin', 'user'],
 		'expired-orders' => ['super_admin', 'admin', 'user'],
 		'timesheet' => ['super_admin', 'admin', 'user'],
 		't-fill' => ['super_admin', 'admin', 'user'],
@@ -172,6 +175,7 @@ class Backend extends BEBaseController
 		$data['o_con'] = $model->where('ord_status', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
 		$data['o_end'] = $model->where('ord_status', '4')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
 		$data['o_exp'] = $model->where('ord_required_to <=', $dt)->where('ord_status', '1')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
+		$data['o_canc'] = $model->where('ord_cancel_bcl', '1')->orWhere('ord_cancel_bdr', '1')->countAllResults();
 
 
 
@@ -1187,7 +1191,7 @@ class Backend extends BEBaseController
 		return $this->LoadView('admin/orders', $data);
 	}
 
-	public function new_order()
+	public function new_order_old()
 	{
 
 		$data = [];
@@ -1411,9 +1415,19 @@ class Backend extends BEBaseController
 		$data = [];
 		helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '2')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_cancel_bcl', '1')->orWhere('ord_cancel_bdr', '1')->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('admin/processed_order', $data);
+	}
+	public function cancelled_order()
+	{
+
+		$data = [];
+		helper(['form']);
+		$model = new ordersModel();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_cancel_bcl', '1')->orWhere('ord_cancel_bdr', '1')->orderBy('ord_updated', 'DESC')->findAll();
+
+		return $this->LoadView('admin/cancelled_order', $data);
 	}
 
 	public function pending_order()
@@ -2086,4 +2100,66 @@ class Backend extends BEBaseController
 		
 	}
 
+	public function order_s1(){
+		$data = [];
+		helper(['form']);
+		$Gmodel = new gradeModel();
+		$data['gr_row'] = $Gmodel->findAll();
+		$Smodel = new specialityModel();
+		$data['sp_row'] = $Smodel->findAll();
+		$clmodel = new ClientModel();
+		$data['c_det'] = $clmodel->findAll();
+		$omodel = new ordersModel();
+
+		if ($this->request->getMethod() == 'post') {
+			$rules = [
+				'cl_id' => ['label' => 'Client', 'rules' => 'required'],
+				'ord_speciality' => ['label' => 'Speciality', 'rules' => 'required'],
+				'ord_grade' => ['label' => 'Grade', 'rules' => 'required'],
+				'ord_required_from' => ['label' => 'Required From', 'rules' => 'required'],
+				'ord_required_to' => ['label' => 'Required To', 'rules' => 'required'],
+				'ord_datetime_detail' => ['label' => 'Date & Time Details', 'rules' => 'required'],
+			];
+
+			if (!$this->validate($rules)) {
+				$data['validation'] = $this->validator;
+			} else {
+
+
+				//store this to database
+
+
+				$newData = [
+					'ord_speciality' => $this->request->getVar('ord_speciality'),
+					'ord_grade' => $this->request->getVar('ord_grade'),
+					'ord_required_from' => $this->request->getVar('ord_required_from'),
+					'ord_required_to' => $this->request->getVar('ord_required_to'),
+					'ord_datetime_detail' => $this->request->getVar('ord_datetime_detail'),
+					'ord_status' => 1,
+					'cl_id'=> $this->request->getVar('cl_id'),
+
+				];
+				$omodel->insert($newData);
+				$id = $omodel->insertID;
+				$session = session();
+				$session->setFlashdata('success', 'First Response saved');
+				return redirect()->to('backend/email-1/' . encryptIt($id));
+				
+			}
+
+
+		}
+
+		
+		return $this->LoadView('admin/new_order', $data);
+	}
+	public function sFirstR($id = null){
+		$data = [];
+		helper(['form']);
+		$id = decryptIt($id);
+		echo $id;
+
+
+
+	}
 }
