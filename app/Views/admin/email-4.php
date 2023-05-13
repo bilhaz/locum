@@ -17,19 +17,36 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
                     <div class="card-header">
-                    <div class="col-md-3 offset-md-5">
-                    <span id="flash-message" class="alert alert-success"></span>
+                    <div class="col-md-12">
+                    <?php if (isset($validation)) : ?>
+                            <div class="alert alert-danger" role="alert">
+                                <?= $validation->listErrors() ?>
+                            </div>
+                        <?php endif; ?>
+                        <?php if (session()->get('success')) : ?>
+                                <div class="alert alert-success" role="alert">
+                                    <?= session()->get('success') ?>
+                                </div>
+                            <?php endif; ?>
+
+                            <?php if (session()->get('error')) : ?>
+                                <div class="alert alert-danger" role="alert">
+                                    <?= session()->get('error') ?>
+                                </div>
+                            <?php endif; ?>
                         </div>
-                        <h6 class="card-title">Email 4</h6>
+                        <h6 class="card-title">Employee Confirmation</h6>
                         <ul class="header-dropdown">
                             <li>
-                                <button type="button" onclick="CopyToClipboard()" class="btn btn-sm btn-outline-primary">Copy</button>
+                                <!-- <button type="button" onclick="CopyToClipboard()" class="btn btn-sm btn-outline-primary">Copy</button> -->
                             </li>
                         </ul>
                     </div>
                     <hr class="primary">
                     <div class="card-body">
-                    <div class="row mb-3 " id="email" contenteditable="true">
+                    <div class="row mb-3 " id="email" >
+                        <form action="<?= base_url('backend/sFourthR/'.encryptIt($em_4['ord_id'])) ?>)?>" method="post">
+
                                <h5 style="color:#157DED">Dear Dr.
                                 
                                 <?= $em_4['emp_fname'].' '. $em_4['emp_lname']. ' ('. $em_4['emp_imcr_no']. ')'?></h5>
@@ -62,7 +79,17 @@
    <li>Shamrock Assist Locum Services Pays. (All agreed rates are Limited company rates only)</li>
 </ol>
 </p>
+<div style="float:right;">
+    <a id="payment-button" href="<?= base_url('backend/order-s4/'.encryptIt($em_4['ord_id'])) ?>" class="btn btn-lg btn-dark btn-block">
 
+<span id="payment-button-amount">Back</span>
+</a>
+&nbsp; &nbsp;
+        <button id="payment-button" type="submit" class="btn btn-lg btn-primary btn-block">
+            <span id="payment-button-amount">Send Email</span>
+        </button>
+                                        </div>
+   </form>
                                 </div>
                     </div>
                 </div>

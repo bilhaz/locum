@@ -1,0 +1,27 @@
+UPDATE orders SET ord_required_from=NULL WHERE ord_required_from='0000-00-00 00:00:00';
+
+UPDATE orders SET ord_required_to=NULL WHERE ord_required_to='0000-00-00 00:00:00';
+
+UPDATE orders SET ord_process_date=NULL WHERE ord_process_date='0000-00-00';
+
+UPDATE orders SET ord_process_details_from=NULL WHERE ord_process_details_from='0000-00-00 00:00:00';
+
+UPDATE orders SET ord_process_details_to=NULL WHERE ord_process_details_to='0000-00-00 00:00:00';
+
+UPDATE orders SET ord_time_sheet_rcvd=NULL WHERE ord_time_sheet_rcvd='0000-00-00';
+
+UPDATE orders SET ord_time_sheet_process=NULL WHERE ord_time_sheet_process='0000-00-00';
+
+UPDATE orders SET ord_invoice_date=NULL WHERE ord_invoice_date='0000-00-00';
+
+UPDATE orders SET ord_paymnt_rcvd_date=NULL WHERE ord_paymnt_rcvd_date='0000-00-00';
+
+UPDATE orders SET ord_pay_to_dr_date=NULL WHERE ord_pay_to_dr_date='0000-00-00';
+
+UPDATE orders SET ord_confirmation_date=NULL WHERE ord_confirmation_date='0000-00-00';
+
+*some of the new fields query i forgot to add*
+
+ALTER TABLE `orders` ADD `ord_emp_pay_status` VARCHAR(255) NULL AFTER `ord_payment_status`;
+
+

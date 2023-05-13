@@ -61,9 +61,10 @@
     background-color: #C70039 !important;
 }
 .pstep{
-    background-color: #f59739 !important;
+    background-color: #838282 !important;
     color: white !important;
 }
+
 
 ul.spbull {
     list-style-type: "\27A8";
@@ -216,22 +217,24 @@ padding-left: 1rem;
 /* end manipulation */
 
 .wizardtabs a:not(:first-child):before {
-    border-left-color: #fafafc
+    
+    border-left-color: #efeff3
 }
 
 .wizardtabs a:not(:last-child):after {
+    
     transform: translateX(33px);
-    border-left-color: #f59739
+    border-left-color: #838282
 }
 
 .wizardtabs span {
     padding: 0 10px 0 17px;
     line-height: 1.7rem;
-    color: #1d1d1e
+    color: #ffffff
 }
 
 .wizardtabs span:first-line {
-    color: #010101;
+    color: #ffffff;
     font-weight: 700;
     font-size: 1.85rem
 }
@@ -267,10 +270,11 @@ padding-left: 1rem;
 
 .wizardtabs a:not(.current):hover span:first-line,
 .done span:first-line {
-    color: #1d1d1f
+    color: #ffffff
 }
 
 .wizardtabs a:not(.current):hover {
+    
     background: #e9e9eb
 }
 
@@ -304,14 +308,19 @@ padding-left: 1rem;
     }
     .wizardtabs span {
         line-height: 1.7rem;
-    color: #1d1d1e;
+    color: #ffffff;
         font-size: 1.2rem !important;
         padding: 0 0 0 0 !important;
       }
       .wizardtabs span:first-line {
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 1.85rem
+    }
+      /* .wizardtabs span:first-line {
         
         font-size: 1.5rem !important;
-      }
+      } */
       .wizardtabs .current:not(:first-child):before {
         border-left-color: #fafaff;
     }

@@ -53,8 +53,15 @@ $routes->match(['get' , 'post'], 'backend/client_unblock/(:any)', 'admin\Backend
 $routes->match(['get' , 'post'], 'backend/block_clients', 'admin\Backend::block_clients' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/orders', 'admin\Backend::orders' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/new_order', 'admin\Backend::new_order_old' ,['filter' => 'B_auth']);
-$routes->match(['get' , 'post'], 'backend/order-s1', 'admin\Backend::order_s1' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'backend/new-order', 'admin\Backend::new_order' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'backend/order-s1/(:any)', 'admin\Backend::order_s1/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/sFirstR/(:any)', 'admin\Backend::sFirstR/$1' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'backend/sSecondR/(:any)', 'admin\Backend::sSecondR/$1' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'backend/order-s2/(:any)', 'admin\Backend::order_s2/$1' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'backend/order-s3/(:any)', 'admin\Backend::order_s3/$1' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'backend/sThirdR/(:any)', 'admin\Backend::sThirdR/$1' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'backend/order-s4/(:any)', 'admin\Backend::order_s4/$1' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'backend/sFourthR/(:any)', 'admin\Backend::sFourthR/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/order_edit/(:any)', 'admin\Backend::order_edit/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/order_view/(:any)', 'admin\Backend::order_view/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/pending_order', 'admin\Backend::pending_order' ,['filter' => 'B_auth']);

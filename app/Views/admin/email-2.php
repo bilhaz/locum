@@ -17,19 +17,34 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
                     <div class="card-header">
-                    <div class="col-md-3 offset-md-5">
-                    <span id="flash-message" class="alert alert-success"></span>
+                    <div class="col-md-12">
+                    <?php if (isset($validation)) : ?>
+                            <div class="alert alert-danger" role="alert">
+                                <?= $validation->listErrors() ?>
+                            </div>
+                        <?php endif; ?>
+                        <?php if (session()->get('success')) : ?>
+                                <div class="alert alert-success" role="alert">
+                                    <?= session()->get('success') ?>
+                                </div>
+                            <?php endif; ?>
+
+                            <?php if (session()->get('error')) : ?>
+                                <div class="alert alert-danger" role="alert">
+                                    <?= session()->get('error') ?>
+                                </div>
+                            <?php endif; ?>
                         </div>
-                        <h6 class="card-title">Email 2</h6>
+                        <h6 class="card-title">Email - Locum Process</h6>
                         <ul class="header-dropdown">
                             <li>
-                                <button type="button" onclick="CopyToClipboard()" class="btn btn-sm btn-outline-primary">Copy</button>
                             </li>
                         </ul>
                     </div>
                     <hr class="primary">
                     <div class="card-body">
-                    <div class="row mb-3 " id="email" contenteditable="true">
+                    <div class="row mb-3 " id="email" >
+                    <form action="<?= base_url('backend/sSecondR/'.encryptIt($em_2['ord_id'])) ?>)?>" method="post">
                                <h6>Dear 
                                 <?php $lname = explode(' ',$em_2['cl_cont_name']) ?>
                                 <?php if(!empty($lname[0])): echo $lname[0]; endif;?></h6>
@@ -63,7 +78,7 @@
       </tr> 
       <tr>
         <th style="border: 1px solid black;"><strong>Rate:</strong></th>
-        <td style="border: 1px solid black;"><strong><?= $em_2['ord_approx_cost'] ?> Euro /hr</strong></td>
+        <td style="border: 1px solid black;"><?= '<b>Normal: </b>' . $em_2['ord_normal_hrs_rt'] .'<br>'. '<b>OnCall: </b>'. $em_2['ord_ocall_rt'].'<br>'.'<b>OffSite: </b>'.$em_2['ord_osite_rt'].'<br>'.'<b>Weekend: </b>'.$em_2['ord_bhw_rt']?></td>
      </tr>
      <tr>
         <th style="border: 1px solid black;"><strong>Admin Charges:</strong></th>
@@ -76,31 +91,31 @@
 
     <?php if(!empty($em_2['emp_cv'])):?>
    <p class="mb-0"><strong>CV</strong></p>
-   <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_cv']) ?>">Click To View</a>
+   <a target="_blank" href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_cv']) ?>">Click To View</a>
    <?php endif; ?>
    <?php if(!empty($em_2['emp_imc_cert'])):?>
    <p class="mb-0"><strong>IMC Certificate</strong></p>
-   <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_imc_cert']) ?>">Click To View</a>
+   <a target="_blank" href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_imc_cert']) ?>">Click To View</a>
    <?php endif; ?>
 <?php if(!empty($em_2['emp_gv_cert'])):?>
    <p class="mb-0"><strong>Garda Vetting Certificate</strong></p>
-   <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_gv_cert']) ?>">Click To View</a>
+   <a target="_blank" href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_gv_cert']) ?>">Click To View</a>
    <?php endif; ?>
 <?php if(!empty($em_2['emp_rec_refer'])):?>
    <p class="mb-0"><strong>Recent Reference</strong></p>
-   <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_rec_refer']) ?>">Click To View</a>
+   <a target="_blank" href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_rec_refer']) ?>">Click To View</a>
    <?php endif; ?>
 <?php if(!empty($em_2['emp_passport'])):?>
    <p class="mb-0"><strong>Passport</strong></p>
-   <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_passport']) ?>">Click To View</a>
+   <a target="_blank" href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_passport']) ?>">Click To View</a>
    <?php endif; ?>
 <?php if(!empty($em_2['emp_occup_health'])):?>
    <p class="mb-0"><strong>Occupational Health</strong></p>
-   <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_occup_health']) ?>">Click To View</a>
+   <a target="_blank" href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_occup_health']) ?>">Click To View</a>
    <?php endif; ?>
 <?php if(!empty($em_2['emp_work_permit'])):?>
    <p class="mb-0"><strong>Work Permit</strong></p>
-   <a href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_work_permit']) ?>">Click To View</a>
+   <a target="_blank" href="<?= base_url('public/uploads/employee_attach/'.$em_2['emp_work_permit']) ?>">Click To View</a>
    <?php endif; ?>
 
 
@@ -115,7 +130,17 @@
 <li style="opacity:0.5;">Locum Confirmation.</li>
 </ol>
 </p>
+<div style="float:right;">
+    <a id="payment-button" href="<?= base_url('backend/order-s2/'.encryptIt($em_2['ord_id'])) ?>" class="btn btn-lg btn-dark btn-block">
 
+<span id="payment-button-amount">Back</span>
+</a>
+&nbsp; &nbsp;
+        <button id="payment-button" type="submit" class="btn btn-lg btn-primary btn-block">
+            <span id="payment-button-amount">Send Email</span>
+        </button>
+                                        </div>
+                                        </form>
                                 </div>
                     </div>
                 </div>

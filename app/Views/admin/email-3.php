@@ -17,19 +17,34 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
                     <div class="card-header">
-                    <div class="col-md-3 offset-md-5">
-                    <span id="flash-message" class="alert alert-success"></span>
+                    <div class="col-md-12">
+                    <?php if (isset($validation)) : ?>
+                            <div class="alert alert-danger" role="alert">
+                                <?= $validation->listErrors() ?>
+                            </div>
+                        <?php endif; ?>
+                        <?php if (session()->get('success')) : ?>
+                                <div class="alert alert-success" role="alert">
+                                    <?= session()->get('success') ?>
+                                </div>
+                            <?php endif; ?>
+
+                            <?php if (session()->get('error')) : ?>
+                                <div class="alert alert-danger" role="alert">
+                                    <?= session()->get('error') ?>
+                                </div>
+                            <?php endif; ?>
                         </div>
-                        <h6 class="card-title">Email 3</h6>
+                        <h6 class="card-title">Email - Locum Confirmation</h6>
                         <ul class="header-dropdown">
                             <li>
-                                <button type="button" onclick="CopyToClipboard()" class="btn btn-sm btn-outline-primary">Copy</button>
                             </li>
                         </ul>
                     </div>
                     <hr class="primary">
                     <div class="card-body">
-                    <div class="row mb-3 " id="email" contenteditable="true">
+                    <div class="row mb-3 " id="email">
+                    <form action="<?= base_url('backend/sThirdR/'.encryptIt($em_3['ord_id'])) ?>)?>" method="post">
                         <h5 class="text-danger">LOCUM CONFIRMATION</h5>
                                <h6>Dear 
                                 <?php $lname = explode(' ',$em_3['cl_cont_name']) ?>
@@ -64,7 +79,7 @@
       </tr> 
       <tr>
         <th style="border: 1px solid black;"><strong>Rate:</strong></th>
-        <td style="border: 1px solid black;"><strong><?= $em_3['ord_approx_cost'] ?> Euro /hr</strong></td>
+        <td style="border: 1px solid black;"><?= '<b>Normal: </b>' . $em_3['ord_normal_hrs_rt'] .'<br>'. '<b>OnCall: </b>'. $em_3['ord_ocall_rt'].'<br>'.'<b>OffSite: </b>'.$em_3['ord_osite_rt'].'<br>'.'<b>Weekend: </b>'.$em_3['ord_bhw_rt']?></td>
      </tr>
      <tr>
         <th style="border: 1px solid black;"><strong>Admin Charges:</strong></th>
@@ -96,7 +111,17 @@
    <li><b>Locum Confirmation.</b></li>
 </ol>
 </p>
+<div style="float:right;">
+    <a id="payment-button" href="<?= base_url('backend/order-s3/'.encryptIt($em_3['ord_id'])) ?>" class="btn btn-lg btn-dark btn-block">
 
+<span id="payment-button-amount">Back</span>
+</a>
+&nbsp; &nbsp;
+        <button id="payment-button" type="submit" class="btn btn-lg btn-primary btn-block">
+            <span id="payment-button-amount">Send Email</span>
+        </button>
+                                        </div>
+                                        </form>
                                 </div>
                     </div>
                 </div>

@@ -3,7 +3,7 @@
 namespace App\Controllers\admin;
 
 
-
+use App\Helpers\EmailHelper;
 use App\Models\UserModel;
 use App\Models\EmpModel;
 use App\Models\ClientModel;
@@ -42,9 +42,16 @@ class Backend extends BEBaseController
 		'block_clients' => ['super_admin', 'admin', 'user'],
 		'client-pwd' => ['super_admin'],
 		'orders' => ['super_admin', 'admin', 'user'],
-		'new_order' => ['super_admin', 'admin', 'user'],
+		'new_order_old' => ['super_admin', 'admin', 'user'],
+		'new-order' => ['super_admin', 'admin', 'user'],
 		'order-s1' => ['super_admin', 'admin', 'user'],
+		'order-s2' => ['super_admin', 'admin', 'user'],
+		'order-s3' => ['super_admin', 'admin', 'user'],
+		'order-s4' => ['super_admin', 'admin', 'user'],
 		'sFirstR' => ['super_admin', 'admin', 'user'],
+		'sSecondR' => ['super_admin', 'admin', 'user'],
+		'sThirdR' => ['super_admin', 'admin', 'user'],
+		'sFourthR' => ['super_admin', 'admin', 'user'],
 		'order_view' => ['super_admin', 'admin', 'user'],
 		'order_edit' => ['super_admin', 'admin', 'user'],
 		'ord_status' => ['super_admin', 'admin', 'user'],
@@ -924,6 +931,7 @@ class Backend extends BEBaseController
 
 		$data = [];
 		helper(['form']);
+		helper(['email']);
 
 		if ($this->request->getMethod() == 'post') {
 			//let's do the validation here
@@ -962,9 +970,20 @@ class Backend extends BEBaseController
 				];
 				$model->save($newData);
 				$id = $model->insertID;
+				$data['clr'] = $model->where('cl_id',$id)->first();
+				$to = $data['clr']['cl_cont_email'];
+				$subject = 'SRA Client Registration';
+				$message = '<p>Dear &nbsp;'.$data['clr']['cl_usr'].' Your account has been succesfully registered on our platform</p><br>
+				<p>Please Make sure to complete your client Profile when you login to <b>SRA Locum</b> on this URL: '.base_url('client/login').'</p><br>
+				<h3>Thank You</h3>';
 				$session = session();
+				if (EmailHelper::sendEmail($to, $subject, $message)) {
 				$session->setFlashdata('success', 'Client Registered, Complete the Registration Form');
 				return redirect()->to('backend/client_details/' . encryptIt($id));
+				}else{
+					$session->setFlashdata('success', 'Client Registered, Completed But Email Failed');
+				return redirect()->to('backend/client_details/' . encryptIt($id));
+				}
 			}
 		}
 
@@ -2100,7 +2119,7 @@ class Backend extends BEBaseController
 		
 	}
 
-	public function order_s1(){
+	public function new_order(){
 		$data = [];
 		helper(['form']);
 		$Gmodel = new gradeModel();
@@ -2108,7 +2127,7 @@ class Backend extends BEBaseController
 		$Smodel = new specialityModel();
 		$data['sp_row'] = $Smodel->findAll();
 		$clmodel = new ClientModel();
-		$data['c_det'] = $clmodel->findAll();
+		$data['c_det'] = $clmodel->where('cl_status', 1)->where('cl_h_name !=', Null)->where('cl_cont_name !=', Null)->find();
 		$omodel = new ordersModel();
 
 		if ($this->request->getMethod() == 'post') {
@@ -2153,13 +2172,676 @@ class Backend extends BEBaseController
 		
 		return $this->LoadView('admin/new_order', $data);
 	}
+	public function order_s1($id = null){
+		$id = decryptIt($id);
+		$data = [];
+		helper(['form']);
+		$Gmodel = new gradeModel();
+		$data['gr_row'] = $Gmodel->findAll();
+		$Smodel = new specialityModel();
+		$data['sp_row'] = $Smodel->findAll();
+		$clmodel = new ClientModel();
+		$data['c_det'] = $clmodel->where('cl_status', 1)->where('cl_h_name !=', Null)->where('cl_cont_name !=', Null)->find();
+		$omodel = new ordersModel();
+		$data['v_ordr'] = $omodel->where('ord_id',$id)->first();
+
+		if ($this->request->getMethod() == 'post') {
+			$rules = [
+				'cl_id' => ['label' => 'Client', 'rules' => 'required'],
+				'ord_speciality' => ['label' => 'Speciality', 'rules' => 'required'],
+				'ord_grade' => ['label' => 'Grade', 'rules' => 'required'],
+				'ord_required_from' => ['label' => 'Required From', 'rules' => 'required'],
+				'ord_required_to' => ['label' => 'Required To', 'rules' => 'required'],
+				'ord_datetime_detail' => ['label' => 'Date & Time Details', 'rules' => 'required'],
+			];
+
+			if (!$this->validate($rules)) {
+				$data['validation'] = $this->validator;
+			} else {
+
+
+				//store this to database
+
+
+				$newData = [
+					'ord_speciality' => $this->request->getVar('ord_speciality'),
+					'ord_grade' => $this->request->getVar('ord_grade'),
+					'ord_required_from' => $this->request->getVar('ord_required_from'),
+					'ord_required_to' => $this->request->getVar('ord_required_to'),
+					'ord_datetime_detail' => $this->request->getVar('ord_datetime_detail'),
+					'ord_status' => 1,
+					'cl_id'=> $this->request->getVar('cl_id'),
+
+				];
+				$omodel->update($id,$newData);
+				$session = session();
+				$session->setFlashdata('success', 'First Response saved');
+				return redirect()->to('backend/email-1/' . encryptIt($id));
+				
+			}
+
+
+		}
+
+		
+		return $this->LoadView('admin/order_s1', $data);
+	}
 	public function sFirstR($id = null){
 		$data = [];
 		helper(['form']);
+		helper('email');
 		$id = decryptIt($id);
-		echo $id;
+		$omodel = new ordersModel();
+		$data['v_ordr'] = $omodel->join('clients','clients.cl_id = orders.cl_id','LEFT')->join('emp_speciality','emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade','emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_id',$id)->first();
+		$ord = $data['v_ordr'];
+		$lname = explode(' ',$ord['cl_cont_name']);
+		// $to = $ord['cl_cont_email'];
+		$to = 'okashadell@gmail.com';
+		$subject = 'First Response';
+		$message ='<html><body>
+		<div class="card-body">
+		<div class="row mb-3 " id="email">
+				   <h3>Dear 
+					'.$lname[0].'</h3>
+					<br>
+					<p>Thank you for requesting a doctor through SRA Locum Service. We can confirm receiving your locum order. Process of sourcing a locum Doctor for you has already been initiated.</p>
+					<p class="text-danger">If the order details are correct, you do not need to reply to this email.</p>
+					<p><strong>Your Order Details are;</strong></p>
+<table class="table align-middle table-responsive table-hover d-inline" border="1" width="50%" >
+<tr>
+<th style="border: 1px solid black;"><strong>Hospital Name & Address:</strong></th>
+<td style="border: 1px solid black;"><strong>'.$ord['cl_h_name']. ', '. $ord['cl_address'].' | ' . $ord['cl_eircode'].'</strong></td>
+</tr>
+<tr>
+<th style="border: 1px solid black;"><strong>Client Contact Name:</strong></th>
+<td style="border: 1px solid black;"><strong>'.$ord['cl_cont_name'].'</strong></td>
+</tr>
+<tr>
+<th style="border: 1px solid black;"><strong>Covering Specialty:</strong></th>
+<td style="border: 1px solid black;"><strong>'.$ord['spec_name'].' - '. $ord['grade_name'].'</strong></td>
+</tr>
+<tr>
+<tr>
+  <th style="border: 1px solid black;"><strong>Covering Date & Time:</strong></th>
+  <td style="border: 1px solid black;"><strong>';
+$pros = explode(",", $ord['ord_datetime_detail']);
+foreach($pros as $var) {
+  $message .= $var . "<br>";
+}
+$message .= '</strong></td>
+</tr>    
+</table>
+<p><strong>Order status:</strong>
+<ol>
+<li><b>Order confirmation.</b></li>
+<li><b>Order processing initiated.</b></li>
+<li style="opacity:0.5;">Proposal of locum to you.</li>
+<li style="opacity:0.5;">Acceptance or declining a locum.</li>
+<li style="opacity:0.5;">Locum Confirmation.</li>
+</ol>
+</p>
+					
+					</div>
+					
+		</div></body></html>';
 
 
+		if ($this->request->getMethod() == 'post') {
+			
+				$newData = [
+					'ord_status' => '2',
 
-	}
+				];
+				$omodel->update($id,$newData);
+				$session = session();
+				if (EmailHelper::sendEmail($to, $subject, $message)) {
+					$session->setFlashdata('success', 'First Response Email Succesfully Sent');
+					return redirect()->to('backend/order-s2/' . encryptIt($id));
+				} else {
+					$session->setFlashdata('error', 'First Response Email Failed');
+					return redirect()->to('backend/order-s2/' . encryptIt($id));
+				}
+				
+				
+				
+			}
+		}
+
+		public function order_s2($id = null){
+			$data = [];
+			helper(['form']);
+			$id = decryptIt($id);
+			$Gmodel = new gradeModel();
+			$data['gr_row'] = $Gmodel->findAll();
+			$Smodel = new specialityModel();
+			$data['sp_row'] = $Smodel->findAll();
+			$omodel = new ordersModel();
+			$data['v_ordr'] = $omodel->where('ord_id',$id)->first();
+			$spec = $data['v_ordr']['ord_speciality'];
+			$clmodel = new ClientModel();
+			$data['c_det'] = $clmodel->where('cl_status', 1)->where('cl_h_name !=', Null)->where('cl_cont_name !=', Null)->find();
+			$Emodel = new EmpModel();
+			$data['emp_row'] = $Emodel->where('emp_status', 1)->where('emp_fname !=', Null)->Where('emp_spec1',$spec)->orWhere('emp_spec2',$spec)->orWhere('emp_spec2',$spec)->find();
+			$norm = (float)$this->request->getVar('ord_normal_hrs');
+			$onc = (float)$this->request->getVar('ord_on_call_hrs');
+			$off = (float)$this->request->getVar('ord_off_site_hrs');
+			$week = (float)$this->request->getVar('ord_bh_week_hrs');
+			$normr = (float)$this->request->getVar('ord_normal_hrs_rt');
+			$oncr = (float)$this->request->getVar('ord_ocall_rt');
+			$offr = (float)$this->request->getVar('ord_osite_rt');
+			$weekr = (float)$this->request->getVar('ord_bhw_rt');
+
+			$tp = $norm * $normr + $onc * $oncr + $off * $offr + $week * $weekr;
+	
+			if ($this->request->getMethod() == 'post') {
+				$rules = [
+					'emp_id' => ['label' => 'Employee', 'rules' => 'required'],
+					'ord_process_details_from' => ['label' => 'Locum Process From', 'rules' => 'required'],
+					'ord_process_details_to' => ['label' => 'Locum Process To', 'rules' => 'required'],
+					'ord_prosdatetime_detail' => ['label' => 'Locum Process Date & Time Details', 'rules' => 'required'],
+					'ord_normal_hrs' => ['label' => 'No of Normal/Flat Hrs', 'rules' => 'required'],
+					'ord_normal_hrs_rt' => ['label' => 'Select Pay Type for Normal Hrs', 'rules' => 'required'],
+					'nh_p_type' => ['label' => 'Hours / Fullday / Halfday', 'rules' => 'required'],
+					'ord_on_call_hrs' => ['label' => 'No of OnCall Hrs', 'rules' => 'required'],
+					'ord_ocall_rt' => ['label' => 'Rate for OnCall Hrs', 'rules' => 'required'],
+					'oc_p_type' => ['label' => 'Select Pay Type for OnCall Hrs', 'rules' => 'required'],
+					'ord_off_site_hrs' => ['label' => 'No of OffSite Hrs', 'rules' => 'required'],
+					'ord_osite_rt' => ['label' => 'Rate for OffSite Hrs', 'rules' => 'required'],
+					'os_p_type' => ['label' => 'Select Pay Type for OffSite Hrs', 'rules' => 'required'],
+					'ord_bh_week_hrs' => ['label' => 'No of BH/Weekend Hrs', 'rules' => 'required'],
+					'ord_bhw_rt' => ['label' => 'Rate for BH/Weekend Hrs', 'rules' => 'required'],
+					'bhw_p_type' => ['label' => 'Select Pay Type for BH/Weekend Hrs', 'rules' => 'required'],
+					'ord_admin_charges' => ['label' => 'Admin Charges', 'rules' => 'required'],
+					'ord_process_date' => ['label' => 'Process Date', 'rules' => 'required'],
+
+					
+				];
+	
+				if (!$this->validate($rules)) {
+					$data['validation'] = $this->validator;
+				} else {
+	
+	
+					//store this to database
+	
+	
+					$newData = [
+						'emp_id' => $this->request->getVar('emp_id'),
+						'ord_process_details_from' => $this->request->getVar('ord_process_details_from'),
+						'ord_process_details_to' => $this->request->getVar('ord_process_details_to'),
+						'ord_prosdatetime_detail' => $this->request->getVar('ord_prosdatetime_detail'),
+						'ord_normal_hrs' => $this->request->getVar('ord_normal_hrs'),
+						'ord_normal_hrs_rt'=> $this->request->getVar('ord_normal_hrs_rt'),
+						'nh_p_type'=> $this->request->getVar('nh_p_type'),
+						'ord_on_call_hrs'=> $this->request->getVar('ord_on_call_hrs'),
+						'ord_ocall_rt'=> $this->request->getVar('ord_ocall_rt'),
+						'oc_p_type'=> $this->request->getVar('oc_p_type'),
+						'ord_off_site_hrs'=> $this->request->getVar('ord_off_site_hrs'),
+						'ord_osite_rt'=> $this->request->getVar('ord_osite_rt'),
+						'os_p_type'=> $this->request->getVar('os_p_type'),
+						'ord_bh_week_hrs'=> $this->request->getVar('ord_bh_week_hrs'),
+						'ord_bhw_rt'=> $this->request->getVar('ord_bhw_rt'),
+						'bhw_p_type'=> $this->request->getVar('bhw_p_type'),
+						'ord_total_hrs'=> $this->request->getVar('ord_total_hrs'),
+						'ord_admin_charges'=> $this->request->getVar('ord_admin_charges'),
+						'ord_process_date'=> $this->request->getVar('ord_process_date'),
+						'ord_paying_to_dr'=> $tp,
+	
+					];
+					$omodel->update($id,$newData);
+					$session = session();
+					$session->setFlashdata('success', 'Locum Process saved');
+					return redirect()->to('backend/email-2/' . encryptIt($id));
+					
+				}
+	
+	
+			}
+	
+			
+			return $this->LoadView('admin/order_s2', $data);
+		}
+		public function sSecondR($id = null){
+			$data = [];
+			helper(['form']);
+			helper('email');
+			$id = decryptIt($id);
+			$omodel = new ordersModel();
+			$data['v_ordr'] = $omodel->join('clients','clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality','emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade','emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_id',$id)->first();
+			$ord = $data['v_ordr'];
+			$lname = explode(' ',$ord['cl_cont_name']);
+		// $to = $ord['cl_cont_email'];
+		$to = 'okashadell@gmail.com';
+		$subject = 'Locum Process';
+		$message ='<html><body>
+		<div class="card-body">
+		<div class="row mb-3 " id="email" >
+				   <h3>Dear '.$lname[0].'</h3>
+					<br>
+					<p>At SRA Locum Service we are pleased to offer you the following doctor. Please review and reply.</p>
+					<p><strong>Your Order Details are;</strong></p>
+					<div class="table-responsive">
+<table class="table table-bordered align-middle d-inline" border="1" width="50%" >
+<tr>
+<th style="border: 1px solid black;"><strong>Hospital Name & Address:</strong></th>
+<td style="border: 1px solid black;"><strong>'. $ord['cl_h_name']. ', '. $ord['cl_address'].' | ' . $ord['cl_eircode'].'</strong></td>
+</tr>
+<tr>
+<th style="border: 1px solid black;"><strong>Client Contact Name:</strong></th>
+<td style="border: 1px solid black;"><strong>'.$ord['cl_cont_name'].'</strong></td>
+</tr>
+<tr>
+<th style="border: 1px solid black;"><strong>Covering Specialty:</strong></th>
+<td style="border: 1px solid black;"><strong>'.$ord['spec_name'].' '. $ord['grade_name'].'</strong></td>
+</tr>
+<tr>
+<th style="border: 1px solid black;"><strong>Offered Doctor (s):</strong></th>
+<td style="border: 1px solid black;"><strong>Dr.'. $ord['emp_fname']. ' ' .$ord['emp_lname'] .'( '. $ord['emp_imcr_no'].')'.'</strong></td>
+</tr>
+<tr>
+<th style="border: 1px solid black;"><strong>Covering Date & Time:</strong></th>
+  <td style="border: 1px solid black;"><strong>';
+$pros = explode(",", $ord['ord_datetime_detail']);
+foreach($pros as $var) {
+  $message .= $var . "<br>";
+}
+$message .= '</strong></td>
+</tr> 
+<tr>
+<th style="border: 1px solid black;"><strong>Rate:</strong></th>
+<td style="border: 1px solid black;"> <b>Normal: </b>' . $ord['ord_normal_hrs_rt'] .'<br>'. '<b>OnCall: </b>'. $ord['ord_ocall_rt'].'<br>'.'<b>OffSite: </b>'.$ord['ord_osite_rt'].'<br>'.'<b>Weekend: </b>'.$ord['ord_bhw_rt'].'</td>
+</tr>
+<tr>
+<th style="border: 1px solid black;"><strong>Admin Charges:</strong></th>
+<td class="text-danger" style="border: 1px solid black;color:red;"><strong>'. $ord['ord_admin_charges'].'%</strong></td>
+</tr>  
+</table>
+</div>
+
+<p><strong>Find attached the relevant CV and other documents.</strong></p>';
+
+if(!empty($ord['emp_cv'])){
+$message .= '<p class="mb-0"><strong>CV</strong></p>
+<a target="_blank" href=" '.base_url('public/uploads/employee_attach/'.$ord['emp_cv']) .'">Click To View</a>';
+}
+if(!empty($ord['emp_imc_cert'])){
+$message .= '<p class="mb-0"><strong>IMC Certificate</strong></p>
+<a target="_blank" href="'. base_url('public/uploads/employee_attach/'.$ord['emp_imc_cert']).'">Click To View</a>';
+}
+if(!empty($ord['emp_gv_cert'])){
+$message .= '<p class="mb-0"><strong>Garda Vetting Certificate</strong></p>
+<a target="_blank" href="'.base_url('public/uploads/employee_attach/'.$ord['emp_gv_cert']).'">Click To View</a>';
+}
+if(!empty($ord['emp_rec_refer'])){
+$message .= '<p class="mb-0"><strong>Recent Reference</strong></p>
+<a target="_blank" href="'.base_url('public/uploads/employee_attach/'.$ord['emp_rec_refer']).'">Click To View</a>';
+}
+if(!empty($ord['emp_passport'])){
+$message .= '<p class="mb-0"><strong>Passport</strong></p>
+<a target="_blank" href="'.base_url('public/uploads/employee_attach/'.$ord['emp_passport']).'">Click To View</a>';
+}
+if(!empty($ord['emp_occup_health'])){
+$message .= '<p class="mb-0"><strong>Occupational Health</strong></p>
+<a target="_blank" href="'. base_url('public/uploads/employee_attach/'.$ord['emp_occup_health']).'">Click To View</a>';
+}
+if(!empty($ord['emp_work_permit'])){
+$message .= '<p class="mb-0"><strong>Work Permit</strong></p>
+<a target="_blank" href="'.base_url('public/uploads/employee_attach/'.$ord['emp_work_permit']).'">Click To View</a>';
+}
+
+$message .= '<br>
+<hr class="primary">
+<p><strong>Order status:</strong>
+<ol>
+<li><b>Order confirmation.</b></li>
+<li><b>Order processing initiated.</b></li>
+<li><b>Proposal of locum to you.</b></li>
+<li style="opacity:0.5;">Acceptance or declining a locum.</li>
+<li style="opacity:0.5;">Locum Confirmation.</li>
+</ol>
+</p>
+					</div>
+		</div> </body></html>';
+		
+			if ($this->request->getMethod() == 'post') {
+				
+					$newData = [
+						'ord_status' => '3',
+	
+					];
+					$omodel->update($id,$newData);
+					$session = session();
+					if (EmailHelper::sendEmail($to, $subject, $message)) {
+						$session->setFlashdata('success', 'Locum Process Email Succesfully Sent');
+						return redirect()->to('backend/order-s3/' . encryptIt($id));
+					} else {
+						$session->setFlashdata('error', 'Locum Process Email Failed');
+						return redirect()->to('backend/order-s3/' . encryptIt($id));
+					}
+					
+					
+				}
+			}
+			public function order_s3($id = null){
+				$data = [];
+				helper(['form']);
+				$id = decryptIt($id);
+				$Gmodel = new gradeModel();
+				$data['gr_row'] = $Gmodel->findAll();
+				$Smodel = new specialityModel();
+				$data['sp_row'] = $Smodel->findAll();
+				$clmodel = new ClientModel();
+				$data['c_det'] = $clmodel->where('cl_status', 1)->where('cl_h_name !=', Null)->where('cl_cont_name !=', Null)->find();
+				$Emodel = new EmpModel();
+				$data['emp_row'] = $Emodel->where('emp_status', 1)->where('emp_fname !=', Null)->find();
+				$omodel = new ordersModel();
+				$data['v_ordr'] = $omodel->where('ord_id',$id)->first();
+		
+				if ($this->request->getMethod() == 'post') {
+					$rules = [
+						'ord_confirmation_date' => ['label' => 'Confirmation Date', 'rules' => 'required'],
+						'ord_adminchrg_intern' => ['label' => 'Total of Admin Charges', 'rules' => 'required'],
+						'ord_hosp_earn' => ['label' => 'Total Earning from Client', 'rules' => 'required'],
+						'vat_rate' => ['label' => 'VAT Rate', 'rules' => 'required'],
+						'ord_vat_sale' => ['label' => 'VAT on Sale', 'rules' => 'required'],
+					];
+		
+					if (!$this->validate($rules)) {
+						$data['validation'] = $this->validator;
+					} else {
+		
+		
+						//store this to database
+		
+		
+						$newData = [
+							'ord_confirmation_date'=> $this->request->getVar('ord_confirmation_date'),
+							'ord_adminchrg_intern'=> $this->request->getVar('ord_adminchrg_intern'),
+							'ord_hosp_earn'=> $this->request->getVar('ord_hosp_earn'),
+							'vat_rate'=> $this->request->getVar('vat_rate'),
+							'ord_vat_sale'=> $this->request->getVar('ord_vat_sale'),
+
+		
+						];
+						$omodel->update($id,$newData);
+						$session = session();
+						$session->setFlashdata('success', 'Client Confirmation saved');
+						return redirect()->to('backend/email-3/' . encryptIt($id));
+						
+					}
+		
+		
+				}
+		
+				
+				return $this->LoadView('admin/order_s3', $data);
+			}
+			public function sThirdR($id = null){
+				$data = [];
+				helper(['form']);
+				helper('email');
+				$id = decryptIt($id);
+				$omodel = new ordersModel();
+				$omodel = new ordersModel();
+			$data['v_ordr'] = $omodel->join('clients','clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality','emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade','emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_id',$id)->first();
+			$ord = $data['v_ordr'];
+			$lname = explode(' ',$ord['cl_cont_name']);
+		// $to = $ord['cl_cont_email'];
+		$to = 'okashadell@gmail.com';
+		$subject = 'Locum Confirmation';
+		$message ='<html><body>
+		<div class="card-body">
+                    <div class="row mb-3 " id="email">
+                               <h3>Dear '.$lname[0].'</h3>
+                                <br>
+                                <p>At SRA Locum Service we are pleased to confirm you the following doctor.</p>
+                                <p><strong>Your Order Details are;</strong></p>
+                                <div class="table-responsive">
+  <table class="table table-bordered align-middle d-inline"  >
+      <tr>
+        <th style="border: 1px solid black;"><strong>Hospital Name & Address:</strong></th>
+        <td style="border: 1px solid black;"><strong>'. $ord['cl_h_name']. ', '. $ord['cl_address'].' | ' . $ord['cl_eircode'] .'</strong></td>
+      </tr>
+      <tr>
+        <th style="border: 1px solid black;"><strong>Client Contact Name:</strong></th>
+        <td style="border: 1px solid black;"><strong>'. $ord['cl_cont_name'].'</strong></td>
+     </tr>
+     <tr>
+        <th style="border: 1px solid black;"><strong>Covering Specialty:</strong></th>
+        <td style="border: 1px solid black;"><strong>'. $ord['spec_name'].' '. $ord['grade_name'].'</strong></td>
+     </tr>
+     <tr>
+        <th style="border: 1px solid black;"><strong>Offered Doctor (s):</strong></th>
+        <td style="border: 1px solid black;"><strong>Dr.'. $ord['emp_fname']. ' ' .$ord['emp_lname'] .'( '. $ord['emp_imcr_no'].')'.'</strong></td>
+     </tr>
+     <tr>
+	 <th style="border: 1px solid black;"><strong>Covering Date & Time:</strong></th>
+	 <td style="border: 1px solid black;"><strong>';
+   $pros = explode(",", $ord['ord_datetime_detail']);
+   foreach($pros as $var) {
+	 $message .= $var . "<br>";
+   }
+   $message .= '</strong></td>
+      </tr> 
+      <tr>
+        <th style="border: 1px solid black;"><strong>Rate:</strong></th>
+        <td style="border: 1px solid black;"><b>Normal: </b>' . $ord['ord_normal_hrs_rt'] .'<br>'. '<b>OnCall: </b>'. $ord['ord_ocall_rt'].'<br>'.'<b>OffSite: </b>'.$ord['ord_osite_rt'].'<br>'.'<b>Weekend: </b>'.$ord['ord_bhw_rt'].'</td>
+     </tr>
+     <tr>
+        <th style="border: 1px solid black;"><strong>Admin Charges:</strong></th>
+        <td class="text-danger" style="border: 1px solid black;color:red;"><strong>'. $ord['ord_admin_charges'].'%</strong></td>
+     </tr>  
+  </table>
+</div>
+
+<p><strong>“SRA Locum”: Shamrock Assist, incorporated in Ireland under registration number 599436, Registered office is at 2nd Floor, 13 Upper Baggot St, Dublin 4 .</strong></p>
+
+   <br>
+   <h3 class="text-danger" style="color:red;">SRA Locum standard terms and conditions are applicable to the above assignment. For the avoidance of doubt,</h3>
+<ol type="a" class="text-danger" style="color:red;">
+    <li>The Client acknowledges that they are being provided locum doctor through the SRA Locum,</li>
+    <li>That all payments will be made to SRA Locum, under no circumstances the client will pay the locum doctor directly. </li>
+    <li>Client acknowledges to us that their services are supplied by us as an independent locum.</li>
+    <li>Any placed personnel will be under the supervision, direction, and control of the client.</li>
+    <li>Where a locum is hired directly by the client within the period of six months of the initial introduction, a one recruitment fee of 7% of the year pay will be payable by the client.</li>
+    <li>The credit limit for your every ordering client shall not exceed 1000 euro unless previous dues are paid.</li>
+</ol>
+   <br>
+<hr class="primary">
+<p><strong>Order status:</strong>
+<ol>
+   <li><b>Order confirmation.</b></li>
+   <li><b>Order processing initiated.</b></li>
+   <li><b>Proposal of locum to you.</b></li>
+   <li><b>Acceptance or declining a locum.</b></li>
+   <li><b>Locum Confirmation.</b></li>
+</ol>
+</p>
+                                </div>
+                    </div>
+		</body></html>';
+
+				if ($this->request->getMethod() == 'post') {
+					
+						$newData = [
+							'ord_status' => '3',
+		
+						];
+						$omodel->update($id,$newData);
+						$session = session();
+						if (EmailHelper::sendEmail($to, $subject, $message)) {
+							$session->setFlashdata('success', 'Locum Confirmation Email Succesfully Sent');
+							return redirect()->to('backend/order-s4/' . encryptIt($id));
+						} else {
+							$session->setFlashdata('error', 'Locum Confirmation Email Failed');
+							return redirect()->to('backend/order-s4/' . encryptIt($id));
+						}
+						
+						
+					}
+				}
+				public function order_s4($id = null){
+					$data = [];
+					helper(['form']);
+					$id = decryptIt($id);
+					$Gmodel = new gradeModel();
+					$data['gr_row'] = $Gmodel->findAll();
+					$Smodel = new specialityModel();
+					$data['sp_row'] = $Smodel->findAll();
+					$clmodel = new ClientModel();
+					$data['c_det'] = $clmodel->where('cl_status', 1)->where('cl_h_name !=', Null)->where('cl_cont_name !=', Null)->find();
+					$Emodel = new EmpModel();
+					$data['emp_row'] = $Emodel->where('emp_status', 1)->where('emp_fname !=', Null)->find();
+					$omodel = new ordersModel();
+					$data['v_ordr'] = $omodel->where('ord_id',$id)->first();
+			
+					if ($this->request->getMethod() == 'post') {
+						$rules = [
+							'ord_ref_no' => ['label' => 'Locum Confirmation No', 'rules' => 'required'],
+							'ord_pay_to_dr' => ['label' => 'Pay to Dr', 'rules' => 'required'],
+							'ord_diff_profit_admin' => ['label' => 'Diff (Profit) + Admin Charges', 'rules' => 'required'],
+							'ord_vat_purch' => ['label' => 'VAT on Purchase', 'rules' => 'required'],
+							'ord_time_sheet_rcvd' => ['label' => 'TimeSheet Received', 'rules' => 'required'],
+							'ord_time_sheet_mode' => ['label' => 'TimeSheet Mode', 'rules' => 'required'],
+							'ord_time_sheet_process' => ['label' => 'TimeSheet Processed', 'rules' => 'required'],
+							'ord_time_sheet_approved' => ['label' => 'TimeSheet Status', 'rules' => 'required'],
+							'ord_invoice_id' => ['label' => 'SRAL Invoice ID', 'rules' => 'required'],
+							'ord_invoice_date' => ['label' => 'SRAL Invoice Date', 'rules' => 'required'],
+							'ord_invoice_by' => ['label' => 'Invoiced By', 'rules' => 'required'],
+							'ord_sage_refer_no' => ['label' => 'Sage Invoice ID', 'rules' => 'required'],
+							'ord_invoice_refer' => ['label' => 'Invoice Details', 'rules' => 'required'],  // Invoice Details
+							'ord_paymnt_rcvd_date' => ['label' => 'Payment Received', 'rules' => 'required'],
+							'ord_payment_status' => ['label' => 'Payment Status', 'rules' => 'required'],
+							'ord_pay_to_dr_date' => ['label' => 'Paid to Employee', 'rules' => 'required'],
+							'ord_emp_pay_status' => ['label' => 'Employee Payment Status', 'rules' => 'required'],
+
+						];
+			
+						if (!$this->validate($rules)) {
+							$data['validation'] = $this->validator;
+						} else {
+			
+			
+							//store this to database
+			
+			
+							$newData = [
+								'ord_ref_no'=> $this->request->getVar('ord_ref_no'),	// Locum Confirmation No
+								'ord_pay_to_dr'=> $this->request->getVar('ord_pay_to_dr'),
+								'ord_diff_profit_admin'=> $this->request->getVar('ord_diff_profit_admin'),
+								'ord_vat_purch'=> $this->request->getVar('ord_vat_purch'),
+								'ord_vat_save'=> $this->request->getVar('ord_vat_save'),
+								'ord_time_sheet_rcvd'=> $this->request->getVar('ord_time_sheet_rcvd'),
+								'ord_time_sheet_mode'=> $this->request->getVar('ord_time_sheet_mode'),
+								'ord_time_sheet_process'=> $this->request->getVar('ord_time_sheet_process'),
+								'ord_time_sheet_approved'=> $this->request->getVar('ord_time_sheet_approved'),
+								'ord_comment1'=> $this->request->getVar('ord_comment1') ? $this->request->getVar('ord_comment1') : NULL,
+								'ord_invoice_id'=> $this->request->getVar('ord_invoice_id'),
+								'ord_invoice_date'=> $this->request->getVar('ord_invoice_date'),
+								'ord_invoice_by'=> $this->request->getVar('ord_invoice_by'),
+								'ord_sage_refer_no'=> $this->request->getVar('ord_sage_refer_no'),
+								'ord_invoice_refer'=> $this->request->getVar('ord_invoice_refer'),	// Invoice Details
+								'ord_paymnt_rcvd_date'=> $this->request->getVar('ord_paymnt_rcvd_date'),
+								'ord_payment_status'=> $this->request->getVar('ord_payment_status'),
+								'ord_pay_to_dr_date'=> $this->request->getVar('ord_pay_to_dr_date'),
+								'ord_emp_pay_status'=> $this->request->getVar('ord_emp_pay_status'),
+								'ord_comment2'=> $this->request->getVar('ord_comment2') ? $this->request->getVar('ord_comment2') : NULL,				// Payment Remarks
+
+	
+			
+							];
+							$omodel->update($id,$newData);
+							$session = session();
+							$session->setFlashdata('success', 'Employee Confirmation saved');
+							return redirect()->to('backend/email-4/' . encryptIt($id));
+							
+						}
+			
+			
+					}
+			
+					
+					return $this->LoadView('admin/order_s4', $data);
+				}
+
+				public function sFourthR($id = null){
+					$data = [];
+					helper(['form']);
+					helper('email');
+					$id = decryptIt($id);
+					$omodel = new ordersModel();
+					$omodel = new ordersModel();
+				$data['v_ordr'] = $omodel->join('clients','clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality','emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade','emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_id',$id)->first();
+				$ord = $data['v_ordr'];
+			// $to = $ord['cl_cont_email'];
+			$to = 'okashadell@gmail.com';
+			$subject = 'Employee Confirmation';
+			$message ='<html><body>
+			<div class="card-body">
+                    <div class="row mb-3 " id="email" >
+                               <h3 style="color:#157DED">Dear Dr.
+                                
+                                '. $ord['emp_fname'].' '. $ord['emp_lname']. ' ('. $ord['emp_imcr_no']. ')'.'</h3>
+                                <br>
+                                <p style="color:#157DED">Congratulations and thank you for taking up this Locum assignment with SRA Locum. Please find attached the confirmation of your booking.</p>
+                                <h4 style="color:#157DED">Attachment</h4>
+                                <ul class="spbull" style="line-height: 2em;">
+                                    <li style="color:#157DED">Attached is the Confirmation of Locum Details with Term & Conditions, Timesheet and Assessment form.<br>
+                                        <a type="button" target="_blank" href="'. base_url('public/uploads/SRAL-timesheet.pdf').'" class="btn" style="background-color:#157DED;color:white;border: none;
+										color: white;
+										padding: 5px 10px;
+										text-align: center;
+										text-decoration: none;
+										display: inline-block;
+										font-size: 16px;
+										margin: 4px 2px;
+										cursor: pointer;">Click to Download Timesheet</a></li>
+                                    <li style="color:#157DED">Timesheet you are required to complete and get signed by your consultant when you have finished the shifts.</li>
+                                    <li style="color:#157DED">Kindly ensure that you get your timesheet signed off at the end of the assignment. This is to make sure that you receive your payment promptly SRA Locum will only pay once Time sheet(s) is confirmed and the Client has paid SRA Locum (T&C applies).</li>
+                                    <li style="color:#157DED">Please also submit the attached assessment form to the consultant/ GP whilst you are working as this will enable us to book you out easier in the future.</li>
+                                    <li style="color:#157DED">Upon receipt of this email, please read the attached confirmation to confirm all details are correct, and then reply back to us immediately on by return Email.</li>
+                                </ul>
+
+
+   <br>
+   <h4 style="color:red;">NOTE:</h4>
+   <span style="color:red;" class="text-danger">If you are unable to reach GP/Hospital/assignment place of work on time for the agreed shifts please Contact Hospital/Surgery and SRA Locum on <a href="mailto:info@sralocum.com">info@sralocum.com</a> / 01-6854700. Unnecessary cancelation effects patient care please referrer to <a href="https://www.medicalcouncil.ie/">https://www.medicalcouncil.ie/</a> for additional information.</span>
+
+   
+<hr class="primary">
+<br>
+<p style="color:#157DED"><strong>What is next:</strong>
+<ol type="1" style="color:#157DED; line-height: 2em;">
+   <li>You finish your locum Assignment</li>
+   <li>You send us a scan or fax of timesheet, Alternatively, leave it with HR.</li>
+   <li>Once your timesheet hours are confirmed</li>
+   <li>Your payment is processed subject to Hospital/ Surgery approval</li>
+   <li>Shamrock Assist Locum Services Pays. (All agreed rates are Limited company rates only)</li>
+</ol>
+</p>
+
+                                </div>
+                    </div>
+			</body></html>';
+		
+					if ($this->request->getMethod() == 'post') {
+						
+							$newData = [
+								'ord_status' => '4',
+			
+							];
+							$omodel->update($id,$newData);
+							$session = session();
+							if (EmailHelper::sendEmail($to, $subject, $message)) {
+								$session->setFlashdata('success', 'Employee Confirmation Email Succesfully Sent');
+								return redirect()->to('backend/email-4/' . encryptIt($id));
+							} else {
+								$session->setFlashdata('error', 'Employee Confirmation Email Failed');
+								return redirect()->to('backend/email-4/' . encryptIt($id));
+							}
+							
+							
+						}
+					}
+	
 }

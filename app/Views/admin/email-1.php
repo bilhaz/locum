@@ -17,7 +17,7 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
                     <div class="card-header">
-                        <div class="col-md-3 offset-md-5">
+                        <div class="col-md-12">
                         <?php if (isset($validation)) : ?>
                             <div class="alert alert-danger" role="alert">
                                 <?= $validation->listErrors() ?>
@@ -47,7 +47,7 @@
                     </div>
                     <hr class="primary">
                     <div class="card-body">
-                    <div class="row mb-3 " id="email" contenteditable="true">
+                    <div class="row mb-3 " id="email">
                     <form action="<?= base_url('backend/sFirstR/'.encryptIt($em_1['ord_id'])) ?>)?>" method="post">
                                <h6>Dear 
                                 <?php $lname = explode(' ',$em_1['cl_cont_name']) ?>
@@ -87,8 +87,15 @@
 </ol>
 </p>
                                 
-<div class="offset-4 col-md-3">
-                    <button type="submit"  class="btn btn-sm btn-outline-primary">Send Mail</button>
+<div style="float:right;">
+    <a id="payment-button" href="<?= base_url('backend/order-s1/'.encryptIt($em_1['ord_id'])) ?>" class="btn btn-lg btn-dark btn-block">
+
+<span id="payment-button-amount">Back</span>
+</a>
+&nbsp; &nbsp;
+        <button id="payment-button" type="submit" class="btn btn-lg btn-primary btn-block">
+            <span id="payment-button-amount">Send Email</span>
+        </button>
                                         </div>
                                         </form>
                                 </div>

@@ -7,9 +7,28 @@ $('.select2').select2();
 			var normal = parseFloat(normal, 10);
 			var call = document.getElementById("ord_on_call_hrs").value;
 			var call = parseFloat(call, 10);
-			var total = normal + call;
+      var off = document.getElementById("ord_off_site_hrs").value;
+			var off = parseFloat(off, 10);
+      var week = document.getElementById("ord_bh_week_hrs").value;
+			var week = parseFloat(week, 10);
+			var total = normal + call + off + week;
 			document.getElementById("total").value = total.toFixed(2);
 		}
+// Calculating total paying to employee
+    // function calculateTp() {
+    //   var norm = parseFloat(document.getElementById("ord_normal_hrs").value);
+    //   var onc = parseFloat(document.getElementById("ord_on_call_hrs").value);
+    //   var off = parseFloat(document.getElementById("ord_off_site_hrs").value);
+    //   var week = parseFloat(document.getElementById("ord_bh_week_hrs").value);
+    //   var normr = parseFloat(document.getElementById("ord_normal_hrs_rt").value);
+    //   var oncr = parseFloat(document.getElementById("ord_ocall_rt").value);
+    //   var offr = parseFloat(document.getElementById("ord_osite_rt").value);
+    //   var weekr = parseFloat(document.getElementById("ord_bhw_rt").value);
+     
+    //   var tp = norm * normr + onc * oncr + off * offr + week * weekr;
+    // document.getElementById("totpay").value = tp.toFixed(2);  
+      
+    // }
 //  Calculating Total admin charges
 
 function calculateTa() {
@@ -24,7 +43,7 @@ document.getElementById("Tadmin").value = ta.toFixed(2);
 function calculateDiff() {
   var hosp = parseFloat(document.getElementById("ord_hosp_earn").value);
   var tadmin = parseFloat(document.getElementById("Tadmin").value);
-  var dr = parseFloat(document.getElementById("ord_paying_to_dr").value);
+  var dr = parseFloat(document.getElementById("totpay").value);
   
   var diff = hosp + tadmin - dr;
   document.getElementById("diff").value = diff.toFixed(2);

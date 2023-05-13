@@ -19,7 +19,7 @@
                         <h6 class="card-title">All Orders</h6>
                         <ul class="header-dropdown">
                             <li>
-                                <a type="button" href="<?= base_url('backend/order-s1') ?>" class="btn btn-sm btn-outline-primary">New Order</a>
+                                <a type="button" href="<?= base_url('backend/new-order') ?>" class="btn btn-sm btn-outline-primary">New Order</a>
                             </li>
                         </ul>
                     </div>
