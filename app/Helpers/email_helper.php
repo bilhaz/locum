@@ -1,9 +1,8 @@
 <?php
-namespace App\Helpers;
 
-class EmailHelper
-{
-    public static function sendEmail($to, $subject, $message)
+if (!function_exists('SendEmail')) {
+
+    function sendEmail($to, $subject, $message)
     {
         $email = \Config\Services::email();
 

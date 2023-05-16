@@ -62,7 +62,7 @@
                             <?php endif; ?>
                         
                         
-                        <form action="<?= base_url('backend/order-s1') ?>" method="post" autocomplete="off" enctype="multipart/form-data" accept-charset="utf-8" data-parsley-validate="" id="forma">
+                        <form action="<?= base_url('backend/new-order') ?>" method="post" autocomplete="off" enctype="multipart/form-data" accept-charset="utf-8" data-parsley-validate="" id="forma">
                         <div class="row">
                         <div class="form-group">
                                     <label for="cl_id" class="control-label mb-1">Order From</label>

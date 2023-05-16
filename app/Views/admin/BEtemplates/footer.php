@@ -6,6 +6,7 @@
 <!-- <script src="<?php // base_url('public/assets/bundles/libscripts.bundle.js')?>"></script> -->
 <script src="<?= base_url('public/assets/bundles/dataTables.bundle.js')?>"></script>
 <script src="<?= base_url('public/assets/js/my.js')?>"></script>
+<script src="<?= base_url('public/assets/js/index2.js')?>"></script>
 
 <script src="<?=  base_url('public/assets/bundles/mainscripts.bundle.js')?>"></script>
 <script>

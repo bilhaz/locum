@@ -36,7 +36,7 @@ class BEBaseController extends Controller
      *
      * @var array
      */
-    protected $helpers = ['configuration_helper'];
+    protected $helpers = ['configuration_helper', 'email_helper'];
 
     /**
      * Constructor.
