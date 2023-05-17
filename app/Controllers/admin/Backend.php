@@ -55,6 +55,8 @@ class Backend extends BEBaseController
 		'locum-ctrack' => ['super_admin', 'admin', 'user'],
 		'locum-intrack' => ['super_admin', 'admin', 'user'],
 		'locum-sagtrack' => ['super_admin', 'admin', 'user'],
+		'order-publish' => ['super_admin', 'admin', 'user'],
+		'order-unpublish' => ['super_admin', 'admin', 'user'],
 		'order_view' => ['super_admin', 'admin', 'user'],
 		'order_edit' => ['super_admin', 'admin', 'user'],
 		'ord_status' => ['super_admin', 'admin', 'user'],
@@ -178,6 +180,10 @@ class Backend extends BEBaseController
 		$data = [];
 		$timestamp = \time();
 		$dt = date('Y-m-d H:i:s', $timestamp);
+		$today = date('Y-m-d');
+		$this_week = date('Y-m-d', strtotime('this week'));
+		$this_month = date('Y-m-d', strtotime('first day of this month'));
+		$this_year = date('Y-m-d', strtotime('first day of January this year'));
 		$model = new ordersModel();
 		$data['o_pen'] = $model->where('ord_status', '1')->where('ord_required_to >=', $dt)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
 		$data['o_pro'] = $model->where('ord_status', '2')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
@@ -185,7 +191,22 @@ class Backend extends BEBaseController
 		$data['o_end'] = $model->where('ord_status', '4')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
 		$data['o_exp'] = $model->where('ord_required_to <=', $dt)->where('ord_status', '1')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
 		$data['o_canc'] = $model->where('ord_cancel_bcl', '1')->orWhere('ord_cancel_bdr', '1')->countAllResults();
-
+		// Confirm Order Statistics
+		$data['today'] = $model->where('ord_status', '3')->where('DATE(ord_updated)', $today)->countAllResults();
+		// Confirm Order Statistics
+		$data['this_week'] = $model->where('ord_status', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated) >=', $this_week)->countAllResults();
+		// Confirm Order Statistics
+		$data['this_month'] = $model->where('ord_status', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated) >=', $this_month)->countAllResults();
+		// Confirm Order Statistics
+		$data['this_year'] = $model->where('ord_status', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated) >=', $this_year)->countAllResults();
+		// Todays Actitvity
+		$data['ord_rcvd'] = $model->where('DATE(ord_created)', $today)->countAllResults();
+		// Todays Actitvity
+		$data['ord_proc'] = $model->where('ord_status', '2')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated)', $today)->countAllResults();
+		// Todays Actitvity
+		$data['ord_conf'] = $model->where('ord_status', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated)', $today)->countAllResults();
+		// Todays Actitvity
+		$data['ord_canc'] = $model->where('ord_cancel_bcl', '1')->where('DATE(ord_updated)', $today)->orWhere('ord_cancel_bdr', '1')->where('DATE(ord_updated)', $today)->countAllResults();
 
 
 
@@ -2617,5 +2638,21 @@ class Backend extends BEBaseController
 				return redirect()->to('backend/dashboard');
 			}
 		}
+	}
+	public function order_publish($id = null)
+	{
+		$id = decryptIt($id);
+		$data = [];
+			$model = new ordersModel();
+			$data['order'] = $model->where('ord_id', $id)->first();
+			$newData = [
+				'ord_advrtise' => '1',
+
+			];
+			$model->update($id, $newData);
+			session()->setFlashdata('success', 'Order has been Succesfully Advertised');
+				return redirect()->to('backend/orders');
+			
+		
 	}
 }

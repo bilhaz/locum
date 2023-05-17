@@ -25,3 +25,9 @@ UPDATE orders SET ord_confirmation_date=NULL WHERE ord_confirmation_date='0000-0
 ALTER TABLE `orders` ADD `ord_emp_pay_status` VARCHAR(255) NULL AFTER `ord_payment_status`;
 
 
+ALTER TABLE `orders` CHANGE `ord_time_sheet_mode` `ord_time_sheet_mode` ENUM('whatsapp','email','fax','online') CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+
+ALTER TABLE `notification` ADD `usr_type` VARCHAR(255) NULL AFTER `emp_id`;
+
+ALTER TABLE `orders` ADD `ord_advrtise` INT NOT NULL AFTER `ord_cl_cremarks`;
+

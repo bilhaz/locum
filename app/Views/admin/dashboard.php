@@ -56,27 +56,27 @@
                     </div>
                     <div class="card-body">
                         <div class="card mb-2">
-                            <label class="form-label">Today<span style="float:right;">41</span></label>
+                            <label class="form-label">Today<span style="float:right;"><?= $today ?></span></label>
                             <div class="progress mb-3">
-                                <div class="progress-bar bg-info bg-gradient" role="progressbar" style="width: 41%;" aria-valuenow="41" aria-valuemin="0" aria-valuemax="100">41/100</div>
+                                <div class="progress-bar bg-info bg-gradient" role="progressbar" style="width: <?= $today ?>%;" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
                         <div class="card mb-2">
-                            <label class="form-label">This Week<span style="float:right;">41</span></label>
+                            <label class="form-label">This Week<span style="float:right;"><?= $this_week ?></span></label>
                             <div class="progress mb-3">
-                                <div class="progress-bar bg-danger bg-gradient" role="progressbar" style="width: 41%;" aria-valuenow="41" aria-valuemin="0" aria-valuemax="100">41/100</div>
+                                <div class="progress-bar bg-danger bg-gradient" role="progressbar" style="width: <?= $this_week ?>%;" aria-valuenow="41" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
                         <div class="card mb-2">
-                            <label class="form-label">This Month<span style="float:right;">41</span></label>
+                            <label class="form-label">This Month<span style="float:right;"><?= $this_month ?></span></label>
                             <div class="progress mb-3">
-                                <div class="progress-bar bg-warning bg-gradient" role="progressbar" style="width: 41%;" aria-valuenow="41" aria-valuemin="0" aria-valuemax="100">41/100</div>
+                                <div class="progress-bar bg-warning bg-gradient" role="progressbar" style="width: <?= $this_month ?>%;" aria-valuenow="41" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
                         <div class="card mb-2">
-                            <label class="form-label">This Year<span style="float:right;">41</span></label>
+                            <label class="form-label">This Year<span style="float:right;"><?= $this_year ?></span></label>
                             <div class="progress mb-3">
-                                <div class="progress-bar bg-gradient" role="progressbar" style="width: 41%;" aria-valuenow="41" aria-valuemin="0" aria-valuemax="100">41/100</div>
+                                <div class="progress-bar bg-gradient" role="progressbar" style="width: <?= $this_year ?>%;" aria-valuenow="500" aria-valuemin="0" aria-valuemax="1000"></div>
                             </div>
                         </div>
                     </div>
@@ -96,7 +96,7 @@
                                     <div class="time mx-3"></div>
                                     <div class="desc">
                                         <h3><strong>Order received</strong></h3>
-                                        <h4>4</h4>
+                                        <h4><?= $ord_rcvd ?></h4>
                                     </div>
                                 </li>
                                 <li class="d-flex align-items-start">
@@ -104,7 +104,7 @@
                                     <div class="time mx-3"></div>
                                     <div class="desc">
                                         <h3><strong>Order Processed</strong></h3>
-                                        <h4>6</h4>
+                                        <h4><?= $ord_proc ?></h4>
                                     </div>
                                 </li>
                                 <li class="d-flex align-items-start">
@@ -112,7 +112,7 @@
                                     <div class="time mx-3"></div>
                                     <div class="desc">
                                         <h3><strong>Order Confirmed</strong></h3>
-                                        <h4>8</h4>
+                                        <h4><?= $ord_conf ?></h4>
                                     </div>
                                 </li>
                                 <li class="d-flex align-items-start">
@@ -120,7 +120,7 @@
                                     <div class="time mx-3"></div>
                                     <div class="desc">
                                         <h3><strong>Order Cancelled</strong></h3>
-                                        <h4>1</h4>
+                                        <h4><?= $ord_canc ?></h4>
                                     </div>
                                 </li>
                             </ul>
@@ -145,7 +145,7 @@
                                 <a type="button" class="btn btn-outline-primary btn-block equal-width" href="#" target="_blank">VAT on Sales</a>
                             </div>
                             <div class="col-md-6 mb-2">
-                                <a type="button" class="btn btn-outline-primary btn-block equal-width" href="#" target="_blank">VAT on Sales</a>
+                                <a type="button" class="btn btn-outline-primary btn-block equal-width" href="#" target="_blank">VAT on Purchase</a>
                             </div>
                             <div class="col-md-6 mb-2">
                                 <a type="button" class="btn btn-outline-primary btn-block equal-width" href="#" target="_blank">VOS - VOP</a>

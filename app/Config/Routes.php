@@ -65,6 +65,7 @@ $routes->match(['get' , 'post'], 'backend/sFourthR/(:any)', 'admin\Backend::sFou
 $routes->match(['get' , 'post'], 'backend/locum-ctrack', 'admin\Backend::Locum_confirmation_track' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/locum-intrack', 'admin\Backend::Locum_invoice_track' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/locum-sagtrack', 'admin\Backend::Locum_sage_track' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'backend/order-publish/(:any)', 'admin\Backend::order_publish/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/order_edit/(:any)', 'admin\Backend::order_edit/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/order_view/(:any)', 'admin\Backend::order_view/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/pending_order', 'admin\Backend::pending_order' ,['filter' => 'B_auth']);

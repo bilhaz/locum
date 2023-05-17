@@ -64,6 +64,8 @@
 <p>Invoice ID: <a href="#"><?= $order['ord_invoice_id']?></a></p>
 <p>Sage ID: <a href="#"><?= $order['ord_sage_refer_no']?></a></p>
 <p>Confirmation No: <a href="#"><?= $order['ord_ref_no']?></a></p>
+<p>Payment Received: <a href="#"><?= $order['ord_paymnt_rcvd_date']?></a></p>
+<p>Paid to Employee: <a href="#"><?= $order['ord_pay_to_dr_date']?></a></p>
 <h6><a target="_blank" href="<?= base_url('backend/order_view/'. encryptIt($order['ord_id'])) ?>">View Detail</a></h6>
 </div>
 </div>
