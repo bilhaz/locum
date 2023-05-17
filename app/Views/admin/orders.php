@@ -24,8 +24,9 @@
                         </ul>
                     </div>
                     <?php if (isset($validation)) : ?>
-                        <div class="alert alert-danger" role="alert">
-                            <?= $validation->listErrors() ?>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <i class="fa fa-times-circle"></i> <?= $validation->listErrors() ?>                            
                         </div>
                     <?php endif; ?>
                     <?php if (session()->get('success')) : ?>
@@ -36,8 +37,9 @@
                     <?php endif; ?>
 
                     <?php if (session()->get('error')) : ?>
-                        <div class="alert alert-danger" role="alert">
-                            <?= session()->get('error') ?>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <i class="fa fa-times-circle"></i> <?= session()->get('error') ?>
                         </div>
                     <?php endif; ?>
                     <div class="card-body">
@@ -129,7 +131,12 @@
                                             <a type="button" href="<?= base_url('backend/order_edit/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
                                             <?php endif; ?>
                                             <a type="button" href="<?= base_url('backend/order_view/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View" data-type="confirm"><i class="fa fa-eye"></i></a>
-                                            <a type="button" href="<?= base_url('backend/order-publish/' . encryptIt($row['ord_id'])) ?>" target="_blank" class="btn btn-sm btn-outline-warning js-sweetalert" Onclick="return confirm('Are You sure? You want to advertise this?');" title="View" data-type="confirm"><i class="fa fa-bullhorn"></i></a>
+                                            <?php if($row['ord_advrtise'] == '0'): ?>
+                                            <a type="button" href="<?= base_url('backend/order-publish/' . encryptIt($row['ord_id'])) ?>" target="_blank" class="btn btn-sm btn-outline-warning js-sweetalert" Onclick="return confirm('Are You sure? You want to advertise this?');" title="Advertise" data-type="confirm"><i class="fa fa-bullhorn"></i></a>
+                                            <?php else: ?>
+                                            <a type="button" href="<?= base_url('backend/order-unpublish/' . encryptIt($row['ord_id'])) ?>" target="_blank" class="btn btn-sm btn-outline-danger js-sweetalert" Onclick="return confirm('Are You sure? You want to Unpublish this?');" title="Unpublish" data-type="confirm"><i class="fa  fa-bullhorn"></i></a>
+                                            <?php endif; ?>
+
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

@@ -29,7 +29,7 @@
                         <div class="tab-pane fade show active" id="confrm-new2">
                             <form action="<?= base_url('backend/locum-ctrack') ?>" method="Post" autocomplete="off" accept-charset="utf-8" data-parsley-validate="" id="forma">
                                 <input type="text" class="form-control mb-2" name="cnfrm_id" placeholder="Enter Locum Confirmation No" required="">
-                                <button type="submit" class="btn btn-primary float-right">Track</button>
+                                <button type="submit" class="btn btn-primary">Track</button>
                             </form>
                         </div>
                         <div class="tab-pane" id="invoice-new2">

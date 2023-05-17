@@ -23,7 +23,7 @@ class emp extends EMPBaseController
 		$validation = \Config\Services::validation();
 		$model = new EmpModel();
 		$data['emp_user'] = $model->where('emp_email', $this->request->getVar('emp_email'))
-		->first();
+			->first();
 
 		if ($this->request->getMethod() == 'post') {
 			//let's do the validation here
@@ -36,31 +36,30 @@ class emp extends EMPBaseController
 				'emp_pwd' => [
 					'validateEmp' => 'Email or Password don\'t match'
 				],
-				
+
 			];
 
 			if (isset($data['emp_user']['emp_status']) && $data['emp_user']['emp_status'] == 0) {
 				$session = session();
 				$session->setFlashdata('error', 'Your Account is Disabled');
 				return redirect()->to('employee/login');
-			}
-			else{
-			
-
-			if (!$this->validate($rules, $errors)) {
-
-
-				$data['validation'] = $this->validator;
 			} else {
-				
 
-				$empuser = $model->where('emp_email', $this->request->getVar('emp_email'))
-					->first();
 
-				$this->setUserSession($empuser);
-				return redirect()->to('employee/dashboard');
+				if (!$this->validate($rules, $errors)) {
+
+
+					$data['validation'] = $this->validator;
+				} else {
+
+
+					$empuser = $model->where('emp_email', $this->request->getVar('emp_email'))
+						->first();
+
+					$this->setUserSession($empuser);
+					return redirect()->to('employee/dashboard');
+				}
 			}
-		}
 		}
 
 		return $this->LoadView('employees/login', $data);
@@ -97,7 +96,7 @@ class emp extends EMPBaseController
 		return $this->LoadView('employees/dashboard', $data);
 	}
 
-	
+
 
 	public function logout()
 	{
@@ -108,10 +107,10 @@ class emp extends EMPBaseController
 
 	public function pwdupd()
 	{
-		
+
 		$data = [];
 		$usrid = session()->emp_id;
-		
+
 		helper(['form']);
 		if ($this->request->getMethod() == 'post') {
 			//let's do the validation here
@@ -121,17 +120,17 @@ class emp extends EMPBaseController
 			];
 
 			if (!$this->validate($rules)) {
-				
+
 				$data['validation'] = $this->validator;
 			} else {
 				//store this to database
 
 				$model = new EmpModel();
 				$newData = [
-					
+
 					'emp_pwd' => $this->request->getVar('emp_pwd'),
 				];
-				$model->update($usrid,$newData);
+				$model->update($usrid, $newData);
 				$session = session();
 				$session->setFlashdata('success', 'Password Updation Successful');
 				return redirect()->to('employee/pwdupd');
@@ -148,36 +147,36 @@ class emp extends EMPBaseController
 		$emodel = new EmpModel();
 		$data['e_doc'] = $emodel->where('emp_id', $id)->first();
 		$model = new ordersModel();
-		$data['order'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->Join('timesheets', 'timesheets.order_id = orders.ord_id','LEFT')->where('orders.emp_id', session()->emp_id)->groupBy('orders.ord_id')->orderBy('ord_created', 'DESC')->findAll();
-		
+		$data['order'] = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->Join('timesheets', 'timesheets.order_id = orders.ord_id', 'LEFT')->where('orders.emp_id', session()->emp_id)->groupBy('orders.ord_id')->orderBy('ord_created', 'DESC')->findAll();
+
 		return $this->LoadView('employees/contracts', $data);
 	}
 
-    public function order_view($oid = null)
+	public function order_view($oid = null)
 	{
 		$data = [];
 		$oid = decryptIt($oid);
 
 		$formula = new formulaModel();
-		$data['forml'] = $formula->where('id',1)->first();
+		$data['forml'] = $formula->where('id', 1)->first();
 
 		$ttmodel = new timesheetModel();
-		$data['ord'] = $ttmodel->where('order_id',$oid)->first();
-		
+		$data['ord'] = $ttmodel->where('order_id', $oid)->first();
+
 		$model = new ordersModel();
 		$data['cont'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade')->where('ord_id', $oid)->first();
 
 		return $this->LoadView('employees/order_view', $data);
 	}
 
-    public function upl_asses($asid = null)
+	public function upl_asses($asid = null)
 	{
-        $asid = decryptIt($asid);
-        $id = session()->cl_id;
+		$asid = decryptIt($asid);
+		$id = session()->cl_id;
 		$link = "backend/order_view";
 		$data = [];
-		helper(['form']);	
-    	$Nmodel = new notificationModel();
+		helper(['form']);
+		$Nmodel = new notificationModel();
 		$model = new ordersModel();
 		$data['e_ord'] = $model->where('ord_id', $asid)->first();
 
@@ -198,7 +197,6 @@ class emp extends EMPBaseController
 					$DAname = encryptIt($DA->getName()) . '.' . pathinfo($_FILES['ord_assignment']['name'], PATHINFO_EXTENSION);
 
 					$DA->move('public/uploads/doc_assesment/', $DAname, true);
-				
 				}
 
 
@@ -206,19 +204,19 @@ class emp extends EMPBaseController
 
 
 				$newData = [
-					
+
 					'ord_assignment' => $DAname,
-					
+
 
 				];
 				$newdata2 = [
 					'ord_id' => $asid,
-					'emp_id' =>$id,
+					'emp_id' => $id,
 					'link'	=> $link,
 					'notification' => "Assesment uploaded by Client",
 					'status' => "0",
-					];
-					
+				];
+
 				$model->update($asid, $newData);
 				$Nmodel->insert($newdata2);
 				$session = session();
@@ -231,114 +229,114 @@ class emp extends EMPBaseController
 		return $this->LoadView('employees/upl_asses', $data);
 	}
 
-	
+
 
 	public function timesheet($tid = null)
 	{
-        $tid = decryptIt($tid);
+		$tid = decryptIt($tid);
 		$data = [];
-		helper(['form']);	
+		helper(['form']);
 
 		$model = new ordersModel();
-		$data['e_ord'] = $model->join('clients','clients.cl_id = orders.cl_id','LEFT')->join('employee','employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_id', $tid)->first();
+		$data['e_ord'] = $model->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $tid)->first();
 
 		$data['start_date'] = $data['e_ord']['ord_process_details_from'];
-		$data['end_date'] = $data['e_ord']['ord_process_details_to'];	
+		$data['end_date'] = $data['e_ord']['ord_process_details_to'];
 
 		return $this->LoadView('employees/timesheet', $data);
 	}
 
-	public function timesheet_save($ord_id){
-		
+	public function timesheet_save($ord_id)
+	{
+
 		$ord_id = decryptIt($ord_id);
 		$eid = session()->emp_id;
 		$link = "backend/t-view";
 		$model = new timesheetModel();
 		$Nmodel = new notificationModel();
-		foreach($_POST['status'] as $row=>$key){
-			
-			$model->insert(array('order_id'=>$ord_id,'dutyDate' => explode(',', $key)[0], 'dutyTime' => explode(',', $key)[1], 'siteStatus' => explode(',', $key)[2]));
-			
+		foreach ($_POST['status'] as $row => $key) {
+
+			$model->insert(array('order_id' => $ord_id, 'dutyDate' => explode(',', $key)[0], 'dutyTime' => explode(',', $key)[1], 'siteStatus' => explode(',', $key)[2]));
 		}
 		$newData = [
 			'ord_id' => $ord_id,
-			'emp_id' =>$eid,
+			'emp_id' => $eid,
 			'link'	=> $link,
 			'notification' => "New Timesheet submitted",
 			'status' => "0",
 		];
-		
+
 		$Nmodel->save($newData);
 		$session = session();
-			$session->setFlashdata('success', 'TimeSheet Saved');
-			return redirect()->to('employee/ord-view/' . encryptIt($ord_id));
+		$session->setFlashdata('success', 'TimeSheet Saved');
+		return redirect()->to('employee/ord-view/' . encryptIt($ord_id));
 	}
 
-	public function edit_timesheet($ord_id){
+	public function edit_timesheet($ord_id)
+	{
 		$data = [];
-		
+
 		$ord_id = decryptIt($ord_id);
 		$model = new timesheetModel();
-		$data['t_view'] = $model->where('order_id',$ord_id)->find();
+		$data['t_view'] = $model->where('order_id', $ord_id)->find();
 
 		$model = new ordersModel();
-		$data['e_ord'] = $model->join('clients','clients.cl_id = orders.cl_id','LEFT')->join('employee','employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_id', $ord_id)->first();
+		$data['e_ord'] = $model->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $ord_id)->first();
 
 		$data['start_date'] = $data['e_ord']['ord_process_details_from'];
-		$data['end_date'] = $data['e_ord']['ord_process_details_to'];	
-		
-		
-		return $this->LoadView('employees/edit_timesheet', $data);
+		$data['end_date'] = $data['e_ord']['ord_process_details_to'];
 
+
+		return $this->LoadView('employees/edit_timesheet', $data);
 	}
 
-	public function timesheet_upd($ord_id){
+	public function timesheet_upd($ord_id)
+	{
 		$data = [];
-		
+
 		$ord_id = decryptIt($ord_id);
 		$eid = session()->emp_id;
 		$link = "backend/t-view";
 		$model = new timesheetModel();
 		$Nmodel = new notificationModel();
-			// Delete all existing timesheet data for this order
-			$model->where(['order_id' => $ord_id])->delete();
-		
-			// Insert the updated timesheet data
-			foreach($_POST['status'] as $row => $key){
-				$model->insert(['order_id' => $ord_id, 'dutyDate' => explode(',', $key)[0], 'dutyTime' => explode(',', $key)[1], 'siteStatus' => explode(',', $key)[2]]);
-			}
-			$newData = [
-				'ord_id' => $ord_id,
-				'emp_id' =>$eid,
-				'link'	=> $link,
-				'notification' => "Timesheet was Updated",
-				'status' => "0",
-			];
-			$Nmodel->save($newData);
-			$session = session();
-				$session->setFlashdata('success', 'TimeSheet Updated');
-				return redirect()->to('employee/t-edit/' . encryptIt($ord_id));
+		// Delete all existing timesheet data for this order
+		$model->where(['order_id' => $ord_id])->delete();
 
+		// Insert the updated timesheet data
+		foreach ($_POST['status'] as $row => $key) {
+			$model->insert(['order_id' => $ord_id, 'dutyDate' => explode(',', $key)[0], 'dutyTime' => explode(',', $key)[1], 'siteStatus' => explode(',', $key)[2]]);
+		}
+		$newData = [
+			'ord_id' => $ord_id,
+			'emp_id' => $eid,
+			'link'	=> $link,
+			'notification' => "Timesheet was Updated",
+			'status' => "0",
+		];
+		$Nmodel->save($newData);
+		$session = session();
+		$session->setFlashdata('success', 'TimeSheet Updated');
+		return redirect()->to('employee/t-edit/' . encryptIt($ord_id));
 	}
 
-	public function timesheet_view($ord_id){
+	public function timesheet_view($ord_id)
+	{
 		$data = [];
-		
+
 		$ord_id = decryptIt($ord_id);
 		$model = new timesheetModel();
-		$data['t_view'] = $model->where('order_id',$ord_id)->find();
+		$data['t_view'] = $model->where('order_id', $ord_id)->find();
 
 		$model = new ordersModel();
-		$data['e_ord'] = $model->join('clients','clients.cl_id = orders.cl_id','LEFT')->join('employee','employee.emp_id = orders.emp_id','LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_id', $ord_id)->first();
+		$data['e_ord'] = $model->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $ord_id)->first();
 
 		$data['start_date'] = $data['e_ord']['ord_process_details_from'];
-		$data['end_date'] = $data['e_ord']['ord_process_details_to'];	
-		
+		$data['end_date'] = $data['e_ord']['ord_process_details_to'];
+
 
 		return $this->LoadView('employees/timesheet_view', $data);
-
 	}
-	
+
 
 	public function profile()
 	{
@@ -356,7 +354,7 @@ class emp extends EMPBaseController
 		$data['emp'] = $model->where('emp_id', $id)->first();
 		if ($this->request->getMethod() == 'post') {
 			//let's do the validation here
-		
+
 			$rules = [
 				'emp_fname' => ['label' => 'First Name', 'rules' => 'required'],
 				'emp_lname' => ['label' => 'Last Name', 'rules' => 'required'],
@@ -372,14 +370,14 @@ class emp extends EMPBaseController
 				'emp_passport' => ['label' => 'Passport', 'rules' => 'uploaded[emp_passport]|ext_in[emp_passport,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_passport,2048]'],
 				'emp_occup_health' => ['label' => 'Occupational Health', 'rules' => 'uploaded[emp_occup_health]|ext_in[emp_occup_health,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_occup_health,2048]'],
 				'emp_work_permit' => ['label' => 'Work Permit', 'rules' => 'uploaded[emp_work_permit]|ext_in[emp_work_permit,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_work_permit,2048]'],
-				'emp_gender'=> ['label' => 'Gender', 'rules' => 'required'],
+				'emp_gender' => ['label' => 'Gender', 'rules' => 'required'],
 			];
 			foreach (['emp_cv', 'emp_imc_cert', 'emp_gv_cert', 'emp_rec_refer', 'emp_passport', 'emp_occup_health', 'emp_work_permit'] as $field) {
 				if (empty($_FILES[$field]['name'])) {
 					unset($rules[$field]);
 				}
 			}
-	
+
 
 			$errors = [
 				'emp_cv' => [
@@ -389,7 +387,7 @@ class emp extends EMPBaseController
 
 				'emp_imc_cert' => [
 					'uploaded' => 'Can not upload not a valid file',
-						'max_size' => 'File size must be less than 2MB'
+					'max_size' => 'File size must be less than 2MB'
 				],
 				'emp_gv_cert' => [
 					'uploaded' => 'Can not upload not a valid file',
@@ -404,17 +402,17 @@ class emp extends EMPBaseController
 					'uploaded' => 'Can not upload not a valid file',
 					'max_size' => 'File size must be less than 2MB'
 				],
-			
+
 				'emp_occup_health' => [
 					'uploaded' => 'Can not upload not a valid file',
 					'max_size' => 'File size must be less than 2MB'
 				],
-			
+
 				'emp_work_permit' => [
 					'uploaded' => 'Can not upload not a valid file',
 					'max_size' => 'File size must be less than 2MB'
 				],
-			
+
 			];
 
 			if (!$this->validate($rules, $errors)) {
@@ -536,7 +534,7 @@ class emp extends EMPBaseController
 		return $this->LoadView('employees/profile', $data);
 	}
 
-public function pending_assign()
+	public function pending_assign()
 	{
 
 		$data = [];
@@ -548,7 +546,7 @@ public function pending_assign()
 		$data['e_doc'] = $emodel->where('emp_id', $id)->first();
 		$model = new ordersModel();
 		$data['o_pen'] = $model->where('ord_status', '1')->where('ord_required_to >=', $dt)->countAllResults();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->Join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->Join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('orders.ord_status', '1')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('employee.emp_id', session()->emp_id)->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->Join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->Join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('orders.ord_status', '1')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('employee.emp_id', session()->emp_id)->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('employees/pending_assigment', $data);
 	}
@@ -561,7 +559,7 @@ public function pending_assign()
 		$emodel = new EmpModel();
 		$data['e_doc'] = $emodel->where('emp_id', $id)->first();
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->Join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->Join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '2')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('employee.emp_id', session()->emp_id)->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->Join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->Join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '2')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('employee.emp_id', session()->emp_id)->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('employees/processed_assign', $data);
 	}
@@ -575,7 +573,7 @@ public function pending_assign()
 		$emodel = new EmpModel();
 		$data['e_doc'] = $emodel->where('emp_id', $id)->first();
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->Join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->Join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('employee.emp_id', session()->emp_id)->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->Join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->Join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('employee.emp_id', session()->emp_id)->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('employees/confirmed_assign', $data);
 	}
@@ -589,9 +587,27 @@ public function pending_assign()
 		$emodel = new EmpModel();
 		$data['e_doc'] = $emodel->where('emp_id', $id)->first();
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->Join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->Join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('ord_status', '4')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('employee.emp_id', session()->emp_id)->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->Join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->Join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '4')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('employee.emp_id', session()->emp_id)->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('employees/completed_assign', $data);
 	}
+	public function advertisements()
+	{
 
+		$data = [];
+		$id = session()->emp_id;
+		helper(['form']);
+		$emodel = new EmpModel();
+		$data['e_doc'] = $emodel->where('emp_id', $id)->first();
+		$doc = $data['e_doc'];
+		$model = new ordersModel();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->Join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')
+			->whereIn('orders.ord_speciality', [$doc['emp_spec1'], $doc['emp_spec2'], $doc['emp_spec3']])
+			->where('orders.ord_cancel_bcl', '0')
+			->where('orders.ord_cancel_bdr', '0')
+			->where('orders.ord_advrtise', '1')
+			->orderBy('orders.ord_updated', 'DESC')
+			->find();
+		return $this->LoadView('employees/advertisements', $data);
+	}
 }

@@ -126,7 +126,7 @@ $routes->match(['get' , 'post'], 'backend/notif-count', 'admin\Backend::get_noti
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->match(['get' , 'post'], 'employee', 'employee\emp::dashboard',['filter' => 'E_Auth']);
-
+$routes->match(['get' , 'post'], 'employee/advertisements', 'employee\emp::advertisements',['filter' => 'E_Auth']);
 $routes->match(['get' , 'post'], 'employee/login', 'employee\emp::login',['filter' => 'E_noauth']);
 $routes->match(['get' , 'post'],'employee/pwdupd', 'employee\emp::pwdupd',['filter' => 'E_Auth']);
 $routes->get('employee/dashboard', 'employee\emp::dashboard',['filter' => 'E_Auth']);
