@@ -103,7 +103,7 @@
 <ul class="main-menu cust metismenu list-unstyled">
 <li class="nav-item"><a class="nav-link" href="<?= base_url('employee/dashboard') ?>"><i class="fa fa-tachometer"></i><span>Dashboard</span></a></li>
 <li class="nav-item"><a href="<?= base_url('employee/profile') ?>"><i class="fa fa-user-circle-o"></i>Profile</a></li>
-<li class="nav-item"><a href="<?= base_url('employee/advertisements') ?>"><i class="fa fa-bullhorn"></i>Advertisements</a></li>
+<!-- <li class="nav-item"><a href="<?php //base_url('employee/advertisements') ?>"><i class="fa fa-bullhorn"></i>Advertisements</a></li> -->
 <li class="nav-item"><a href="<?= base_url('employee/orders') ?>"><i class="fa fa-user-md"></i>My Assignments</a></li>
 
 </ul>

@@ -591,23 +591,23 @@ class emp extends EMPBaseController
 
 		return $this->LoadView('employees/completed_assign', $data);
 	}
-	public function advertisements()
-	{
+	// public function advertisements()
+	// {
 
-		$data = [];
-		$id = session()->emp_id;
-		helper(['form']);
-		$emodel = new EmpModel();
-		$data['e_doc'] = $emodel->where('emp_id', $id)->first();
-		$doc = $data['e_doc'];
-		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->Join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')
-			->whereIn('orders.ord_speciality', [$doc['emp_spec1'], $doc['emp_spec2'], $doc['emp_spec3']])
-			->where('orders.ord_cancel_bcl', '0')
-			->where('orders.ord_cancel_bdr', '0')
-			->where('orders.ord_advrtise', '1')
-			->orderBy('orders.ord_updated', 'DESC')
-			->find();
-		return $this->LoadView('employees/advertisements', $data);
-	}
+	// 	$data = [];
+	// 	$id = session()->emp_id;
+	// 	helper(['form']);
+	// 	$emodel = new EmpModel();
+	// 	$data['e_doc'] = $emodel->where('emp_id', $id)->first();
+	// 	$doc = $data['e_doc'];
+	// 	$model = new ordersModel();
+	// 	$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->Join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')
+	// 		->whereIn('orders.ord_speciality', [$doc['emp_spec1'], $doc['emp_spec2'], $doc['emp_spec3']])
+	// 		->where('orders.ord_cancel_bcl', '0')
+	// 		->where('orders.ord_cancel_bdr', '0')
+	// 		->where('orders.ord_advrtise', '1')
+	// 		->orderBy('orders.ord_updated', 'DESC')
+	// 		->find();
+	// 	return $this->LoadView('employees/advertisements', $data);
+	// }
 }

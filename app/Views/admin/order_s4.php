@@ -604,3 +604,11 @@
             </div>
         </div>
     </div>
+    <script>
+    function checkCancellation() {
+        if (document.getElementById("ord_cancel_bdr").value === "1") {
+            if (confirm("Are you sure?"))
+                window.location.href = "<?= base_url("backend/change_doctor_cancelled_order/" . encryptIt($v_ordr['ord_id'])) ?>" + "/" + document.getElementById("emp_id").value;
+        }
+    }
+</script>

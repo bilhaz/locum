@@ -280,11 +280,13 @@
                                                                     '0',
                                                                     ($v_ordr['vat_rate'] == '0') ? TRUE : FALSE
                                                                 ) ?>>0%</option>
+                                                                <?php if(!empty($v_ordr['vat_rate'])): ?>
                                             <option value="$v_ordr['vat_rate']" <?= set_select(
                                                                     'vat_rate',
                                                                     $v_ordr['vat_rate'],
                                                                     ($v_ordr['vat_rate'] == $v_ordr['vat_rate']) ? TRUE : FALSE
                                                                 ) ?>><?=$v_ordr['vat_rate']?>%</option>
+                                                                <?php endif; ?>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4 ">
@@ -312,3 +314,11 @@
         </div>
     </div>
 </div>
+<script>
+    function checkCancellation() {
+        if (document.getElementById("ord_cancel_bdr").value === "1") {
+            if (confirm("Are you sure?"))
+                window.location.href = "<?= base_url("backend/change_doctor_cancelled_order/" . encryptIt($v_ordr['ord_id'])) ?>" + "/" + document.getElementById("emp_id").value;
+        }
+    }
+</script>

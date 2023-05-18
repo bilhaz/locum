@@ -270,6 +270,17 @@ class Backend extends BEBaseController
 
 				];
 				$model->save($newData);
+				$id = $model->INSERTID;
+				// logs
+				$log = array(
+					'row_id' => $id,
+					'adm_id' => session()->usr_id,
+					'action_table' => 'Users',
+					'content' => $_POST,
+					'event' => 'New Backend User Added',
+				);
+
+				add_log($log);
 				$session = session();
 				$session->setFlashdata('success', 'Registration Successful');
 				return redirect()->to('backend/users');
@@ -306,9 +317,19 @@ class Backend extends BEBaseController
 			if (!$this->validate($rules)) {
 				$data['validation'] = $this->validator;
 			} else {
+				
+				// logs
+				$log = array(
+					'row_id' => $uid,
+					'adm_id' => session()->usr_id,
+					'action_table' => 'Users',
+					'content' => $_POST,
+					'event' => 'Backend User Updated',
+				);
+
+				add_log($log);
+
 				//store this to database
-
-
 				$newData = [
 					'usr_email' => $this->request->getVar('usr_email'),
 					'usr_name' => $this->request->getVar('usr_name'),
@@ -347,6 +368,16 @@ class Backend extends BEBaseController
 			} else {
 				//store this to database
 
+				// logs
+				$log = array(
+					'row_id' => $bid,
+					'adm_id' => session()->usr_id,
+					'action_table' => 'Users',
+					'content' => 'Password',
+					'event' => 'Change Password for Backend User',
+				);
+
+				add_log($log);
 
 				$newData = [
 
@@ -455,6 +486,18 @@ class Backend extends BEBaseController
 				];
 				$model->save($newData);
 				$id = $model->insertID;
+
+				// logs
+			$log = array(
+				'row_id' => $id,
+				'adm_id' => session()->usr_id,
+				'action_table' => 'Employee',
+				'content' => $_POST,
+				'event' => 'New Employee Added',
+			);
+	
+			add_log($log);
+
 				$data['empr'] = $model->where('emp_id', $id)->first();
 				$to = $data['empr']['emp_email'];
 				$subject = 'SRA Employee Registration';
@@ -556,6 +599,16 @@ class Backend extends BEBaseController
 			if (!$this->validate($rules, $errors)) {
 				$data['validation'] = $this->validator;
 			} else {
+				// logs
+			$log = array(
+				'row_id' => $id,
+				'adm_id' => session()->usr_id,
+				'action_table' => 'Employee',
+				'content' => $_POST,
+				'event' => 'Employee Details Added',
+			);
+	
+			add_log($log);
 
 
 				$cv = $this->request->getFile('emp_cv');
@@ -735,6 +788,17 @@ class Backend extends BEBaseController
 				$data['validation'] = $this->validator;
 			} else {
 
+				// logs
+			$log = array(
+				'row_id' => $id,
+				'adm_id' => session()->usr_id,
+				'action_table' => 'Employee',
+				'content' => $_POST,
+				'event' => 'Employee Details Updated',
+			);
+	
+			add_log($log);
+
 
 				$cv = $this->request->getFile('emp_cv');
 
@@ -868,9 +932,8 @@ class Backend extends BEBaseController
 
 				$data['validation'] = $this->validator;
 			} else {
+
 				//store this to database
-
-
 				$newData = [
 
 					'emp_pwd' => $this->request->getVar('emp_pwd'),
@@ -895,6 +958,17 @@ class Backend extends BEBaseController
 
 
 		if ($del['emp_status'] == 1) {
+
+			// logs
+			$log = array(
+				'row_id' => $id,
+				'adm_id' => session()->usr_id,
+				'action_table' => 'Employee',
+				'content' => 'Block',
+				'event' => 'Employee Blocked',
+			);
+	
+			add_log($log);
 
 			$newData = [
 				'emp_status' => 0,
@@ -932,6 +1006,17 @@ class Backend extends BEBaseController
 
 
 		if ($del['emp_status'] == 0) {
+
+			// logs
+			$log = array(
+				'row_id' => $id,
+				'adm_id' => session()->usr_id,
+				'action_table' => 'Employee',
+				'content' => 'Unblock',
+				'event' => 'Employee Unblocked',
+			);
+	
+			add_log($log);
 
 			$newData = [
 				'emp_status' => 1,
@@ -1005,6 +1090,16 @@ class Backend extends BEBaseController
 				];
 				$model->save($newData);
 				$id = $model->insertID;
+				// logs
+			$log = array(
+				'row_id' => $id,
+				'adm_id' => session()->usr_id,
+				'action_table' => 'Clients',
+				'content' => $_POST,
+				'event' => 'New Client Added',
+			);
+	
+			add_log($log);
 				$data['clr'] = $model->where('cl_id', $id)->first();
 				$to = $data['clr']['cl_cont_email'];
 				$subject = 'SRA Client Registration';
@@ -1053,10 +1148,18 @@ class Backend extends BEBaseController
 				$data['validation'] = $this->validator;
 			} else {
 
+				// logs
+			$log = array(
+				'row_id' => $id,
+				'adm_id' => session()->usr_id,
+				'action_table' => 'Clients',
+				'content' => $_POST,
+				'event' => 'Client Details Added',
+			);
+	
+			add_log($log);
 
 				//store this to database
-
-
 				$newData = [
 					'cl_h_name' => $this->request->getVar('cl_h_name'),
 					'cl_reg_as' => $this->request->getVar('cl_reg_as'),
@@ -1107,7 +1210,16 @@ class Backend extends BEBaseController
 				$data['validation'] = $this->validator;
 			} else {
 
+				// logs
+				$log = array(
+					'row_id' => $id,
+					'adm_id' => session()->usr_id,
+					'action_table' => 'Clients',
+					'content' => $_POST,
+					'event' => 'Client Data Updated',
+				);
 
+				add_log($log);
 				//store this to database
 
 
@@ -1154,9 +1266,8 @@ class Backend extends BEBaseController
 
 				$data['validation'] = $this->validator;
 			} else {
+
 				//store this to database
-
-
 				$newData = [
 
 					'cl_cont_pwd' => $this->request->getVar('cl_cont_pwd'),
@@ -1181,6 +1292,16 @@ class Backend extends BEBaseController
 
 		if ($del['cl_status'] == 1) {
 
+			// logs
+			$log = array(
+				'row_id' => $id,
+				'adm_id' => session()->usr_id,
+				'action_table' => 'Clients',
+				'content' => 'block',
+				'event' => 'Client Blocked',
+			);
+
+			add_log($log);
 			$newData = [
 				'cl_status' => 0,
 
@@ -1205,6 +1326,17 @@ class Backend extends BEBaseController
 
 
 		if ($del['cl_status'] == 0) {
+
+			// logs
+			$log = array(
+				'row_id' => $id,
+				'adm_id' => session()->usr_id,
+				'action_table' => 'Clients',
+				'content' => 'Unblock',
+				'event' => 'Client Unblocked',
+			);
+
+			add_log($log);
 
 			$newData = [
 				'cl_status' => 1,
@@ -1245,92 +1377,92 @@ class Backend extends BEBaseController
 		return $this->LoadView('admin/orders', $data);
 	}
 
-	public function new_order_old()
-	{
+	// public function new_order_old()
+	// {
 
-		$data = [];
-		helper(['form']);
-		$Gmodel = new gradeModel();
-		$data['gr_row'] = $Gmodel->findAll();
-		$Smodel = new specialityModel();
-		$data['sp_row'] = $Smodel->findAll();
-		$Emodel = new EmpModel();
-		$data['emp_row'] = $Emodel->where('emp_status', 1)->where('emp_fname !=', Null)->find();
-		$Cmodel = new ClientModel();
-		$data['cli_row'] = $Cmodel->where('cl_status', 1)->where('cl_h_name !=', Null)->where('cl_cont_name !=', Null)->find();
+	// 	$data = [];
+	// 	helper(['form']);
+	// 	$Gmodel = new gradeModel();
+	// 	$data['gr_row'] = $Gmodel->findAll();
+	// 	$Smodel = new specialityModel();
+	// 	$data['sp_row'] = $Smodel->findAll();
+	// 	$Emodel = new EmpModel();
+	// 	$data['emp_row'] = $Emodel->where('emp_status', 1)->where('emp_fname !=', Null)->find();
+	// 	$Cmodel = new ClientModel();
+	// 	$data['cli_row'] = $Cmodel->where('cl_status', 1)->where('cl_h_name !=', Null)->where('cl_cont_name !=', Null)->find();
 
-		$model = new ordersModel();
+	// 	$model = new ordersModel();
 
-		if ($this->request->getMethod() == 'post') {
-			//let's do the validation here
-
-
+	// 	if ($this->request->getMethod() == 'post') {
+	// 		//let's do the validation here
 
 
 
 
 
-			//store this to database
 
 
-			$newData = [
-
-				'ord_speciality' => $this->request->getVar('ord_speciality'),
-				'ord_grade' => $this->request->getVar('ord_grade'),
-				'cl_id' => $this->request->getVar('cl_id'),
-				'emp_id' => $this->request->getVar('emp_id'),
-				'ord_required_from' => $this->request->getVar('ord_required_from'),
-				'ord_required_to' => $this->request->getVar('ord_required_to'),
-				'ord_process_date' => $this->request->getVar('ord_process_date'),
-				'ord_process_details_from' => $this->request->getVar('ord_process_details_from'),
-				'ord_process_details_to' => $this->request->getVar('ord_process_details_to'),
-				'ord_confirmation_date' => $this->request->getVar('ord_confirmation_date'),
-				'ord_invoice_id' => $this->request->getVar('ord_invoice_id'),
-				'ord_normal_hrs' => $this->request->getVar('ord_normal_hrs'),
-				'ord_on_call_hrs' => $this->request->getVar('ord_on_call_hrs'),
-				'ord_total_hrs' => $this->request->getVar('ord_total_hrs'),
-				'ord_approx_cost' => $this->request->getVar('ord_approx_cost'),
-				'ord_pay_to_dr' => $this->request->getVar('ord_pay_to_dr'),
-				'ord_admin_charges' => $this->request->getVar('ord_admin_charges'),
-				'ord_diff_profit_admin' => $this->request->getVar('ord_diff_profit_admin'),
-				'ord_time_sheet_rcvd' => $this->request->getVar('ord_time_sheet_rcvd'),
-				'ord_time_sheet_mode' => $this->request->getVar('ord_time_sheet_mode'),
-				'ord_time_sheet_process' => $this->request->getVar('ord_time_sheet_process'),
-				'ord_time_sheet_approved' => $this->request->getVar('ord_time_sheet_approved'),
-				'ord_comment1' => $this->request->getVar('ord_comment1'),
-				'ord_invoice_refer' => $this->request->getVar('ord_invoice_refer'),
-				'ord_invoice_date' => $this->request->getVar('ord_invoice_date'),
-				'ord_invoice_by' => $this->request->getVar('ord_invoice_by'),
-				'ord_sage_refer_no' => $this->request->getVar('ord_sage_refer_no'),
-				'ord_paymnt_rcvd_date' => $this->request->getVar('ord_paymnt_rcvd_date'),
-				'ord_pay_to_dr_date' => $this->request->getVar('ord_pay_to_dr_date'),
-				'ord_case_status' => $this->request->getVar('ord_case_status'),
-				'ord_payment_status' => $this->request->getVar('ord_payment_status'),
-				'ord_comment2' => $this->request->getVar('ord_comment2'),
-				'ord_status' => $this->request->getVar('ord_status'),
-				'ord_datetime_detail' => $this->request->getVar('ord_datetime_detail'),
-				'ord_prosdatetime_detail' => $this->request->getVar('ord_prosdatetime_detail'),
-				'ord_cancel_bcl' => "0",
-				'ord_ref_no' => $this->request->getVar('ord_ref_no'),
-				'ord_vat_sale' => $this->request->getVar('ord_vat_sale'),
-				'ord_vat_purch' => $this->request->getVar('ord_vat_purch'),
-				'ord_vat_save' => $this->request->getVar('ord_vat_save'),
-				'ord_hosp_earn' => $this->request->getVar('ord_hosp_earn'),
-				'ord_paying_to_dr' => $this->request->getVar('ord_paying_to_dr'),
-				'ord_adminchrg_intern' => $this->request->getVar('ord_adminchrg_intern'),
+	// 		//store this to database
 
 
+	// 		$newData = [
 
-			];
-			$model->insert($newData);
-			$session = session();
-			$session->setFlashdata('success', 'Order Successfully Added');
-			return redirect()->to('backend/orders');
-		}
+	// 			'ord_speciality' => $this->request->getVar('ord_speciality'),
+	// 			'ord_grade' => $this->request->getVar('ord_grade'),
+	// 			'cl_id' => $this->request->getVar('cl_id'),
+	// 			'emp_id' => $this->request->getVar('emp_id'),
+	// 			'ord_required_from' => $this->request->getVar('ord_required_from'),
+	// 			'ord_required_to' => $this->request->getVar('ord_required_to'),
+	// 			'ord_process_date' => $this->request->getVar('ord_process_date'),
+	// 			'ord_process_details_from' => $this->request->getVar('ord_process_details_from'),
+	// 			'ord_process_details_to' => $this->request->getVar('ord_process_details_to'),
+	// 			'ord_confirmation_date' => $this->request->getVar('ord_confirmation_date'),
+	// 			'ord_invoice_id' => $this->request->getVar('ord_invoice_id'),
+	// 			'ord_normal_hrs' => $this->request->getVar('ord_normal_hrs'),
+	// 			'ord_on_call_hrs' => $this->request->getVar('ord_on_call_hrs'),
+	// 			'ord_total_hrs' => $this->request->getVar('ord_total_hrs'),
+	// 			'ord_approx_cost' => $this->request->getVar('ord_approx_cost'),
+	// 			'ord_pay_to_dr' => $this->request->getVar('ord_pay_to_dr'),
+	// 			'ord_admin_charges' => $this->request->getVar('ord_admin_charges'),
+	// 			'ord_diff_profit_admin' => $this->request->getVar('ord_diff_profit_admin'),
+	// 			'ord_time_sheet_rcvd' => $this->request->getVar('ord_time_sheet_rcvd'),
+	// 			'ord_time_sheet_mode' => $this->request->getVar('ord_time_sheet_mode'),
+	// 			'ord_time_sheet_process' => $this->request->getVar('ord_time_sheet_process'),
+	// 			'ord_time_sheet_approved' => $this->request->getVar('ord_time_sheet_approved'),
+	// 			'ord_comment1' => $this->request->getVar('ord_comment1'),
+	// 			'ord_invoice_refer' => $this->request->getVar('ord_invoice_refer'),
+	// 			'ord_invoice_date' => $this->request->getVar('ord_invoice_date'),
+	// 			'ord_invoice_by' => $this->request->getVar('ord_invoice_by'),
+	// 			'ord_sage_refer_no' => $this->request->getVar('ord_sage_refer_no'),
+	// 			'ord_paymnt_rcvd_date' => $this->request->getVar('ord_paymnt_rcvd_date'),
+	// 			'ord_pay_to_dr_date' => $this->request->getVar('ord_pay_to_dr_date'),
+	// 			'ord_case_status' => $this->request->getVar('ord_case_status'),
+	// 			'ord_payment_status' => $this->request->getVar('ord_payment_status'),
+	// 			'ord_comment2' => $this->request->getVar('ord_comment2'),
+	// 			'ord_status' => $this->request->getVar('ord_status'),
+	// 			'ord_datetime_detail' => $this->request->getVar('ord_datetime_detail'),
+	// 			'ord_prosdatetime_detail' => $this->request->getVar('ord_prosdatetime_detail'),
+	// 			'ord_cancel_bcl' => "0",
+	// 			'ord_ref_no' => $this->request->getVar('ord_ref_no'),
+	// 			'ord_vat_sale' => $this->request->getVar('ord_vat_sale'),
+	// 			'ord_vat_purch' => $this->request->getVar('ord_vat_purch'),
+	// 			'ord_vat_save' => $this->request->getVar('ord_vat_save'),
+	// 			'ord_hosp_earn' => $this->request->getVar('ord_hosp_earn'),
+	// 			'ord_paying_to_dr' => $this->request->getVar('ord_paying_to_dr'),
+	// 			'ord_adminchrg_intern' => $this->request->getVar('ord_adminchrg_intern'),
 
 
-		return $this->LoadView('admin/new_order', $data);
-	}
+
+	// 		];
+	// 		$model->insert($newData);
+	// 		$session = session();
+	// 		$session->setFlashdata('success', 'Order Successfully Added');
+	// 		return redirect()->to('backend/orders');
+	// 	}
+
+
+	// 	return $this->LoadView('admin/new_order', $data);
+	// }
 
 	public function order_edit($eid = null)
 	{
@@ -1449,6 +1581,20 @@ class Backend extends BEBaseController
 		$ordr_row['emp_id'] = $doc_id;
 		$ordr_row['ord_cancel_bdr'] = 0;
 		unset($ordr_row['ord_id']);
+
+
+		// logs
+		$log = array(
+			'row_id' => $oid,
+			'adm_id' => session()->usr_id,
+			'action_table' => 'Orders',
+			'content' => $_POST,
+			'event' => 'Inserted new row for cancelled order by doctor when doctor changed',
+		);
+
+		add_log($log);
+
+		// Inserting new row for cancelled order by doctor when doctor change
 		if ($id = $model->insert($ordr_row)) {
 			session()->setFlashdata('success', 'Doctor Changed and Order status has been set to active.');
 			return redirect()->to('backend/order_edit/' . encryptIt($id));
@@ -1547,13 +1693,24 @@ class Backend extends BEBaseController
 		helper(['form']);
 		$model = new ordersModel();
 		if ($this->request->getMethod() == 'post') {
-			//let's do the validation here
+
+			// logs
+			$log = array(
+				'row_id' => $ordid,
+				'adm_id' => session()->usr_id,
+				'action_table' => 'Orders',
+				'content' => $_POST,
+				'event' => 'Order Status Updated',
+			);
+
+			add_log($log);
+
 			$newData = [
 				'ord_status' => $this->request->getVar('ord_status'),
 			];
 			$model->update($ordid, $newData);
 			$session = session();
-			$session->setFlashdata('success', 'Case Status Updated');
+			$session->setFlashdata('success', 'Order Status Updated');
 			return redirect()->to('backend/orders');
 		}
 	}
@@ -1595,6 +1752,18 @@ class Backend extends BEBaseController
 
 				];
 				$model->insert($newData);
+				$sid = $model->insertID;
+				// logs
+				$log = array(
+					'row_id' => $sid,
+					'adm_id' => session()->usr_id,
+					'action_table' => 'emp_speciality',
+					'content' => $_POST,
+					'event' => 'New Speciality Added',
+				);
+
+				add_log($log);
+
 				$session = session();
 				$session->setFlashdata('success', 'Speciality Successfully Added');
 				return redirect()->to('backend/speciality');
@@ -1622,10 +1791,18 @@ class Backend extends BEBaseController
 				$data['validation'] = $this->validator;
 			} else {
 
+				// logs
+				$log = array(
+					'row_id' => $sid,
+					'adm_id' => session()->usr_id,
+					'action_table' => 'emp_speciality',
+					'content' => $_POST,
+					'event' => 'Speciality Updated',
+				);
+
+				add_log($log);
 
 				//store this to database
-
-
 				$newData = [
 					'spec_name' => $this->request->getVar('spec_name'),
 
@@ -1646,6 +1823,18 @@ class Backend extends BEBaseController
 		$data = [];
 		helper(['form']);
 		$Smodel = new specialityModel();
+
+		// logs
+		$log = array(
+			'row_id' => $ssid,
+			'adm_id' => session()->usr_id,
+			'action_table' => 'emp_speciality',
+			'content' => 'Deleted',
+			'event' => 'Speciality Deleted',
+		);
+
+		add_log($log);
+		// Deleting from database
 		$data['sp_row'] = $Smodel->where('spec_id', $ssid)->delete();
 
 		$session = session();
@@ -1691,6 +1880,18 @@ class Backend extends BEBaseController
 
 				];
 				$model->insert($newData);
+				$id = $model->insertID;
+				// logs
+				$log = array(
+					'row_id' => $id,
+					'adm_id' => session()->usr_id,
+					'action_table' => 'cl_reg_cat',
+					'content' => $_POST,
+					'event' => 'New Grade Added',
+				);
+
+				add_log($log);
+
 				$session = session();
 				$session->setFlashdata('success', 'Grade Successfully Added');
 				return redirect()->to('backend/grade');
@@ -1717,6 +1918,16 @@ class Backend extends BEBaseController
 				$data['validation'] = $this->validator;
 			} else {
 
+				// logs
+				$log = array(
+					'row_id' => $gid,
+					'adm_id' => session()->usr_id,
+					'action_table' => 'emp_grade',
+					'content' => $_POST,
+					'event' => 'Grade Updated',
+				);
+
+				add_log($log);
 
 				//store this to database
 
@@ -1742,6 +1953,17 @@ class Backend extends BEBaseController
 		$data = [];
 		helper(['form']);
 		$Smodel = new gradeModel();
+		// logs
+		$log = array(
+			'row_id' => $gid,
+			'adm_id' => session()->usr_id,
+			'action_table' => 'emp_grade',
+			'content' => 'Deleted',
+			'event' => 'Grade Deleted',
+		);
+
+		add_log($log);
+		// Deleting from database
 		$data['gr_row'] = $Smodel->where('grade_id', $gid)->delete();
 
 		$session = session();
@@ -1778,14 +2000,23 @@ class Backend extends BEBaseController
 
 
 				//store this to database
-
-
 				$newData = [
 					'reg_cat_name' => $this->request->getVar('reg_cat_name'),
 
 
 				];
 				$model->insert($newData);
+				$id = $model->insertID;
+				// logs
+				$log = array(
+					'row_id' => $id,
+					'adm_id' => session()->usr_id,
+					'action_table' => 'cl_reg_cat',
+					'content' => $_POST,
+					'event' => 'New Category Added',
+				);
+
+				add_log($log);
 				$session = session();
 				$session->setFlashdata('success', 'Category Successfully Added');
 				return redirect()->to('backend/cat');
@@ -1812,10 +2043,18 @@ class Backend extends BEBaseController
 				$data['validation'] = $this->validator;
 			} else {
 
+				// logs
+				$log = array(
+					'row_id' => $idcl,
+					'adm_id' => session()->usr_id,
+					'action_table' => 'cl_reg_cat',
+					'content' => $_POST,
+					'event' => 'Client Category Updated',
+				);
+
+				add_log($log);
 
 				//store this to database
-
-
 				$newData = [
 					'reg_cat_name' => $this->request->getVar('reg_cat_name'),
 
@@ -1837,6 +2076,18 @@ class Backend extends BEBaseController
 		$data = [];
 		helper(['form']);
 		$Smodel = new clRegModel();
+
+		// logs
+		$log = array(
+			'row_id' => $cid,
+			'adm_id' => session()->usr_id,
+			'action_table' => 'cl_reg_cat',
+			'content' => 'Deleted',
+			'event' => 'Client Category deleted',
+		);
+
+		add_log($log);
+
 		$data['gr_row'] = $Smodel->where('reg_cat_id', $cid)->delete();
 
 		$session = session();
@@ -1945,6 +2196,20 @@ class Backend extends BEBaseController
 
 		$ord_id = decryptIt($ord_id);
 		$model = new timesheetModel();
+
+		// logs
+		$log = array(
+			'row_id' => $ord_id,
+			'adm_id' => session()->usr_id,
+			'action_table' => 'Timesheets',
+			'content' => $_POST,
+			'event' => 'New Timesheet Added',
+		);
+
+		add_log($log);
+
+
+		// Saving data to database
 		foreach ($_POST['status'] as $row => $key) {
 			$model->insert(array('order_id' => $ord_id, 'dutyDate' => explode(',', $key)[0], 'dutyTime' => explode(',', $key)[1], 'siteStatus' => explode(',', $key)[2]));
 		}
@@ -1981,6 +2246,17 @@ class Backend extends BEBaseController
 		// Delete all existing timesheet data for this order
 		$model->where(['order_id' => $ord_id])->delete();
 
+		// logs
+		$log = array(
+			'row_id' => $ord_id,
+			'adm_id' => session()->usr_id,
+			'action_table' => 'Timesheets',
+			'content' => $_POST,
+			'event' => 'Timesheet Updated',
+		);
+
+		add_log($log);
+
 		// Insert the updated timesheet data
 		foreach ($_POST['status'] as $row => $key) {
 			$model->insert(['order_id' => $ord_id, 'dutyDate' => explode(',', $key)[0], 'dutyTime' => explode(',', $key)[1], 'siteStatus' => explode(',', $key)[2]]);
@@ -2016,7 +2292,16 @@ class Backend extends BEBaseController
 
 		$model = new ordersModel();
 		$data['e_ord'] = $model->where('ord_id', $id)->first();
+		// logs
+		$log = array(
+			'row_id' => $id,
+			'adm_id' => session()->usr_id,
+			'action_table' => 'Orders',
+			'content' => 'Approved',
+			'event' => 'Timesheet Approved',
+		);
 
+		add_log($log);
 		$newData = [
 			'ord_time_sheet_approved' => "Approved",
 
@@ -2056,6 +2341,17 @@ class Backend extends BEBaseController
 			if (!$this->validate($rules)) {
 				$data['validation'] = $this->validator;
 			} else {
+				// logs
+				$log = array(
+					'row_id' => $id,
+					'adm_id' => session()->usr_id,
+					'action_table' => 'Formulae',
+					'content' => $_POST,
+					'event' => 'Formula Updated',
+				);
+
+				add_log($log);
+
 
 
 				//store this to database
@@ -2157,10 +2453,7 @@ class Backend extends BEBaseController
 				$data['validation'] = $this->validator;
 			} else {
 
-
 				//store this to database
-
-
 				$newData = [
 					'ord_speciality' => $this->request->getVar('ord_speciality'),
 					'ord_grade' => $this->request->getVar('ord_grade'),
@@ -2173,6 +2466,15 @@ class Backend extends BEBaseController
 				];
 				$omodel->insert($newData);
 				$id = $omodel->insertID;
+				// LOgs
+				$log = array(
+					'row_id' => $id,
+					'adm_id' => session()->usr_id,
+					'action_table' => 'Orders',
+					'content' => $_POST,
+					'event' => 'New Order Step 1 Completed',
+				);
+				add_log($log);
 				$session = session();
 				$session->setFlashdata('success', 'First Response saved');
 				return redirect()->to('backend/email-1/' . encryptIt($id));
@@ -2187,6 +2489,7 @@ class Backend extends BEBaseController
 		$id = decryptIt($id);
 		$data = [];
 		helper(['form']);
+		// helper(['email']);
 		$Gmodel = new gradeModel();
 		$data['gr_row'] = $Gmodel->findAll();
 		$Smodel = new specialityModel();
@@ -2210,10 +2513,16 @@ class Backend extends BEBaseController
 				$data['validation'] = $this->validator;
 			} else {
 
-
+				// log
+				$log = array(
+					'row_id' => $id,
+					'adm_id' => session()->usr_id,
+					'action_table' => 'Orders',
+					'content' => $_POST,
+					'event' => 'Order Step 1 Updated',
+				);
+				add_log($log);
 				//store this to database
-
-
 				$newData = [
 					'ord_speciality' => $this->request->getVar('ord_speciality'),
 					'ord_grade' => $this->request->getVar('ord_grade'),
@@ -2249,6 +2558,18 @@ class Backend extends BEBaseController
 
 
 		if ($this->request->getMethod() == 'post') {
+
+			// log
+			$log = array(
+				'row_id' => $id,
+				'adm_id' => session()->usr_id,
+				'action_table' => 'Orders',
+				'content' => '2',
+				'event' => 'Sended Email and Order Status changed',
+				'first_response' => '1'
+			);
+
+			add_log($log);
 
 			$newData = [
 				'ord_status' => '2',
@@ -2320,12 +2641,23 @@ class Backend extends BEBaseController
 			if (!$this->validate($rules)) {
 				$data['validation'] = $this->validator;
 			} else {
+				// log
+				$log = array(
+					'row_id' => $id,
+					'adm_id' => session()->usr_id,
+					'action_table' => 'Orders',
+					'content' => $_POST,
+					'event' => 'Order Step 2 Updated',
+				);
+
+				add_log($log);
 
 
 				//store this to database
 
 
 				$newData = [
+					'ord_cancel_bcl' => $this->request->getVar('ord_cancel_bcl'),
 					'emp_id' => $this->request->getVar('emp_id'),
 					'ord_process_details_from' => $this->request->getVar('ord_process_details_from'),
 					'ord_process_details_to' => $this->request->getVar('ord_process_details_to'),
@@ -2371,7 +2703,19 @@ class Backend extends BEBaseController
 		$message = $this->LoadView('admin/email_responses/2nd-response-email', $data);
 
 		if ($this->request->getMethod() == 'post') {
+			// logs
+			$log = array(
+				'row_id' => $id,
+				'adm_id' => session()->usr_id,
+				'action_table' => 'Orders',
+				'content' => '3',
+				'event' => 'Order Status Changed and Email Send',
+				'locum_process' => '1',
+			);
 
+			add_log($log);
+
+			// save to database
 			$newData = [
 				'ord_status' => '3',
 
@@ -2416,11 +2760,21 @@ class Backend extends BEBaseController
 				$data['validation'] = $this->validator;
 			} else {
 
+				// logs
+				$log = array(
+					'row_id' => $id,
+					'adm_id' => session()->usr_id,
+					'action_table' => 'Orders',
+					'content' => $_POST,
+					'event' => 'Order Step 3 Updated',
+				);
+
+				add_log($log);
 
 				//store this to database
-
-
 				$newData = [
+					'ord_cancel_bcl' => $this->request->getVar('ord_cancel_bcl'),
+					'ord_cancel_bdr' => $this->request->getVar('ord_cancel_bdr'),
 					'ord_confirmation_date' => $this->request->getVar('ord_confirmation_date'),
 					'ord_adminchrg_intern' => $this->request->getVar('ord_adminchrg_intern'),
 					'ord_hosp_earn' => $this->request->getVar('ord_hosp_earn'),
@@ -2457,6 +2811,18 @@ class Backend extends BEBaseController
 
 		if ($this->request->getMethod() == 'post') {
 
+			// logs
+			$log = array(
+				'row_id' => $id,
+				'adm_id' => session()->usr_id,
+				'action_table' => 'Orders',
+				'content' => '3',
+				'event' => 'Order Status Updated and Email send',
+				'locum_confirmation' => '1',
+			);
+
+			add_log($log);
+			// saving to database
 			$newData = [
 				'ord_status' => '3',
 
@@ -2514,11 +2880,21 @@ class Backend extends BEBaseController
 				$data['validation'] = $this->validator;
 			} else {
 
+				// logs
+				$log = array(
+					'row_id' => $id,
+					'adm_id' => session()->usr_id,
+					'action_table' => 'Orders',
+					'content' => $_POST,
+					'event' => 'Order Step 4 Updated',
+				);
+
+				add_log($log);
 
 				//store this to database
-
-
 				$newData = [
+					'ord_cancel_bcl' => $this->request->getVar('ord_cancel_bcl'),
+					'ord_cancel_bdr' => $this->request->getVar('ord_cancel_bdr'),
 					'ord_ref_no' => $this->request->getVar('ord_ref_no'),	// Locum Confirmation No
 					'ord_pay_to_dr' => $this->request->getVar('ord_pay_to_dr'),
 					'ord_diff_profit_admin' => $this->request->getVar('ord_diff_profit_admin'),
@@ -2569,6 +2945,20 @@ class Backend extends BEBaseController
 		$message = $this->LoadView('admin/email_responses/4th-response-email', $data);
 
 		if ($this->request->getMethod() == 'post') {
+
+			// logs
+			$log = array(
+				'row_id' => $id,
+				'adm_id' => session()->usr_id,
+				'action_table' => 'Orders',
+				'content' => '4',
+				'event' => 'Order Status Updated and Email Send',
+				'employee_confirmation' => '1',
+			);
+
+			add_log($log);
+
+			//store this to database
 
 			$newData = [
 				'ord_status' => '4',
@@ -2643,16 +3033,26 @@ class Backend extends BEBaseController
 	{
 		$id = decryptIt($id);
 		$data = [];
-			$model = new ordersModel();
-			$data['order'] = $model->where('ord_id', $id)->first();
-			$newData = [
-				'ord_advrtise' => '1',
+		$model = new ordersModel();
+		$data['order'] = $model->where('ord_id', $id)->first();
+		// logs
+		$log = array(
+			'row_id' => $id,
+			'adm_id' => session()->usr_id,
+			'action_table' => 'Orders',
+			'content' => '4',
+			'event' => 'Order Status Updated and Email Send',
+			'employee_confirmation' => '1',
+		);
 
-			];
-			$model->update($id, $newData);
-			session()->setFlashdata('success', 'Order has been Succesfully Advertised');
-				return redirect()->to('backend/orders');
-			
-		
+		add_log($log);
+
+		$newData = [
+			'ord_advrtise' => '1',
+
+		];
+		$model->update($id, $newData);
+		session()->setFlashdata('success', 'Order has been Succesfully Advertised');
+		return redirect()->to('backend/orders');
 	}
 }
