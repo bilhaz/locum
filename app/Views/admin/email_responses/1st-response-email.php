@@ -24,7 +24,7 @@
 <tr>
 <tr>
   <th style="border: 1px solid black;"><strong>Covering Date & Time:</strong></th>
-  <td style="border: 1px solid black;"><strong><?php $pros = explode(",",$v_ordr['ord_prosdatetime_detail']);
+  <td style="border: 1px solid black;"><strong><?php $pros = explode(",",$v_ordr['ord_datetime_detail']);
                                         foreach($pros as $var): ?>
                                        <?= $var ?> <br>
                                        <?php endforeach; ?>

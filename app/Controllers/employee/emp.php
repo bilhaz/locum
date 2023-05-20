@@ -4,7 +4,7 @@ namespace App\Controllers\employee;
 
 
 
-use App\Models\UserModel;
+use App\Helpers\EmailHelper;
 use App\Models\EmpModel;
 use App\Models\gradeModel;
 use App\Models\ordersModel;
@@ -13,7 +13,7 @@ use App\Models\timesheetModel;
 use App\Models\formulaModel;
 use App\Models\notificationModel;
 use DateTimeZone;
-
+helper('email');
 class emp extends EMPBaseController
 {
 	public function login()
@@ -179,6 +179,18 @@ class emp extends EMPBaseController
 		$Nmodel = new notificationModel();
 		$model = new ordersModel();
 		$data['e_ord'] = $model->where('ord_id', $asid)->first();
+			$to = 'sralocum@sra.com';
+			$cc = '';
+			$subject = ''.session()->emp_email.' Uploaded Assesment';
+			$message = '<html><body><p> Here is the Assesment Link</p><br><a target="_blank" href='.base_url('public/uploads/doc_assesment/'.encryptIt($data['e_ord']['ord_assignment'])).' style="background-color:#157DED;color:white;border: none;
+			color: white;
+			padding: 5px 10px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;">Click to View</a></body</html>';
 
 		if ($this->request->getMethod() == 'post') {
 			//let's do the validation here
@@ -209,19 +221,27 @@ class emp extends EMPBaseController
 
 
 				];
+					
+				
 				$newdata2 = [
 					'ord_id' => $asid,
 					'emp_id' => $id,
 					'link'	=> $link,
-					'notification' => "Assesment uploaded by Client",
+					'notification' => "Assesment uploaded by Employee",
 					'status' => "0",
+					'usr_type' => "admin",
 				];
 
 				$model->update($asid, $newData);
 				$Nmodel->insert($newdata2);
 				$session = session();
-				$session->setFlashdata('success', 'Assesment Successful Added');
-				return redirect()->to('employee/ord-view/' . encryptIt($asid));
+				if (sendEmail($to, $cc, $subject, $message)) {
+					$session->setFlashdata('success', 'Assesment Successful Uploaded');
+						return redirect()->to('employee/ord-view/' . encryptIt($asid));
+					} else {
+						return redirect()->to('employee/ord-view/' . encryptIt($asid));
+					}	
+				
 			}
 		}
 
@@ -253,7 +273,21 @@ class emp extends EMPBaseController
 		$eid = session()->emp_id;
 		$link = "backend/t-view";
 		$model = new timesheetModel();
+		$omodel = new ordersModel();
+		$data['v_ordr'] = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $ord_id)->first();
 		$Nmodel = new notificationModel();
+			$to = 'sralocum@sra.com,'.$data['v_ordr']['emp_email'];
+			$cc = '';
+			$subject = ''.session()->emp_email.'Submitted Timesheet';
+			$message = '<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href='.base_url('backend/t-view/'.encryptIt($ord_id)).' style="background-color:#157DED;color:white;border: none;
+			color: white;
+			padding: 5px 10px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;">Click to View</a></body</html>';
 		foreach ($_POST['status'] as $row => $key) {
 
 			$model->insert(array('order_id' => $ord_id, 'dutyDate' => explode(',', $key)[0], 'dutyTime' => explode(',', $key)[1], 'siteStatus' => explode(',', $key)[2]));
@@ -264,12 +298,18 @@ class emp extends EMPBaseController
 			'link'	=> $link,
 			'notification' => "New Timesheet submitted",
 			'status' => "0",
+			'usr_type' => "admin",
 		];
 
 		$Nmodel->save($newData);
 		$session = session();
-		$session->setFlashdata('success', 'TimeSheet Saved');
-		return redirect()->to('employee/ord-view/' . encryptIt($ord_id));
+		if (sendEmail($to, $cc, $subject, $message)) {
+						$session->setFlashdata('success', 'TimeSheet Saved');
+						return redirect()->to('employee/ord-view/' . encryptIt($ord_id));
+					} else {
+						return redirect()->to('employee/ord-view/' . encryptIt($ord_id));
+					}	
+		
 	}
 
 	public function edit_timesheet($ord_id)
@@ -298,7 +338,21 @@ class emp extends EMPBaseController
 		$eid = session()->emp_id;
 		$link = "backend/t-view";
 		$model = new timesheetModel();
+		$omodel = new ordersModel();
+		$data['v_ordr'] = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $ord_id)->first();
 		$Nmodel = new notificationModel();
+			$to = 'sralocum@sra.com,'.$data['v_ordr']['emp_email'];
+			$cc = '';
+			$subject = ''.session()->emp_email.' Updated Timesheet';
+			$message = '<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href='.base_url('backend/t-view/'.encryptIt($ord_id)).' style="background-color:#157DED;color:white;border: none;
+			color: white;
+			padding: 5px 10px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;">Click to View</a></body</html>';
 		// Delete all existing timesheet data for this order
 		$model->where(['order_id' => $ord_id])->delete();
 
@@ -315,8 +369,13 @@ class emp extends EMPBaseController
 		];
 		$Nmodel->save($newData);
 		$session = session();
-		$session->setFlashdata('success', 'TimeSheet Updated');
-		return redirect()->to('employee/t-edit/' . encryptIt($ord_id));
+		if (sendEmail($to, $cc, $subject, $message)) {
+			$session->setFlashdata('success', 'TimeSheet Updated');
+			return redirect()->to('employee/t-edit/' . encryptIt($ord_id));
+			} else {
+				return redirect()->to('employee/t-edit/' . encryptIt($ord_id));
+			}	
+
 	}
 
 	public function timesheet_view($ord_id)
@@ -591,23 +650,59 @@ class emp extends EMPBaseController
 
 		return $this->LoadView('employees/completed_assign', $data);
 	}
-	// public function advertisements()
-	// {
+	public function advt_apply($id = null)
+	{
+		$id = decryptIt($id);
+		$link = "backend/order_view";
+		$data = [];
+		$eid = session()->emp_id;
+		helper(['form']);
+		$Nmodel = new notificationModel();
+		$model = new ordersModel();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->Join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')
+			->where('orders.ord_id', $id)
+			->orderBy('orders.ord_updated', 'DESC')
+			->first();
 
-	// 	$data = [];
-	// 	$id = session()->emp_id;
-	// 	helper(['form']);
-	// 	$emodel = new EmpModel();
-	// 	$data['e_doc'] = $emodel->where('emp_id', $id)->first();
-	// 	$doc = $data['e_doc'];
-	// 	$model = new ordersModel();
-	// 	$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->Join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')
-	// 		->whereIn('orders.ord_speciality', [$doc['emp_spec1'], $doc['emp_spec2'], $doc['emp_spec3']])
-	// 		->where('orders.ord_cancel_bcl', '0')
-	// 		->where('orders.ord_cancel_bdr', '0')
-	// 		->where('orders.ord_advrtise', '1')
-	// 		->orderBy('orders.ord_updated', 'DESC')
-	// 		->find();
-	// 	return $this->LoadView('employees/advertisements', $data);
-	// }
+			$to = 'sralocum@sra.com';
+			$cc = '';
+			$subject = ''.session()->emp_email.' Applied for Locum';
+			$message = $this->LoadView('employees/emails/advt_apply', $data);
+				
+			$session = session();
+			if (sendEmail($to, $cc, $subject, $message)) {
+				$newdata2 = [
+					'ord_id' => $id,
+					'emp_id' => $eid,
+					'link'	=> $link,
+					'notification' => "".session()->emp_fname.''.session()->emp_lname." Applied For Locum",
+					'status' => "0",
+					'usr_type' => "admin",
+				];
+				$Nmodel->insert($newdata2);
+					return redirect()->to('employee/advt_applied');
+				} else {
+					$session->setFlashdata('error', 'Apply Failed');
+					return redirect()->to('employee/orders');
+				}	
+	}
+	public function advt_applied($id = null)
+	{
+
+			$to = session()->emp_email;
+			$cc = '';
+			$subject = 'Applied Successfully for Locum';
+			$message = $this->LoadView('employees/emails/advt_applied');
+				
+			$session = session();
+			if (sendEmail($to, $cc, $subject, $message)) {
+					$session->setFlashdata('success', 'Applied for Locum Successfully');
+					return redirect()->to('employee/orders');
+				} else {
+					$session->setFlashdata('error', 'Apply Failed');
+					return redirect()->to('employee/orders');
+				}	
+
+
+	}
 }

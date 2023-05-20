@@ -20,7 +20,9 @@ UPDATE orders SET ord_pay_to_dr_date=NULL WHERE ord_pay_to_dr_date='0000-00-00';
 
 UPDATE orders SET ord_confirmation_date=NULL WHERE ord_confirmation_date='0000-00-00';
 
-*some of the new fields query i forgot to add*
+*some of the new fields query i forgot to add of orders table*
+
+'nh_p_type','ord_normal_hrs_rt','ord_ocall_rt','oc_p_type','ord_off_site_hrs','ord_osite_rt','os_p_type','ord_bh_week_hrs','ord_bhw_rt','bhw_p_type','vat_rate','ord_emp_pay_status'
 
 ALTER TABLE `orders` ADD `ord_emp_pay_status` VARCHAR(255) NULL AFTER `ord_payment_status`;
 

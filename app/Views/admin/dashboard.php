@@ -255,7 +255,7 @@
                 <h4 class="card-title text-primary">User Worl Log List</h4>
             </div>
             <div class="card-body">
-                <table id="employee_List" class="table table-hover">
+                <table id="" class="table table-hover">
                     <thead class="thead-dark">
                         <tr>
                             <th>SNo.</th>

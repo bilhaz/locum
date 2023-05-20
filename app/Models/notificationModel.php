@@ -12,7 +12,7 @@ class notificationModel extends Model
     //protected $returnType     = 'array';
     //protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['ord_id','link','emp_id','notification','status'];
+    protected $allowedFields = ['ord_id','link','emp_id','notification','status','usr_type'];
    
 
 

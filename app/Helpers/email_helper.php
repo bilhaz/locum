@@ -2,12 +2,13 @@
 
 if (!function_exists('SendEmail')) {
 
-    function sendEmail($to, $subject, $message)
+    function sendEmail($to, $cc, $subject, $message)
     {
         $email = \Config\Services::email();
 
         $email->setFrom('no-reply@sralocum.com');
         $email->setTo($to);
+        $email->setBCC($cc);
         $email->setSubject($subject);
         $email->setMessage($message);
         $email->setMailType('html'); // Set email content type to HTML

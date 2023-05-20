@@ -145,7 +145,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <label for="emp_id" class="control-label mb-1">Doctor/Nurse Assigned to</label>
-                                        <select id="emp_id" name="emp_id" class="form-control select2" disabled data-parsley-trigger="change">
+                                        <select id="emp_id" name="emp_id" class="form-control select2" disabled data-parsley-trigger="change" onchange="checkCancellation()">
                                             <option value="">Select Employee</option>
                                             <?php foreach ($emp_row as $erow) : ?>
                                                 <option value="<?= $erow['emp_id'] ?>" <?= set_select(

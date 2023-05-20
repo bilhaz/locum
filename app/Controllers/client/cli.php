@@ -13,6 +13,8 @@ use App\Models\clRegModel;
 use App\Models\notificationModel;
 use DateTimeZone;
 
+helper('email');
+
 class cli extends CLIBaseController
 {
 	public function index()
@@ -179,6 +181,18 @@ class cli extends CLIBaseController
 		$model = new ordersModel();
 		$del = $model->where('ord_id', $coid)->first();
 		$Nmodel = new notificationModel();
+			$to = 'sralocum@sra.com';
+			$cc = '';
+			$subject = ''.session()->cl_h_name.' Cancelled Order';
+			$message = '<html><body><p> Here is the Order Link</p><br><a target="_blank" href='.base_url('backend/order_view/'.encryptIt($coid)).' style="background-color:#157DED;color:white;border: none;
+			color: white;
+			padding: 5px 10px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;">Click to View</a></body</html>';
 		helper(['form']);
 		if ($this->request->getMethod() == 'post') {
 			//let's do the validation here
@@ -197,7 +211,7 @@ class cli extends CLIBaseController
 
 			];
 			$newdata2 = [
-				'ord_id' => $coid,
+			'ord_id' => $coid,
 			'emp_id' =>$cid,
 			'link'	=> $link,
 			'notification' => "Order Cancel by Client",
@@ -207,8 +221,13 @@ class cli extends CLIBaseController
 			$model->update($coid, $newData);
 			$Nmodel->insert($newdata2);
 			$session = session();
-			$session->setFlashdata('success', 'Order Cancelled');
-			return redirect()->to('client/orders');
+			if (sendEmail($to, $cc, $subject, $message)) {
+				$session->setFlashdata('success', 'Order Cancelled');
+				return redirect()->to('client/orders');
+				} else {
+					return redirect()->to('client/orders');
+				}	
+			
 		
 	}
 }
@@ -238,14 +257,28 @@ class cli extends CLIBaseController
 		$data = [];
 		$Nmodel = new notificationModel();
 		$model = new ordersModel();
-		$data['e_ord'] = $model->where('ord_id', $id)->first();
+		$omodel = new ordersModel();
+		$data['e_ord'] = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $id)->first();
+		// $data['e_ord'] = $model->where('ord_id', $id)->first();
+			$to = 'sralocum@sra.com,'.$data['e_ord']['cl_cont_email'];
+			$cc = '';
+			$subject = ''.session()->cl_h_name.' Approved Timesheet';
+			$message = '<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href='.base_url('backend/t-view/'.encryptIt($id)).' style="background-color:#157DED;color:white;border: none;
+			color: white;
+			padding: 5px 10px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;">Click to View</a></body</html>';
 
 		$newData = [
 			'ord_time_sheet_approved' => "Approved",
 
 		];
         $newdata2 = [
-				'ord_id' => $id,
+			'ord_id' => $id,
 			'emp_id' =>$cid,
 			'link'	=> $link,
 			'notification' => "Timsheet Approved by Client",
@@ -256,8 +289,13 @@ class cli extends CLIBaseController
 		$model->update($id, $newData);
 		$Nmodel->insert($newdata2);
 		$session = session();
-		$session->setFlashdata('success', 'Timesheet Approved');
+		if (sendEmail($to, $cc, $subject, $message)) {
+			$session->setFlashdata('success', 'Timesheet Approved');
 		return redirect()->to('client/timesheet/'.encryptIt($data['e_ord']['ord_id']));
+			} else {
+				return redirect()->to('client/timesheet/'.encryptIt($data['e_ord']['ord_id']));
+		}	
+		
 
 		
 	}
@@ -314,7 +352,18 @@ class cli extends CLIBaseController
 				];
 				$model->insert($newData);
 				$oid = $model->insertID;
-
+			$to = 'sralocum@sra.com';
+			$cc = '';
+			$subject = ''.session()->cl_h_name.' Created New Order';
+			$message = '<html><body><p> Here is the Order Link</p><br><a target="_blank" href='.base_url('backend/order-s1/'.encryptIt($oid)).' style="background-color:#157DED;color:white;border: none;
+			color: white;
+			padding: 5px 10px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;">Click to View</a></body</html>';
 				$newdata2 = [
 					'ord_id' => $oid,
 					'emp_id' =>$id,
@@ -325,8 +374,13 @@ class cli extends CLIBaseController
 				];
 				$nmodel->insert($newdata2);
 				$session = session();
-				$session->setFlashdata('success', 'Order Successful Created');
-				return redirect()->to('client/orders');
+				if (sendEmail($to, $cc, $subject, $message)) {
+					$session->setFlashdata('success', 'Order Successful Created');
+					return redirect()->to('client/orders');
+					} else {
+						return redirect()->to('client/orders');
+					}	
+				
 			}
 		}
 
@@ -347,6 +401,18 @@ class cli extends CLIBaseController
 		$Smodel = new specialityModel();
 		$data['sp_row'] = $Smodel->findAll();
 		$Nmodel = new notificationModel();
+			$to = 'sralocum@sra.com';
+			$cc = '';
+			$subject = ''.session()->cl_h_name.' Updated Order';
+			$message = '<html><body><p> Here is the Order Link</p><br><a target="_blank" href='.base_url('backend/order-s1/'.encryptIt($eoid)).' style="background-color:#157DED;color:white;border: none;
+			color: white;
+			padding: 5px 10px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;">Click to View</a></body</html>';
 		
 
 		$model = new ordersModel();
@@ -393,8 +459,13 @@ class cli extends CLIBaseController
 				$model->update($eoid,$newData);
 				$Nmodel->insert($newdata2);
 				$session = session();
-				$session->setFlashdata('success', 'Order Successful Updated');
-				return redirect()->to('client/orders');
+				if (sendEmail($to, $cc, $subject, $message)) {
+					$session->setFlashdata('success', 'Order Successful Updated');
+					return redirect()->to('client/orders');
+					} else {
+						return redirect()->to('client/orders');
+					}	
+				
 			}
 		}
 
@@ -477,6 +548,21 @@ public function order_confirm($oid = null)
 
 		$e2model = new ordersModel();
 		$Nmodel = new notificationModel();
+
+			$to = 'sralocum@sra.com';
+			$cc = '';
+			$subject = ''.session()->cl_h_name.' Confirmed Order';
+			$message = '<html><body><p> Here is the Order Link</p><br><a target="_blank" href='.base_url('backend/order-s1/'.encryptIt($oid)).' style="background-color:#157DED;color:white;border: none;
+			color: white;
+			padding: 5px 10px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;">Click to View</a></body</html>';
+
+
 		$newData = [
 			'ord_status' => 3,
 		];
@@ -490,8 +576,13 @@ public function order_confirm($oid = null)
 		$e2model->update($oid, $newData);
 		$Nmodel->insert($newdata2);
 				$session = session();
-				$session->setFlashdata('success', 'Order Confirmed');
-				return redirect()->to('client/orders');
+				if (sendEmail($to, $cc, $subject, $message)) {
+					$session->setFlashdata('success', 'Order Confirmed');
+					return redirect()->to('client/orders');
+					} else {
+						return redirect()->to('client/orders');
+					}	
+				
 
 		
 	}

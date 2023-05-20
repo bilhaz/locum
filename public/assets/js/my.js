@@ -178,3 +178,4 @@ window.Parsley.addValidator('maxFileSize', {
         fr: 'Ce fichier est plus grand que %s Kb.'
     }
 });
+

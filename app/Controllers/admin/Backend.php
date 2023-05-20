@@ -500,12 +500,13 @@ class Backend extends BEBaseController
 
 				$data['empr'] = $model->where('emp_id', $id)->first();
 				$to = $data['empr']['emp_email'];
+				$cc='';
 				$subject = 'SRA Employee Registration';
 				$message = '<p><b>' . $data['empr']['emp_email'] . '</b> Your Email has been succesfully registered on our platform</p><br>
 				<p>Please Make sure to complete your Employee Profile when you login to <b>SRA Locum</b> on this URL: ' . base_url('employee/login') . '</p><br>
 				<h3>Thank You</h3>';
 				$session = session();
-				if (sendEmail($to, $subject, $message)) {
+				if (sendEmail($to, $cc, $subject, $message)) {
 					$session->setFlashdata('success', 'Doctor Registered, Complete the Registration Form');
 					return redirect()->to('backend/emp_details/' . encryptIt($id));
 				} else {
@@ -1102,12 +1103,13 @@ class Backend extends BEBaseController
 			add_log($log);
 				$data['clr'] = $model->where('cl_id', $id)->first();
 				$to = $data['clr']['cl_cont_email'];
+				$cc = '';
 				$subject = 'SRA Client Registration';
 				$message = '<p>Dear &nbsp;' . $data['clr']['cl_usr'] . ' Your account has been succesfully registered on our platform</p><br>
 				<p>Please Make sure to complete your client Profile when you login to <b>SRA Locum</b> on this URL: ' . base_url('client/login') . '</p><br>
 				<h3>Thank You</h3>';
 				$session = session();
-				if (sendEmail($to, $subject, $message)) {
+				if (sendEmail($to, $cc, $subject, $message)) {
 					$session->setFlashdata('success', 'Client Registered, Complete the Registration Form');
 					return redirect()->to('backend/client_details/' . encryptIt($id));
 				} else {
@@ -1597,10 +1599,10 @@ class Backend extends BEBaseController
 		// Inserting new row for cancelled order by doctor when doctor change
 		if ($id = $model->insert($ordr_row)) {
 			session()->setFlashdata('success', 'Doctor Changed and Order status has been set to active.');
-			return redirect()->to('backend/order_edit/' . encryptIt($id));
+			return redirect()->to('backend/order_s3/' . encryptIt($id));
 		} else {
-			session()->setFlashdata('success', 'Something went wrong!');
-			return redirect()->to('backend/order_edit/' . encryptIt($oid));
+			session()->setFlashdata('error', 'Something went wrong!');
+			return redirect()->to('backend/order_s3/' . encryptIt($oid));
 		}
 	}
 
@@ -2242,6 +2244,10 @@ class Backend extends BEBaseController
 
 		$ord_id = decryptIt($ord_id);
 		$model = new timesheetModel();
+		$Nmodel = new notificationModel();
+		$omodel = new ordersModel();
+		$link = 'client/timesheet';
+		$link2 = 'employee/t-view';
 
 		// Delete all existing timesheet data for this order
 		$model->where(['order_id' => $ord_id])->delete();
@@ -2256,15 +2262,63 @@ class Backend extends BEBaseController
 		);
 
 		add_log($log);
+		$newdata2 = [
+			'ord_id' => $ord_id,
+			'emp_id' => session()->usr_id,
+			'link'	=> $link,
+			'notification' => "Timesheet Updated by SRAL",
+			'status' => "0",
+			'usr_type' => "client",
+		];
+		$newdata3 = [
+			'ord_id' => $ord_id,
+			'emp_id' => session()->usr_id,
+			'link'	=> $link2,
+			'notification' => "Timesheet Updated by SRAL",
+			'status' => "0",
+			'usr_type' => "employee",
+		];
+		$Nmodel->insert($newdata2);
+		$Nmodel->insert($newdata3);
 
 		// Insert the updated timesheet data
 		foreach ($_POST['status'] as $row => $key) {
 			$model->insert(['order_id' => $ord_id, 'dutyDate' => explode(',', $key)[0], 'dutyTime' => explode(',', $key)[1], 'siteStatus' => explode(',', $key)[2]]);
 		}
+			$to = 'okashalali88@gmail.com';
+			$cc = '';
+			$subject = 'SRAL Updated Timesheet';
+			$message = ['<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href='.base_url('client/timesheet/'.encryptIt($ord_id)).' style="background-color:#157DED;color:white;border: none;
+			color: white;
+			padding: 5px 10px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;">Click to View</a></body</html>',
 
+			'<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href='.base_url('employee/t-view/'.encryptIt($ord_id)).' style="background-color:#157DED;color:white;border: none;
+			color: white;
+			padding: 5px 10px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;">Click to View</a></body</html>'
+		];
 		$session = session();
-		$session->setFlashdata('success', 'TimeSheet Updated');
-		return redirect()->to('backend/timesheet');
+		if (sendEmail($to, $cc, $subject, $message)) {
+			$session->setFlashdata('success', 'TimeSheet Updated');
+			return redirect()->to('backend/timesheet');	
+				} else {
+				$session->setFlashdata('error', 'Apply Failed');
+				return redirect()->to('backend/timesheet');
+			}	
+
+		
+		
 	}
 
 	public function timesheet_view($ord_id)
@@ -2291,7 +2345,19 @@ class Backend extends BEBaseController
 		$data = [];
 
 		$model = new ordersModel();
-		$data['e_ord'] = $model->where('ord_id', $id)->first();
+		$data['e_ord'] = $model->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $id)->first();
+			$to = $data['e_ord']['emp_email'];
+			$cc = '';
+			$subject = 'SRAL Approved your Timesheet';
+			$message = '<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href='.base_url('backend/t-view/'.encryptIt($id)).' style="background-color:#157DED;color:white;border: none;
+			color: white;
+			padding: 5px 10px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;">Click to View</a></body</html>';
 		// logs
 		$log = array(
 			'row_id' => $id,
@@ -2376,7 +2442,7 @@ class Backend extends BEBaseController
 		$data = [];
 		$model = new notificationModel();
 		// fetch live data from the database and store it in $data
-		$data = $model->orderBy('status', 'ASC')->orderBy('created_at', 'DESC')->limit(8)->find(); // your database query here
+		$data = $model->where('usr_type','admin')->orderBy('status', 'ASC')->orderBy('created_at', 'DESC')->limit(8)->find(); // your database query here
 		// fetch the count of unseen notifications
 		$count = $model->where('status', 0)->countAllResults();
 
@@ -2550,9 +2616,11 @@ class Backend extends BEBaseController
 		helper('email');
 		$id = decryptIt($id);
 		$omodel = new ordersModel();
+		$Nmodel = new notificationModel();
+		$link = 'client/ord-status';
 		$data['v_ordr'] = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $id)->first();
-		// $to = $ord['cl_cont_email'];
-		$to = 'okashadell@gmail.com';
+		$to = $data['v_ordr']['cl_cont_email'];
+		$cc='';
 		$subject = 'SRA-First Response';
 		$message = $this->LoadView('admin/email_responses/1st-response-email', $data);
 
@@ -2575,9 +2643,19 @@ class Backend extends BEBaseController
 				'ord_status' => '2',
 
 			];
+			$newData2 = [
+				'ord_id' => $id,
+				'emp_id' => session()->usr_id,
+				'link'	=> $link,
+				'notification' => "Locum Confirmation",
+				'status' => "0",
+				'usr_type' => "client",
+			];
+	
+			$Nmodel->save($newData2);
 			$omodel->update($id, $newData);
 			$session = session();
-			if (sendEmail($to, $subject, $message)) {
+			if (sendEmail($to, $cc, $subject, $message)) {
 				$session->setFlashdata('success', 'First Response Email Succesfully Sent');
 				return redirect()->to('backend/order-s2/' . encryptIt($id));
 			} else {
@@ -2696,9 +2774,11 @@ class Backend extends BEBaseController
 		helper(['form']);
 		$id = decryptIt($id);
 		$omodel = new ordersModel();
+		$Nmodel = new notificationModel();
 		$data['v_ordr'] = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $id)->first();
-		// $to = $ord['cl_cont_email'];
-		$to = 'okashadell@gmail.com';
+		$link = 'client/ord-status';
+		$to = $data['v_ordr']['cl_cont_email'];
+		$cc = '';
 		$subject = 'SRA-Locum Process';
 		$message = $this->LoadView('admin/email_responses/2nd-response-email', $data);
 
@@ -2720,9 +2800,19 @@ class Backend extends BEBaseController
 				'ord_status' => '3',
 
 			];
+			$newData2 = [
+				'ord_id' => $id,
+				'emp_id' => session()->usr_id,
+				'link'	=> $link,
+				'notification' => "Locum Confirmation",
+				'status' => "0",
+				'usr_type' => "client",
+			];
+	
+			$Nmodel->save($newData2);
 			$omodel->update($id, $newData);
 			$session = session();
-			if (sendEmail($to, $subject, $message)) {
+			if (sendEmail($to, $cc, $subject, $message)) {
 				$session->setFlashdata('success', 'Locum Process Email Succesfully Sent');
 				return redirect()->to('backend/order-s3/' . encryptIt($id));
 			} else {
@@ -2741,6 +2831,7 @@ class Backend extends BEBaseController
 		$Smodel = new specialityModel();
 		$data['sp_row'] = $Smodel->findAll();
 		$clmodel = new ClientModel();
+		$Nmodel = new notificationModel();
 		$data['c_det'] = $clmodel->where('cl_status', 1)->where('cl_h_name !=', Null)->where('cl_cont_name !=', Null)->find();
 		$Emodel = new EmpModel();
 		$data['emp_row'] = $Emodel->where('emp_status', 1)->where('emp_fname !=', Null)->find();
@@ -2780,9 +2871,8 @@ class Backend extends BEBaseController
 					'ord_hosp_earn' => $this->request->getVar('ord_hosp_earn'),
 					'vat_rate' => $this->request->getVar('vat_rate'),
 					'ord_vat_sale' => $this->request->getVar('ord_vat_sale'),
-
-
 				];
+
 				$omodel->update($id, $newData);
 				$session = session();
 				$session->setFlashdata('success', 'Client Confirmation saved');
@@ -2800,12 +2890,13 @@ class Backend extends BEBaseController
 
 		$id = decryptIt($id);
 		$omodel = new ordersModel();
-		$omodel = new ordersModel();
+		$Nmodel = new notificationModel();
 		$data['v_ordr'] = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $id)->first();
-
+		$link = 'client/ord-status';
 		// $lname = explode(' ',$ord['cl_cont_name']);
 		// $to = $ord['cl_cont_email'];
-		$to = 'okashadell@gmail.com';
+		$to = $data['v_ordr']['cl_cont_email'];
+		$cc = '';
 		$subject = 'SRA-Locum Confirmation';
 		$message = $this->LoadView('admin/email_responses/3rd-response-email', $data);
 
@@ -2827,9 +2918,19 @@ class Backend extends BEBaseController
 				'ord_status' => '3',
 
 			];
+			$newData2 = [
+				'ord_id' => $id,
+				'emp_id' => session()->usr_id,
+				'link'	=> $link,
+				'notification' => "Locum Confirmation",
+				'status' => "0",
+				'usr_type' => "client",
+			];
+	
+			$Nmodel->save($newData2);
 			$omodel->update($id, $newData);
 			$session = session();
-			if (sendEmail($to, $subject, $message)) {
+			if (sendEmail($to, $cc, $subject, $message)) {
 				$session->setFlashdata('success', 'Locum Confirmation Email Succesfully Sent');
 				return redirect()->to('backend/order-s4/' . encryptIt($id));
 			} else {
@@ -2937,10 +3038,13 @@ class Backend extends BEBaseController
 		helper('email');
 		$id = decryptIt($id);
 		$omodel = new ordersModel();
+		$Nmodel = new notificationModel();
+		$link = 'employee/ord-view';
 		$data['v_ordr'] = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $id)->first();
 
 		// $to = $ord['cl_cont_email'];
-		$to = 'okashadell@gmail.com';
+		$to =  $data['v_ordr']['emp_email'];
+		$cc = '';
 		$subject = 'SRA-Employee Confirmation';
 		$message = $this->LoadView('admin/email_responses/4th-response-email', $data);
 
@@ -2964,9 +3068,19 @@ class Backend extends BEBaseController
 				'ord_status' => '4',
 
 			];
+			$newData2 = [
+				'ord_id' => $id,
+				'emp_id' => session()->usr_id,
+				'link'	=> $link,
+				'notification' => "Locum Confirmation",
+				'status' => "0",
+				'usr_type' => "employee",
+			];
+	
+			$Nmodel->save($newData2);
 			$omodel->update($id, $newData);
 			$session = session();
-			if (sendEmail($to, $subject, $message)) {
+			if (sendEmail($to, $cc, $subject, $message)) {
 				$session->setFlashdata('success', 'Employee Confirmation Email Succesfully Sent');
 				return redirect()->to('backend/email-4/' . encryptIt($id));
 			} else {
@@ -3034,15 +3148,27 @@ class Backend extends BEBaseController
 		$id = decryptIt($id);
 		$data = [];
 		$model = new ordersModel();
-		$data['order'] = $model->where('ord_id', $id)->first();
+		$Emodel = new EmpModel();
+		$data['doc'] = $Emodel->findAll();
+		$data['ord'] = $model->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $id)->first();
+		$ord = $data['ord'];
+		$data['doc'] = $Emodel->select('emp_email')->where('emp_spec1',$ord['ord_speciality'])->orWhere('emp_spec2',$ord['ord_speciality'])->orWhere('emp_spec3',$ord['ord_speciality'])->findAll();
+		// $emails = implode(',' ,$data['doc']);
+		$Aemail = array_column($data['doc'], 'emp_email');
+		$emails = implode(',', $Aemail);
+		
+		$to = 'okashaali88@gmail.com';
+		$cc = 'okashadell@gmail.com';
+		$subject = 'New Locum Posted in SRA';
+		$message = $this->LoadView('admin/email_responses/job-advertisement', $data);
+		
 		// logs
 		$log = array(
 			'row_id' => $id,
 			'adm_id' => session()->usr_id,
 			'action_table' => 'Orders',
-			'content' => '4',
-			'event' => 'Order Status Updated and Email Send',
-			'employee_confirmation' => '1',
+			'content' => 'ord_advertise = 1',
+			'event' => 'Order Publish',
 		);
 
 		add_log($log);
@@ -3051,8 +3177,20 @@ class Backend extends BEBaseController
 			'ord_advrtise' => '1',
 
 		];
-		$model->update($id, $newData);
-		session()->setFlashdata('success', 'Order has been Succesfully Advertised');
-		return redirect()->to('backend/orders');
+		
+		$session = session();
+		if (sendEmail($to, $cc, $subject, $message)) {
+			$newData = [
+				'ord_advrtise' => '1',
+	
+			];
+			$model->update($id, $newData);
+				$session->setFlashdata('success', 'Order Published Successfully');
+				return redirect()->to('backend/orders');
+			} else {
+				$session->setFlashdata('error', 'Order Published Failed');
+				return redirect()->to('backend/orders');
+			}
+					
 	}
 }
