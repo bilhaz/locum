@@ -13,6 +13,7 @@ use App\Filters\B_auth;
 use App\Filters\B_noauth;
 use App\Filters\C_Auth;
 use App\Filters\C_noauth;
+use App\Filters\MaintenanceModeFilter;
 use App\Filters\RoleAccessFilter;
 
 
@@ -35,7 +36,8 @@ class Filters extends BaseConfig
         'C_Auth' =>    C_Auth::class,
         'C_noauth' => C_noauth::class,
         'usercheck' =>    usercheck::class,
-        'RoleAccess' => RoleAccessFilter::class
+        'RoleAccess' => RoleAccessFilter::class,
+        
     ];
 
     /**

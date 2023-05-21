@@ -146,6 +146,9 @@ $routes->match(['get' , 'post'], 'employee/processed-assignments', 'employee\emp
 $routes->match(['get' , 'post'], 'employee/confirmed-assignments', 'employee\emp::confirmed_assign',['filter' => 'E_Auth']);
 $routes->match(['get' , 'post'], 'employee/completed-assignments', 'employee\emp::completed_assign',['filter' => 'E_Auth']);
 $routes->get('employee/logout', 'employee\emp::logout');
+$routes->match(['get' , 'post'], 'employee/notif-get', 'employee\emp::get_notif',/*['filter' => 'B_auth']*/);
+$routes->match(['get' , 'post'], 'employee/notif-seen', 'employee\emp::notif_seen',['filter' => 'E_Auth']);
+$routes->match(['get' , 'post'], 'employee/notif-count', 'employee\emp::get_notifcount',/*['filter' => 'B_auth']*/);
 
 
 /*
@@ -176,6 +179,9 @@ $routes->match(['get' , 'post'], 'client/cur-processed', 'client\cli::cur_proces
 $routes->match(['get' , 'post'], 'client/confirm-orders', 'client\cli::confirmed_orders',['filter' => 'C_Auth']);
 $routes->match(['get' , 'post'], 'client/completed-orders', 'client\cli::completed_order',['filter' => 'C_Auth']);
 $routes->get('client/logout', 'client\cli::logout');
+$routes->match(['get' , 'post'], 'client/notif-get', 'client\cli::get_notif',/*['filter' => 'B_auth']*/);
+$routes->match(['get' , 'post'], 'client/notif-seen', 'client\cli::notif_seen',['filter' => 'C_Auth']);
+$routes->match(['get' , 'post'], 'client/notif-count', 'client\cli::get_notifcount',/*['filter' => 'B_auth']*/);
 
 
 

@@ -252,7 +252,7 @@
     <div class="col-md-8">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title text-primary">User Worl Log List</h4>
+                <h4 class="card-title text-primary">User Work Log List</h4>
             </div>
             <div class="card-body">
                 <table id="" class="table table-hover">

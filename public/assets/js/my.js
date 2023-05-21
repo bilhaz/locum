@@ -179,3 +179,28 @@ window.Parsley.addValidator('maxFileSize', {
     }
 });
 
+
+function askNotificationPermission() {
+    // Checking if the browser supports notifications
+    if (!("Notification" in window)) {
+        console.log("This browser does not support desktop notification");
+        return;
+    }
+
+    // Requesting permission from the user
+    Notification.requestPermission().then(function (permission) {
+        if (permission === "granted") {
+            console.log("Notification permission granted");
+        } else if (permission === "denied") {
+            console.log("Notification permission denied");
+        } else if (permission === "default") {
+            console.log("Notification permission dismissed");
+        }
+    });
+}
+
+// Check if the permission has already been granted
+if (Notification.permission !== "granted") {
+    // Asking for permission if not granted
+    askNotificationPermission();
+}

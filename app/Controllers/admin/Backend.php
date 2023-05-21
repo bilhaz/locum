@@ -279,6 +279,8 @@ class Backend extends BEBaseController
 					'content' => $_POST,
 					'event' => 'New Backend User Added',
 				);
+				unset($log['content']['usr_pwd']);
+				unset($log['content']['password_confirm']);
 
 				add_log($log);
 				$session = session();
@@ -317,7 +319,7 @@ class Backend extends BEBaseController
 			if (!$this->validate($rules)) {
 				$data['validation'] = $this->validator;
 			} else {
-				
+
 				// logs
 				$log = array(
 					'row_id' => $uid,
@@ -488,19 +490,19 @@ class Backend extends BEBaseController
 				$id = $model->insertID;
 
 				// logs
-			$log = array(
-				'row_id' => $id,
-				'adm_id' => session()->usr_id,
-				'action_table' => 'Employee',
-				'content' => $_POST,
-				'event' => 'New Employee Added',
-			);
-	
-			add_log($log);
+				$log = array(
+					'row_id' => $id,
+					'adm_id' => session()->usr_id,
+					'action_table' => 'Employee',
+					'content' => $_POST,
+					'event' => 'New Employee Added',
+				);
+
+				add_log($log);
 
 				$data['empr'] = $model->where('emp_id', $id)->first();
 				$to = $data['empr']['emp_email'];
-				$cc='';
+				$cc = '';
 				$subject = 'SRA Employee Registration';
 				$message = '<p><b>' . $data['empr']['emp_email'] . '</b> Your Email has been succesfully registered on our platform</p><br>
 				<p>Please Make sure to complete your Employee Profile when you login to <b>SRA Locum</b> on this URL: ' . base_url('employee/login') . '</p><br>
@@ -601,15 +603,15 @@ class Backend extends BEBaseController
 				$data['validation'] = $this->validator;
 			} else {
 				// logs
-			$log = array(
-				'row_id' => $id,
-				'adm_id' => session()->usr_id,
-				'action_table' => 'Employee',
-				'content' => $_POST,
-				'event' => 'Employee Details Added',
-			);
-	
-			add_log($log);
+				$log = array(
+					'row_id' => $id,
+					'adm_id' => session()->usr_id,
+					'action_table' => 'Employee',
+					'content' => $_POST,
+					'event' => 'Employee Details Added',
+				);
+
+				add_log($log);
 
 
 				$cv = $this->request->getFile('emp_cv');
@@ -790,15 +792,15 @@ class Backend extends BEBaseController
 			} else {
 
 				// logs
-			$log = array(
-				'row_id' => $id,
-				'adm_id' => session()->usr_id,
-				'action_table' => 'Employee',
-				'content' => $_POST,
-				'event' => 'Employee Details Updated',
-			);
-	
-			add_log($log);
+				$log = array(
+					'row_id' => $id,
+					'adm_id' => session()->usr_id,
+					'action_table' => 'Employee',
+					'content' => $_POST,
+					'event' => 'Employee Details Updated',
+				);
+
+				add_log($log);
 
 
 				$cv = $this->request->getFile('emp_cv');
@@ -968,7 +970,7 @@ class Backend extends BEBaseController
 				'content' => 'Block',
 				'event' => 'Employee Blocked',
 			);
-	
+
 			add_log($log);
 
 			$newData = [
@@ -1016,7 +1018,7 @@ class Backend extends BEBaseController
 				'content' => 'Unblock',
 				'event' => 'Employee Unblocked',
 			);
-	
+
 			add_log($log);
 
 			$newData = [
@@ -1092,15 +1094,15 @@ class Backend extends BEBaseController
 				$model->save($newData);
 				$id = $model->insertID;
 				// logs
-			$log = array(
-				'row_id' => $id,
-				'adm_id' => session()->usr_id,
-				'action_table' => 'Clients',
-				'content' => $_POST,
-				'event' => 'New Client Added',
-			);
-	
-			add_log($log);
+				$log = array(
+					'row_id' => $id,
+					'adm_id' => session()->usr_id,
+					'action_table' => 'Clients',
+					'content' => $_POST,
+					'event' => 'New Client Added',
+				);
+
+				add_log($log);
 				$data['clr'] = $model->where('cl_id', $id)->first();
 				$to = $data['clr']['cl_cont_email'];
 				$cc = '';
@@ -1151,15 +1153,15 @@ class Backend extends BEBaseController
 			} else {
 
 				// logs
-			$log = array(
-				'row_id' => $id,
-				'adm_id' => session()->usr_id,
-				'action_table' => 'Clients',
-				'content' => $_POST,
-				'event' => 'Client Details Added',
-			);
-	
-			add_log($log);
+				$log = array(
+					'row_id' => $id,
+					'adm_id' => session()->usr_id,
+					'action_table' => 'Clients',
+					'content' => $_POST,
+					'event' => 'Client Details Added',
+				);
+
+				add_log($log);
 
 				//store this to database
 				$newData = [
@@ -1370,12 +1372,58 @@ class Backend extends BEBaseController
 	{
 
 		$data = [];
+		$fromDate = $this->request->getPost('from');
+		$toDate = $this->request->getPost('to');
+		$hospital = $this->request->getPost('cl_id');
+		$employee = $this->request->getPost('emp_id');
+		$specialty = $this->request->getPost('ord_speciality');
+		$data['filter'] = [
+			'from' => $fromDate,
+			'to' => $toDate,
+			'cl_id' => $hospital,
+			'emp_id' => $employee,
+			'ord_speciality' => $specialty
+		];
+		// echo $fromDate. $toDate. $hospital. $employee. $specialty;exit;
 		$timestamp = \time();
 		$dt = date('Y-m-d H:i:s', $timestamp);
 		helper(['form']);
-		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->orderBy('orders.ord_created', 'DESC')->findAll();
+		$omodel = new ordersModel();
+		$Smodel = new specialityModel();
+		$data['sp_row'] = $Smodel->findAll();
+		$clmodel = new ClientModel();
+		$data['c_det'] = $clmodel->where('cl_status', 1)->where('cl_h_name !=', Null)->where('cl_cont_name !=', Null)->find();
+		$Emodel = new EmpModel();
+		$data['emp_row'] = $Emodel->where('emp_status', 1)->where('emp_fname !=', Null)->find();
+		// $ord_row = $this->$omodel->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->orderBy('orders.ord_created', 'DESC');
 
+
+		// Build your query using the filter values
+		// $query = ->table('orders');
+		$query = $omodel->select('*');
+		$query->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->orderBy('orders.ord_created', 'DESC');
+
+		if (!empty($fromDate) && !empty($toDate)) {
+			$query->where('ord_created >=', $fromDate);
+			$query->where('ord_created <=', $toDate);
+		}
+
+		if (!empty($hospital) && $hospital !== '0') {
+			$query->where('orders.cl_id', $hospital);
+		}
+
+		if (!empty($employee) && $employee !== '0') {
+			$query->where('orders.emp_id', $employee);
+		}
+
+		if (!empty($specialty) && $specialty !== '0') {
+			$query->where('ord_speciality', $specialty);
+		}
+
+		$data['ord_row'] = $query->get()->getResultArray();
+
+		// Process the query results as needed
+		// ...
 		return $this->LoadView('admin/orders', $data);
 	}
 
@@ -2246,6 +2294,7 @@ class Backend extends BEBaseController
 		$model = new timesheetModel();
 		$Nmodel = new notificationModel();
 		$omodel = new ordersModel();
+		$data['e_ord'] = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $ord_id)->first();
 		$link = 'client/timesheet';
 		$link2 = 'employee/t-view';
 
@@ -2285,10 +2334,11 @@ class Backend extends BEBaseController
 		foreach ($_POST['status'] as $row => $key) {
 			$model->insert(['order_id' => $ord_id, 'dutyDate' => explode(',', $key)[0], 'dutyTime' => explode(',', $key)[1], 'siteStatus' => explode(',', $key)[2]]);
 		}
-			$to = 'okashalali88@gmail.com';
-			$cc = '';
-			$subject = 'SRAL Updated Timesheet';
-			$message = ['<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href='.base_url('client/timesheet/'.encryptIt($ord_id)).' style="background-color:#157DED;color:white;border: none;
+		$to2 = $data['e_ord']['emp_email'];
+		$to = $data['e_ord']['cl_cont_email'];
+		$cc = '';
+		$subject = 'SRAL Updated Timesheet';
+		$message = '<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href=' . base_url('client/timesheet/' . encryptIt($ord_id)) . ' style="background-color:#157DED;color:white;border: none;
 			color: white;
 			padding: 5px 10px;
 			text-align: center;
@@ -2296,9 +2346,9 @@ class Backend extends BEBaseController
 			display: inline-block;
 			font-size: 16px;
 			margin: 4px 2px;
-			cursor: pointer;">Click to View</a></body</html>',
+			cursor: pointer;">Click to View</a></body</html>';
 
-			'<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href='.base_url('employee/t-view/'.encryptIt($ord_id)).' style="background-color:#157DED;color:white;border: none;
+		$message2 = '<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href=' . base_url('employee/t-view/' . encryptIt($ord_id)) . ' style="background-color:#157DED;color:white;border: none;
 			color: white;
 			padding: 5px 10px;
 			text-align: center;
@@ -2306,19 +2356,20 @@ class Backend extends BEBaseController
 			display: inline-block;
 			font-size: 16px;
 			margin: 4px 2px;
-			cursor: pointer;">Click to View</a></body</html>'
-		];
+			cursor: pointer;">Click to View</a></body</html>';
 		$session = session();
 		if (sendEmail($to, $cc, $subject, $message)) {
+		} else {
+			$session->setFlashdata('error', 'Email Failed to ' . $to);
+			return redirect()->to('backend/timesheet');
+		}
+		if (sendEmail($to2, $cc, $subject, $message2)) {
 			$session->setFlashdata('success', 'TimeSheet Updated');
-			return redirect()->to('backend/timesheet');	
-				} else {
-				$session->setFlashdata('error', 'Apply Failed');
-				return redirect()->to('backend/timesheet');
-			}	
-
-		
-		
+			return redirect()->to('backend/timesheet');
+		} else {
+			$session->setFlashdata('error', 'Email Failed to ' . $to2);
+			return redirect()->to('backend/timesheet');
+		}
 	}
 
 	public function timesheet_view($ord_id)
@@ -2346,10 +2397,10 @@ class Backend extends BEBaseController
 
 		$model = new ordersModel();
 		$data['e_ord'] = $model->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $id)->first();
-			$to = $data['e_ord']['emp_email'];
-			$cc = '';
-			$subject = 'SRAL Approved your Timesheet';
-			$message = '<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href='.base_url('backend/t-view/'.encryptIt($id)).' style="background-color:#157DED;color:white;border: none;
+		$to = $data['e_ord']['emp_email'];
+		$cc = '';
+		$subject = 'SRAL Approved your Timesheet';
+		$message = '<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href=' . base_url('backend/t-view/' . encryptIt($id)) . ' style="background-color:#157DED;color:white;border: none;
 			color: white;
 			padding: 5px 10px;
 			text-align: center;
@@ -2442,7 +2493,7 @@ class Backend extends BEBaseController
 		$data = [];
 		$model = new notificationModel();
 		// fetch live data from the database and store it in $data
-		$data = $model->where('usr_type','admin')->orderBy('status', 'ASC')->orderBy('created_at', 'DESC')->limit(8)->find(); // your database query here
+		$data = $model->where('usr_type', 'admin')->orderBy('status', 'ASC')->orderBy('created_at', 'DESC')->limit(8)->find(); // your database query here
 		// fetch the count of unseen notifications
 		$count = $model->where('status', 0)->countAllResults();
 
@@ -2465,7 +2516,7 @@ class Backend extends BEBaseController
 		$data = [];
 		$model = new notificationModel();
 		// fetch the count of unseen notifications
-		$count = $model->where('status', 0)->countAllResults();
+		$count = $model->where('status', 0)->where('usr_type', 'admin')->countAllResults();
 		echo $count;
 		// return the count as JSON
 		// return $this->response->setJSON(['count' => $count]);
@@ -2620,7 +2671,7 @@ class Backend extends BEBaseController
 		$link = 'client/ord-status';
 		$data['v_ordr'] = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $id)->first();
 		$to = $data['v_ordr']['cl_cont_email'];
-		$cc='';
+		$cc = '';
 		$subject = 'SRA-First Response';
 		$message = $this->LoadView('admin/email_responses/1st-response-email', $data);
 
@@ -2651,7 +2702,7 @@ class Backend extends BEBaseController
 				'status' => "0",
 				'usr_type' => "client",
 			];
-	
+
 			$Nmodel->save($newData2);
 			$omodel->update($id, $newData);
 			$session = session();
@@ -2808,7 +2859,7 @@ class Backend extends BEBaseController
 				'status' => "0",
 				'usr_type' => "client",
 			];
-	
+
 			$Nmodel->save($newData2);
 			$omodel->update($id, $newData);
 			$session = session();
@@ -2926,7 +2977,7 @@ class Backend extends BEBaseController
 				'status' => "0",
 				'usr_type' => "client",
 			];
-	
+
 			$Nmodel->save($newData2);
 			$omodel->update($id, $newData);
 			$session = session();
@@ -3076,7 +3127,7 @@ class Backend extends BEBaseController
 				'status' => "0",
 				'usr_type' => "employee",
 			];
-	
+
 			$Nmodel->save($newData2);
 			$omodel->update($id, $newData);
 			$session = session();
@@ -3152,16 +3203,21 @@ class Backend extends BEBaseController
 		$data['doc'] = $Emodel->findAll();
 		$data['ord'] = $model->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $id)->first();
 		$ord = $data['ord'];
-		$data['doc'] = $Emodel->select('emp_email')->where('emp_spec1',$ord['ord_speciality'])->orWhere('emp_spec2',$ord['ord_speciality'])->orWhere('emp_spec3',$ord['ord_speciality'])->findAll();
+		$data['doc'] = $Emodel->select('emp_id,emp_email')->where('emp_spec1', $ord['ord_speciality'])->orWhere('emp_spec2', $ord['ord_speciality'])->orWhere('emp_spec3', $ord['ord_speciality'])->findAll();
+		$emp_id = $data['doc'];
+		foreach ($data['doc'] as &$item) {
+			unset($item['emp_id']);
+		}
+
+		unset($item); // Unset the reference variable
+
+		// print_r($emp_id);exit;
+		// print_r($data['doc']);exit;
+
 		// $emails = implode(',' ,$data['doc']);
-		$Aemail = array_column($data['doc'], 'emp_email');
-		$emails = implode(',', $Aemail);
-		
-		$to = 'okashaali88@gmail.com';
-		$cc = 'okashadell@gmail.com';
-		$subject = 'New Locum Posted in SRA';
-		$message = $this->LoadView('admin/email_responses/job-advertisement', $data);
-		
+
+
+
 		// logs
 		$log = array(
 			'row_id' => $id,
@@ -3177,20 +3233,26 @@ class Backend extends BEBaseController
 			'ord_advrtise' => '1',
 
 		];
-		
+
 		$session = session();
-		if (sendEmail($to, $cc, $subject, $message)) {
-			$newData = [
-				'ord_advrtise' => '1',
-	
-			];
-			$model->update($id, $newData);
+		foreach ($data['doc'] as $doc) {
+			$to = $doc;
+			$cc = '';
+			$subject = 'Hello';
+			$message = $this->LoadView('admin/email_responses/job-advertisement', $data);
+			if (sendEmail($to, $cc, $subject, $message)) {
+
 				$session->setFlashdata('success', 'Order Published Successfully');
-				return redirect()->to('backend/orders');
 			} else {
 				$session->setFlashdata('error', 'Order Published Failed');
 				return redirect()->to('backend/orders');
 			}
-					
+		}
+		$newData = [
+			'ord_advrtise' => '1',
+
+		];
+		$model->update($id, $newData);
+		return redirect()->to('backend/orders');
 	}
 }

@@ -23,15 +23,66 @@
                             </li>
                         </ul>
                     </div>
+                    <form action="<?= base_url('backend/orders') ?>" method="post" autocomplete="off">
+                        <div class="row">
+                            <div class="form-group col-md-2 ">
+                                <label for="from">From</label>
+                                <input id="from" name="from" class="form-control" type="date" value="<?= esc($filter['from'] ?? '') ?>">
+                            </div>
+                            <div class="form-group col-md-2 ">
+                                <label for="to">To</label>
+                                <input id="to" name="to" class="form-control" type="date" value="<?= esc($filter['to'] ?? '') ?>">
+                            </div>
+                            <div class="form-group col-md-2 ">
+                                <label for="cl_id">Hospital</label>
+                                <select id="cl_id" name="cl_id" class="select2 form-control" data-parsley-trigger="change">
+                                    <option value="0">All</option>
+                                    <?php foreach ($c_det as $crow) : ?>
+                                        <option value="<?= $crow['cl_id'] ?>" <?= set_select('cl_id',
+                                         $crow['cl_id'], ($filter['cl_id'] == $crow['cl_id']) ? TRUE : FALSE );?>>
+                                            <?= $crow['cl_h_name'] ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-2 ">
+                                <label for="emp_id">Employee</label>
+                                <select id="emp_id" name="emp_id" class="form-control select2" data-parsley-trigger="change">
+                                    <option value="0">All</option>
+                                    <?php foreach ($emp_row as $erow) : ?>
+                                        <option value="<?= $erow['emp_id'] ?>" <?= set_select('emp_id',
+                                         $erow['emp_id'], ($filter['emp_id'] == $erow['emp_id']) ? TRUE : FALSE );?>>
+                                            <?= $erow['emp_fname'] . ' ' . $erow['emp_lname'] ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-2 ">
+                                <label for="ord_speciality">Speciality</label>
+                                <select id="ord_speciality" name="ord_speciality" class="form-control select2" data-parsley-trigger="change">
+                                    <option value="0">All</option>
+                                    <?php foreach ($sp_row as $srow) : ?>
+                                        <option value="<?= $srow['spec_id'] ?>"  <?= set_select('ord_speciality',
+                                         $srow['spec_id'], ($filter['ord_speciality'] == $srow['spec_id']) ? TRUE : FALSE );?>>
+                                            <?= $srow['spec_name'] ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-2 mt-4">
+                                <button class="btn btn-primary btn-small" type="submit">Get</button>
+                            </div>
+                        </div>
+                    </form>
                     <?php if (isset($validation)) : ?>
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <div class=" alert alert-danger alert-dismissible fade show" role="alert">
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            <i class="fa fa-times-circle"></i> <?= $validation->listErrors() ?>                            
+                            <i class="fa fa-times-circle"></i> <?= $validation->listErrors() ?>
                         </div>
                     <?php endif; ?>
                     <?php if (session()->get('success')) : ?>
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             <i class="fa fa-check-circle"></i> <?= session()->get('success') ?>
                         </div>
                     <?php endif; ?>
@@ -70,69 +121,72 @@
 
                                         <td>
                                             <span><b><?= $row['cl_h_name'] ?></b></span><br>
-                                            <small><?= $row['spec_name'].'-'. $row['grade_name'] ?></small>
+                                            <small><?= $row['spec_name'] . '-' . $row['grade_name'] ?></small>
                                         </td>
                                         <td><span><?= $row['emp_fname'] . ' ' . $row['emp_lname'] ?></span><br>
-                                        <small><?= $row['emp_imcr_no'] ?></small></td>
-                                        <td><?php $pros = explode(",",$row['ord_prosdatetime_detail']);
-                                        foreach($pros as $var): ?>
-                                       <?= $var ?> <br>
-                                       <?php endforeach; ?></td>
+                                            <small><?= $row['emp_imcr_no'] ?></small>
+                                        </td>
+                                        <td><?php $pros = explode(",", $row['ord_prosdatetime_detail']);
+                                            foreach ($pros as $var) : ?>
+                                                <?= $var ?> <br>
+                                            <?php endforeach; ?></td>
                                         </td>
                                         <td><?= date("d-m-y  h:i:s a", strtotime($row['ord_created'])) ?></td>
                                         <td>
-                                        <?php if($row['ord_cancel_bcl'] == 1): ?>
+                                            <?php if ($row['ord_cancel_bcl'] == 1) : ?>
                                                 <span class="badge bg-danger">Cancelled By Client</span><br>
-                                                <span class="badge bg-warning text-dark"><?= $row['ord_cl_cremarks']?></span>
-                                                <?php else: ?>
-                                        <?php if($row['ord_cancel_bdr'] == 1): ?>
-                                                <span class="badge bg-danger">Cancelled By Dr.</span><br>
-                                                <span class="badge bg-warning text-dark"><?= $row['ord_dr_cremarks']?></span>
-                                                <?php else: ?>
-                                            <?php if ($row['ord_status'] == "1") : ?>
-                                                <span class="badge chart-color123">Pending</span>
-                                            <?php elseif ($row['ord_status'] == "2") : ?>
-                                                <span class="badge chart-color122">Processed</span>
-                                            <?php elseif ($row['ord_status'] == "3") : ?>
-                                                <span class="badge bg-success">Confirmed</span>
+                                                <span class="badge bg-warning text-dark"><?= $row['ord_cl_cremarks'] ?></span>
                                             <?php else : ?>
-                                                <span class="badge chart-color120">Ended</span>
+                                                <?php if ($row['ord_cancel_bdr'] == 1) : ?>
+                                                    <span class="badge bg-danger">Cancelled By Dr.</span><br>
+                                                    <span class="badge bg-warning text-dark"><?= $row['ord_dr_cremarks'] ?></span>
+                                                <?php else : ?>
+                                                    <?php if ($row['ord_status'] == "1") : ?>
+                                                        <span class="badge chart-color123">Pending</span>
+                                                    <?php elseif ($row['ord_status'] == "2") : ?>
+                                                        <span class="badge chart-color122">Processed</span>
+                                                    <?php elseif ($row['ord_status'] == "3") : ?>
+                                                        <span class="badge bg-success">Confirmed</span>
+                                                    <?php else : ?>
+                                                        <span class="badge chart-color120">Ended</span>
+                                                    <?php endif; ?>
+                                                <?php endif; ?>
                                             <?php endif; ?>
-                                            <?php endif; ?>
-                                            <?php endif; ?>
-                                            </td>
-                                            <td>
-                                                <?= $row['ord_invoice_id'] ?>
-                                            </td>
+                                        </td>
                                         <td>
-                                                
-                                        
-<ul class="nav nav-pills">
-<li class="nav-item dropdown">
-<a class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Emails</a>
- <ul class="dropdown-menu shadow-sm">
-<li><a class="dropdown-item" target="_blank" href="<?= base_url('backend/email-1/'.encryptIt($row['ord_id'])) ?>">First Response</a></li>
-<li><a class="dropdown-item" target="_blank" href="<?= base_url('backend/email-2/'.encryptIt($row['ord_id'])) ?>">Locum Process</a></li>
-<li><a class="dropdown-item" target="_blank" href="<?= base_url('backend/email-3/'.encryptIt($row['ord_id'])) ?>">Client Confirmation</a></li>
-<li><a class="dropdown-item" target="_blank" href="<?= base_url('backend/email-4/'.encryptIt($row['ord_id'])) ?>">Dr. Confirmation</a></li>
-<li><hr class="dropdown-divider"></li>
-<li><a class="dropdown-item" target="_blank" href="<?= base_url('backend/contract/'.encryptIt($row['ord_id'])) ?>">Contract</a></li>
-</ul>
-</li>
-</ul>
+                                            <?= $row['ord_invoice_id'] ?>
+                                        </td>
+                                        <td>
+
+
+                                            <ul class="nav nav-pills">
+                                                <li class="nav-item dropdown">
+                                                    <a class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Emails</a>
+                                                    <ul class="dropdown-menu shadow-sm">
+                                                        <li><a class="dropdown-item" target="_blank" href="<?= base_url('backend/email-1/' . encryptIt($row['ord_id'])) ?>">First Response</a></li>
+                                                        <li><a class="dropdown-item" target="_blank" href="<?= base_url('backend/email-2/' . encryptIt($row['ord_id'])) ?>">Locum Process</a></li>
+                                                        <li><a class="dropdown-item" target="_blank" href="<?= base_url('backend/email-3/' . encryptIt($row['ord_id'])) ?>">Client Confirmation</a></li>
+                                                        <li><a class="dropdown-item" target="_blank" href="<?= base_url('backend/email-4/' . encryptIt($row['ord_id'])) ?>">Dr. Confirmation</a></li>
+                                                        <li>
+                                                            <hr class="dropdown-divider">
+                                                        </li>
+                                                        <li><a class="dropdown-item" target="_blank" href="<?= base_url('backend/contract/' . encryptIt($row['ord_id'])) ?>">Contract</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
                                         </td>
 
-                                            <td>
-                                                <?php if (session()->grp_id == 'user' && $row['ord_case_status'] <>"Closed"): ?>
-                                            <a type="button" href="<?= base_url('backend/order_edit/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
-                                            <?php elseif(session()->grp_id == 'admin' && $row['ord_status'] <>"Closed"):?>
-                                            <a type="button" href="<?= base_url('backend/order_edit/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
-                                            <?php elseif(session()->grp_id == 'super_admin'):?>
-                                            <a type="button" href="<?= base_url('backend/order_edit/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                        <td>
+                                            <?php if (session()->grp_id == 'user' && $row['ord_case_status'] <> "Closed") : ?>
+                                                <a type="button" href="<?= base_url('backend/order_edit/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                            <?php elseif (session()->grp_id == 'admin' && $row['ord_status'] <> "Closed") : ?>
+                                                <a type="button" href="<?= base_url('backend/order_edit/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                            <?php elseif (session()->grp_id == 'super_admin') : ?>
+                                                <a type="button" href="<?= base_url('backend/order_edit/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
                                             <?php endif; ?>
                                             <a type="button" href="<?= base_url('backend/order_view/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View" data-type="confirm"><i class="fa fa-eye"></i></a>
-                                            <?php if($row['ord_advrtise'] == '0'): ?>
-                                            <a type="button" href="<?= base_url('backend/order-publish/' . encryptIt($row['ord_id'])) ?>" target="_blank" class="btn btn-sm btn-outline-warning js-sweetalert" Onclick="return confirm('Are You sure? You want to advertise this?');" title="Advertise" data-type="confirm"><i class="fa fa-bullhorn"></i></a>
+                                            <?php if ($row['ord_advrtise'] == '0') : ?>
+                                                <a type="button" href="<?= base_url('backend/order-publish/' . encryptIt($row['ord_id'])) ?>" target="_blank" class="btn btn-sm btn-outline-warning js-sweetalert" Onclick="return confirm('Are You sure? You want to advertise this?');" title="Advertise" data-type="confirm"><i class="fa fa-bullhorn"></i></a>
                                             <?php endif; ?>
 
                                         </td>

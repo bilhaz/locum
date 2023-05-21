@@ -705,4 +705,60 @@ class emp extends EMPBaseController
 
 
 	}
+
+		public function get_notif()
+	{
+		$data = [];
+		$model = new notificationModel();
+		// fetch live data from the database and store it in $data
+		$data = $model->where('emp_id', session()->emp_id)->where('usr_type','employee')->orderBy('status', 'ASC')->orderBy('created_at', 'DESC')->limit(8)->find(); // your database query here
+		// fetch the count of unseen notifications
+		$count = $model->where('status', 0)->countAllResults();
+
+		foreach ($data as $row) {
+			$url = base_url($row['link'] . '/' . encryptIt($row['ord_id']));
+			echo '<li class="d-flex">
+				<div class="feeds-left"><i class="fa fa-calendar"></i></div>
+				<div class="feeds-body flex-grow-1">
+					<h6 class="mb-1" >' . $row['notification'] . '<small class="float-end text-muted small">' . date("d-m-y", strtotime($row['created_at'])) . '</small><br></h6>
+					<span class="text-muted"><a class="notification" href="#!" onclick="seenaa(' . $row['id'] . ',\'' . $url . '\')" >Click here to view</a> <b style="float:right;">' . ($row['status'] == 1 ? 'Seen' : '') . '</b></span>
+				</div>
+			</li>';
+		}
+
+		// return the data as JSON
+		// return $this->response->setJSON(['count' => $count]);
+	}
+	public function get_notifcount()
+	{
+		$data = [];
+		$model = new notificationModel();
+		// fetch the count of unseen notifications
+		$count = $model->where('emp_id', session()->emp_id)->where('status', 0)->where('usr_type', 'employee')->countAllResults();
+		echo $count;
+		// return the count as JSON
+		// return $this->response->setJSON(['count' => $count]);
+	}
+	public function notif_seen()
+	{
+
+		$data = [];
+		$id = $this->request->getPost('id');
+		$model = new notificationModel();
+		$data['notif_id'] = $model->where('id', $id)->first();
+		// 		$notid = $data['notif_id']['id'];
+		$newdata = [
+			'status' => '1',
+		];
+
+		$model->update($id, $newdata);
+		// return the data as JSON
+
+
+
+		// $model = new NotificationModel();
+		// $model->update($id, ['status' => 1]);
+		return json_encode(['success' => true]); // return JSON response
+
+	}
 }

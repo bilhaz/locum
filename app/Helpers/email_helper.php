@@ -40,4 +40,18 @@ function add_log($data = array()) {
     $logModel->insert($log);
     
 }
+function add_notif($data = array()) {
+    $notiModel = new App\Models\notificationModel();
+    
+    $noti = [
+            'ord_id' => $data['ord_id'],
+            'link' => $data['link'],
+            'emp_id' => $data['emp_id'],
+            'usr_type' => $data['usr_type'],
+            'notification' => $data['notification'],
+            'status' => '0',
+    ];
+    $notiModel->insert($noti);
+    
+}
 }
