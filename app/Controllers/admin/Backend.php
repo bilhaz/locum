@@ -12,6 +12,7 @@ use App\Models\ordersModel;
 use App\Models\specialityModel;
 use App\Models\clRegModel;
 use App\Models\formulaModel;
+use App\Models\logModel;
 use App\Models\usrgrpModel;
 use App\Models\timesheetModel;
 use App\Models\notificationModel;
@@ -97,6 +98,7 @@ class Backend extends BEBaseController
 		'formula' => ['super_admin', 'admin'],
 		'edit-formula' => ['super_admin', 'admin'],
 		'get_notif' => ['super_admin', 'admin', 'user'],
+		'show-notif' => ['super_admin', 'admin', 'user'],
 		'notif-seen' => ['super_admin', 'admin', 'user'],
 		'notif-count' => ['super_admin', 'admin', 'user'],
 
@@ -208,7 +210,38 @@ class Backend extends BEBaseController
 		// Todays Actitvity
 		$data['ord_canc'] = $model->where('ord_cancel_bcl', '1')->where('DATE(ord_updated)', $today)->orWhere('ord_cancel_bdr', '1')->where('DATE(ord_updated)', $today)->countAllResults();
 
+		$slmodel = new logModel();
+		
+    // Iterate over each user
+    $users = $slmodel->join('users', 'users.usr_id = sra_logs.adm_id','LEFT')->findAll(); // Retrieve all users from the database
 
+    $counts = [];
+
+    // Iterate over each user
+    foreach ($users as $user) {
+        // Get the user ID
+		
+        $userId = $user['adm_id']; // Replace 'id' with the actual column name for the user ID
+		$userName = $user['usr_name']; // Replace 'name' with the actual column name for the user's name
+
+        // Set a value of 1 for each column for the user
+        $columnCounts = [
+            'first_response' => $slmodel->where('first_response','1')->where('adm_id', $userId)->countAllResults('first_response'),
+            'locum_process' => $slmodel->where('locum_process','1')->where('adm_id', $userId)->countAllResults('locum_process'),
+            'locum_confirmation' => $slmodel->where('locum_confirmation','1')->where('adm_id', $userId)->countAllResults('locum_confirmation'),
+            'employee_confirmation' => $slmodel->where('employee_confirmation','1')->where('adm_id', $userId)->countAllResults('employee_confirmation'),
+		        ];
+				$counts[$userId] = [
+					'usr_name' => $userName,
+					'counts' => $columnCounts
+				];
+        // Store the column counts for the user
+        
+    }
+
+    // Pass the counts to the view
+    $data['counts'] = $counts;
+	// print_r($data['counts']);exit;
 
 		return $this->LoadView('admin/dashboard', $data);
 	}
@@ -2313,7 +2346,7 @@ class Backend extends BEBaseController
 		add_log($log);
 		$newdata2 = [
 			'ord_id' => $ord_id,
-			'emp_id' => session()->usr_id,
+			'emp_id' => $data['e_ord']['cl_id'],
 			'link'	=> $link,
 			'notification' => "Timesheet Updated by SRAL",
 			'status' => "0",
@@ -2321,7 +2354,7 @@ class Backend extends BEBaseController
 		];
 		$newdata3 = [
 			'ord_id' => $ord_id,
-			'emp_id' => session()->usr_id,
+			'emp_id' => $data['e_ord']['emp_id'], //user id to whom we want to send notification
 			'link'	=> $link2,
 			'notification' => "Timesheet Updated by SRAL",
 			'status' => "0",
@@ -2495,8 +2528,9 @@ class Backend extends BEBaseController
 		// fetch live data from the database and store it in $data
 		$data = $model->where('usr_type', 'admin')->orderBy('status', 'ASC')->orderBy('created_at', 'DESC')->limit(8)->find(); // your database query here
 		// fetch the count of unseen notifications
-		$count = $model->where('status', 0)->countAllResults();
-
+		// $count = $model->where('status', 0)->countAllResults();
+		 // Return the JSON and HTML data
+		//  echo json_encode($data);
 		foreach ($data as $row) {
 			$url = base_url($row['link'] . '/' . encryptIt($row['ord_id']));
 			echo '<li class="d-flex">
@@ -2506,10 +2540,24 @@ class Backend extends BEBaseController
 					<span class="text-muted"><a class="notification" href="#!" onclick="seenaa(' . $row['id'] . ',\'' . $url . '\')" >Click here to view</a> <b style="float:right;">' . ($row['status'] == 1 ? 'Seen' : '') . '</b></span>
 				</div>
 			</li>';
+			
 		}
 
-		// return the data as JSON
-		// return $this->response->setJSON(['count' => $count]);
+		
+	}
+	public function show_notif()
+	{
+		$data = [];
+		$model = new notificationModel();
+		// fetch live data from the database and store it in $data
+		$data = $model->where('usr_type', 'admin')->orderBy('status', 'ASC')->orderBy('created_at', 'DESC')->limit(8)->find(); // your database query here
+		
+		foreach ($data as &$notification) {
+			$notification['ord_id'] = encryptIt($notification['ord_id']);
+		}
+		 // Return the JSON and HTML data
+		 echo json_encode($data);
+		
 	}
 	public function get_notifcount()
 	{
@@ -2691,14 +2739,14 @@ class Backend extends BEBaseController
 			add_log($log);
 
 			$newData = [
-				'ord_status' => '2',
+				'ord_status' => '1',
 
 			];
 			$newData2 = [
 				'ord_id' => $id,
-				'emp_id' => session()->usr_id,
+				'emp_id' => $data['v_ordr']['cl_id'], //user id to whom we want to send notification
 				'link'	=> $link,
-				'notification' => "Locum Confirmation",
+				'notification' => "Locum Response",
 				'status' => "0",
 				'usr_type' => "client",
 			];
@@ -2848,14 +2896,14 @@ class Backend extends BEBaseController
 
 			// save to database
 			$newData = [
-				'ord_status' => '3',
+				'ord_status' => '2',
 
 			];
 			$newData2 = [
 				'ord_id' => $id,
-				'emp_id' => session()->usr_id,
+				'emp_id' => $data['v_ordr']['cl_id'], //user id to whom we want to send notification
 				'link'	=> $link,
-				'notification' => "Locum Confirmation",
+				'notification' => "Locum Processed",
 				'status' => "0",
 				'usr_type' => "client",
 			];
@@ -2971,7 +3019,7 @@ class Backend extends BEBaseController
 			];
 			$newData2 = [
 				'ord_id' => $id,
-				'emp_id' => session()->usr_id,
+				'emp_id' => $data['v_ordr']['cl_id'], //user id to whom we want to send notification
 				'link'	=> $link,
 				'notification' => "Locum Confirmation",
 				'status' => "0",
@@ -3104,7 +3152,7 @@ class Backend extends BEBaseController
 			// logs
 			$log = array(
 				'row_id' => $id,
-				'adm_id' => session()->usr_id,
+				'adm_id' => $data['v_ordr']['emp_id'], //user id to whom we want to send notification
 				'action_table' => 'Orders',
 				'content' => '4',
 				'event' => 'Order Status Updated and Email Send',
@@ -3222,8 +3270,8 @@ class Backend extends BEBaseController
 		$log = array(
 			'row_id' => $id,
 			'adm_id' => session()->usr_id,
-			'action_table' => 'Orders',
-			'content' => 'ord_advertise = 1',
+			'action_table' => $data['doc'],
+			'content' => 'ord_advertised',
 			'event' => 'Order Publish',
 		);
 

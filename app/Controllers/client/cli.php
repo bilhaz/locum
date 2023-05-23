@@ -455,6 +455,7 @@ class cli extends CLIBaseController
 					'link'	=> $link,
 					'notification' => "Order updated by Client",
 					'status' => "0",
+					'usr_type' => "admin",
 				];
 				$model->update($eoid,$newData);
 				$Nmodel->insert($newdata2);
@@ -642,7 +643,7 @@ public function get_notif()
 		$data = [];
 		$model = new notificationModel();
 		// fetch live data from the database and store it in $data
-		$data = $model->where('usr_type','client')->orderBy('status', 'ASC')->orderBy('created_at', 'DESC')->limit(8)->find(); // your database query here
+		$data = $model->where('emp_id', session()->cl_id)->where('usr_type','client')->orderBy('status', 'ASC')->orderBy('created_at', 'DESC')->limit(8)->find(); // your database query here
 		// fetch the count of unseen notifications
 		$count = $model->where('status', 0)->countAllResults();
 
@@ -665,7 +666,7 @@ public function get_notif()
 		$data = [];
 		$model = new notificationModel();
 		// fetch the count of unseen notifications
-		$count = $model->where('status', 0)->where('usr_type', 'client')->countAllResults();
+		$count = $model->where('status', 0)->where('usr_type', 'client')->where('emp_id', session()->cl_id)->countAllResults();
 		echo $count;
 		// return the count as JSON
 		// return $this->response->setJSON(['count' => $count]);

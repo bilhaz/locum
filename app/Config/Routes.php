@@ -110,6 +110,7 @@ $routes->match(['get' , 'post'], 'backend/email-4/(:any)', 'admin\Backend::email
 $routes->match(['get' , 'post'], 'backend/contract/(:any)', 'admin\Backend::contract/$1',['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/change_doctor_cancelled_order/(:any)/(:any)', 'admin\Backend::change_doctor_cancelled_order/$1/$2',['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/notif-get', 'admin\Backend::get_notif',/*['filter' => 'B_auth']*/);
+$routes->match(['get' , 'post'], 'backend/show-notif', 'admin\Backend::show_notif',/*['filter' => 'B_auth']*/);
 $routes->match(['get' , 'post'], 'backend/notif-seen', 'admin\Backend::notif_seen',['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/notif-count', 'admin\Backend::get_notifcount',/*['filter' => 'B_auth']*/);
 

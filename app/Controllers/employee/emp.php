@@ -225,7 +225,7 @@ class emp extends EMPBaseController
 				
 				$newdata2 = [
 					'ord_id' => $asid,
-					'emp_id' => $id,
+					'emp_id' => session()->emp_id,
 					'link'	=> $link,
 					'notification' => "Assesment uploaded by Employee",
 					'status' => "0",

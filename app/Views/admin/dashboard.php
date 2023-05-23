@@ -250,46 +250,47 @@
 </div>
 <div class="row mb-3">
     <div class="col-md-8">
-        <div class="card">
+        <div class="card" style="height:70%">
             <div class="card-header">
                 <h4 class="card-title text-primary">User Work Log List</h4>
             </div>
-            <div class="card-body">
-                <table id="" class="table table-hover">
+            <div class="card-body overflow-scroll">
+            <table id="employee_List" class="table table-hover">
                     <thead class="thead-dark">
                         <tr>
                             <th>SNo.</th>
                             <th>Name</th>
                             <th>First Response</th>
                             <th>Processed</th>
-                            <th>Confirmed</th>
-                            <th>Session</th>
+                            <th>Client Confirmation</th>
+                            <th>Employee Confirmation</th>
                         </tr>
                     </thead>
                     <tbody>
-
-
-                        <tr>
-                            <td>
-                                1
-                            </td>
-
-
-                            <td>
-                                <h6 class="mb-0">abc</h6>
-                            </td>
-                            <td><span>33</span></td>
-                            <td><span>55</span></td>
-                            <td>88</td>
-                            <td>
-                                Nothing
-
-                            </td>
-                        </tr>
+                    <?php $i=1; foreach ($counts as $userId => $userData): ?>
+            <tr>
+                <td><?= $i++ ?></td>
+                <td><?= $userData['usr_name'] ?></td>
+                <td class="text-center"><?= $userData['counts']['first_response'] ?></td>
+                <td class="text-center"><?= $userData['counts']['locum_process'] ?></td>
+                <td class="text-center"><?= $userData['counts']['locum_confirmation'] ?></td>
+                <td class="text-center"><?= $userData['counts']['employee_confirmation'] ?></td>
+            </tr>
+        <?php endforeach; ?>
 
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+<div class="col-md-4 col-sm-12">
+<div class="card">
+<div class="card-header">
+<h6 class="card-title">Locum Analysis</h6>
+</div>
+<div class="card-body text-center">
+<div id="income_analysis"></div>
+</div>
+</div>
+</div>
 </div>
