@@ -2550,7 +2550,7 @@ class Backend extends BEBaseController
 		$data = [];
 		$model = new notificationModel();
 		// fetch live data from the database and store it in $data
-		$data = $model->where('usr_type', 'admin')->orderBy('status', 'ASC')->orderBy('created_at', 'DESC')->limit(8)->find(); // your database query here
+		$data = $model->where('usr_type', 'admin')->where('status', '0')->orderBy('created_at', 'DESC')->limit(8)->find(); // your database query here
 		
 		foreach ($data as &$notification) {
 			$notification['ord_id'] = encryptIt($notification['ord_id']);

@@ -26,6 +26,7 @@ function showNotification(title, body, url) {
             body: body,
             icon: '<?php echo base_url('public/images/sralogo-icon.png'); ?>' // Replace with the path to your static icon
           };
+          console.log("Notification Permission is granted");
           var notification = new Notification(title, options);
 
           // Open the URL when notification is clicked

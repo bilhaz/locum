@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
     <meta charset="utf-8">
     <title>SRA | Flow</title>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -51,7 +52,7 @@
                             <div class="navbar-brand ps-2">
                                 <a class="mr-4" href="<?= base_url('backend/') ?>">
                                     <img src="<?= base_url('public/images/sralogo-icon.png') ?>" width="40" height="40" />
-                                    <span class="text-success mt-4 text-center">SRA LOCUM</span>
+                                    <span class="text-success d-none d-sm-inline mt-4 text-center">SRA LOCUM</span>
                                 </a>
 
                             </div>
