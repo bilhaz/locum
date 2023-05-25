@@ -73,20 +73,7 @@ $(document).ready(function() {
   </script>
 
 
-<script>
-    $(document).ready(function () {
-        $('#employee_List')
-        .dataTable({
-            responsive: true,
-            columnDefs: [
-                {
-                    orderable: true,
-                    targets: [0]
-                }
-            ]
-        });
-    });
-</script>
+
 <script>
   var inputs = document.querySelectorAll(".eircode");
   inputs.forEach(function(input) {

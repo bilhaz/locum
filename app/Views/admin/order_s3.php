@@ -280,7 +280,7 @@
                                                                     '0',
                                                                     ($v_ordr['vat_rate'] == '0') ? TRUE : FALSE
                                                                 ) ?>>0%</option>
-                                                                <?php if(!empty($v_ordr['vat_rate'])): ?>
+                                                                 <?php if (!empty($v_ordr['vat_rate']) && $v_ordr['vat_rate'] != "23" && $v_ordr['vat_rate'] != "0" ): ?>
                                             <option value="$v_ordr['vat_rate']" <?= set_select(
                                                                     'vat_rate',
                                                                     $v_ordr['vat_rate'],

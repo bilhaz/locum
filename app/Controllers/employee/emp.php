@@ -78,7 +78,135 @@ class emp extends EMPBaseController
 		session()->set($data);
 		return true;
 	}
+	// Loading Forgot Password page
+	public function forgot_pass() {
+		$data = [];
+		helper('form');
 
+		return $this->LoadView('employees/forgot-password', $data);
+	}
+
+	// method for reset password verification & send email
+    public function passwordReset() {
+		$data = [];
+        // date_default_timezone_set('Asia/Karachi'); // setting riyadh timezone
+        
+        // checking if it is valid ajax request
+        if (!$this->request->isAJAX()) {
+            exit('No direct script access allowed');
+        }
+
+        $email = $this->request->getPost('email'); // email input
+
+        $model = new EmpModel(); //
+        $candidate = $model->where('emp_email', $email)->first();
+
+        if (is_array($candidate)) {
+
+            //generate reset token
+            $reset_token = urlencode(md5(time() . 'emp_created' . rand(1000, 99999) . rand(100, 999)));
+            
+            // creating token expiry date
+            $now = date("Y-m-d H:m:s");
+            $expirydate = date("Y-m-d H:i:s", strtotime('+24 hours', strtotime($now))); 
+
+            $upd = array('Reset_Token' => $reset_token,'Reset_Token_Expiry'=>$expirydate); // preparing data for updation
+
+            if ($model->update($candidate['emp_id'], $upd)) { // updating record
+                if ($this->PasswordResetEmailTemplate($email, $reset_token)) { // sending email
+                    echo json_encode(array('info' => '1', 'msg' => 'email sent successfully')); // success msg
+                } else {
+
+                    echo json_encode(array('info' => '0', 'msg' => 'email not sent')); // error msg
+                }
+            } else {
+                return json_encode(array('info' => '0', 'msg' => 'Error')); // error msg
+            }
+        } else {
+            echo json_encode(array('info' => '0', 'msg' => 'Email not registered')); // // error msg
+        }
+		
+    }
+	// method to load password-reset view
+    public function resetPasswordRequest($reset_token = '') {
+        // date_default_timezone_set("Asia/Karachi");
+        
+		
+        if ($reset_token == '') {
+            show_404();
+        }
+        
+        $model = new EmpModel(); // loading model
+        $result = $model->where('Reset_Token',  urldecode($reset_token))->first();
+        
+        $data['expired'] = false ;
+        
+        // checking for token expiry
+        $now = date("Y-m-d H:m:s");
+        if(strtotime($result['Reset_Token_Expiry']) < strtotime($now)){
+            $data['expired'] = true ;
+        }
+        
+        $data['reset_token'] = urldecode($reset_token);
+		return $this->LoadView('employees/reset-password', $data);
+        // echo view('site/password-reset', $data);
+        
+    }
+	public function changePassword_Request() {
+
+
+        $rules = [
+			'password' => 'trim|min_length[8]|required', // validation rules
+            'confirm_password' => 'required|matches[password]'
+		];
+
+        $reset_token = $this->request->getPost('reset_token');  // getting token input
+
+        if (!$this->validate($rules)) {
+			$data['validation'] = $this->validator;// validating inputs
+            session()->setFlashdata('requestMsgErr', $this->validator->listErrors()); // passing validation errors
+            return redirect()->to('employee/resetPasswordRequest/' . $reset_token);
+        }
+
+        $model = new EmpModel(); // loading model
+        //update password
+        $data = array(
+            'Reset_Token' => '',
+            'Reset_Token_Expiry' => NULL,
+            'emp_pwd' => $this->request->getPost('password')
+        );
+        $result = $model->where('Reset_Token', $reset_token)->set($data)->update();
+
+//        $result = $siteModel->query("UPDATE pmc_et_tbl_basicentries SET Reset_Token = '', Reset_Token_Expiry = NULL, entPassword = OLD_PASSWORD('".$data['entPassword']."') WHERE Reset_Token = '$reset_token'");
+        if ($result) { // checking if password updated
+            session()->setFlashdata('success', 'Password Changed Sucessfully');
+        }
+        return redirect()->to('employee/login');
+    }
+	 // email template
+	 private function PasswordResetEmailTemplate($email = '', $reset_token = '') {
+
+        $ctrl = 'employee';
+        // preparing data for email content
+        $data = array(
+            'controller' => $ctrl,
+            'username' => $email,
+            'reset_token' => $reset_token,
+            'string' => 'Dear ',
+            'host' => $_SERVER['HTTP_HOST'],
+            'tokken_link' => base_url('employee/resetPasswordRequest/' . $reset_token)
+        );
+
+
+        $parser = \Config\Services::parser(); // loading parse library
+        $email_page = $parser->setData($data)->render('employees/emails/reset-password'); // rendering password reset html
+        //send email
+        $to = $email;
+		$cc = '';
+		$subject = 'SRA-Password Reset Request';
+		$message = $email_page;
+        return(sendEmail($to, $cc, $subject, $message));
+    }
 	public function dashboard()
 	{
 		$data = [];

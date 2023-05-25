@@ -54,4 +54,7 @@ function add_notif($data = array()) {
     $notiModel->insert($noti);
     
 }
+function show_404(){
+    throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+}
 }

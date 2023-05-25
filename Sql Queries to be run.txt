@@ -33,3 +33,11 @@ ALTER TABLE `notification` ADD `usr_type` VARCHAR(255) NULL AFTER `emp_id`;
 
 ALTER TABLE `orders` ADD `ord_advrtise` INT NOT NULL AFTER `ord_cl_cremarks`;
 
+// Clients reset token fields
+
+ALTER TABLE `clients` ADD `Reset_Token` TEXT NULL AFTER `cl_status`, ADD `Reset_Token_Expiry` DATETIME NULL DEFAULT NULL AFTER `Reset_Token`;
+
+// Employee reset token fields
+
+ALTER TABLE `employee` ADD `Reset_Token` TEXT NULL AFTER `emp_status`, ADD `Reset_Token_Expiry` DATETIME NULL DEFAULT NULL AFTER `Reset_Token`;
+

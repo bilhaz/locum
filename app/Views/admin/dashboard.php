@@ -136,16 +136,16 @@
                     <div class="card-body">
                         <div class="row mb-2">
                             <div class="col-md-6 mb-2">
-                                <a type="button" class="btn btn-outline-primary btn-block equal-width" href="#" target="_blank">Sales</a>
+                                <a type="button" class="btn btn-outline-primary btn-block equal-width" href="<?= base_url('backend/sales') ?>" target="_blank">Sales</a>
                             </div>
                             <div class="col-md-6 mb-2">
-                                <a type="button" class="btn btn-outline-primary btn-block equal-width" href="#" target="_blank">Purchases</a>
+                                <a type="button" class="btn btn-outline-primary btn-block equal-width" href="<?= base_url('backend/purchase') ?>" target="_blank">Purchases</a>
                             </div>
                             <div class="col-md-6 mb-2">
-                                <a type="button" class="btn btn-outline-primary btn-block equal-width" href="#" target="_blank">VAT on Sales</a>
+                                <a type="button" class="btn btn-outline-primary btn-block equal-width" href="<?= base_url('backend/vos') ?>" target="_blank">VAT on Sales</a>
                             </div>
                             <div class="col-md-6 mb-2">
-                                <a type="button" class="btn btn-outline-primary btn-block equal-width" href="#" target="_blank">VAT on Purchase</a>
+                                <a type="button" class="btn btn-outline-primary btn-block equal-width" href="<?= base_url('backend/vop') ?>" target="_blank">VAT on Purchase</a>
                             </div>
                             <div class="col-md-6 mb-2">
                                 <a type="button" class="btn btn-outline-primary btn-block equal-width" href="#" target="_blank">VOS - VOP</a>

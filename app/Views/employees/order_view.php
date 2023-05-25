@@ -412,9 +412,9 @@
                             <?php elseif(isset($ord['order_id'])): ?>
                             <a type="button" href="<?= base_url('employee/t-view/' .encryptIt($cont['ord_id'])) ?>" class="btn btn-sm btn-warning d-print-none"><i class="fa fa-eye ">&nbsp;</i>View TimeSheet</a>
                                 <?php endif; ?>
-                            <?php if(!empty($cont['ord_assignment'])): ?>
+                            <?php if(!empty($cont['ord_assignment']) && $cont['ord_status'] > "2"): ?>
                             <a type="button" target="_blank" href="<?= base_url('public/uploads/doc_assesment/'. $cont['ord_assignment']) ?>" class="btn btn-sm btn-info d-print-none text-light">View Assesment</a>
-                            <?php else: ?>
+                            <?php elseif(empty($cont['ord_assignment']) && $cont['ord_status'] > "2"): ?>
                             <a type="button" href="<?= base_url('employee/upl-asses/' .encryptIt($cont['ord_id'])) ?>" class="btn btn-sm btn-info d-print-none text-light">Upload Assesment</a>
                                 <?php endif; ?>
                         </li>
@@ -422,11 +422,12 @@
                     <?php endif; ?>
                 </div>
             </div>
-            <ul class="header-dropdown d-print-none">
+            <!-- <ul class="header-dropdown d-print-none"> -->
                 <li class="dropdown">
                     <button onclick="printSection()" class="btn btn-outline-info">Print Assesment Form &nbsp;<i class="fa fa-print"></i></button>
                 </li>
-            </ul>
+                <br>
+            <!-- </ul> -->
        
         <div class="row clearfix">
             <!-- Contract Starts here -->

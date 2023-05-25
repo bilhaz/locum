@@ -97,6 +97,11 @@ $routes->match(['get' , 'post'], 'backend/client-pwd/(:any)', 'admin\Backend::cl
 $routes->match(['get' , 'post'], 'backend/employee-pwd/(:any)', 'admin\Backend::employee_pwd/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/expired-orders', 'admin\Backend::expired_orders' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/timesheet', 'admin\Backend::timesheet' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'backend/sales', 'admin\Backend::sale_sumry' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'backend/purchase', 'admin\Backend::purchase_sumry' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'backend/vos', 'admin\Backend::vos_sumry' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'backend/vop', 'admin\Backend::vop_sumry' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'backend/vos-vop', 'admin\Backend::vosvop_sumry' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/t-fill/(:any)', 'admin\Backend::fill_timesheet/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/timesheet_save/(:any)', 'admin\Backend::timesheet_save/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/t-edit/(:any)', 'admin\Backend::edit_timesheet/$1' ,['filter' => 'B_auth']);
@@ -110,7 +115,7 @@ $routes->match(['get' , 'post'], 'backend/email-4/(:any)', 'admin\Backend::email
 $routes->match(['get' , 'post'], 'backend/contract/(:any)', 'admin\Backend::contract/$1',['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/change_doctor_cancelled_order/(:any)/(:any)', 'admin\Backend::change_doctor_cancelled_order/$1/$2',['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/notif-get', 'admin\Backend::get_notif',/*['filter' => 'B_auth']*/);
-$routes->match(['get' , 'post'], 'backend/show-notif', 'admin\Backend::show_notif',/*['filter' => 'B_auth']*/);
+$routes->match(['get' , 'post'], 'backend/show-notif', 'admin\Backend::show_notif',['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/notif-seen', 'admin\Backend::notif_seen',['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/notif-count', 'admin\Backend::get_notifcount',/*['filter' => 'B_auth']*/);
 
@@ -130,6 +135,10 @@ $routes->match(['get' , 'post'], 'employee', 'employee\emp::dashboard',['filter'
 $routes->match(['get' , 'post'], 'employee/advt_apply/(:any)', 'employee\emp::advt_apply/$1',['filter' => 'E_Auth']);
 $routes->match(['get' , 'post'], 'employee/advt_applied', 'employee\emp::advt_applied',['filter' => 'E_Auth']);
 $routes->match(['get' , 'post'], 'employee/login', 'employee\emp::login',['filter' => 'E_noauth']);
+$routes->match(['get' , 'post'], 'employee/forgot-password', 'employee\emp::forgot_pass',['filter' => 'E_noauth']);
+$routes->match(['get' , 'post'], 'employee/passwordReset', 'employee\emp::passwordReset',['filter' => 'E_noauth']);
+$routes->match(['get' , 'post'], 'employee/resetPasswordRequest/(:any)', 'employee\emp::resetPasswordRequest/$1',['filter' => 'E_noauth']);
+$routes->match(['get' , 'post'], 'employee/changePassword_Request', 'employee\emp::changePassword_Request',['filter' => 'E_noauth']);
 $routes->match(['get' , 'post'],'employee/pwdupd', 'employee\emp::pwdupd',['filter' => 'E_Auth']);
 $routes->get('employee/dashboard', 'employee\emp::dashboard',['filter' => 'E_Auth']);
 $routes->match(['get' , 'post'], 'employee/orders', 'employee\emp::contracts',['filter' => 'E_Auth']);
@@ -165,6 +174,10 @@ $routes->match(['get' , 'post'],'client', 'client\cli::dashboard',['filter' => '
 $routes->match(['get' , 'post'], 'client/new-order', 'client\cli::new_order',['filter' => 'C_Auth']);
 $routes->match(['get' , 'post'], 'client/edit-order/(:any)', 'client\cli::order_edit/$1',['filter' => 'C_Auth']);
 $routes->match(['get' , 'post'], 'client/login', 'client\cli::login',['filter' => 'C_noauth']);
+$routes->match(['get' , 'post'], 'client/forgot-password', 'client\cli::forgot_pass',['filter' => 'C_noauth']);
+$routes->match(['get' , 'post'], 'client/passwordReset', 'client\cli::passwordReset',['filter' => 'C_noauth']);
+$routes->match(['get' , 'post'], 'client/resetPasswordRequest/(:any)', 'client\cli::resetPasswordRequest/$1',['filter' => 'C_noauth']);
+$routes->match(['get' , 'post'], 'client/changePassword_Request', 'client\cli::changePassword_Request',['filter' => 'C_noauth']);
 $routes->match(['get' , 'post'],'client/pwdupd', 'client\cli::pwdupd',['filter' => 'C_Auth']);
 $routes->get('client/dashboard', 'client\cli::dashboard',['filter' => 'C_Auth']);
 $routes->match(['get' , 'post'], 'client/profile', 'client\cli::profile',['filter' => 'C_Auth']);

@@ -347,7 +347,7 @@
                                     <div class="form-group col-md-4 ">
                                         <label for="ord_paying_to_dr" class="control-label mb-1">Total Paying to
                                             Employee&nbsp;<small class="text-danger">(Office use only)</small></label>
-                                        <input id="totpay" name="ord_paying_to_dr" oninput="calculateDiff()" required="" type="text" class="form-control" value="<?= $v_ordr['ord_paying_to_dr'] ? $v_ordr['ord_paying_to_dr'] : set_value('ord_paying_to_dr') ?>" readonly>
+                                        <input id="totpay" name="ord_paying_to_dr" oninput="calculateDiff()"  type="text" class="form-control" value="<?= $v_ordr['ord_paying_to_dr'] ? $v_ordr['ord_paying_to_dr'] : set_value('ord_paying_to_dr') ?>" readonly>
                                     </div>
 
                                 </div>
@@ -387,11 +387,13 @@
                                                                     '0',
                                                                     ($v_ordr['vat_rate'] == '0') ? TRUE : FALSE
                                                                 ) ?>>0%</option>
-                                            <option value="$v_ordr['vat_rate']" <?= set_select(
+                                                                <?php if (!empty($v_ordr['vat_rate']) && $v_ordr['vat_rate'] != "23" && $v_ordr['vat_rate'] != "0" ): ?>
+                                            <option value="<?=$v_ordr['vat_rate'] ?>" <?= set_select(
                                                                     'vat_rate',
                                                                     $v_ordr['vat_rate'],
                                                                     ($v_ordr['vat_rate'] == $v_ordr['vat_rate']) ? TRUE : FALSE
                                                                 ) ?>><?=$v_ordr['vat_rate']?>%</option>
+                                                                <?php endif; ?>
                                         </select>                                    </div>
                                     <div class="form-group col-md-4 ">
                                         <label for="ord_vat_sale" class="control-label mb-1">VAT on Sale</label>

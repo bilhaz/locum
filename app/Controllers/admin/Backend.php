@@ -58,6 +58,11 @@ class Backend extends BEBaseController
 		'locum-sagtrack' => ['super_admin', 'admin', 'user'],
 		'order-publish' => ['super_admin', 'admin', 'user'],
 		'order-unpublish' => ['super_admin', 'admin', 'user'],
+		'sales' => ['super_admin', 'admin', 'user'],
+		'vos' => ['super_admin', 'admin', 'user'],
+		'vop' => ['super_admin', 'admin', 'user'],
+		'vos-vop' => ['super_admin', 'admin', 'user'],
+		'purchase' => ['super_admin', 'admin', 'user'],
 		'order_view' => ['super_admin', 'admin', 'user'],
 		'order_edit' => ['super_admin', 'admin', 'user'],
 		'ord_status' => ['super_admin', 'admin', 'user'],
@@ -211,37 +216,37 @@ class Backend extends BEBaseController
 		$data['ord_canc'] = $model->where('ord_cancel_bcl', '1')->where('DATE(ord_updated)', $today)->orWhere('ord_cancel_bdr', '1')->where('DATE(ord_updated)', $today)->countAllResults();
 
 		$slmodel = new logModel();
-		
-    // Iterate over each user
-    $users = $slmodel->join('users', 'users.usr_id = sra_logs.adm_id','LEFT')->findAll(); // Retrieve all users from the database
 
-    $counts = [];
+		// Iterate over each user
+		$users = $slmodel->join('users', 'users.usr_id = sra_logs.adm_id', 'LEFT')->findAll(); // Retrieve all users from the database
 
-    // Iterate over each user
-    foreach ($users as $user) {
-        // Get the user ID
-		
-        $userId = $user['adm_id']; // Replace 'id' with the actual column name for the user ID
-		$userName = $user['usr_name']; // Replace 'name' with the actual column name for the user's name
+		$counts = [];
 
-        // Set a value of 1 for each column for the user
-        $columnCounts = [
-            'first_response' => $slmodel->where('first_response','1')->where('adm_id', $userId)->countAllResults('first_response'),
-            'locum_process' => $slmodel->where('locum_process','1')->where('adm_id', $userId)->countAllResults('locum_process'),
-            'locum_confirmation' => $slmodel->where('locum_confirmation','1')->where('adm_id', $userId)->countAllResults('locum_confirmation'),
-            'employee_confirmation' => $slmodel->where('employee_confirmation','1')->where('adm_id', $userId)->countAllResults('employee_confirmation'),
-		        ];
-				$counts[$userId] = [
-					'usr_name' => $userName,
-					'counts' => $columnCounts
-				];
-        // Store the column counts for the user
-        
-    }
+		// Iterate over each user
+		foreach ($users as $user) {
+			// Get the user ID
 
-    // Pass the counts to the view
-    $data['counts'] = $counts;
-	// print_r($data['counts']);exit;
+			$userId = $user['adm_id']; // Replace 'id' with the actual column name for the user ID
+			$userName = $user['usr_name']; // Replace 'name' with the actual column name for the user's name
+
+			// Set a value of 1 for each column for the user
+			$columnCounts = [
+				'first_response' => $slmodel->where('first_response', '1')->where('adm_id', $userId)->countAllResults('first_response'),
+				'locum_process' => $slmodel->where('locum_process', '1')->where('adm_id', $userId)->countAllResults('locum_process'),
+				'locum_confirmation' => $slmodel->where('locum_confirmation', '1')->where('adm_id', $userId)->countAllResults('locum_confirmation'),
+				'employee_confirmation' => $slmodel->where('employee_confirmation', '1')->where('adm_id', $userId)->countAllResults('employee_confirmation'),
+			];
+			$counts[$userId] = [
+				'usr_name' => $userName,
+				'counts' => $columnCounts
+			];
+			// Store the column counts for the user
+
+		}
+
+		// Pass the counts to the view
+		$data['counts'] = $counts;
+		// print_r($data['counts']);exit;
 
 		return $this->LoadView('admin/dashboard', $data);
 	}
@@ -2529,7 +2534,7 @@ class Backend extends BEBaseController
 		$data = $model->where('usr_type', 'admin')->orderBy('status', 'ASC')->orderBy('created_at', 'DESC')->limit(8)->find(); // your database query here
 		// fetch the count of unseen notifications
 		// $count = $model->where('status', 0)->countAllResults();
-		 // Return the JSON and HTML data
+		// Return the JSON and HTML data
 		//  echo json_encode($data);
 		foreach ($data as $row) {
 			$url = base_url($row['link'] . '/' . encryptIt($row['ord_id']));
@@ -2540,10 +2545,7 @@ class Backend extends BEBaseController
 					<span class="text-muted"><a class="notification" href="#!" onclick="seenaa(' . $row['id'] . ',\'' . $url . '\')" >Click here to view</a> <b style="float:right;">' . ($row['status'] == 1 ? 'Seen' : '') . '</b></span>
 				</div>
 			</li>';
-			
 		}
-
-		
 	}
 	public function show_notif()
 	{
@@ -2551,13 +2553,12 @@ class Backend extends BEBaseController
 		$model = new notificationModel();
 		// fetch live data from the database and store it in $data
 		$data = $model->where('usr_type', 'admin')->where('status', '0')->orderBy('created_at', 'DESC')->limit(8)->find(); // your database query here
-		
+
 		foreach ($data as &$notification) {
 			$notification['ord_id'] = encryptIt($notification['ord_id']);
 		}
-		 // Return the JSON and HTML data
-		 echo json_encode($data);
-		
+		// Return the JSON and HTML data
+		echo json_encode($data);
 	}
 	public function get_notifcount()
 	{
@@ -3259,48 +3260,342 @@ class Backend extends BEBaseController
 
 		unset($item); // Unset the reference variable
 
-		// print_r($emp_id);exit;
-		// print_r($data['doc']);exit;
-
-		// $emails = implode(',' ,$data['doc']);
-
-
-
 		// logs
 		$log = array(
 			'row_id' => $id,
 			'adm_id' => session()->usr_id,
-			'action_table' => $data['doc'],
-			'content' => 'ord_advertised',
+			'action_table' => 'Orders',
+			'content' => $data['doc'],
 			'event' => 'Order Publish',
 		);
 
 		add_log($log);
 
-		$newData = [
-			'ord_advrtise' => '1',
-
-		];
-
+		$sucees = [];
+		$failedEmails = [];
 		$session = session();
+		
 		foreach ($data['doc'] as $doc) {
-			$to = $doc;
-			$cc = '';
-			$subject = 'Hello';
-			$message = $this->LoadView('admin/email_responses/job-advertisement', $data);
-			if (sendEmail($to, $cc, $subject, $message)) {
 
-				$session->setFlashdata('success', 'Order Published Successfully');
+			$to = $doc['emp_email'];
+			$cc = '';
+			$subject = 'SRA-New Locum';
+			$message = $this->LoadView('admin/email_responses/job-advertisement', $data);
+
+			if (sendEmail($to, $cc, $subject, $message)) {
+				$sucees[] = $to;
 			} else {
-				$session->setFlashdata('error', 'Order Published Failed');
-				return redirect()->to('backend/orders');
+				$failedEmails[] = $to; // Store the failed email address in the array
 			}
 		}
+		if (!empty($failedEmails)) {
+			// Store the failed email addresses in the error session message
+			$session->setFlashdata('error', 'Order Published Failed. Emails failed to send to:<br> <b>' . implode(',', $failedEmails).'</b>');
+			return redirect()->to('backend/orders');
+		} else {
+
+		
 		$newData = [
 			'ord_advrtise' => '1',
 
 		];
 		$model->update($id, $newData);
+		$session->setFlashdata('success', 'Order Published Successfully. Email Succesfully Sent to: <br> <b>'. implode(',', $sucees).'</b>');
 		return redirect()->to('backend/orders');
+	}
+	}
+	public function sale_sumry()
+	{
+
+		$data = [];
+		$fromDate = $this->request->getPost('from');
+		$toDate = $this->request->getPost('to');
+		$hospital = $this->request->getPost('cl_id');
+		$employee = $this->request->getPost('emp_id');
+		$specialty = $this->request->getPost('ord_speciality');
+		$data['filter'] = [
+			'from' => $fromDate,
+			'to' => $toDate,
+			'cl_id' => $hospital,
+			'emp_id' => $employee,
+			'ord_speciality' => $specialty
+		];
+		// echo $fromDate. $toDate. $hospital. $employee. $specialty;exit;
+
+		helper(['form']);
+		$omodel = new ordersModel();
+		$Smodel = new specialityModel();
+		$data['sp_row'] = $Smodel->findAll();
+		$clmodel = new ClientModel();
+		$data['c_det'] = $clmodel->where('cl_status', 1)->where('cl_h_name !=', Null)->where('cl_cont_name !=', Null)->find();
+		$Emodel = new EmpModel();
+		$data['emp_row'] = $Emodel->where('emp_status', 1)->where('emp_fname !=', Null)->find();
+		$data['title'] = "Sales";
+
+		// Build your query using the filter values
+
+		// $query = $omodel->select('SUM(ord_hosp_earn + ord_vat_sale) AS total_sum');
+		$query = $omodel->table('orders')->selectSum('ord_hosp_earn','hosp')->selectSum('ord_vat_sale','sale');
+		// $query->selectSum('ord_pay_to_dr');
+		// $query->selectSum('ord_vat_sale');
+
+		if (!empty($fromDate) && !empty($toDate)) {
+			$query->where('ord_created >=', $fromDate);
+			$query->where('ord_created <=', $toDate);
+		}
+
+		if (!empty($hospital) && $hospital !== '0') {
+			$query->where('orders.cl_id', $hospital);
+		}
+
+		if (!empty($employee) && $employee !== '0') {
+			$query->where('orders.emp_id', $employee);
+		}
+
+		if (!empty($specialty) && $specialty !== '0') {
+			$query->where('ord_speciality', $specialty);
+		}
+
+		$data['sumry'] = $query->get()->getRow();
+		// print_r($data['sumry']);exit;
+		// Process the query results as needed
+		// ...
+		return $this->LoadView('admin/sale_report', $data);
+	}
+	public function purchase_sumry()
+	{
+
+		$data = [];
+		$fromDate = $this->request->getPost('from');
+		$toDate = $this->request->getPost('to');
+		$hospital = $this->request->getPost('cl_id');
+		$employee = $this->request->getPost('emp_id');
+		$specialty = $this->request->getPost('ord_speciality');
+		$data['filter'] = [
+			'from' => $fromDate,
+			'to' => $toDate,
+			'cl_id' => $hospital,
+			'emp_id' => $employee,
+			'ord_speciality' => $specialty
+		];
+		// echo $fromDate. $toDate. $hospital. $employee. $specialty;exit;
+
+		helper(['form']);
+		$omodel = new ordersModel();
+		$Smodel = new specialityModel();
+		$data['sp_row'] = $Smodel->findAll();
+		$clmodel = new ClientModel();
+		$data['c_det'] = $clmodel->where('cl_status', 1)->where('cl_h_name !=', Null)->where('cl_cont_name !=', Null)->find();
+		$Emodel = new EmpModel();
+		$data['emp_row'] = $Emodel->where('emp_status', 1)->where('emp_fname !=', Null)->find();
+		$data['title'] = "Purchase";
+
+		// Build your query using the filter values
+
+		// $query = $omodel->select('SUM(ord_pay_to_dr + ord_vat_purch) AS total_sum');
+		$query = $omodel->table('orders')->selectSum('ord_pay_to_dr','dr')->selectSum('ord_vat_purch','purchase');
+		// $query->selectSum('ord_pay_to_dr');
+		// $query->selectSum('ord_vat_sale');
+
+		if (!empty($fromDate) && !empty($toDate)) {
+			$query->where('ord_created >=', $fromDate);
+			$query->where('ord_created <=', $toDate);
+		}
+
+		if (!empty($hospital) && $hospital !== '0') {
+			$query->where('orders.cl_id', $hospital);
+		}
+
+		if (!empty($employee) && $employee !== '0') {
+			$query->where('orders.emp_id', $employee);
+		}
+
+		if (!empty($specialty) && $specialty !== '0') {
+			$query->where('ord_speciality', $specialty);
+		}
+
+		$data['sumry'] = $query->get()->getRow();
+		// print_r($data['sumry']);exit;
+		// Process the query results as needed
+		// ...
+		return $this->LoadView('admin/purchase_report', $data);
+	}
+	public function vos_sumry()
+	{
+
+		$data = [];
+		$fromDate = $this->request->getPost('from');
+		$toDate = $this->request->getPost('to');
+		$hospital = $this->request->getPost('cl_id');
+		$employee = $this->request->getPost('emp_id');
+		$specialty = $this->request->getPost('ord_speciality');
+		$data['filter'] = [
+			'from' => $fromDate,
+			'to' => $toDate,
+			'cl_id' => $hospital,
+			'emp_id' => $employee,
+			'ord_speciality' => $specialty
+		];
+		// echo $fromDate. $toDate. $hospital. $employee. $specialty;exit;
+
+		helper(['form']);
+		$omodel = new ordersModel();
+		$Smodel = new specialityModel();
+		$data['sp_row'] = $Smodel->findAll();
+		$clmodel = new ClientModel();
+		$data['c_det'] = $clmodel->where('cl_status', 1)->where('cl_h_name !=', Null)->where('cl_cont_name !=', Null)->find();
+		$Emodel = new EmpModel();
+		$data['emp_row'] = $Emodel->where('emp_status', 1)->where('emp_fname !=', Null)->find();
+		$data['title'] = "VAT on Sales";
+
+		// Build your query using the filter values
+
+		$query = $omodel->select('SUM(ord_vat_sale) AS total_sum');
+		// $query->selectSum('ord_pay_to_dr');
+		// $query->selectSum('ord_vat_sale');
+
+		if (!empty($fromDate) && !empty($toDate)) {
+			$query->where('ord_created >=', $fromDate);
+			$query->where('ord_created <=', $toDate);
+		}
+
+		if (!empty($hospital) && $hospital !== '0') {
+			$query->where('orders.cl_id', $hospital);
+		}
+
+		if (!empty($employee) && $employee !== '0') {
+			$query->where('orders.emp_id', $employee);
+		}
+
+		if (!empty($specialty) && $specialty !== '0') {
+			$query->where('ord_speciality', $specialty);
+		}
+
+		$data['sumry'] = $query->get()->getRow();
+		// print_r($data['sumry']);exit;
+		// Process the query results as needed
+		// ...
+		return $this->LoadView('admin/vos_report', $data);
+	}
+	public function vop_sumry()
+	{
+
+		$data = [];
+		$fromDate = $this->request->getPost('from');
+		$toDate = $this->request->getPost('to');
+		$hospital = $this->request->getPost('cl_id');
+		$employee = $this->request->getPost('emp_id');
+		$specialty = $this->request->getPost('ord_speciality');
+		$data['filter'] = [
+			'from' => $fromDate,
+			'to' => $toDate,
+			'cl_id' => $hospital,
+			'emp_id' => $employee,
+			'ord_speciality' => $specialty
+		];
+		// echo $fromDate. $toDate. $hospital. $employee. $specialty;exit;
+
+		helper(['form']);
+		$omodel = new ordersModel();
+		$Smodel = new specialityModel();
+		$data['sp_row'] = $Smodel->findAll();
+		$clmodel = new ClientModel();
+		$data['c_det'] = $clmodel->where('cl_status', 1)->where('cl_h_name !=', Null)->where('cl_cont_name !=', Null)->find();
+		$Emodel = new EmpModel();
+		$data['emp_row'] = $Emodel->where('emp_status', 1)->where('emp_fname !=', Null)->find();
+		$data['title'] = "VAT on Purchase";
+
+		// Build your query using the filter values
+
+		$query = $omodel->select('SUM(ord_vat_purch) AS total_sum');
+		// $query->selectSum('ord_pay_to_dr');
+		// $query->selectSum('ord_vat_sale');
+
+		if (!empty($fromDate) && !empty($toDate)) {
+			$query->where('ord_created >=', $fromDate);
+			$query->where('ord_created <=', $toDate);
+		}
+
+		if (!empty($hospital) && $hospital !== '0') {
+			$query->where('orders.cl_id', $hospital);
+		}
+
+		if (!empty($employee) && $employee !== '0') {
+			$query->where('orders.emp_id', $employee);
+		}
+
+		if (!empty($specialty) && $specialty !== '0') {
+			$query->where('ord_speciality', $specialty);
+		}
+
+		$data['sumry'] = $query->get()->getRow();
+		// print_r($data['sumry']);exit;
+		// Process the query results as needed
+		// ...
+		return $this->LoadView('admin/vop_report', $data);
+	}
+	public function vosvop_sumry()
+	{
+
+		$data = [];
+		$fromDate = $this->request->getPost('from');
+		$toDate = $this->request->getPost('to');
+		$hospital = $this->request->getPost('cl_id');
+		$employee = $this->request->getPost('emp_id');
+		$specialty = $this->request->getPost('ord_speciality');
+		$data['filter'] = [
+			'from' => $fromDate,
+			'to' => $toDate,
+			'cl_id' => $hospital,
+			'emp_id' => $employee,
+			'ord_speciality' => $specialty
+		];
+		// echo $fromDate. $toDate. $hospital. $employee. $specialty;exit;
+
+		helper(['form']);
+		
+		$Smodel = new specialityModel();
+		$data['sp_row'] = $Smodel->findAll();
+		$clmodel = new ClientModel();
+		$data['c_det'] = $clmodel->where('cl_status', 1)->where('cl_h_name !=', Null)->where('cl_cont_name !=', Null)->find();
+		$Emodel = new EmpModel();
+		$data['emp_row'] = $Emodel->where('emp_status', 1)->where('emp_fname !=', Null)->find();
+		$omodel = new ordersModel();
+		$data['title'] = "VAT on Sales - VAT on Purchase";
+
+		// Build your query using the filter values
+
+		// $query = $omodel->select('(SELECT SUM(ord_vat_purch) FROM orders) AS purchase, (SELECT SUM(ord_vat_sale) FROM orders) AS sale');
+		// $query = $omodel->select('SUM(ord_vat_purch, ord_vat_sale)');
+		$query = $omodel->table('orders')->selectSum('ord_vat_purch','purchase')->selectSum('ord_vat_sale','sale');
+		
+		
+
+		if (!empty($fromDate) && !empty($toDate)) {
+			$query->where('ord_created >=', $fromDate);
+			$query->where('ord_created <=', $toDate);
+		}
+
+		if (!empty($hospital) && $hospital !== '0') {
+			$query->where('orders.cl_id', $hospital);
+		}
+
+		if (!empty($employee) && $employee !== '0') {
+			$query->where('orders.emp_id', $employee);
+		}
+
+		if (!empty($specialty) && $specialty !== '0') {
+			$query->where('ord_speciality', $specialty);
+		}
+
+		
+		$data['sumry'] = $query->get()->getRow();
+// 		echo $omodel->getLastQuery();
+// exit;
+		// print_r($data['sumry']);
+		// exit;
+		// Process the query results as needed
+		// ...
+		return $this->LoadView('admin/vos-vop_report', $data);
 	}
 }

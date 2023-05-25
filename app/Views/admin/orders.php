@@ -24,7 +24,7 @@
                         </ul>
                     </div>
                     <form action="<?= base_url('backend/orders') ?>" method="post" autocomplete="off">
-                        <div class="row">
+                        <div class="row clearfix px-2 mb-1">
                             <div class="form-group col-md-2 ">
                                 <label for="from">From</label>
                                 <input id="from" name="from" class="form-control" type="date" value="<?= esc($filter['from'] ?? '') ?>">
