@@ -14089,6 +14089,8 @@ fieldset:disabled .btn {
     --chart-color3: #F1C550;
     --chart-color4: #EA4C4C;
     --chart-color5: #ACC6AA;
+    --chart-color6: #157DED;
+    --chart-color7: #FF734C;
     --primary-gradient: linear-gradient(145deg, var(--primary-color), var(--chart-color4))
 }
 
@@ -15733,6 +15735,12 @@ body.rtl_mode .fc .fc-scroller-harness {
 
 .chart-color5 {
     background-color: var(--chart-color5)!important
+}
+.chart-color6 {
+    background-color: var(--chart-color6)!important
+}
+.chart-color7 {
+    background-color: var(--chart-color7)!important
 }
 
 .chart-text-color1 {

@@ -374,10 +374,14 @@
                     <div class="row g-3">
                         <div class="col-md-6 col-sm-12">
                             <h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a>Contract</h2>
-                            <ul class="breadcrumb mb-0">
+                            <ul class="breadcrumb mb-2">
                                 <a href="javascript:history.go(-1)" class="btn btn-secondary"><i class="fa fa-arrow-left me-2"></i>Go Back</a> 
-        
                             </ul>
+                            <!-- <ul class="d-print-none"> -->
+                <li class="d-print-none">
+                    <button onclick="printSection()" class="btn btn-outline-info">Print This Document &nbsp;<i class="fa fa-print"></i></button>
+                </li>
+            <!-- </ul> -->
                         </div>
         
                     </div>
@@ -404,12 +408,7 @@
                     <ul class="header-dropdown" style="background-color: transparent;">
                         <li style="background-color: transparent;">
                         
-                        <?php if(isset($ord['order_id']) && $cont['ord_time_sheet_approved'] <> "Approved"): ?>
-                            <a type="button" href="<?= base_url('employee/t-edit/' .encryptIt($cont['ord_id'])) ?>" class="btn btn-sm btn-primary d-print-none"><i class="fa fa-calendar text-light">&nbsp;</i>Edit TimeSheet</a>
-                            <?php endif; ?>
-                        <?php if(!isset($ord['order_id']) && $cont['ord_status'] > "2"): ?>
-                            <a type="button" href="<?= base_url('employee/timesheet/' .encryptIt($cont['ord_id'])) ?>" class="btn btn-sm btn-primary d-print-none"><i class="fa fa-calendar text-light">&nbsp;</i>Fill Time Sheet Online</a>
-                            <?php elseif(isset($ord['order_id'])): ?>
+                            <?php if(isset($ord['order_id'])): ?>
                             <a type="button" href="<?= base_url('employee/t-view/' .encryptIt($cont['ord_id'])) ?>" class="btn btn-sm btn-warning d-print-none"><i class="fa fa-eye ">&nbsp;</i>View TimeSheet</a>
                                 <?php endif; ?>
                             <?php if(!empty($cont['ord_assignment'])): ?>
@@ -422,11 +421,7 @@
                     <?php endif; ?>
                 </div>
             </div>
-            <ul class="header-dropdown d-print-none">
-                <li class="dropdown">
-                    <button onclick="printSection()" class="btn btn-outline-info">Print This Document &nbsp;<i class="fa fa-print"></i></button>
-                </li>
-            </ul>
+           
        
         <div class="row clearfix">
             <!-- Contract Starts here -->

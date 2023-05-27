@@ -79,6 +79,6 @@
                         <h4 class="text-success"> TOTAL <?= $title?></h4>
                         <!-- <h3><?php // number_format($sumry->total_sum,2) ?> &euro; </h3> -->
                         <?php $total= $sumry->sale+$sumry->hosp ?>
-                        <h3><?= number_format($total,2) ?> &euro; </h3>
+                        <h3> &euro;<?= number_format($total,2) ?></h3>
                         </div>
                     </div>

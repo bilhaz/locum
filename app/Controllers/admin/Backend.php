@@ -63,6 +63,8 @@ class Backend extends BEBaseController
 		'vop' => ['super_admin', 'admin', 'user'],
 		'vos-vop' => ['super_admin', 'admin', 'user'],
 		'purchase' => ['super_admin', 'admin', 'user'],
+		'cash-flow' => ['super_admin', 'admin', 'user'],
+		'fetch-ChartData' => ['super_admin', 'admin', 'user'],
 		'order_view' => ['super_admin', 'admin', 'user'],
 		'order_edit' => ['super_admin', 'admin', 'user'],
 		'ord_status' => ['super_admin', 'admin', 'user'],
@@ -77,6 +79,7 @@ class Backend extends BEBaseController
 		'ended_order' => ['super_admin', 'admin', 'user'],
 		'expired-orders' => ['super_admin', 'admin', 'user'],
 		'timesheet' => ['super_admin', 'admin', 'user'],
+		'timesheet_verificatioNotify' => ['super_admin', 'admin', 'user'],
 		't-fill' => ['super_admin', 'admin', 'user'],
 		't-edit' => ['super_admin', 'admin', 'user'],
 		't-view' => ['super_admin', 'admin', 'user'],
@@ -1722,7 +1725,30 @@ class Backend extends BEBaseController
 		$dt = date('Y-m-d H:i:s', $timestamp);
 		helper(['form']);
 		$model = new ordersModel();
-		$data['o_pen'] = $model->where('ord_status', '1')->where('ord_required_to >=', $dt)->countAllResults();
+		$dailyData = $model->select("DATE(ord_created) AS date")
+			->where('ord_status', '1')
+			->where('ord_required_to >=', $dt)
+			->groupBy('DATE(ord_created)')
+			->findAll();
+
+		// Monthly breakdown
+		$monthlyData = $model->select("DATE_FORMAT(ord_created, '%Y-%m') AS month")
+			->where('ord_status', '1')
+			->where('ord_required_to >=', $dt)
+			->groupBy("DATE_FORMAT(ord_created, '%Y-%m')")
+			->findAll();
+
+		// Yearly breakdown
+		$yearlyData = $model->select("YEAR(ord_created) AS year")
+			->where('ord_status', '1')
+			->where('ord_required_to >=', $dt)
+			->groupBy('YEAR(ord_created)')
+			->findAll();
+
+		$data['daily'] = $dailyData;
+		$data['monthly'] = $monthlyData;
+		$data['yearly'] = $yearlyData;
+		// $data['o_pen'] = $model->where('ord_status', '1')->where('ord_required_to >=', $dt)->countAllResults();
 		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '1')->where('ord_required_to >=', $dt)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('admin/pending_order', $data);
@@ -2245,21 +2271,101 @@ class Backend extends BEBaseController
 
 		return $this->LoadView('admin/contract', $data);
 	}
+	public function timesheet_verificatioNotify($id = null)
+	{
+		$id = decryptIt($id);
+		$data = [];
+		$omodel  = new ordersModel();
+		$data['e_ord'] = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $id)->first();
+		$Nmodel = new notificationModel();
+		$link = 'client/timesheet';
+		$link2 = 'employee/t-view';
+		$log = array(
+			'row_id' => $id,
+			'adm_id' => session()->usr_id,
+			'action_table' => 'Orders',
+			'content' => 'Timesheet Status Updated to Sent for Verification',
+			'event' => 'Notification to employee and client "Timesheet Sent for Verification"',
+		);
+
+		add_log($log);
+
+		$newData = [
+			'ord_time_sheet_approved' => 'Sent_for_verification',
+
+		];
+		$newdata2 = [
+			'ord_id' => $id,
+			'emp_id' => $data['e_ord']['cl_id'],
+			'link'	=> $link,
+			'notification' => "Timesheet Received for Verification",
+			'status' => "0",
+			'usr_type' => "client",
+		];
+		$newdata3 = [
+			'ord_id' => $id,
+			'emp_id' => $data['e_ord']['emp_id'], //user id to whom we want to send notification
+			'link'	=> $link2,
+			'notification' => "Timesheet Sent for Verification",
+			'status' => "0",
+			'usr_type' => "employee",
+		];
+		$to2 = 'okashaali88@gmail.com';
+		$to = 'okashaali88@gmail.com';
+		// $to2 = $data['e_ord']['emp_email'];
+		// $to = $data['e_ord']['cl_cont_email'];
+		$cc = '';
+		$subject = 'SRAL Timesheet Sent for Verification';
+		$message = '<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href=' . base_url('client/timesheet/' . encryptIt($id)) . ' style="background-color:#157DED;color:white;border: none;
+			color: white;
+			padding: 5px 10px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;">Click to View</a></body</html>';
+
+		$message2 = '<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href=' . base_url('employee/t-view/' . encryptIt($id)) . ' style="background-color:#157DED;color:white;border: none;
+			color: white;
+			padding: 5px 10px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;">Click to View</a></body</html>';
+
+		$Nmodel->insert($newdata2);
+		$Nmodel->insert($newdata3);
+		$omodel->update($id, $newData);
+		$session = session();
+		if (sendEmail($to, $cc, $subject, $message)) {
+			$session->setFlashdata('success', 'TimeSheet Status Notified');
+		} else {
+			$session->setFlashdata('error', 'Email Failed to ' . $to);
+			return redirect()->to('backend/order-s4/' . encryptIt($id));
+		}
+		if (sendEmail($to2, $cc, $subject, $message2)) {
+			$session->setFlashdata('success', 'TimeSheet Status Notified');
+			return redirect()->to('backend/order-s4/' . encryptIt($id));
+		} else {
+			$session->setFlashdata('error', 'Email Failed to ' . $to2);
+			return redirect()->to('backend/order-s4/' . encryptIt($id));
+		}
+
+		return $this->LoadView('admin/timesheet', $data);
+	}
 
 	public function timesheet()
 	{
 		$data = [];
-
 
 		$model = new ordersModel();
 		$data['t_order'] = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')
 			->Join('timesheets', 'timesheets.order_id = orders.ord_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')
 			->where('ord_status >', '2')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->groupBy('orders.ord_id')->orderBy('orders.ord_id', 'DESC')
 			->findAll();
-
-
-
-
 
 		return $this->LoadView('admin/timesheet', $data);
 	}
@@ -2877,8 +2983,10 @@ class Backend extends BEBaseController
 		$Nmodel = new notificationModel();
 		$data['v_ordr'] = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $id)->first();
 		$link = 'client/ord-status';
+		$link2 = 'employee/ord-view';
 		$to = $data['v_ordr']['cl_cont_email'];
-		$cc = '';
+		$to2 = $data['v_ordr']['emp_email'];
+		$cc = 'sra@sralocum.com';
 		$subject = 'SRA-Locum Process';
 		$message = $this->LoadView('admin/email_responses/2nd-response-email', $data);
 
@@ -2889,7 +2997,7 @@ class Backend extends BEBaseController
 				'adm_id' => session()->usr_id,
 				'action_table' => 'Orders',
 				'content' => '3',
-				'event' => 'Order Status Changed and Email Send',
+				'event' => 'Order Status Changed and Notified',
 				'locum_process' => '1',
 			);
 
@@ -2908,11 +3016,26 @@ class Backend extends BEBaseController
 				'status' => "0",
 				'usr_type' => "client",
 			];
+			$newData3 = [
+				'ord_id' => $id,
+				'emp_id' => $data['v_ordr']['emp_id'], //user id to whom we want to send notification
+				'link'	=> $link2,
+				'notification' => "Locum Processed",
+				'status' => "0",
+				'usr_type' => "employee",
+			];
 
 			$Nmodel->save($newData2);
+			$Nmodel->save($newData3);
 			$omodel->update($id, $newData);
 			$session = session();
 			if (sendEmail($to, $cc, $subject, $message)) {
+				$session->setFlashdata('success', 'Locum Process Email Succesfully Sent');
+			} else {
+				$session->setFlashdata('error', 'Locum Process Email Failed');
+				return redirect()->to('backend/order-s3/' . encryptIt($id));
+			}
+			if (sendEmail($to2, $cc, $subject, $message)) {
 				$session->setFlashdata('success', 'Locum Process Email Succesfully Sent');
 				return redirect()->to('backend/order-s3/' . encryptIt($id));
 			} else {
@@ -2993,10 +3116,10 @@ class Backend extends BEBaseController
 		$Nmodel = new notificationModel();
 		$data['v_ordr'] = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $id)->first();
 		$link = 'client/ord-status';
-		// $lname = explode(' ',$ord['cl_cont_name']);
-		// $to = $ord['cl_cont_email'];
+		$link2 = 'employee/ord-view';
 		$to = $data['v_ordr']['cl_cont_email'];
-		$cc = '';
+		$to2 = $data['v_ordr']['emp_email'];
+		$cc = 'sra@sralocum.com';
 		$subject = 'SRA-Locum Confirmation';
 		$message = $this->LoadView('admin/email_responses/3rd-response-email', $data);
 
@@ -3008,7 +3131,7 @@ class Backend extends BEBaseController
 				'adm_id' => session()->usr_id,
 				'action_table' => 'Orders',
 				'content' => '3',
-				'event' => 'Order Status Updated and Email send',
+				'event' => 'Order Status Updated and Notified',
 				'locum_confirmation' => '1',
 			);
 
@@ -3026,11 +3149,25 @@ class Backend extends BEBaseController
 				'status' => "0",
 				'usr_type' => "client",
 			];
+			$newData3 = [
+				'ord_id' => $id,
+				'emp_id' => $data['v_ordr']['emp_id'], //user id to whom we want to send notification
+				'link'	=> $link2,
+				'notification' => "Locum Confirmation",
+				'status' => "0",
+				'usr_type' => "employee",
+			];
 
 			$Nmodel->save($newData2);
 			$omodel->update($id, $newData);
 			$session = session();
 			if (sendEmail($to, $cc, $subject, $message)) {
+				$session->setFlashdata('success', 'Locum Confirmation Email Succesfully Sent');
+			} else {
+				$session->setFlashdata('error', 'Locum Confirmation Email Failed');
+				return redirect()->to('backend/order-s4/' . encryptIt($id));
+			}
+			if (sendEmail($to2, $cc, $subject, $message)) {
 				$session->setFlashdata('success', 'Locum Confirmation Email Succesfully Sent');
 				return redirect()->to('backend/order-s4/' . encryptIt($id));
 			} else {
@@ -3140,10 +3277,12 @@ class Backend extends BEBaseController
 		$omodel = new ordersModel();
 		$Nmodel = new notificationModel();
 		$link = 'employee/ord-view';
+		$link2 = 'client/ord-status';
 		$data['v_ordr'] = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $id)->first();
 
 		// $to = $ord['cl_cont_email'];
 		$to =  $data['v_ordr']['emp_email'];
+		$to2 =  $data['v_ordr']['cl_cont_email'];
 		$cc = '';
 		$subject = 'SRA-Employee Confirmation';
 		$message = $this->LoadView('admin/email_responses/4th-response-email', $data);
@@ -3153,10 +3292,10 @@ class Backend extends BEBaseController
 			// logs
 			$log = array(
 				'row_id' => $id,
-				'adm_id' => $data['v_ordr']['emp_id'], //user id to whom we want to send notification
+				'adm_id' => session()->usr_id,
 				'action_table' => 'Orders',
 				'content' => '4',
-				'event' => 'Order Status Updated and Email Send',
+				'event' => 'Order Status Updated and Notified',
 				'employee_confirmation' => '1',
 			);
 
@@ -3170,17 +3309,32 @@ class Backend extends BEBaseController
 			];
 			$newData2 = [
 				'ord_id' => $id,
-				'emp_id' => session()->usr_id,
+				'emp_id' => $data['v_ordr']['emp_id'], //user id to whom we want to send notification,
 				'link'	=> $link,
-				'notification' => "Locum Confirmation",
+				'notification' => "Employee Locum Confirmation",
 				'status' => "0",
 				'usr_type' => "employee",
 			];
+			$newData3 = [
+				'ord_id' => $id,
+				'emp_id' => $data['v_ordr']['cl_id'],
+				'link'	=> $link2,
+				'notification' => "Employee Locum Confirmation", //user id to whom we want to send notification,
+				'status' => "0",
+				'usr_type' => "client",
+			];
 
 			$Nmodel->save($newData2);
+			$Nmodel->save($newData3);
 			$omodel->update($id, $newData);
 			$session = session();
 			if (sendEmail($to, $cc, $subject, $message)) {
+				$session->setFlashdata('success', 'Employee Confirmation Email Succesfully Sent');
+			} else {
+				$session->setFlashdata('error', 'Employee Confirmation Email Failed');
+				return redirect()->to('backend/email-4/' . encryptIt($id));
+			}
+			if (sendEmail($to2, $cc, $subject, $message)) {
 				$session->setFlashdata('success', 'Employee Confirmation Email Succesfully Sent');
 				return redirect()->to('backend/email-4/' . encryptIt($id));
 			} else {
@@ -3274,7 +3428,7 @@ class Backend extends BEBaseController
 		$sucees = [];
 		$failedEmails = [];
 		$session = session();
-		
+
 		foreach ($data['doc'] as $doc) {
 
 			$to = $doc['emp_email'];
@@ -3290,19 +3444,19 @@ class Backend extends BEBaseController
 		}
 		if (!empty($failedEmails)) {
 			// Store the failed email addresses in the error session message
-			$session->setFlashdata('error', 'Order Published Failed. Emails failed to send to:<br> <b>' . implode(',', $failedEmails).'</b>');
+			$session->setFlashdata('error', 'Order Published Failed. Emails failed to send to:<br> <b>' . implode(',', $failedEmails) . '</b>');
 			return redirect()->to('backend/orders');
 		} else {
 
-		
-		$newData = [
-			'ord_advrtise' => '1',
 
-		];
-		$model->update($id, $newData);
-		$session->setFlashdata('success', 'Order Published Successfully. Email Succesfully Sent to: <br> <b>'. implode(',', $sucees).'</b>');
-		return redirect()->to('backend/orders');
-	}
+			$newData = [
+				'ord_advrtise' => '1',
+
+			];
+			$model->update($id, $newData);
+			$session->setFlashdata('success', 'Order Published Successfully. Email Succesfully Sent to: <br> <b>' . implode(',', $sucees) . '</b>');
+			return redirect()->to('backend/orders');
+		}
 	}
 	public function sale_sumry()
 	{
@@ -3335,7 +3489,7 @@ class Backend extends BEBaseController
 		// Build your query using the filter values
 
 		// $query = $omodel->select('SUM(ord_hosp_earn + ord_vat_sale) AS total_sum');
-		$query = $omodel->table('orders')->selectSum('ord_hosp_earn','hosp')->selectSum('ord_vat_sale','sale');
+		$query = $omodel->table('orders')->selectSum('ord_hosp_earn', 'hosp')->selectSum('ord_vat_sale', 'sale');
 		// $query->selectSum('ord_pay_to_dr');
 		// $query->selectSum('ord_vat_sale');
 
@@ -3393,7 +3547,7 @@ class Backend extends BEBaseController
 		// Build your query using the filter values
 
 		// $query = $omodel->select('SUM(ord_pay_to_dr + ord_vat_purch) AS total_sum');
-		$query = $omodel->table('orders')->selectSum('ord_pay_to_dr','dr')->selectSum('ord_vat_purch','purchase');
+		$query = $omodel->table('orders')->selectSum('ord_pay_to_dr', 'dr')->selectSum('ord_vat_purch', 'purchase');
 		// $query->selectSum('ord_pay_to_dr');
 		// $query->selectSum('ord_vat_sale');
 
@@ -3553,7 +3707,7 @@ class Backend extends BEBaseController
 		// echo $fromDate. $toDate. $hospital. $employee. $specialty;exit;
 
 		helper(['form']);
-		
+
 		$Smodel = new specialityModel();
 		$data['sp_row'] = $Smodel->findAll();
 		$clmodel = new ClientModel();
@@ -3567,9 +3721,9 @@ class Backend extends BEBaseController
 
 		// $query = $omodel->select('(SELECT SUM(ord_vat_purch) FROM orders) AS purchase, (SELECT SUM(ord_vat_sale) FROM orders) AS sale');
 		// $query = $omodel->select('SUM(ord_vat_purch, ord_vat_sale)');
-		$query = $omodel->table('orders')->selectSum('ord_vat_purch','purchase')->selectSum('ord_vat_sale','sale');
-		
-		
+		$query = $omodel->table('orders')->selectSum('ord_vat_purch', 'purchase')->selectSum('ord_vat_sale', 'sale');
+
+
 
 		if (!empty($fromDate) && !empty($toDate)) {
 			$query->where('ord_created >=', $fromDate);
@@ -3588,14 +3742,140 @@ class Backend extends BEBaseController
 			$query->where('ord_speciality', $specialty);
 		}
 
-		
+
 		$data['sumry'] = $query->get()->getRow();
-// 		echo $omodel->getLastQuery();
-// exit;
+		// 		echo $omodel->getLastQuery();
+		// exit;
 		// print_r($data['sumry']);
 		// exit;
 		// Process the query results as needed
 		// ...
 		return $this->LoadView('admin/vos-vop_report', $data);
+	}
+
+	public function CashFlow()
+	{
+
+		$data = [];
+		$fromDate = $this->request->getPost('from');
+		$toDate = $this->request->getPost('to');
+		$hospital = $this->request->getPost('cl_id');
+		$employee = $this->request->getPost('emp_id');
+		$specialty = $this->request->getPost('ord_speciality');
+		$data['filter'] = [
+			'from' => $fromDate,
+			'to' => $toDate,
+			'cl_id' => $hospital,
+			'emp_id' => $employee,
+			'ord_speciality' => $specialty
+		];
+		// echo $fromDate. $toDate. $hospital. $employee. $specialty;exit;
+
+		helper(['form']);
+
+		$Smodel = new specialityModel();
+		$data['sp_row'] = $Smodel->findAll();
+		$clmodel = new ClientModel();
+		$data['c_det'] = $clmodel->where('cl_status', 1)->where('cl_h_name !=', Null)->where('cl_cont_name !=', Null)->find();
+		$Emodel = new EmpModel();
+		$data['emp_row'] = $Emodel->where('emp_status', 1)->where('emp_fname !=', Null)->find();
+		$omodel = new ordersModel();
+		$data['title'] = "Cash Flow";
+
+		// Build your query using the filter values
+
+		// $query = $omodel->select('(SELECT SUM(ord_vat_purch) FROM orders) AS purchase, (SELECT SUM(ord_vat_sale) FROM orders) AS sale');
+		// $query = $omodel->select('SUM(ord_vat_purch, ord_vat_sale)');
+		$queryCashIn = $omodel->table('orders')->selectSum('ord_hosp_earn', 'hosp')->selectSum('ord_adminchrg_intern', 'admin')->selectSum('ord_vat_sale', 'vos');
+
+		if (!empty($fromDate) && !empty($toDate)) {
+			$queryCashIn->where('ord_created >=', $fromDate);
+			$queryCashIn->where('ord_created <=', $toDate);
+		}
+
+		if (!empty($hospital) && $hospital !== '0') {
+			$queryCashIn->where('orders.cl_id', $hospital);
+		}
+
+		if (!empty($employee) && $employee !== '0') {
+			$queryCashIn->where('orders.emp_id', $employee);
+		}
+
+		if (!empty($specialty) && $specialty !== '0') {
+			$queryCashIn->where('ord_speciality', $specialty);
+		}
+
+
+		$data['CashIn'] = $queryCashIn->get()->getRow();
+
+		$queryCashOut = $omodel->table('orders')->selectSum('ord_pay_to_dr', 'dr')->selectSum('ord_vat_purch', 'vop');
+		if (!empty($fromDate) && !empty($toDate)) {
+			$queryCashOut->where('ord_created >=', $fromDate);
+			$queryCashOut->where('ord_created <=', $toDate);
+		}
+
+		if (!empty($hospital) && $hospital !== '0') {
+			$queryCashOut->where('orders.cl_id', $hospital);
+		}
+
+		if (!empty($employee) && $employee !== '0') {
+			$queryCashOut->where('orders.emp_id', $employee);
+		}
+
+		if (!empty($specialty) && $specialty !== '0') {
+			$queryCashOut->where('ord_speciality', $specialty);
+		}
+
+
+		$data['CashOut'] = $queryCashOut->get()->getRow();
+		// 		echo $omodel->getLastQuery();
+		// exit;
+		// print_r($data['sumry']);
+		// exit;
+		// Process the query results as needed
+		// ...
+		return $this->LoadView('admin/cashFlow_report', $data);
+	}
+	// Controller method to fetch chart data
+	public function fetchChartData()
+	{
+		$model = new ordersModel();
+		$startDate = $this->request->getPost('start_date');
+		$endDate = $this->request->getPost('end_date');
+
+		// Fetch data from the database based on the selected date range and group by month
+		// Modify this query based on your database structure and requirements
+		$data = $model->table('orders')
+			->select("*")
+			->select("DATE_FORMAT(ord_created, '%Y-%m') AS month")
+			->select("SUM(CASE WHEN ord_status = 1 AND ord_cancel_bcl = 0 THEN 1 ELSE 0 END) AS ord_status_1_count")
+			->select("SUM(CASE WHEN ord_status = 2 AND ord_cancel_bcl = 0 THEN 1 ELSE 0 END) AS ord_status_2_count")
+			->select("SUM(CASE WHEN ord_status = 3 AND ord_cancel_bcl = 0 THEN 1 ELSE 0 END) AS ord_status_3_count")
+			->select("SUM(CASE WHEN ord_cancel_bcl = 1 THEN 1 ELSE 0 END) AS ord_canc_bcl_count");
+
+		if (!empty($startDate) && !empty($endDate)) {
+			$data->where('ord_created >=', $startDate)
+				->where('ord_created <=', $endDate);
+		}
+
+		$data = $data->groupBy('month')
+			->get()
+			->getResultArray();
+
+		// Prepare the response data
+		$response = [];
+		foreach ($data as $row) {
+			// Add data to the response array
+			$response[] = [
+				'month' => $row['month'],
+				'ord_status_1_count' => $row['ord_status_1_count'],
+				'ord_status_2_count' => $row['ord_status_2_count'],
+				'ord_status_3_count' => $row['ord_status_3_count'],
+				'ord_canc_bcl_count' => $row['ord_canc_bcl_count']
+			];
+		}
+		// print_r($responses);exit;
+		// Return the response as JSON
+		return $this->response->setJSON($response);
 	}
 }

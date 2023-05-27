@@ -77,6 +77,6 @@
                     <div class="card-body">
                         <div class="col-md-12 text-center">
                         <h4 class="text-success"> TOTAL <?= $title?></h4>
-                        <h3><?= number_format($sumry->total_sum,2) ?> &euro; </h3>
+                        <h3> &euro;<?= number_format($sumry->total_sum,2) ?> &euro; </h3>
                         </div>
                     </div>

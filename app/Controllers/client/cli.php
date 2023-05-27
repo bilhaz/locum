@@ -389,9 +389,9 @@ class cli extends CLIBaseController
 		$omodel = new ordersModel();
 		$data['e_ord'] = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $id)->first();
 		// $data['e_ord'] = $model->where('ord_id', $id)->first();
-			$to = 'sralocum@sra.com,'.$data['e_ord']['cl_cont_email'];
+			$to = 'sralocum@sra.com,'.$data['e_ord']['emp_email'];
 			$cc = '';
-			$subject = ''.session()->cl_h_name.' Approved Timesheet';
+			$subject = ''.session()->cl_h_name.' Approved your Timesheet';
 			$message = '<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href='.base_url('backend/t-view/'.encryptIt($id)).' style="background-color:#157DED;color:white;border: none;
 			color: white;
 			padding: 5px 10px;
@@ -792,6 +792,19 @@ public function get_notif()
 		// return the data as JSON
 		// return $this->response->setJSON(['count' => $count]);
 	}
+	public function show_notif()
+	{
+		$data = [];
+		$model = new notificationModel();
+		// fetch live data from the database and store it in $data
+		$data = $model->where('usr_type', 'client')->where('status', '0')->orderBy('created_at', 'DESC')->limit(8)->find(); // your database query here
+
+		foreach ($data as &$notification) {
+			$notification['ord_id'] = encryptIt($notification['ord_id']);
+		}
+		// Return the JSON and HTML data
+		echo json_encode($data);
+	}
 	public function get_notifcount()
 	{
 		$data = [];
@@ -823,5 +836,18 @@ public function get_notif()
 		// $model->update($id, ['status' => 1]);
 		return json_encode(['success' => true]); // return JSON response
 
+	}
+	public function await_timesheet()
+	{
+
+		$data = [];
+
+		$model = new ordersModel();
+		$data['t_order'] = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')
+			->Join('timesheets', 'timesheets.order_id = orders.ord_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')
+			->where('ord_status >', '2')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('ord_time_sheet_approved', 'Sent_for_verification')->where('orders.cl_id', session()->cl_id)->groupBy('orders.ord_id')->orderBy('orders.ord_id', 'DESC')
+			->findAll();
+
+		return $this->LoadView('clients/await_rimesheets', $data);
 	}
 }

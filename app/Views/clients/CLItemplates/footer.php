@@ -8,6 +8,14 @@
 <script src="<?= base_url('public/assets/js/my.js')?>"></script>
 <script src="<?=  base_url('public/assets/bundles/mainscripts.bundle.js')?>"></script>
 <script>
+  const link1 = '<?php echo base_url('client/show-notif'); ?>';
+  const IconPic = '<?php echo base_url('public/images/sralogo-icon.png'); ?>';
+  const link2 = '<?php echo base_url('client/notif-get'); ?>';
+  const link3 = '<?php echo base_url('client/notif-count'); ?>';
+  const link4 = '<?php echo base_url('client/notif-seen'); ?>';
+</script>
+<script src="<?= base_url('public/assets/js/clientStats.js') ?>"></script>
+<script>
   $(document).ready(function() {
     // Fetch notifications
     function fetchNotifications() {

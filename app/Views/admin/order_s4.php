@@ -440,7 +440,7 @@
                                             <option value="online" <?= set_select(
                                                                     'ord_time_sheet_mode',
                                                                     'online',
-                                                                    ($v_ordr['ord_time_sheet_mode'] == 'fax') ? TRUE : FALSE
+                                                                    ($v_ordr['ord_time_sheet_mode'] == 'online') ? TRUE : FALSE
                                                                 ) ?>>Online Submitted</option>
                                         </select>
                                     </div>
@@ -452,7 +452,7 @@
                                     <div class="form-group col-md-4 ">
                                         <label for="ord_time_sheet_approved" class="control-label mb-1">Time Sheet
                                             Status</label>
-                                        <select id="ord_time_sheet_approved" name="ord_time_sheet_approved" type="text" required="" class="form-control select2" data-parsley-trigger="change">
+                                        <select id="ord_time_sheet_approved" name="ord_time_sheet_approved" onchange="sentVerificationEmail()" type="text" required="" class="form-control select2" data-parsley-trigger="change">
                                             <option value="">Select Status</option>
                                             <option value="Due" <?= set_select(
                                                                     'ord_time_sheet_approved',
@@ -611,6 +611,14 @@
         if (document.getElementById("ord_cancel_bdr").value === "1") {
             if (confirm("Are you sure?"))
                 window.location.href = "<?= base_url("backend/change_doctor_cancelled_order/" . encryptIt($v_ordr['ord_id'])) ?>" + "/" + document.getElementById("emp_id").value;
+        }
+    }
+</script>
+<script>
+    function sentVerificationEmail(){
+        if (document.getElementById("ord_time_sheet_approved").value === "Sent_for_verification") {
+            if (confirm("Are you sure? You want to Notify?"))
+                window.location.href = "<?= base_url("backend/timesheet_verificatioNotify/" . encryptIt($v_ordr['ord_id'])) ?>" + "/" + document.getElementById("emp_id").value;
         }
     }
 </script>

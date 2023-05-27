@@ -17,17 +17,17 @@
 
     <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
 
-    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script> -->
+    <script src="<?= base_url('public/assets/bundles/libscripts.bundle.js') ?>"></script>
+    <script src="<?= base_url('public/assets/pushjs/push.min.js') ?>"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.min.js" integrity="sha512-eyHL1atYNycXNXZMDndxrDhNAegH2BDWt1TmkXJPoGf1WLlNYt08CSjkqF5lnCRmdm3IrkHid8s2jOUY4NIZVQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="<?= base_url('public/assets/css/my.css') ?>">
-    <script src="<?= base_url('public/assets/bundles/libscripts.bundle.js') ?>"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
 </head>
-
 <body onload="fetchNotifications(); fetchNotificationscount();">
     <?php $uri = service('uri'); ?>
     <?php if (session()->get('CliLoggedIn')) : ?>
@@ -119,6 +119,7 @@
                                     <li class="nav-item"><a class="nav-link" href="<?= base_url('client/dashboard') ?>"><i class="fa fa-tachometer"></i><span>Dashboard</span></a></li>
                                     <li class="nav-item"><a href="<?= base_url('client/profile') ?>"><i class="fa fa-user-circle-o"></i>Profile</a></li>
                                     <li class="nav-item"><a href="<?= base_url('client/orders') ?>"><i class="fa fa-user-md"></i>Orders</a></li>
+                                    <li class="nav-item"><a href="<?= base_url('client/await-timeshets') ?>"><i class="fa fa-calendar"></i>Awaiting Timesheets</a></li>
 
                                 </ul>
                             </nav>

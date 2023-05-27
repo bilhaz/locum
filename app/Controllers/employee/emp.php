@@ -13,6 +13,7 @@ use App\Models\timesheetModel;
 use App\Models\formulaModel;
 use App\Models\notificationModel;
 use DateTimeZone;
+
 helper('email');
 class emp extends EMPBaseController
 {
@@ -79,7 +80,8 @@ class emp extends EMPBaseController
 		return true;
 	}
 	// Loading Forgot Password page
-	public function forgot_pass() {
+	public function forgot_pass()
+	{
 		$data = [];
 		helper('form');
 
@@ -87,126 +89,129 @@ class emp extends EMPBaseController
 	}
 
 	// method for reset password verification & send email
-    public function passwordReset() {
+	public function passwordReset()
+	{
 		$data = [];
-        // date_default_timezone_set('Asia/Karachi'); // setting riyadh timezone
-        
-        // checking if it is valid ajax request
-        if (!$this->request->isAJAX()) {
-            exit('No direct script access allowed');
-        }
+		// date_default_timezone_set('Asia/Karachi'); // setting riyadh timezone
 
-        $email = $this->request->getPost('email'); // email input
+		// checking if it is valid ajax request
+		if (!$this->request->isAJAX()) {
+			exit('No direct script access allowed');
+		}
 
-        $model = new EmpModel(); //
-        $candidate = $model->where('emp_email', $email)->first();
+		$email = $this->request->getPost('email'); // email input
 
-        if (is_array($candidate)) {
+		$model = new EmpModel(); //
+		$candidate = $model->where('emp_email', $email)->first();
 
-            //generate reset token
-            $reset_token = urlencode(md5(time() . 'emp_created' . rand(1000, 99999) . rand(100, 999)));
-            
-            // creating token expiry date
-            $now = date("Y-m-d H:m:s");
-            $expirydate = date("Y-m-d H:i:s", strtotime('+24 hours', strtotime($now))); 
+		if (is_array($candidate)) {
 
-            $upd = array('Reset_Token' => $reset_token,'Reset_Token_Expiry'=>$expirydate); // preparing data for updation
+			//generate reset token
+			$reset_token = urlencode(md5(time() . 'emp_created' . rand(1000, 99999) . rand(100, 999)));
 
-            if ($model->update($candidate['emp_id'], $upd)) { // updating record
-                if ($this->PasswordResetEmailTemplate($email, $reset_token)) { // sending email
-                    echo json_encode(array('info' => '1', 'msg' => 'email sent successfully')); // success msg
-                } else {
+			// creating token expiry date
+			$now = date("Y-m-d H:m:s");
+			$expirydate = date("Y-m-d H:i:s", strtotime('+24 hours', strtotime($now)));
 
-                    echo json_encode(array('info' => '0', 'msg' => 'email not sent')); // error msg
-                }
-            } else {
-                return json_encode(array('info' => '0', 'msg' => 'Error')); // error msg
-            }
-        } else {
-            echo json_encode(array('info' => '0', 'msg' => 'Email not registered')); // // error msg
-        }
-		
-    }
+			$upd = array('Reset_Token' => $reset_token, 'Reset_Token_Expiry' => $expirydate); // preparing data for updation
+
+			if ($model->update($candidate['emp_id'], $upd)) { // updating record
+				if ($this->PasswordResetEmailTemplate($email, $reset_token)) { // sending email
+					echo json_encode(array('info' => '1', 'msg' => 'email sent successfully')); // success msg
+				} else {
+
+					echo json_encode(array('info' => '0', 'msg' => 'email not sent')); // error msg
+				}
+			} else {
+				return json_encode(array('info' => '0', 'msg' => 'Error')); // error msg
+			}
+		} else {
+			echo json_encode(array('info' => '0', 'msg' => 'Email not registered')); // // error msg
+		}
+	}
 	// method to load password-reset view
-    public function resetPasswordRequest($reset_token = '') {
-        // date_default_timezone_set("Asia/Karachi");
-        
-		
-        if ($reset_token == '') {
-            show_404();
-        }
-        
-        $model = new EmpModel(); // loading model
-        $result = $model->where('Reset_Token',  urldecode($reset_token))->first();
-        
-        $data['expired'] = false ;
-        
-        // checking for token expiry
-        $now = date("Y-m-d H:m:s");
-        if(strtotime($result['Reset_Token_Expiry']) < strtotime($now)){
-            $data['expired'] = true ;
-        }
-        
-        $data['reset_token'] = urldecode($reset_token);
+	public function resetPasswordRequest($reset_token = '')
+	{
+		// date_default_timezone_set("Asia/Karachi");
+
+
+		if ($reset_token == '') {
+			show_404();
+		}
+
+		$model = new EmpModel(); // loading model
+		$result = $model->where('Reset_Token',  urldecode($reset_token))->first();
+
+		$data['expired'] = false;
+
+		// checking for token expiry
+		$now = date("Y-m-d H:m:s");
+		if (strtotime($result['Reset_Token_Expiry']) < strtotime($now)) {
+			$data['expired'] = true;
+		}
+
+		$data['reset_token'] = urldecode($reset_token);
 		return $this->LoadView('employees/reset-password', $data);
-        // echo view('site/password-reset', $data);
-        
-    }
-	public function changePassword_Request() {
+		// echo view('site/password-reset', $data);
+
+	}
+	public function changePassword_Request()
+	{
 
 
-        $rules = [
+		$rules = [
 			'password' => 'trim|min_length[8]|required', // validation rules
-            'confirm_password' => 'required|matches[password]'
+			'confirm_password' => 'required|matches[password]'
 		];
 
-        $reset_token = $this->request->getPost('reset_token');  // getting token input
+		$reset_token = $this->request->getPost('reset_token');  // getting token input
 
-        if (!$this->validate($rules)) {
-			$data['validation'] = $this->validator;// validating inputs
-            session()->setFlashdata('requestMsgErr', $this->validator->listErrors()); // passing validation errors
-            return redirect()->to('employee/resetPasswordRequest/' . $reset_token);
-        }
+		if (!$this->validate($rules)) {
+			$data['validation'] = $this->validator; // validating inputs
+			session()->setFlashdata('requestMsgErr', $this->validator->listErrors()); // passing validation errors
+			return redirect()->to('employee/resetPasswordRequest/' . $reset_token);
+		}
 
-        $model = new EmpModel(); // loading model
-        //update password
-        $data = array(
-            'Reset_Token' => '',
-            'Reset_Token_Expiry' => NULL,
-            'emp_pwd' => $this->request->getPost('password')
-        );
-        $result = $model->where('Reset_Token', $reset_token)->set($data)->update();
+		$model = new EmpModel(); // loading model
+		//update password
+		$data = array(
+			'Reset_Token' => '',
+			'Reset_Token_Expiry' => NULL,
+			'emp_pwd' => $this->request->getPost('password')
+		);
+		$result = $model->where('Reset_Token', $reset_token)->set($data)->update();
 
-//        $result = $siteModel->query("UPDATE pmc_et_tbl_basicentries SET Reset_Token = '', Reset_Token_Expiry = NULL, entPassword = OLD_PASSWORD('".$data['entPassword']."') WHERE Reset_Token = '$reset_token'");
-        if ($result) { // checking if password updated
-            session()->setFlashdata('success', 'Password Changed Sucessfully');
-        }
-        return redirect()->to('employee/login');
-    }
-	 // email template
-	 private function PasswordResetEmailTemplate($email = '', $reset_token = '') {
+		//        $result = $siteModel->query("UPDATE pmc_et_tbl_basicentries SET Reset_Token = '', Reset_Token_Expiry = NULL, entPassword = OLD_PASSWORD('".$data['entPassword']."') WHERE Reset_Token = '$reset_token'");
+		if ($result) { // checking if password updated
+			session()->setFlashdata('success', 'Password Changed Sucessfully');
+		}
+		return redirect()->to('employee/login');
+	}
+	// email template
+	private function PasswordResetEmailTemplate($email = '', $reset_token = '')
+	{
 
-        $ctrl = 'employee';
-        // preparing data for email content
-        $data = array(
-            'controller' => $ctrl,
-            'username' => $email,
-            'reset_token' => $reset_token,
-            'string' => 'Dear ',
-            'host' => $_SERVER['HTTP_HOST'],
-            'tokken_link' => base_url('employee/resetPasswordRequest/' . $reset_token)
-        );
+		$ctrl = 'employee';
+		// preparing data for email content
+		$data = array(
+			'controller' => $ctrl,
+			'username' => $email,
+			'reset_token' => $reset_token,
+			'string' => 'Dear ',
+			'host' => $_SERVER['HTTP_HOST'],
+			'tokken_link' => base_url('employee/resetPasswordRequest/' . $reset_token)
+		);
 
 
-        $parser = \Config\Services::parser(); // loading parse library
-        $email_page = $parser->setData($data)->render('employees/emails/reset-password'); // rendering password reset html
-        //send email
-        $to = $email;
+		$parser = \Config\Services::parser(); // loading parse library
+		$email_page = $parser->setData($data)->render('employees/emails/reset-password'); // rendering password reset html
+		//send email
+		$to = $email;
 		$cc = '';
 		$subject = 'SRA-Password Reset Request';
 		$message = $email_page;
-        return(sendEmail($to, $cc, $subject, $message));
-    }
+		return (sendEmail($to, $cc, $subject, $message));
+	}
 	public function dashboard()
 	{
 		$data = [];
@@ -307,10 +312,10 @@ class emp extends EMPBaseController
 		$Nmodel = new notificationModel();
 		$model = new ordersModel();
 		$data['e_ord'] = $model->where('ord_id', $asid)->first();
-			$to = 'sralocum@sra.com';
-			$cc = '';
-			$subject = ''.session()->emp_email.' Uploaded Assesment';
-			$message = '<html><body><p> Here is the Assesment Link</p><br><a target="_blank" href='.base_url('public/uploads/doc_assesment/'.encryptIt($data['e_ord']['ord_assignment'])).' style="background-color:#157DED;color:white;border: none;
+		$to = 'sralocum@sra.com';
+		$cc = '';
+		$subject = '' . session()->emp_email . ' Uploaded Assesment';
+		$message = '<html><body><p> Here is the Assesment Link</p><br><a target="_blank" href=' . base_url('public/uploads/doc_assesment/' . encryptIt($data['e_ord']['ord_assignment'])) . ' style="background-color:#157DED;color:white;border: none;
 			color: white;
 			padding: 5px 10px;
 			text-align: center;
@@ -349,8 +354,8 @@ class emp extends EMPBaseController
 
 
 				];
-					
-				
+
+
 				$newdata2 = [
 					'ord_id' => $asid,
 					'emp_id' => session()->emp_id,
@@ -365,11 +370,10 @@ class emp extends EMPBaseController
 				$session = session();
 				if (sendEmail($to, $cc, $subject, $message)) {
 					$session->setFlashdata('success', 'Assesment Successful Uploaded');
-						return redirect()->to('employee/ord-view/' . encryptIt($asid));
-					} else {
-						return redirect()->to('employee/ord-view/' . encryptIt($asid));
-					}	
-				
+					return redirect()->to('employee/ord-view/' . encryptIt($asid));
+				} else {
+					return redirect()->to('employee/ord-view/' . encryptIt($asid));
+				}
 			}
 		}
 
@@ -404,10 +408,10 @@ class emp extends EMPBaseController
 		$omodel = new ordersModel();
 		$data['v_ordr'] = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $ord_id)->first();
 		$Nmodel = new notificationModel();
-			$to = 'sralocum@sra.com,'.$data['v_ordr']['emp_email'];
-			$cc = '';
-			$subject = ''.session()->emp_email.'Submitted Timesheet';
-			$message = '<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href='.base_url('backend/t-view/'.encryptIt($ord_id)).' style="background-color:#157DED;color:white;border: none;
+		$to = 'sralocum@sra.com,' . $data['v_ordr']['emp_email'];
+		$cc = '';
+		$subject = '' . session()->emp_email . 'Submitted Timesheet';
+		$message = '<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href=' . base_url('backend/t-view/' . encryptIt($ord_id)) . ' style="background-color:#157DED;color:white;border: none;
 			color: white;
 			padding: 5px 10px;
 			text-align: center;
@@ -420,24 +424,27 @@ class emp extends EMPBaseController
 
 			$model->insert(array('order_id' => $ord_id, 'dutyDate' => explode(',', $key)[0], 'dutyTime' => explode(',', $key)[1], 'siteStatus' => explode(',', $key)[2]));
 		}
+		$status = [
+			'ord_time_sheet_mode' => 'online',
+		];
 		$newData = [
 			'ord_id' => $ord_id,
 			'emp_id' => $eid,
 			'link'	=> $link,
-			'notification' => "New Timesheet submitted",
+			'notification' => "Timesheet submitted Online",
 			'status' => "0",
 			'usr_type' => "admin",
 		];
 
 		$Nmodel->save($newData);
+		$omodel->update($ord_id, $status);
 		$session = session();
 		if (sendEmail($to, $cc, $subject, $message)) {
-						$session->setFlashdata('success', 'TimeSheet Saved');
-						return redirect()->to('employee/ord-view/' . encryptIt($ord_id));
-					} else {
-						return redirect()->to('employee/ord-view/' . encryptIt($ord_id));
-					}	
-		
+			$session->setFlashdata('success', 'TimeSheet Saved');
+			return redirect()->to('employee/ord-view/' . encryptIt($ord_id));
+		} else {
+			return redirect()->to('employee/ord-view/' . encryptIt($ord_id));
+		}
 	}
 
 	public function edit_timesheet($ord_id)
@@ -469,10 +476,10 @@ class emp extends EMPBaseController
 		$omodel = new ordersModel();
 		$data['v_ordr'] = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $ord_id)->first();
 		$Nmodel = new notificationModel();
-			$to = 'sralocum@sra.com,'.$data['v_ordr']['emp_email'];
-			$cc = '';
-			$subject = ''.session()->emp_email.' Updated Timesheet';
-			$message = '<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href='.base_url('backend/t-view/'.encryptIt($ord_id)).' style="background-color:#157DED;color:white;border: none;
+		$to = 'sralocum@sra.com,' . $data['v_ordr']['emp_email'];
+		$cc = '';
+		$subject = '' . session()->emp_email . ' Updated Timesheet';
+		$message = '<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href=' . base_url('backend/t-view/' . encryptIt($ord_id)) . ' style="background-color:#157DED;color:white;border: none;
 			color: white;
 			padding: 5px 10px;
 			text-align: center;
@@ -494,16 +501,16 @@ class emp extends EMPBaseController
 			'link'	=> $link,
 			'notification' => "Timesheet was Updated",
 			'status' => "0",
+			'usr_type' => "admin"
 		];
 		$Nmodel->save($newData);
 		$session = session();
 		if (sendEmail($to, $cc, $subject, $message)) {
 			$session->setFlashdata('success', 'TimeSheet Updated');
 			return redirect()->to('employee/t-edit/' . encryptIt($ord_id));
-			} else {
-				return redirect()->to('employee/t-edit/' . encryptIt($ord_id));
-			}	
-
+		} else {
+			return redirect()->to('employee/t-edit/' . encryptIt($ord_id));
+		}
 	}
 
 	public function timesheet_view($ord_id)
@@ -792,54 +799,52 @@ class emp extends EMPBaseController
 			->orderBy('orders.ord_updated', 'DESC')
 			->first();
 
-			$to = 'sralocum@sra.com';
-			$cc = '';
-			$subject = ''.session()->emp_email.' Applied for Locum';
-			$message = $this->LoadView('employees/emails/advt_apply', $data);
-				
-			$session = session();
-			if (sendEmail($to, $cc, $subject, $message)) {
-				$newdata2 = [
-					'ord_id' => $id,
-					'emp_id' => $eid,
-					'link'	=> $link,
-					'notification' => "".session()->emp_fname.''.session()->emp_lname." Applied For Locum",
-					'status' => "0",
-					'usr_type' => "admin",
-				];
-				$Nmodel->insert($newdata2);
-					return redirect()->to('employee/advt_applied');
-				} else {
-					$session->setFlashdata('error', 'Apply Failed');
-					return redirect()->to('employee/orders');
-				}	
+		$to = 'sralocum@sra.com';
+		$cc = '';
+		$subject = '' . session()->emp_email . ' Applied for Locum';
+		$message = $this->LoadView('employees/emails/advt_apply', $data);
+
+		$session = session();
+		if (sendEmail($to, $cc, $subject, $message)) {
+			$newdata2 = [
+				'ord_id' => $id,
+				'emp_id' => $eid,
+				'link'	=> $link,
+				'notification' => "" . session()->emp_fname . '' . session()->emp_lname . " Applied For Locum",
+				'status' => "0",
+				'usr_type' => "admin",
+			];
+			$Nmodel->insert($newdata2);
+			return redirect()->to('employee/advt_applied');
+		} else {
+			$session->setFlashdata('error', 'Apply Failed');
+			return redirect()->to('employee/orders');
+		}
 	}
 	public function advt_applied($id = null)
 	{
 
-			$to = session()->emp_email;
-			$cc = '';
-			$subject = 'Applied Successfully for Locum';
-			$message = $this->LoadView('employees/emails/advt_applied');
-				
-			$session = session();
-			if (sendEmail($to, $cc, $subject, $message)) {
-					$session->setFlashdata('success', 'Applied for Locum Successfully');
-					return redirect()->to('employee/orders');
-				} else {
-					$session->setFlashdata('error', 'Apply Failed');
-					return redirect()->to('employee/orders');
-				}	
+		$to = session()->emp_email;
+		$cc = '';
+		$subject = 'Applied Successfully for Locum';
+		$message = $this->LoadView('employees/emails/advt_applied');
 
-
+		$session = session();
+		if (sendEmail($to, $cc, $subject, $message)) {
+			$session->setFlashdata('success', 'Applied for Locum Successfully');
+			return redirect()->to('employee/orders');
+		} else {
+			$session->setFlashdata('error', 'Apply Failed');
+			return redirect()->to('employee/orders');
+		}
 	}
 
-		public function get_notif()
+	public function get_notif()
 	{
 		$data = [];
 		$model = new notificationModel();
 		// fetch live data from the database and store it in $data
-		$data = $model->where('emp_id', session()->emp_id)->where('usr_type','employee')->orderBy('status', 'ASC')->orderBy('created_at', 'DESC')->limit(8)->find(); // your database query here
+		$data = $model->where('emp_id', session()->emp_id)->where('usr_type', 'employee')->orderBy('status', 'ASC')->orderBy('created_at', 'DESC')->limit(8)->find(); // your database query here
 		// fetch the count of unseen notifications
 		$count = $model->where('status', 0)->countAllResults();
 
@@ -856,6 +861,19 @@ class emp extends EMPBaseController
 
 		// return the data as JSON
 		// return $this->response->setJSON(['count' => $count]);
+	}
+	public function show_notif()
+	{
+		$data = [];
+		$model = new notificationModel();
+		// fetch live data from the database and store it in $data
+		$data = $model->where('usr_type', 'employee')->where('status', '0')->orderBy('created_at', 'DESC')->limit(8)->find(); // your database query here
+
+		foreach ($data as &$notification) {
+			$notification['ord_id'] = encryptIt($notification['ord_id']);
+		}
+		// Return the JSON and HTML data
+		echo json_encode($data);
 	}
 	public function get_notifcount()
 	{

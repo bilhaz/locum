@@ -146,15 +146,21 @@
                                                     <?php elseif ($row['ord_status'] == "2") : ?>
                                                         <span class="badge chart-color122">Processed</span>
                                                     <?php elseif ($row['ord_status'] == "3") : ?>
-                                                        <span class="badge bg-success">Confirmed</span>
-                                                    <?php else : ?>
-                                                        <span class="badge chart-color120">Ended</span>
+                                                        <span class="badge bg-success">Confirmed</span><br>
+                                                        <span><a href="<?= base_url("backend/contract/".encryptIt($row['ord_id']))?>" target="_blank"><?= $row['ord_ref_no'] ?></a></span>
+                                                    <?php elseif($row['ord_status'] == "4") : ?>
+                                                        <span class="badge chart-color120">Ended</span><br>
+                                                        <span><a href="<?= base_url("backend/contract/".encryptIt($row['ord_id']))?>" target="_blank"><?= $row['ord_ref_no'] ?></a></span>
+                                                        <?php else: ?>
+                                                        <span class="badge bg-success">Paid</span><br>
+                                                        <span><a href="<?= base_url("backend/contract/".encryptIt($row['ord_id']))?>" target="_blank"><?= $row['ord_ref_no'] ?></a></span>
                                                     <?php endif; ?>
                                                 <?php endif; ?>
                                             <?php endif; ?>
                                         </td>
                                         <td>
-                                            <?= $row['ord_invoice_id'] ?>
+                                            <?= $row['ord_invoice_id'] ?><br>
+                                            <?= $row['ord_sage_refer_no'] ?>
                                         </td>
                                         <td>
 

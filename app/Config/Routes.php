@@ -102,7 +102,9 @@ $routes->match(['get' , 'post'], 'backend/purchase', 'admin\Backend::purchase_su
 $routes->match(['get' , 'post'], 'backend/vos', 'admin\Backend::vos_sumry' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/vop', 'admin\Backend::vop_sumry' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/vos-vop', 'admin\Backend::vosvop_sumry' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'backend/cash-flow', 'admin\Backend::CashFlow' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/t-fill/(:any)', 'admin\Backend::fill_timesheet/$1' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'backend/timesheet_verificatioNotify/(:any)', 'admin\Backend::timesheet_verificatioNotify/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/timesheet_save/(:any)', 'admin\Backend::timesheet_save/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/t-edit/(:any)', 'admin\Backend::edit_timesheet/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/t-upd/(:any)', 'admin\Backend::upd_timesheet/$1' ,['filter' => 'B_auth']);
@@ -117,6 +119,7 @@ $routes->match(['get' , 'post'], 'backend/change_doctor_cancelled_order/(:any)/(
 $routes->match(['get' , 'post'], 'backend/notif-get', 'admin\Backend::get_notif',/*['filter' => 'B_auth']*/);
 $routes->match(['get' , 'post'], 'backend/show-notif', 'admin\Backend::show_notif',['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/notif-seen', 'admin\Backend::notif_seen',['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'backend/fetch-ChartData', 'admin\Backend::fetchChartData',['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/notif-count', 'admin\Backend::get_notifcount',/*['filter' => 'B_auth']*/);
 
 // });
@@ -158,6 +161,7 @@ $routes->match(['get' , 'post'], 'employee/completed-assignments', 'employee\emp
 $routes->get('employee/logout', 'employee\emp::logout');
 $routes->match(['get' , 'post'], 'employee/notif-get', 'employee\emp::get_notif',/*['filter' => 'B_auth']*/);
 $routes->match(['get' , 'post'], 'employee/notif-seen', 'employee\emp::notif_seen',['filter' => 'E_Auth']);
+$routes->match(['get' , 'post'], 'employee/show-notif', 'employee\emp::show_notif',['filter' => 'E_Auth']);
 $routes->match(['get' , 'post'], 'employee/notif-count', 'employee\emp::get_notifcount',/*['filter' => 'B_auth']*/);
 
 
@@ -184,6 +188,7 @@ $routes->match(['get' , 'post'], 'client/profile', 'client\cli::profile',['filte
 $routes->match(['get' , 'post'], 'client/orders', 'client\cli::contracts',['filter' => 'C_Auth']);
 $routes->match(['get' , 'post'], 'client/ord-view/(:any)', 'client\cli::order_view/$1',['filter' => 'C_Auth']);
 $routes->match(['get' , 'post'], 'client/canc-ord/(:any)', 'client\cli::canc_ord/$1',['filter' => 'C_Auth']);
+$routes->match(['get' , 'post'], 'client/await-timeshets', 'client\cli::await_timesheet',['filter' => 'C_Auth']);
 $routes->match(['get' , 'post'], 'client/timesheet/(:any)', 'client\cli::timesheet/$1',['filter' => 'C_Auth']);
 $routes->match(['get' , 'post'], 'client/timesheet-approve/(:any)', 'client\cli::timesheet_approve/$1',['filter' => 'C_Auth']);
 $routes->match(['get' , 'post'], 'client/ord-status/(:any)', 'client\cli::order_status/$1',['filter' => 'C_Auth']);
@@ -195,6 +200,7 @@ $routes->match(['get' , 'post'], 'client/completed-orders', 'client\cli::complet
 $routes->get('client/logout', 'client\cli::logout');
 $routes->match(['get' , 'post'], 'client/notif-get', 'client\cli::get_notif',/*['filter' => 'B_auth']*/);
 $routes->match(['get' , 'post'], 'client/notif-seen', 'client\cli::notif_seen',['filter' => 'C_Auth']);
+$routes->match(['get' , 'post'], 'client/show-notif', 'client\cli::show_notif',['filter' => 'C_Auth']);
 $routes->match(['get' , 'post'], 'client/notif-count', 'client\cli::get_notifcount',/*['filter' => 'B_auth']*/);
 
 

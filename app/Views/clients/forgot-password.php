@@ -8,7 +8,7 @@
             <div class="auth-box">
                 <div class="top mb-4">
                     <div class="logo">
-                        <<svg width="130px" height="40px" viewBox="0 0 85.5 50.9">
+                        <svg width="130px" height="40px" viewBox="0 0 85.5 50.9">
                             <img src="<?= base_url('public/images/sralogo-icon.png') ?>" width="60" height="60" />
                             </svg>
                     </div>

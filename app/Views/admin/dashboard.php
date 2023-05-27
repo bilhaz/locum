@@ -148,10 +148,10 @@
                                 <a type="button" class="btn btn-outline-primary btn-block equal-width" href="<?= base_url('backend/vop') ?>" target="_blank">VAT on Purchase</a>
                             </div>
                             <div class="col-md-6 mb-2">
-                                <a type="button" class="btn btn-outline-primary btn-block equal-width" href="#" target="_blank">VOS - VOP</a>
+                                <a type="button" class="btn btn-outline-primary btn-block equal-width" href="<?= base_url('backend/vos-vop') ?>" target="_blank">VOS - VOP</a>
                             </div>
                             <div class="col-md-6 mb-2">
-                                <a type="button" class="btn btn-outline-primary btn-block equal-width" href="#" target="_blank">CASH FLOW</a>
+                                <a type="button" class="btn btn-outline-primary btn-block equal-width" href="<?= base_url('backend/cash-flow') ?>" target="_blank">CASH FLOW</a>
                             </div>
                         </div>
                     </div>
@@ -226,25 +226,34 @@
                 <div class="col">
                     <h6 class="card-title">Work Report</h6>
                 </div>
-                <div class="col-auto">
-                    <div class="form-group mb-0">
-                        <input type="date" class="form-control">
+                <form id="chart_filters" class="form-control">
+                    <div class="row">
+                        <div class="col-auto">
+                            <div class="form-group mb-0">
+                                <input type="date" class="form-control" name="start_date" value="">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="form-group mb-0">
+                                <span class="mx-2"><b>TO</b></span>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="form-group mb-0">
+                                <input type="date" class="form-control" name="end_date">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="form-group mb-0">
+                                <button type="submit" class="btn btn-secondary bt-sm">Get</button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-auto">
-                    <div class="form-group mb-0">
-                        <span class="mx-2">TO</span>
-                    </div>
-                </div>
-                <div class="col-auto">
-                    <div class="form-group mb-0">
-                        <input type="date" class="form-control">
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
         <div class="card-body">
-            <div id="wrok_report"></div>
+            <div id="work_report"></div>
         </div>
     </div>
 </div>
@@ -255,7 +264,7 @@
                 <h4 class="card-title text-primary">User Work Log List</h4>
             </div>
             <div class="card-body overflow-scroll">
-            <table id="employee_List" class="table table-hover">
+                <table id="employee_List" class="table table-hover">
                     <thead class="thead-dark">
                         <tr>
                             <th>SNo.</th>
@@ -267,30 +276,31 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <?php $i=1; foreach ($counts as $userId => $userData): ?>
-            <tr>
-                <td><?= $i++ ?></td>
-                <td><?= $userData['usr_name'] ?></td>
-                <td class="text-center"><?= $userData['counts']['first_response'] ?></td>
-                <td class="text-center"><?= $userData['counts']['locum_process'] ?></td>
-                <td class="text-center"><?= $userData['counts']['locum_confirmation'] ?></td>
-                <td class="text-center"><?= $userData['counts']['employee_confirmation'] ?></td>
-            </tr>
-        <?php endforeach; ?>
+                        <?php $i = 1;
+                        foreach ($counts as $userId => $userData) : ?>
+                            <tr>
+                                <td><?= $i++ ?></td>
+                                <td><?= $userData['usr_name'] ?></td>
+                                <td class="text-center"><?= $userData['counts']['first_response'] ?></td>
+                                <td class="text-center"><?= $userData['counts']['locum_process'] ?></td>
+                                <td class="text-center"><?= $userData['counts']['locum_confirmation'] ?></td>
+                                <td class="text-center"><?= $userData['counts']['employee_confirmation'] ?></td>
+                            </tr>
+                        <?php endforeach; ?>
 
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-<div class="col-md-4 col-sm-12">
-<div class="card">
-<div class="card-header">
-<h6 class="card-title">Locum Analysis</h6>
-</div>
-<div class="card-body text-center">
-<div id="income_analysis"></div>
-</div>
-</div>
-</div>
+    <div class="col-md-4 col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="card-title">Locum Analysis</h6>
+            </div>
+            <div class="card-body text-center">
+                <div id="income_analysis"></div>
+            </div>
+        </div>
+    </div>
 </div>
