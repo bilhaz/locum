@@ -41,3 +41,7 @@ ALTER TABLE `clients` ADD `Reset_Token` TEXT NULL AFTER `cl_status`, ADD `Reset_
 
 ALTER TABLE `employee` ADD `Reset_Token` TEXT NULL AFTER `emp_status`, ADD `Reset_Token_Expiry` DATETIME NULL DEFAULT NULL AFTER `Reset_Token`;
 
+ALTER TABLE `employee` ADD `emp_acls` VARCHAR(500) NULL AFTER `emp_work_permit`, ADD `emp_bcls` VARCHAR(500) NULL AFTER `emp_acls`, ADD `emp_bls` VARCHAR(500) NULL AFTER `emp_bcls`, ADD `emp_atls` VARCHAR(500) NULL AFTER `emp_bls`, ADD `emp_otherDocs` VARCHAR(500) NULL AFTER `emp_atls`;
+
+ALTER TABLE `employee` ADD `emp_gpIndemnity` VARCHAR(255) NULL AFTER `emp_atls`;
+

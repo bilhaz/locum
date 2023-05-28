@@ -226,8 +226,8 @@
                 <div class="col">
                     <h6 class="card-title">Work Report</h6>
                 </div>
-                <form id="chart_filters" class="form-control">
-                    <div class="row">
+                <form id="chart_filters" class="form-control ">
+                    <div class="row float-end">
                         <div class="col-auto">
                             <div class="form-group mb-0">
                                 <input type="date" class="form-control" name="start_date" value="">
@@ -296,7 +296,7 @@
     <div class="col-md-4 col-sm-12">
         <div class="card">
             <div class="card-header">
-                <h6 class="card-title">Locum Analysis</h6>
+                <h6 class="card-title text-primary">Locum Analysis</h6>
             </div>
             <div class="card-body text-center">
                 <div id="income_analysis"></div>

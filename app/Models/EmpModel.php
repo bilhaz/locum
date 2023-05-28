@@ -12,7 +12,7 @@ class EmpModel extends Model
     //protected $returnType     = 'array';
     //protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['emp_spec1', 'emp_spec2', 'emp_spec3', 'emp_grade1','emp_grade2','emp_grade3','emp_fname', 'emp_lname','emp_gender','emp_email','emp_pwd','emp_phone','emp_imcr_no','emp_pps_no','emp_cv','emp_imc_cert','emp_gv_cert','emp_rec_refer','emp_passport','emp_occup_health','emp_work_permit','emp_status','Reset_Token', 'Reset_Token_Expiry'];
+    protected $allowedFields = ['emp_spec1', 'emp_spec2', 'emp_spec3', 'emp_grade1','emp_grade2','emp_grade3','emp_fname', 'emp_lname','emp_gender','emp_email','emp_pwd','emp_phone','emp_imcr_no','emp_pps_no','emp_cv','emp_imc_cert','emp_gv_cert','emp_rec_refer','emp_passport','emp_occup_health','emp_work_permit','emp_status','Reset_Token', 'Reset_Token_Expiry','emp_acls','emp_bcls','emp_bls','emp_atls','emp_otherDocs','emp_gpIndemnity'];
     protected $beforeInsert = ['beforeInsert'];
     protected $beforeUpdate = ['beforeUpdate'];    
 

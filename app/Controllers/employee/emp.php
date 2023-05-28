@@ -564,9 +564,14 @@ class emp extends EMPBaseController
 				'emp_passport' => ['label' => 'Passport', 'rules' => 'uploaded[emp_passport]|ext_in[emp_passport,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_passport,2048]'],
 				'emp_occup_health' => ['label' => 'Occupational Health', 'rules' => 'uploaded[emp_occup_health]|ext_in[emp_occup_health,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_occup_health,2048]'],
 				'emp_work_permit' => ['label' => 'Work Permit', 'rules' => 'uploaded[emp_work_permit]|ext_in[emp_work_permit,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_work_permit,2048]'],
+				'emp_acls' => ['label' => 'ACLS', 'rules' => 'uploaded[emp_acls]|ext_in[emp_acls,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_acls,2048]'],
+				'emp_bcls' => ['label' => 'BCLS', 'rules' => 'uploaded[emp_bcls]|ext_in[emp_bcls,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_bcls,2048]'],
+				'emp_bls' => ['label' => 'BLS', 'rules' => 'uploaded[emp_bls]|ext_in[emp_bls,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_bls,2048]'],
+				'emp_atls' => ['label' => 'ATLS', 'rules' => 'uploaded[emp_atls]|ext_in[emp_atls,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_atls,2048]'],
+				'emp_gpIndemnity' => ['label' => 'GP Indemnity', 'rules' => 'uploaded[emp_gpIndemnity]|ext_in[emp_gpIndemnity,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_gpIndemnity,2048]'],
 				'emp_gender' => ['label' => 'Gender', 'rules' => 'required'],
 			];
-			foreach (['emp_cv', 'emp_imc_cert', 'emp_gv_cert', 'emp_rec_refer', 'emp_passport', 'emp_occup_health', 'emp_work_permit'] as $field) {
+			foreach (['emp_cv', 'emp_imc_cert', 'emp_gv_cert', 'emp_rec_refer', 'emp_passport', 'emp_occup_health', 'emp_work_permit','emp_acls','emp_bcls','emp_bls','emp_atls','emp_gpIndemnity'] as $field) {
 				if (empty($_FILES[$field]['name'])) {
 					unset($rules[$field]);
 				}
@@ -606,6 +611,27 @@ class emp extends EMPBaseController
 					'uploaded' => 'Can not upload not a valid file',
 					'max_size' => 'File size must be less than 2MB'
 				],
+				'emp_acls' => [
+					'uploaded' => 'Can not upload not a valid file',
+					'max_size' => 'File size must be less than 2MB'
+				],
+				'emp_bcls' => [
+					'uploaded' => 'Can not upload not a valid file',
+					'max_size' => 'File size must be less than 2MB'
+				],
+				'emp_bls' => [
+					'uploaded' => 'Can not upload not a valid file',
+					'max_size' => 'File size must be less than 2MB'
+				],
+				'emp_atls' => [
+					'uploaded' => 'Can not upload not a valid file',
+					'max_size' => 'File size must be less than 2MB'
+				],
+				'emp_gpIndemnity' => [
+					'uploaded' => 'Can not upload not a valid file',
+					'max_size' => 'File size must be less than 2MB'
+				],
+
 
 			];
 
@@ -690,7 +716,69 @@ class emp extends EMPBaseController
 					$emp_work_permit = $this->request->getPost('emp_work_permitt');
 					$emp_work_permit_name = $emp_work_permit;
 				}
+				$emp_acls = $this->request->getFile('emp_acls');
 
+				if ($emp_acls->isValid() && !$emp_acls->hasMoved()) {
+					$emp_acls_name = encryptIt($emp_acls->getName()) . '.' . pathinfo($_FILES['emp_acls']['name'], PATHINFO_EXTENSION);
+
+					$emp_acls->move('public/uploads/employee_attach/', $emp_acls_name, true);
+				} else {
+					$emp_acls = $this->request->getPost('emp_aclss');
+					$emp_acls_name = $emp_acls;
+				}
+				$emp_bcls = $this->request->getFile('emp_bcls');
+
+				if ($emp_bcls->isValid() && !$emp_bcls->hasMoved()) {
+					$emp_bcls_name = encryptIt($emp_bcls->getName()) . '.' . pathinfo($_FILES['emp_bcls']['name'], PATHINFO_EXTENSION);
+
+					$emp_bcls->move('public/uploads/employee_attach/', $emp_bcls_name, true);
+				} else {
+					$emp_bcls = $this->request->getPost('emp_bclss');
+					$emp_bcls_name = $emp_bcls;
+				}
+
+				$emp_bls = $this->request->getFile('emp_bls');
+
+				if ($emp_bls->isValid() && !$emp_bls->hasMoved()) {
+					$emp_bls_name = encryptIt($emp_bls->getName()) . '.' . pathinfo($_FILES['emp_bls']['name'], PATHINFO_EXTENSION);
+
+					$emp_bls->move('public/uploads/employee_attach/', $emp_bls_name, true);
+				} else {
+					$emp_bls = $this->request->getPost('emp_blss');
+					$emp_bls_name = $emp_bls;
+				}
+				$emp_atls = $this->request->getFile('emp_atls');
+
+				if ($emp_atls->isValid() && !$emp_atls->hasMoved()) {
+					$emp_atls_name = encryptIt($emp_atls->getName()) . '.' . pathinfo($_FILES['emp_atls']['name'], PATHINFO_EXTENSION);
+
+					$emp_atls->move('public/uploads/employee_attach/', $emp_atls_name, true);
+				} else {
+					$emp_atls = $this->request->getPost('emp_atlss');
+					$emp_atls_name = $emp_atls;
+				}
+				$emp_otherDocs = $this->request->getFile('emp_otherDocs');
+
+				if ($emp_otherDocs->isValid() && !$emp_otherDocs->hasMoved()) {
+					$emp_otherDocs_name = encryptIt($emp_otherDocs->getName()) . '.' . pathinfo($_FILES['emp_otherDocs']['name'], PATHINFO_EXTENSION);
+
+					$emp_otherDocs->move('public/uploads/employee_attach/', $emp_otherDocs_name, true);
+				} else {
+					$emp_otherDocs = $this->request->getPost('emp_otherDocss');
+					$emp_otherDocs_name = $emp_otherDocs;
+				}
+				$emp_gpIndemnity = $this->request->getFile('emp_gpIndemnity');
+
+				if ($emp_gpIndemnity->isValid() && !$emp_gpIndemnity->hasMoved()) {
+					$emp_gpIndemnity_name = encryptIt($emp_gpIndemnity->getName()) . '.' . pathinfo($_FILES['emp_gpIndemnity']['name'], PATHINFO_EXTENSION);
+
+					$emp_gpIndemnity->move('public/uploads/employee_attach/', $emp_gpIndemnity_name, true);
+				} else {
+					$emp_gpIndemnity = $this->request->getPost('emp_gpIndemnityy');
+					$emp_gpIndemnity_name = $emp_gpIndemnity;
+				}
+
+				
 				//store this to database
 
 				$model = new EmpModel();
@@ -714,7 +802,12 @@ class emp extends EMPBaseController
 					'emp_passport' => $emp_passport_name,
 					'emp_occup_health' => $emp_occup_health_name,
 					'emp_work_permit' => $emp_work_permit_name,
-
+					'emp_acls' => $emp_acls_name,
+					'emp_bcls' => $emp_bcls_name,
+					'emp_bls' => $emp_bls_name,
+					'emp_atls' => $emp_atls_name,
+					'emp_otherDocs' => $emp_otherDocs_name,
+					'emp_gpIndemnity' => $emp_gpIndemnity_name,
 
 				];
 				$model->update($id, $newData);

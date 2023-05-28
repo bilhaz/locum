@@ -151,79 +151,40 @@ $(document).ready(function() {
     });
   }
 });
+// end WORK REPORT Graph
 
+// Locum Analysis
+    var options = {
+        series: [44, 35, 13],
+        colors: ['var(--chart-color1)', 'var(--chart-color6)', 'var(--chart-color5)'],
+        chart: {
+            width: 200,
+            type: "pie",
+        },
+        legend: {
+            show: false,
+        },
+        dataLabels: {
+            enabled: false,
+        },
+        labels: ["Hospital", "Nurse", "GP"],
+        responsive: [{
+            breakpoint: 480,
+            options: {
+                chart: {
+                    width: 100,
+                },
+                legend: {
+                    show: false,
+                    position: "bottom",
+                },
+            },
+        }, ],
+    };
+    var chart = new ApexCharts(document.querySelector("#income_analysis"), options);
+    chart.render();
     
-// $(document).ready(function() {
-//   $('#chart_filters').submit(function(event) {
-//       event.preventDefault(); // Prevent form submission
-
-//       var startDate = $('input[name="start_date"]').val();
-//       var endDate = $('input[name="end_date"]').val();
-
-//       // Perform AJAX request to fetch filtered chart data
-//       $.ajax({
-//           url: link5, // Update with your API endpoint
-//           type: 'POST',
-//           data: {
-//               start_date: startDate,
-//               end_date: endDate
-//           },
-//           dataType: 'json',
-//           success: function(response) {
-//             const chartData = response;
-//             console.log(chartData);
-//               // Handle the response and update the chart data
-//               // updateChart(response);
-//           },
-//           error: function(xhr, status, error) {
-//               console.error(error);
-//           }
-//       });
-//   });
-
-  // Function to update the chart with new data
-//   function updateChart(data) {
-//       var optionsSpark1 = {
-//           series: data.series,
-//           colors: ['var(--chart-color7)', 'var(--chart-color6)', 'var(--chart-color1)', 'var(--chart-color4)'],
-//           chart: {
-//               type: "area",
-//               height: 300,
-//               sparkline: {
-//                   enabled: false,
-//               },
-//               toolbar: {
-//                   show: false,
-//               },
-//           },
-//           stroke: {
-//               show: true,
-//               curve: "smooth",
-//               colors: undefined,
-//               width: 2,
-//               dashArray: 0,
-//           },
-//           dataLabels: {
-//               enabled: false,
-//           },
-//           xaxis: {
-//               show: true,
-//               categories: data.categories,
-//           },
-//           yaxis: {
-//               show: false,
-//           },
-//           legend: {
-//               position: "top",
-//               horizontalAlign: "center",
-//           },
-//       };
-
-//       var chartSpark1 = new ApexCharts(document.querySelector("#work_report"), optionsSpark1);
-//       chartSpark1.render();
-//   }
-// });
-
+// show Browser Notification
 
   function showNotification(title, body, url) {
     Push.create(title, {

@@ -1,75 +1,75 @@
 $(function() {
     ("use strict");
-    console.log(chartData.series);
-    // Wrok Report Chart
-    var optionsSpark1 = {
-        series: chartData.series,
-        // [{
-        //         name: "Received",
-        //         data: [100, 35, 62, 41, 45, 57, 40, 55, 22, 95, 55, 10],
-        //     },
-        //     {
-        //         name: "Proposed",
-        //         data: [80, 25, 38, 40, 24, 48, 28, 55, 45, 60, 78, 34],
-        //     },
-        //     {
-        //         name: "Confirmed",
-        //         data: [60, 30, 36, 28, 45, 58, 59, 19, 58, 70, 45, 12],
-        //     },
-        //     {
-        //         name: "Cancelled",
-        //         data: [23, 55, 88, 12, 87, 67, 5, 19, 66, 38, 76, 49],
-        //     },
-        // ],
-        colors: ['var(--chart-color7)', 'var(--chart-color6)', 'var(--chart-color1)', 'var(--chart-color4)'],
-        chart: {
-            type: "area",
-            height: 300,
-            sparkline: {
-                enabled: false,
-            },
-            toolbar: {
-                show: false,
-            },
-        },
-        stroke: {
-            show: true,
-            curve: "smooth",
-            colors: undefined,
-            width: 2,
-            dashArray: 0,
-        },
-        dataLabels: {
-            enabled: false,
-        },
-        xaxis: {
-            show: true,
-            categories: chartData.categories, 
-            // [
-            //     "January",
-            //     "February",
-            //     "March",
-            //     "April",
-            //     "May",
-            //     "June",
-            //     "July",
-            //     "August",
-            //     "September",
-            //     "October",
-            //     "November",
-            //     "December",
-            // ],
-        },
-        yaxis: {
-            show: false,
-        },
-        legend: {
-            position: "top",
-            horizontalAlign: "center",
-        },
-    };
-    var chartSpark1 = new ApexCharts(document.querySelector("#work_report"), optionsSpark1);
-    chartSpark1.render();
+    // console.log(chartData.series);
+    // // Wrok Report Chart
+    // var optionsSpark1 = {
+    //     series: chartData.series,
+    //     // [{
+    //     //         name: "Received",
+    //     //         data: [100, 35, 62, 41, 45, 57, 40, 55, 22, 95, 55, 10],
+    //     //     },
+    //     //     {
+    //     //         name: "Proposed",
+    //     //         data: [80, 25, 38, 40, 24, 48, 28, 55, 45, 60, 78, 34],
+    //     //     },
+    //     //     {
+    //     //         name: "Confirmed",
+    //     //         data: [60, 30, 36, 28, 45, 58, 59, 19, 58, 70, 45, 12],
+    //     //     },
+    //     //     {
+    //     //         name: "Cancelled",
+    //     //         data: [23, 55, 88, 12, 87, 67, 5, 19, 66, 38, 76, 49],
+    //     //     },
+    //     // ],
+    //     colors: ['var(--chart-color7)', 'var(--chart-color6)', 'var(--chart-color1)', 'var(--chart-color4)'],
+    //     chart: {
+    //         type: "area",
+    //         height: 300,
+    //         sparkline: {
+    //             enabled: false,
+    //         },
+    //         toolbar: {
+    //             show: false,
+    //         },
+    //     },
+    //     stroke: {
+    //         show: true,
+    //         curve: "smooth",
+    //         colors: undefined,
+    //         width: 2,
+    //         dashArray: 0,
+    //     },
+    //     dataLabels: {
+    //         enabled: false,
+    //     },
+    //     xaxis: {
+    //         show: true,
+    //         categories: chartData.categories, 
+    //         // [
+    //         //     "January",
+    //         //     "February",
+    //         //     "March",
+    //         //     "April",
+    //         //     "May",
+    //         //     "June",
+    //         //     "July",
+    //         //     "August",
+    //         //     "September",
+    //         //     "October",
+    //         //     "November",
+    //         //     "December",
+    //         // ],
+    //     },
+    //     yaxis: {
+    //         show: false,
+    //     },
+    //     legend: {
+    //         position: "top",
+    //         horizontalAlign: "center",
+    //     },
+    // };
+    // var chartSpark1 = new ApexCharts(document.querySelector("#work_report"), optionsSpark1);
+    // chartSpark1.render();
 
 //     // Project List Table small Chart
 //     var options = {
