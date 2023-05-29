@@ -224,7 +224,7 @@
                                                                             } else {
                                                                             } ?>">
                                 <label for="formFile" class="form-label">GP Indemnity</label>
-                                <input type="file" name="emp_gpIndemnity" class="form-control id=" file_gpint" data-parsley-max-file-size="2000" data-parsley-fileextension="jpg,JPEG,pdf,PDF,png,PNG,doc,docx"><br>
+                                <input type="file" name="emp_gpIndemnity" class="form-control" id="file_gpint" data-parsley-max-file-size="2000" data-parsley-fileextension="jpg,JPEG,pdf,PDF,png,PNG,doc,docx"><br>
                             </div>
                             <div class="row mb-3">
                                 <?php if (!empty($emp['emp_gpIndemnity'])) : ?>
@@ -391,92 +391,3 @@
 </div>
 </div>
 </div>
-<script>
-    $(document).ready(function() {
-        $('input[name="acls"]').on('change', function() {
-            var $fileInput = $('#acls-upload').find('input[type="file"]');
-            if ($(this).is(':checked')) {
-                $fileInput.attr('data-parsley-required', 'true');
-                $('#acls-upload').show();
-            } else {
-                $fileInput.removeAttr('data-parsley-required');
-                $('#acls-upload').hide();
-            }
-        });
-
-        $('input[name="bcls"]').on('change', function() {
-            var $fileInput = $('#bcls-upload').find('input[type="file"]');
-            if ($(this).is(':checked')) {
-                $fileInput.attr('data-parsley-required', 'true');
-                $('#bcls-upload').show();
-            } else {
-                $fileInput.removeAttr('data-parsley-required');
-                $('#bcls-upload').hide();
-            }
-        });
-
-        $('input[name="bls"]').on('change', function() {
-            var $fileInput = $('#bls-upload').find('input[type="file"]');
-            if ($(this).is(':checked')) {
-                $fileInput.attr('data-parsley-required', 'true');
-                $('#bls-upload').show();
-            } else {
-                $fileInput.removeAttr('data-parsley-required');
-                $('#bls-upload').hide();
-            }
-        });
-
-        $('input[name="atls"]').on('change', function() {
-            var $fileInput = $('#atls-upload').find('input[type="file"]');
-            if ($(this).is(':checked')) {
-                $fileInput.attr('data-parsley-required', 'true');
-                $('#atls-upload').show();
-            } else {
-                $fileInput.removeAttr('data-parsley-required');
-                $('#atls-upload').hide();
-            }
-        });
-    });
-    $(document).ready(function() {
-        $('#emp_spec1').on('change', function() {
-            var selectedValue = $(this).val();
-            var $fileInput = $('#gpIndemnity').find('input[type="file"]');
-
-            if (selectedValue === "1") {
-                $fileInput.attr('data-parsley-required', 'true');
-                $('#gpIndemnity').show();
-            } else {
-                $fileInput.removeAttr('data-parsley-required');
-                $('#gpIndemnity').hide();
-            }
-        });
-    });
-    $(document).ready(function() {
-        $('#emp_spec2').on('change', function() {
-            var selectedValue = $(this).val();
-            var $fileInput = $('#gpIndemnity').find('input[type="file"]');
-
-            if (selectedValue === "1") {
-                $fileInput.attr('data-parsley-required', 'true');
-                $('#gpIndemnity').show();
-            } else {
-                $fileInput.removeAttr('data-parsley-required');
-                $('#gpIndemnity').hide();
-            }
-        });
-    });
-    $(document).ready(function() {
-        $('#emp_spec3').on('change', function() {
-            var selectedValue = $(this).val();
-            var $fileInput = $('#gpIndemnity').find('input[type="file"]');
-
-            if (selectedValue === "1") {
-                $fileInput.attr('data-parsley-required', 'true');
-                $('#gpIndemnity').show();
-            } else {
-                $fileInput.removeAttr('data-parsley-required');
-                $('#gpIndemnity').hide();
-            }
-        });
-    });
-</script>

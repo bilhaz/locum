@@ -230,6 +230,12 @@
 
                             </tbody>
                         </table>
+                        <div class="row mb-3">
+                        <div class="col-md-4">
+                        <lable for="date"  class="control-label mb-1 text-primary">Signature</lable>
+                        <input id="date" type="text" value="<?= $e_ord['ord_timesheetSign'] ?>" disabled readonly required>
+                        </div>
+                        </div>
                         <br>
                         
 

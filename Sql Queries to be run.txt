@@ -45,3 +45,7 @@ ALTER TABLE `employee` ADD `emp_acls` VARCHAR(500) NULL AFTER `emp_work_permit`,
 
 ALTER TABLE `employee` ADD `emp_gpIndemnity` VARCHAR(255) NULL AFTER `emp_atls`;
 
+ALTER TABLE `orders` ADD `ord_timesheetSign` VARCHAR(255) NULL AFTER `ord_time_sheet_approved`;
+
+
+

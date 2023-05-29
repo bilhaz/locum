@@ -232,6 +232,12 @@
                             </tbody>
                         </table>
                         <br>
+                        <div class="row mb-3">
+                        <div class="col-md-4">
+                        <lable  class="control-label mb-1 text-primary">Signature</lable>
+                        <input type="text" value="<?= $e_ord['ord_timesheetSign'] ?>" disabled readonly required>
+                        </div>
+                        </div>
                         <br>
                         <div style="float:right;padding-right:2rem;">
                         <a id="payment-button" href="<?= base_url('employee/ord-view/'. encryptIt($e_ord['ord_id'])) ?>"

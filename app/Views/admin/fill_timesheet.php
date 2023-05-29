@@ -39,7 +39,7 @@
                         </div>
                     <?php endif; ?>
 
-                    <form action="<?= base_url('backend/timesheet_save/' . encryptIt($e_ord['ord_id'])) ?>" method="post">
+                    <form action="<?= base_url('backend/timesheet_save/' . encryptIt($e_ord['ord_id'])) ?>" method="post" data-parsley-validate="" id="forma">
 
                         <table class="table table-striped table-bordered">
                             <thead class="thead-dark">
@@ -158,8 +158,14 @@
 
                             </tbody>
                         </table>
+                        <div class="row mb-3">
+                        <div class="col-md-4">
+                        <lable>Signature<small class="text-danger">&nbsp;(Click Below to Sign)</small></lable>
+                        <input type="text" id="dateInput" onclick="loadCurrentDateTime()" class="form-control" name="ord_timesheetSign" readonly required>
+                        </div>
+                        </div>
                         <br>
-                        <div style="float:right !important;"> 
+                        <div class="float-end"> 
                                 <a id="payment-button" href="<?= base_url('backend/timesheet') ?>"
                                     class="btn btn-lg btn-dark text-light btn-block">
                                     <span id="payment-button-amount">Cancel</span>

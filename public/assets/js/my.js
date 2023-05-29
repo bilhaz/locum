@@ -195,3 +195,104 @@ $(document).ready(function () {
     });
 });
 
+// Employee profile Script
+$(document).ready(function() {
+    $('input[name="acls"]').on('change', function() {
+        var $fileInput = $('#acls-upload').find('input[type="file"]');
+        if ($(this).is(':checked')) {
+            $fileInput.attr('data-parsley-required', 'true');
+            $('#acls-upload').show();
+        } else {
+            $fileInput.removeAttr('data-parsley-required');
+            $('#acls-upload').hide();
+        }
+    });
+
+    $('input[name="bcls"]').on('change', function() {
+        var $fileInput = $('#bcls-upload').find('input[type="file"]');
+        if ($(this).is(':checked')) {
+            $fileInput.attr('data-parsley-required', 'true');
+            $('#bcls-upload').show();
+        } else {
+            $fileInput.removeAttr('data-parsley-required');
+            $('#bcls-upload').hide();
+        }
+    });
+
+    $('input[name="bls"]').on('change', function() {
+        var $fileInput = $('#bls-upload').find('input[type="file"]');
+        if ($(this).is(':checked')) {
+            $fileInput.attr('data-parsley-required', 'true');
+            $('#bls-upload').show();
+        } else {
+            $fileInput.removeAttr('data-parsley-required');
+            $('#bls-upload').hide();
+        }
+    });
+
+    $('input[name="atls"]').on('change', function() {
+        var $fileInput = $('#atls-upload').find('input[type="file"]');
+        if ($(this).is(':checked')) {
+            $fileInput.attr('data-parsley-required', 'true');
+            $('#atls-upload').show();
+        } else {
+            $fileInput.removeAttr('data-parsley-required');
+            $('#atls-upload').hide();
+        }
+    });
+});
+$(document).ready(function() {
+    $('#emp_spec1').on('change', function() {
+        var selectedValue = $(this).val();
+        var $fileInput = $('#gpIndemnity').find('input[type="file"]');
+
+        if (selectedValue === "1") {
+            $fileInput.attr('data-parsley-required', 'true');
+            $('#gpIndemnity').show();
+        } else {
+            $fileInput.removeAttr('data-parsley-required');
+            $('#gpIndemnity').hide();
+        }
+    });
+});
+$(document).ready(function() {
+    $('#emp_spec2').on('change', function() {
+        var selectedValue = $(this).val();
+        var $fileInput = $('#gpIndemnity').find('input[type="file"]');
+
+        if (selectedValue === "1") {
+            $fileInput.attr('data-parsley-required', 'true');
+            $('#gpIndemnity').show();
+        } else {
+            $fileInput.removeAttr('data-parsley-required');
+            $('#gpIndemnity').hide();
+        }
+    });
+});
+$(document).ready(function() {
+    $('#emp_spec3').on('change', function() {
+        var selectedValue = $(this).val();
+        var $fileInput = $('#gpIndemnity').find('input[type="file"]');
+
+        if (selectedValue === "1") {
+            $fileInput.attr('data-parsley-required', 'true');
+            $('#gpIndemnity').show();
+        } else {
+            $fileInput.removeAttr('data-parsley-required');
+            $('#gpIndemnity').hide();
+        }
+    });
+});
+function loadCurrentDateTime() {
+    var dateInput = document.getElementById("dateInput");
+    var currentDateTime = new Date().toLocaleString('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true
+    });
+    dateInput.value = currentDateTime;
+  }

@@ -426,6 +426,7 @@ class emp extends EMPBaseController
 		}
 		$status = [
 			'ord_time_sheet_mode' => 'online',
+			'ord_timesheetSign' => $this->request->getVar('ord_timesheetSign'),
 		];
 		$newData = [
 			'ord_id' => $ord_id,
@@ -435,7 +436,7 @@ class emp extends EMPBaseController
 			'status' => "0",
 			'usr_type' => "admin",
 		];
-
+		
 		$Nmodel->save($newData);
 		$omodel->update($ord_id, $status);
 		$session = session();

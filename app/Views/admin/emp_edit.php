@@ -164,7 +164,19 @@
                                     <input type="hidden" name="emp_imc_certt" value="<?= $ed_emp['emp_imc_cert'] ?>">
                                 <?php endif; ?>
                             </div>
-
+                            <div class="row mb-3" id="gpIndemnity" style="<?php if (empty($ed_emp['emp_gpIndemnity'])) {
+                                                                                echo "display: none;";
+                                                                            } else {
+                                                                            } ?>">
+                                <label for="formFile" class="form-label">GP Indemnity</label>
+                                <input type="file" name="emp_gpIndemnity" class="form-control" id="file_gpint" data-parsley-max-file-size="2000" data-parsley-fileextension="jpg,JPEG,pdf,PDF,png,PNG,doc,docx"><br>
+                            </div>
+                            <div class="row mb-3">
+                                <?php if (!empty($ed_emp['emp_gpIndemnity'])) : ?>
+                                    <a href="<?= base_url('public/uploads/employee_attach/' . $ed_emp['emp_gpIndemnity']) ?>" target="_blank">View Document</a>
+                                    <input type="hidden" name="emp_gpIndemnityy" value="<?= $ed_emp['emp_gpIndemnity'] ?>">
+                                <?php endif; ?>
+                            </div>
 
                             <div class="row mb-3">
                                 <label for="formFile" class="form-label">Garda Vetting Certificate</label>
@@ -216,8 +228,6 @@
                                     <input type="hidden" name="emp_occup_healthh" value="<?= $ed_emp['emp_occup_health'] ?>">
                                 <?php endif; ?>
                             </div>
-
-
                                 <div class="row mb-3">
                                 <label for="formFile" class="form-label">Work Permit</label>
                                 <input class="form-control" type="file" name="emp_work_permit" id="formFile"
@@ -229,6 +239,84 @@
                                     <input type="hidden" name="emp_work_permitt" value="<?= $ed_emp['emp_work_permit'] ?>">
                                 <?php endif; ?>
                             </div>
+                            <div class="row mb-3">
+                                <p><span class="text-danger h6">Note: </span>"If you want to change any file just uncheck the file and check again to update your file"</p>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="form-group col-md-3">
+                                    <label class="form-label">
+
+                                        <input type="checkbox" class="form-check-input" <?php if (!empty($ed_emp['emp_acls'])) {
+                                                                                            echo "checked";
+                                                                                        } ?> name="acls" value="ACLS"> ACLS
+                                    </label><br>
+
+                                    <div id="acls-upload" style="display: none;">
+                                        <input type="file" id="file_acls" name="emp_acls" data-parsley-max-file-size="2000" data-parsley-fileextension="jpg,JPEG,pdf,PDF,png,PNG,doc,docx"><br>
+                                    </div>
+                                    <?php if (!empty($ed_emp['emp_acls'])) : ?>
+                                        <a class="mb-3" href="<?= base_url('public/uploads/employee_attach/' . $ed_emp['emp_acls']) ?>" target="_blank">View Document</a>
+                                        <input type="hidden" name="emp_aclss" value="<?= $ed_emp['emp_acls'] ?>">
+                                    <?php endif; ?>
+                                </div>
+                                <div class="form-group col-md-3">
+
+                                    <label class="form-label">
+                                        <input type="checkbox" class="form-check-input" <?php if (!empty($ed_emp['emp_bcls'])) {
+                                                                                            echo "checked";
+                                                                                        } ?> name="bcls" value="BCLS"> BCLS
+                                    </label><br>
+
+                                    <div id="bcls-upload" style="display: none;">
+                                        <input type="file" name="emp_bcls" id="file_bcls" data-parsley-max-file-size="2000" data-parsley-fileextension="jpg,JPEG,pdf,PDF,png,PNG,doc,docx"><br>
+                                    </div>
+                                    <?php if (!empty($emp['ed_emp'])) : ?>
+                                        <a class="mb-3" href="<?= base_url('public/uploads/employee_attach/' . $ed_emp['emp_bcls']) ?>" target="_blank">View Document</a>
+                                        <input type="hidden" name="emp_bclss" value="<?= $ed_emp['emp_bcls'] ?>">
+                                    <?php endif; ?>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="form-label">
+                                        <input type="checkbox" class="form-check-input" <?php if (!empty($ed_emp['emp_bls'])) {
+                                                                                            echo "checked";
+                                                                                        } ?> name="bls" value="BLS"> BLS
+                                    </label><br>
+
+                                    <div id="bls-upload" style="display: none;">
+                                        <input type="file" name="emp_bls" id="file_bls" data-parsley-max-file-size="2000" data-parsley-fileextension="jpg,JPEG,pdf,PDF,png,PNG,doc,docx"><br>
+                                    </div>
+                                    <?php if (!empty($ed_emp['emp_bls'])) : ?>
+                                        <a class="mb-3" href="<?= base_url('public/uploads/employee_attach/' . $ed_emp['emp_bls']) ?>" target="_blank">View Document</a>
+                                        <input type="hidden" name="emp_blss" value="<?= $ed_emp['emp_bls'] ?>">
+                                    <?php endif; ?>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="form-label">
+                                        <input type="checkbox" class="form-check-input" <?php if (!empty($ed_emp['emp_atls'])) {
+                                                                                            echo "checked";
+                                                                                        } ?> name="atls" value="ATLS"> ATLS
+                                    </label><br>
+
+                                    <div id="atls-upload" style="display: none;">
+                                        <input type="file" name="emp_atls" id="file_atls" data-parsley-max-file-size="2000" data-parsley-fileextension="jpg,JPEG,pdf,PDF,png,PNG,doc,docx"><br>
+                                    </div>
+                                    <?php if (!empty($ed_emp['emp_atls'])) : ?>
+                                        <a class="mb-3" href="<?= base_url('public/uploads/employee_attach/' . $ed_emp['emp_atls']) ?>" target="_blank">View Document</a>
+                                        <input type="hidden" name="emp_atlss" value="<?= $ed_emp['emp_atls'] ?>">
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="formFile" class="form-label">Other Document</label>
+                                <input class="form-control" type="file" name="emp_otherDocs" id="formFile" data-parsley-max-file-size="2000" data-parsley-fileextension="jpg,JPEG,pdf,PDF,png,PNG,doc,docx" />
+                            </div>
+                            <div class="row mb-3">
+                                <?php if (!empty($ed_emp['emp_otherDocs'])) : ?>
+                                    <a class="mb-3" href="<?= base_url('public/uploads/employee_attach/' . $ed_emp['emp_otherDocs']) ?>" target="_blank">View Document</a>
+                                    <input type="hidden" name="emp_otherDocss" value="<?= $ed_emp['emp_otherDocs'] ?>">
+                                <?php endif; ?>
+                            </div>
+
 
 
                             <div style="float:right"> 

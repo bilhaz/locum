@@ -162,8 +162,13 @@
                                 <input class="form-control" type="file" name="emp_imc_cert" id="formFile"
                                     data-parsley-max-file-size="2000" data-parsley-fileextension="jpg,JPEG,pdf,PDF,png,PNG,doc,docx" required="" />
                             </div>
-
-
+                            <div class="row mb-3" id="gpIndemnity" style="<?php if (empty($emp['emp_gpIndemnity'])) {
+                                                                                echo "display: none;";
+                                                                            } ?>">
+                                <label for="formFile" class="form-label">GP Indemnity</label>
+                                <input type="file" name="emp_gpIndemnity" class="form-control" id="file_gpint" data-parsley-max-file-size="2000" data-parsley-fileextension="jpg,JPEG,pdf,PDF,png,PNG,doc,docx"><br>
+                            </div>
+                           
                             <div class="row mb-3">
                                 <label for="formFile" class="form-label">Garda Vetting Certificate</label>
                                 <input class="form-control" type="file" name="emp_gv_cert" id="formFile"
@@ -194,8 +199,53 @@
                                 <input class="form-control" type="file" name="emp_work_permit" id="formFile"
                                     data-parsley-max-file-size="2000" data-parsley-fileextension="jpg,JPEG,pdf,PDF,png,PNG,doc,docx" />
                             </div>
+                          
+                            <div class="row mb-3">
+                                <div class="form-group col-md-3">
+                                    <label class="form-label">
 
-                            <div style="float:right"> 
+                                        <input type="checkbox" class="form-check-input" name="acls" value="ACLS"> ACLS
+                                    </label><br>
+
+                                    <div id="acls-upload" style="display: none;">
+                                        <input type="file" id="file_acls" name="emp_acls" data-parsley-max-file-size="2000" data-parsley-fileextension="jpg,JPEG,pdf,PDF,png,PNG,doc,docx"><br>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+
+                                    <label class="form-label">
+                                        <input type="checkbox" class="form-check-input" name="bcls" value="BCLS"> BCLS
+                                    </label><br>
+
+                                    <div id="bcls-upload" style="display: none;">
+                                        <input type="file" name="emp_bcls" id="file_bcls" data-parsley-max-file-size="2000" data-parsley-fileextension="jpg,JPEG,pdf,PDF,png,PNG,doc,docx"><br>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="form-label">
+                                        <input type="checkbox" class="form-check-input" name="bls" value="BLS"> BLS
+                                    </label><br>
+
+                                    <div id="bls-upload" style="display: none;">
+                                        <input type="file" name="emp_bls" id="file_bls" data-parsley-max-file-size="2000" data-parsley-fileextension="jpg,JPEG,pdf,PDF,png,PNG,doc,docx"><br>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="form-label">
+                                        <input type="checkbox" class="form-check-input" name="atls" value="ATLS"> ATLS
+                                    </label><br>
+
+                                    <div id="atls-upload" style="display: none;">
+                                        <input type="file" name="emp_atls" id="file_atls" data-parsley-max-file-size="2000" data-parsley-fileextension="jpg,JPEG,pdf,PDF,png,PNG,doc,docx"><br>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="formFile" class="form-label">Other Document</label>
+                                <input class="form-control" type="file" name="emp_otherDocs" id="formFile" data-parsley-max-file-size="2000" data-parsley-fileextension="jpg,JPEG,pdf,PDF,png,PNG,doc,docx" />
+                            </div>
+
+                            <div class="float-end"> 
                                
                                 <a  id="payment-button" href="<?= base_url('backend/employees') ?>"
                                     class="btn btn-lg btn-dark text-light btn-block">
