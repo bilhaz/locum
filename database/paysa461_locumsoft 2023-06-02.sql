@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jun 01, 2023 at 12:19 PM
+-- Generation Time: Jun 01, 2023 at 10:07 PM
 -- Server version: 8.0.31
 -- PHP Version: 7.3.33
 
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `clients` (
   `cl_updated` datetime NOT NULL,
   PRIMARY KEY (`cl_id`),
   UNIQUE KEY `cl_cont_email` (`cl_cont_email`,`cl_usr`)
-) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `clients`
@@ -77,7 +77,8 @@ INSERT INTO `clients` (`cl_id`, `cl_reg_as`, `cl_h_name`, `cl_county`, `cl_eirco
 (20, '3', 'Longford Medical Centre', 'Co. Longford', 'N39 FT91', 'Margaret', 'doc.syedali@yahoo.com', 'lmcentre', '$2y$10$kxu7ZgqgDVgCjyjMNOrhYeYjKk94Q3/cuPAhCtp3B3WFlVntbXAZS', '0433331973', 'Medical Personnel', 'Dublin Road, Longford', '1', NULL, NULL, '2023-04-04 12:30:08', '2023-04-04 12:34:17'),
 (21, '1', 'Kildare/West Wicklow Mental Health', 'Kildare', 'R51 RX51', 'Vivien O\'Rouke', 'Vivien.orourke@hse.ie', 'Vivien Orourke ', '$2y$10$6jDE3d5Nmy0FdWkic5uDaOqddldnVJbNiOjyLkGdOOgN5.QephtNm', '045920603', 'Medical Manpower', 'St. Mary\'s, Craddockstown Road, Naas, Co. Kildare', '1', NULL, NULL, '2023-04-21 12:47:55', '2023-04-21 12:50:55'),
 (22, '3', 'Cavan Medical Practice', 'Cavan', 'H12 A9P2', 'Dr. Shamim Syed', 'cavanmedicalpractice@gmail.com', 'cavanmedicalpractice', '$2y$10$oe6GvhqMWB.zkyulHfbMTuv45rAgL0hyGHujAV1nbGuGgbRldj7xO', '0872351797', 'Doctor', '113 college street Cavan, Co. Cavan', '1', NULL, NULL, '2023-04-28 11:33:21', '2023-05-18 14:25:28'),
-(26, NULL, NULL, NULL, NULL, NULL, 'okashaali88@gmail.com', 'okashaali', '$2y$10$fnDQoLAGba0RIDj70GMqsuhNYJl4NysWd./K4z9K09iXxLi2xFhr.', NULL, NULL, NULL, '1', '', NULL, '2023-05-17 05:43:18', '2023-05-25 14:49:22');
+(26, NULL, NULL, NULL, NULL, NULL, 'okashaali88@gmail.com', 'okashaali', '$2y$10$fnDQoLAGba0RIDj70GMqsuhNYJl4NysWd./K4z9K09iXxLi2xFhr.', NULL, NULL, NULL, '1', '', NULL, '2023-05-17 05:43:18', '2023-05-25 14:49:22'),
+(27, NULL, NULL, NULL, NULL, NULL, 'okasha@lll.com', 'llllokasha', '$2y$10$z8u7zmQXGkCXuymFTaAvSemfU0.7wPsL5zpxviWEWH/ZJpyCrcmYu', NULL, NULL, NULL, '1', NULL, NULL, '2023-06-01 15:51:43', '2023-06-01 15:51:43');
 
 -- --------------------------------------------------------
 
@@ -103,6 +104,32 @@ INSERT INTO `cl_reg_cat` (`reg_cat_id`, `reg_cat_name`, `reg_cat_created`, `reg_
 (2, 'Private Hospital', '2023-01-24 07:43:30', '2023-02-17 12:32:14'),
 (3, 'GP Clinic', '2023-01-24 07:43:30', '2023-02-17 12:32:24'),
 (7, 'Nurse', '2023-05-18 13:32:53', '2023-05-30 11:33:53');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `email_logs`
+--
+
+DROP TABLE IF EXISTS `email_logs`;
+CREATE TABLE IF NOT EXISTS `email_logs` (
+  `em_id` int NOT NULL AUTO_INCREMENT,
+  `em_to` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `em_subject` varchar(500) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `em_body` varchar(2500) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `row_id` int NOT NULL,
+  `action_table` varchar(50) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `em_status` int NOT NULL COMMENT '"0" for Failed and "1" for sent',
+  `sent_at` datetime NOT NULL,
+  PRIMARY KEY (`em_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+--
+-- Dumping data for table `email_logs`
+--
+
+INSERT INTO `email_logs` (`em_id`, `em_to`, `em_subject`, `em_body`, `row_id`, `action_table`, `em_status`, `sent_at`) VALUES
+(1, 'okasha@lll.com', 'SRA Client Registration', '\"<p>Dear &nbsp;llllokasha Your account has been succesfully registered on our platform<\\/p><br>\\r\\n\\t\\t\\t\\t<p>Please Make sure to complete your client Profile when you login to <b>SRA Locum<\\/b> on this URL: http:\\/\\/localhost\\/locum\\/client\\/login<\\/p><br>\\r\\n\\t\\t\\t\\t<h3>Thank You<\\/h3>\"', 27, 'Employee', 0, '2023-06-01 15:51:43');
 
 -- --------------------------------------------------------
 
@@ -344,7 +371,7 @@ CREATE TABLE IF NOT EXISTS `notification` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=144 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=145 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `notification`
@@ -492,7 +519,8 @@ INSERT INTO `notification` (`id`, `ord_id`, `link`, `emp_id`, `usr_type`, `notif
 (140, 242, 'employee/ord-view', 53, 'employee', 'Locum Payment Paid', '0', '2023-05-31 17:43:41', '2023-05-31 17:43:41'),
 (141, 242, 'client/ord-status', 3, 'client', 'Locum Payment received', '0', '2023-05-31 17:43:45', '2023-05-31 17:43:45'),
 (142, 242, 'employee/ord-view', 53, 'employee', 'Locum Payment Paid', '0', '2023-05-31 17:47:43', '2023-05-31 17:47:43'),
-(143, 242, 'client/ord-status', 3, 'client', 'Locum Payment received', '0', '2023-05-31 17:47:46', '2023-05-31 17:47:46');
+(143, 242, 'client/ord-status', 3, 'client', 'Locum Payment received', '0', '2023-05-31 17:47:46', '2023-05-31 17:47:46'),
+(144, 242, 'client/ord-status', 3, 'client', 'Locum Confirmation', '0', '2023-06-01 11:28:28', '2023-06-01 11:28:28');
 
 -- --------------------------------------------------------
 
@@ -712,7 +740,7 @@ INSERT INTO `orders` (`ord_id`, `ord_ref_no`, `ord_speciality`, `ord_grade`, `cl
 INSERT INTO `orders` (`ord_id`, `ord_ref_no`, `ord_speciality`, `ord_grade`, `cl_id`, `emp_id`, `ord_required_from`, `ord_required_to`, `ord_datetime_detail`, `ord_process_date`, `ord_process_details_from`, `ord_process_details_to`, `ord_prosdatetime_detail`, `ord_confirmation_date`, `ord_invoice_id`, `ord_normal_hrs`, `ord_normal_hrs_rt`, `nh_p_type`, `ord_on_call_hrs`, `ord_ocall_rt`, `oc_p_type`, `ord_off_site_hrs`, `ord_osite_rt`, `os_p_type`, `ord_bh_week_hrs`, `ord_bhw_rt`, `bhw_p_type`, `ord_Hnormal_hrs_rt`, `ord_Hocall_rt`, `ord_Hosite_rt`, `ord_Hbhw_rt`, `ord_total_hrs`, `ord_approx_cost`, `ord_hosp_earn`, `ord_pay_to_dr`, `ord_paying_to_dr`, `ord_admin_charges`, `ord_adminchrg_intern`, `ord_diff_profit_admin`, `ord_time_sheet_rcvd`, `ord_time_sheet_mode`, `ord_time_sheet_process`, `ord_time_sheet_approved`, `ord_timesheetSign`, `ord_comment1`, `ord_invoice_refer`, `ord_invoice_date`, `ord_invoice_by`, `vat_rate`, `ord_vat_sale`, `ord_vat_purch`, `ord_vat_save`, `ord_sage_refer_no`, `ord_paymnt_rcvd_date`, `ord_pay_to_dr_date`, `ord_case_status`, `ord_payment_status`, `ord_emp_pay_status`, `ord_assignment`, `ord_comment2`, `ord_status`, `ord_cancel_bdr`, `ord_dr_cremarks`, `ord_cancel_bcl`, `ord_cl_cremarks`, `ord_advrtise`, `ord_created`, `ord_updated`) VALUES
 (130, 'SRAL-3493-Y23', '2', '2', 1, 42, '2023-03-13 10:23:00', '2023-03-16 10:23:00', 'Mon 20th Feb - Fri 17th Mar 2023 (9am - 5pm)\r\n', '2023-01-31', '2023-03-13 10:23:00', '2023-03-16 10:23:00', 'Mon 20th Feb - Fri 17th Mar 2023 (9am - 5pm)\r\n', '2023-01-31', 'SRAL-0551-Y23', '32', NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', '', '', '32.00', '90', '2880', '90', '2880.00', '7', '201.60', '201.60', '2023-03-22', 'email', '2023-03-23', 'Approved', NULL, '', 'Mon 13th - Thurs 16th March 2023 (9am - 5pm)', '2023-03-23', 'HS', NULL, '708.77', '0', '708.77', 'SRA-43530', NULL, '2023-03-24', 'Pending', 'Paid', NULL, '', '', '4', 0, NULL, 0, NULL, 0, '2023-03-24 10:26:18', '2023-03-24 10:50:06'),
 (131, 'SRAL-3519-Y23', '4', '4', 10, 53, '2023-03-13 10:31:00', '2023-03-19 10:31:00', 'Thurs 9th Mar – Mon 10th July 2023 (8am – 5pm), Plus On Calls', '2023-02-20', '2023-03-13 10:31:00', '2023-03-19 10:31:00', 'Thurs 9th Mar – Mon 10th July 2023 (8am – 5pm), Plus On Calls', '2023-02-20', 'SRAL-0550-Y23', '78', NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', '', '', '78.00', '80', '5490', '80', '5490', '7', '384.30', '384.30', '2023-03-22', 'email', '2023-03-23', 'Approved', NULL, '', 'Hours: 63.00, Mon 13th - Sun 19th March 2023 (8am - 5pm), Offsite Hours: 15.00, Wed 15th March 2023 (5pm - 8am)', '2023-03-23', 'HS', NULL, '1351.09', '0', '1351.09', 'SRA-43529', '2023-04-28', '2023-03-24', 'Closed', 'Paid', NULL, '', '', '4', 0, NULL, 0, NULL, 0, '2023-03-24 10:35:55', '2023-05-02 15:42:16'),
-(132, '', '2', '5', 16, 0, '2023-03-25 17:20:00', '2023-08-31 17:20:00', '25th Mar to 6 months onward', NULL, '2023-03-25 17:20:00', '2023-04-20 17:47:00', '25th Mar to 6 months onward', NULL, '', '', NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '', NULL, '', NULL, '', NULL, '', '', NULL, '', NULL, '', '', '', '', NULL, NULL, '', '', NULL, '', '', '1', 0, NULL, 0, NULL, 0, '2023-03-24 12:21:01', '2023-04-20 10:40:22'),
+(132, '', '2', '5', 16, 0, '2023-03-25 17:20:00', '2023-08-31 17:20:00', '25th Mar, to 6 months onward', NULL, '2023-03-25 17:20:00', '2023-04-20 17:47:00', '25th Mar, to 6 months onward', NULL, '', '', NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '', NULL, '', NULL, '', NULL, '', '', NULL, '', NULL, '', '', '', '', NULL, NULL, '', '', NULL, '', '', '1', 0, NULL, 0, NULL, 0, '2023-03-24 12:21:01', '2023-04-20 10:40:22'),
 (133, 'SRAL-3581-Y23', '2', '4', 16, 15, '2023-03-25 17:21:00', '2023-08-31 17:46:00', '25th Mar to 6 months onward', '2023-03-27', '2023-04-03 17:21:00', '2023-04-07 17:45:00', 'Mon 3rd - Fri 7th Apr 2023 (9am - 5pm)', '2023-03-28', 'SRAL-0605-Y23', '37.5', NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', '', '', '37.50', '65', '2437.5', '65', '2437.50', '7', '170.63', '170.63', '2023-04-19', 'whatsapp', '2023-04-19', 'Approved', NULL, 'Lunch Breaks Deducted (2.5hrs)', 'Mon 3rd - Fri 7th Apr 2023 (9am - 5pm)', '2023-04-19', 'HS', NULL, '599.87', '0', '599.87', 'SRA-43604', NULL, '2023-04-21', 'Pending', 'Paid', NULL, '', '', '3', 0, NULL, 0, NULL, 0, '2023-03-24 12:21:49', '2023-04-27 11:45:23'),
 (134, 'SRAL-3566-Y23', '2', '2', 11, 1, '2023-04-10 13:21:00', '2023-04-14 13:21:00', 'Tues 11th  (9am) -  (4pm) Fri 14th Apr 2023', '2023-03-24', '2023-04-10 13:22:00', '2023-04-14 13:22:00', 'Tues 11th  (9am) -  (4pm) Fri 14th Apr 2023', '2023-03-24', 'SRAL-0602-Y23', '72', NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', '', '', '72.00', '100', '6640', '100', '6640', '7', '464.80', '464.80', '2023-04-19', 'whatsapp', '2023-04-19', 'Approved', NULL, '', 'Consultant Physician (Onsite) Dates, Mon 10th April 2023 (12am – 2am & 6am - 6pm), Tues 11th & Wed 12th April 2023 (8am - 6pm),  Thurs 13th April 2023 (8am – 2am), Fri 14th April 2023 (6am - 6pm), Consultant Physician (Offsite) Dates, Mon 10th & Fri 14th April 2023 (2am - 6am)', '2023-04-19', 'HS', NULL, '1634.104', '0', '1634.10', 'SRA-43601', NULL, NULL, 'Pending', 'Pending', NULL, '', '', '3', 0, NULL, 0, NULL, 0, '2023-03-24 13:23:00', '2023-04-27 11:36:53'),
 (135, 'SRAL-3567-Y23', '2', '4', 3, 15, '2023-03-25 15:31:00', '2023-03-25 15:31:00', 'Sat 25th Mar 2023 (9am - 10pm)', '2023-03-24', '2023-03-25 15:31:00', '2023-03-25 15:31:00', 'Sat 25th Mar 2023 (9am - 10pm)', '2023-03-24', 'SRAL-0559-Y23', '13', NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', '', '', '13.00', '70', '910', '70', '910.00', '7', '63.70', '63.70', '2023-03-27', 'whatsapp', '2023-03-28', 'Approved', NULL, '', 'Sat 25th March 2023 (9am – 10pm)', '2023-03-28', 'HS', NULL, '223.95', '0', '223.95', 'SRA-43538', NULL, '2023-03-31', 'Pending', 'Paid', NULL, '', '', '3', 0, NULL, 0, NULL, 0, '2023-03-24 15:32:07', '2023-04-14 10:52:58'),
@@ -820,7 +848,7 @@ INSERT INTO `orders` (`ord_id`, `ord_ref_no`, `ord_speciality`, `ord_grade`, `cl
 (239, NULL, '1', '4', 5, NULL, '2023-05-26 01:30:00', '2023-05-19 13:30:00', 'jhgjgkj35\r\n', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', 0, NULL, 0, NULL, 0, '2023-05-19 15:00:02', '2023-05-25 11:20:37'),
 (240, NULL, '1', '4', 5, NULL, '2023-06-03 12:57:00', '2023-07-12 12:57:00', 'sadfghjk', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', 0, NULL, 0, NULL, 0, '2023-05-24 08:57:37', '2023-05-27 14:34:58'),
 (241, '343567890', '2', '4', 5, 3, '2023-05-11 13:04:00', '2023-06-27 13:04:00', '23456dsfghj', '2023-05-16', '2023-05-19 15:26:00', '2023-05-31 15:27:00', 'rtu', '2023-05-11', 'etryuio', '10', '10', '1', '10', '10', '2', '10', '10', '1', '10', '10', '1', '', '', '', '', '40.00', '', '3456', '234', '400', '7', '345', 'r678', '2023-05-09', 'online', '2023-05-11', 'Sent_for_verification', '29/05/2023, 10:23:16 am', '', '67vhn', '2023-05-24', '567890', '$v_ordr[\'vat_rate\']', '3456', '34567', 'NaN', '876543', '2023-05-11', '2023-05-12', '', 'Paid', 'Due', '', '', '4', 0, NULL, 0, NULL, 1, '2023-05-24 09:04:40', '2023-05-29 06:23:29'),
-(242, 'SRA-L-23876', '4', '2', 3, 53, '2023-05-16 15:29:00', '2023-06-01 15:29:00', '567', '2023-05-26', '2023-05-16 15:30:00', '2023-05-20 15:30:00', '678', '2023-05-31', '123454', '10', '10', '1', '10', '10', '2', '0', '0', '', '0', '0', '', '20', '20', '0', '0', '20.00', NULL, '428', '150', '200', '7', '29.96', '257.96', '2023-05-31', 'fax', '2023-05-31', 'Received', NULL, NULL, '21345rffcgj', '2023-05-31', 'ak', '23', '98.44', '34.50', '63.94', '234567', '2023-05-31', '2023-05-31', NULL, 'Rceived', 'Paid', NULL, NULL, '5', 0, NULL, 0, NULL, 0, '2023-05-26 11:29:16', '2023-05-31 17:47:38'),
+(242, 'SRA-L-23876', '4', '2', 3, 53, '2023-05-16 15:29:00', '2023-06-01 15:29:00', '567', '2023-05-26', '2023-05-16 15:30:00', '2023-05-20 15:30:00', '678', '2023-05-31', '123454', '10', '10', '1', '10', '10', '2', '0', '0', '', '0', '0', '', '20', '20', '0', '0', '20.00', NULL, '428', '150', '200', '7', '29.96', '257.96', '2023-05-31', 'fax', '2023-05-31', 'Received', NULL, NULL, '21345rffcgj', '2023-05-31', 'ak', '23', '98.44', '34.50', '63.94', '234567', '2023-05-31', '2023-05-31', NULL, 'Rceived', 'Paid', NULL, NULL, '5', 0, NULL, 0, NULL, 0, '2023-05-26 11:29:16', '2023-06-01 14:03:38'),
 (243, NULL, '3', '2', 3, NULL, '2023-05-24 22:05:00', '2023-06-30 22:05:00', '34566gfds', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 0, NULL, 0, '2023-05-31 18:05:52', '2023-05-31 18:05:52');
 
 -- --------------------------------------------------------
@@ -844,7 +872,7 @@ CREATE TABLE IF NOT EXISTS `sra_logs` (
   `event_performed` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
   `log_date` datetime NOT NULL,
   PRIMARY KEY (`log_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=150 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=153 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- Dumping data for table `sra_logs`
@@ -1000,7 +1028,10 @@ INSERT INTO `sra_logs` (`log_id`, `change_row_id`, `adm_id`, `ip_address`, `acti
 (146, 242, 2, '::1', 'Orders', '{\"ord_invoice_id\":\"123454\",\"ord_invoice_date\":\"2023-05-31\",\"ord_invoice_by\":\"ak\",\"ord_sage_refer_no\":\"234567\",\"ord_invoice_refer\":\"21345rffcgj\",\"ord_paymnt_rcvd_date\":\"2023-05-31\",\"ord_payment_status\":\"Rceived\",\"ord_pay_to_dr_date\":\"2023-05-31\",\"ord_emp_pay_status\":\"Paid\",\"ord_comment2\":\"\"}', 0, 0, 0, 0, 'Order Step 5 Updated', '2023-05-31 17:43:36'),
 (147, 242, 2, '::1', 'Orders', '{\"ord_invoice_id\":\"123454\",\"ord_invoice_date\":\"2023-05-31\",\"ord_invoice_by\":\"ak\",\"ord_sage_refer_no\":\"234567\",\"ord_invoice_refer\":\"21345rffcgj\",\"ord_paymnt_rcvd_date\":\"2023-05-31\",\"ord_payment_status\":\"Rceived\",\"ord_pay_to_dr_date\":\"2023-05-31\",\"ord_emp_pay_status\":\"Paid\",\"ord_comment2\":\"\"}', 0, 0, 0, 0, 'Order Step 5 Updated', '2023-05-31 17:47:38'),
 (148, 3, 2, '::1', 'Users', '\"Password\"', 0, 0, 0, 0, 'Change Password for Backend User', '2023-05-31 17:56:06'),
-(149, 243, 2, '::1', 'Orders', '{\"cl_id\":\"3\",\"ord_speciality\":\"3\",\"ord_grade\":\"2\",\"ord_required_from\":\"2023-05-24T22:05\",\"ord_required_to\":\"2023-06-30T22:05\",\"ord_datetime_detail\":\"34566gfds\"}', 0, 0, 0, 0, 'New Order Step 1 Completed', '2023-05-31 18:05:52');
+(149, 243, 2, '::1', 'Orders', '{\"cl_id\":\"3\",\"ord_speciality\":\"3\",\"ord_grade\":\"2\",\"ord_required_from\":\"2023-05-24T22:05\",\"ord_required_to\":\"2023-06-30T22:05\",\"ord_datetime_detail\":\"34566gfds\"}', 0, 0, 0, 0, 'New Order Step 1 Completed', '2023-05-31 18:05:52'),
+(150, 242, 2, '::1', 'Orders', '\"3\"', 0, 0, 1, 0, 'Order Status Updated and Notified', '2023-06-01 11:28:28'),
+(151, 242, 2, '::1', 'Orders', '{\"ord_ref_no\":\"SRA-L-23876\",\"ord_cancel_bcl\":\"\",\"ord_cancel_bdr\":\"\",\"ord_confirmation_date\":\"2023-05-31\",\"cl_id\":\"3\",\"ord_speciality\":\"4\",\"ord_grade\":\"2\",\"emp_id\":\"53\",\"ord_required_from\":\"2023-05-16T15:29\",\"ord_required_to\":\"2023-06-01T15:29\",\"ord_datetime_detail\":\"567\",\"ord_process_details_from\":\"2023-05-16T15:30\",\"ord_process_details_to\":\"2023-05-20T15:30\",\"ord_process_date\":\"2023-05-26\",\"ord_prosdatetime_detail\":\"678\",\"ord_normal_hrs\":\"10\",\"ord_Hnormal_hrs_rt\":\"20\",\"ord_normal_hrs_rt\":\"10\",\"nh_p_type\":\"1\",\"ord_on_call_hrs\":\"10\",\"ord_Hocall_rt\":\"20\",\"ord_ocall_rt\":\"10\",\"oc_p_type\":\"2\",\"ord_off_site_hrs\":\"0\",\"ord_Hosite_rt\":\"0\",\"ord_osite_rt\":\"0\",\"os_p_type\":\"\",\"ord_bh_week_hrs\":\"0\",\"ord_Hbhw_rt\":\"0\",\"ord_bhw_rt\":\"0\",\"bhw_p_type\":\"\",\"ord_total_hrs\":\"20.00\",\"ord_pay_to_dr\":\"150\",\"ord_paying_to_dr\":\"200\",\"ord_admin_charges\":\"7\",\"ord_adminchrg_intern\":\"29.96\",\"ord_hosp_earn\":\"428\",\"ord_diff_profit_admin\":\"257.96\",\"vat_rate\":\"23\",\"ord_vat_sale\":\"98.44\",\"ord_vat_purch\":\"34.50\",\"ord_vat_save\":\"63.94\",\"ord_time_sheet_rcvd\":\"2023-05-31\",\"ord_time_sheet_mode\":\"fax\",\"ord_time_sheet_process\":\"2023-05-31\",\"ord_time_sheet_approved\":\"Received\",\"ord_comment1\":\"\"}', 0, 0, 0, 0, 'Order Step 4 Updated', '2023-06-01 14:03:38'),
+(152, 27, 2, '::1', 'Clients', '{\"cl_cont_email\":\"okasha@lll.com\",\"cl_usr\":\"llllokasha\",\"cl_cont_pwd\":\"55667788\",\"cnfrm_pwd\":\"55667788\"}', 0, 0, 0, 0, 'New Client Added', '2023-06-01 15:51:43');
 
 -- --------------------------------------------------------
 
