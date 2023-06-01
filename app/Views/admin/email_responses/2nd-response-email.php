@@ -36,7 +36,16 @@
 </tr> 
 <tr>
 <th style="border: 1px solid black;"><strong>Rate:</strong></th>
-<td style="border: 1px solid black;"> <b>Normal: </b><?= $v_ordr['ord_normal_hrs_rt'] .'<br>'. '<b>OnCall: </b>'. $v_ordr['ord_ocall_rt'].'<br>'.'<b>OffSite: </b>'.$v_ordr['ord_osite_rt'].'<br>'.'<b>Weekend: </b>'.$v_ordr['ord_bhw_rt']?></td>
+<td style="border: 1px solid black;"><b>Normal:</b> &euro;<?=  $v_ordr['ord_normal_hrs_rt'] ?>&nbsp;<?php if($v_ordr['nh_p_type'] == 1): echo "/hr"; elseif($v_ordr['nh_p_type'] == 2): echo "/day"; else: echo "/halfday"; endif; ?><br>
+                                            <?php if($v_ordr['ord_ocall_rt'] > 0): ?>
+                                            <b>OnCall:</b> &euro;<?= $v_ordr['ord_ocall_rt']?>&nbsp;<?php if($v_ordr['oc_p_type'] == 1): echo "/hr"; elseif($v_ordr['oc_p_type'] == 2): echo "/day"; else: echo "/halfday"; endif; ?> <br>
+                                            <?php endif; ?>
+                                            <?php if($v_ordr['ord_osite_rt'] > 0): ?>
+                                            <b>OffSite:</b> &euro;<?= $v_ordr['ord_osite_rt'] ?>&nbsp;<?php if($v_ordr['os_p_type'] == 1): echo "/hr"; elseif($v_ordr['os_p_type'] == 2): echo "/day"; else: echo "/halfday"; endif; ?><br>
+                                            <?php endif; ?>
+                                            <?php if($v_ordr['ord_bhw_rt'] > 0): ?>
+                                            <b>Weekend:</b> &euro;<?= $v_ordr['ord_bhw_rt'] ?>&nbsp;<?php if($v_ordr['bhw_p_type'] == 1): echo "/hr"; elseif($v_ordr['bhw_p_type'] == 2): echo "/day"; else: echo "/halfday"; endif; ?><br></td>
+                                            <?php endif; ?>
 </tr>
 <tr>
 <th style="border: 1px solid black;"><strong>Admin Charges:</strong></th>

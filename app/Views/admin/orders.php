@@ -160,7 +160,7 @@
                                                         <span class="badge chart-color120">Ended</span><br>
                                                         <span><a href="<?= base_url("backend/contract/" . encryptIt($row['ord_id'])) ?>" target="_blank"><?= $row['ord_ref_no'] ?></a></span>
                                                     <?php else : ?>
-                                                        <span class="badge bg-success">Paid</span><br>
+                                                        <span class="badge chart-color135">Paid</span><br>
                                                         <span><a href="<?= base_url("backend/contract/" . encryptIt($row['ord_id'])) ?>" target="_blank"><?= $row['ord_ref_no'] ?></a></span>
                                                     <?php endif; ?>
                                                 <?php endif; ?>

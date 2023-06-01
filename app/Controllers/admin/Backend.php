@@ -78,6 +78,7 @@ class Backend extends BEBaseController
 		'email-4' => ['super_admin', 'admin', 'user'],
 		'contract' => ['super_admin', 'admin', 'user'],
 		'pending_order' => ['super_admin', 'admin', 'user'],
+		'paid-order' => ['super_admin', 'admin', 'user'],
 		'processed_order' => ['super_admin', 'admin', 'user'],
 		'cancelled_order' => ['super_admin', 'admin', 'user'],
 		'confirm_order' => ['super_admin', 'admin', 'user'],
@@ -200,11 +201,12 @@ class Backend extends BEBaseController
 		$this_month = date('Y-m-d', strtotime('first day of this month'));
 		$this_year = date('Y-m-d', strtotime('first day of January this year'));
 		$model = new ordersModel();
-		$data['o_pen'] = $model->where('ord_status', '1')->where('ord_required_to >=', $dt)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
+		$data['o_pen'] = $model->where('ord_status', '1')->where('ord_cancel_bcl', '0')->where('ord_required_to >=', $dt)->where('ord_cancel_bdr', '0')->countAllResults();
 		$data['o_pro'] = $model->where('ord_status', '2')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
 		$data['o_con'] = $model->where('ord_status', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
 		$data['o_end'] = $model->where('ord_status', '4')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
-		$data['o_exp'] = $model->where('ord_required_to <=', $dt)->where('ord_status', '1')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
+		$data['o_paid'] = $model->where('ord_status', '5')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
+		$data['o_exp'] = $model->where('ord_required_to <', $dt)->where('ord_status', '1')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
 		$data['o_canc'] = $model->where('ord_cancel_bcl', '1')->orWhere('ord_cancel_bdr', '1')->countAllResults();
 		// Confirm Order Statistics
 		$data['today'] = $model->where('ord_status', '3')->where('DATE(ord_updated)', $today)->countAllResults();
@@ -1864,7 +1866,27 @@ class Backend extends BEBaseController
 
 		$data = [];
 		helper(['form']);
+		$timestamp = \time();
+		$today = date('Y-m-d');
+		$this_month = date('Y-m-d', strtotime('first day of this month'));
+		$this_year = date('Y-m-d', strtotime('first day of January this year'));
+		$dt = date('Y-m-d H:i:s', $timestamp);
+		helper(['form']);
 		$model = new ordersModel();
+		// Daily records
+		$dailyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '2')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated)', $today)->orderBy('ord_updated', 'DESC')->findAll();
+		
+		// Monthly breakdown
+		$monthlyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '2')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated) >=', $this_month)->orderBy('ord_updated', 'DESC')->findAll();
+
+		// Yearly breakdown
+		$yearlyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '2')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated) >=', $this_year)->orderBy('ord_updated', 'DESC')->findAll();
+		
+
+		$data['daily'] = $dailyData;
+		$data['monthly'] = $monthlyData;
+		$data['yearly'] = $yearlyData;
+		
 		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '2')->where('ord_cancel_bcl', '0')->Where('ord_cancel_bdr', '0')->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('admin/processed_order', $data);
@@ -1885,28 +1907,20 @@ class Backend extends BEBaseController
 
 		$data = [];
 		$timestamp = \time();
+		$today = date('Y-m-d');
+		$this_month = date('Y-m-d', strtotime('first day of this month'));
+		$this_year = date('Y-m-d', strtotime('first day of January this year'));
 		$dt = date('Y-m-d H:i:s', $timestamp);
 		helper(['form']);
 		$model = new ordersModel();
-		$dailyData = $model->select("DATE(ord_created) AS date")
-			->where('ord_status', '1')
-			->where('ord_required_to >=', $dt)
-			->groupBy('DATE(ord_created)')
-			->findAll();
-
+		// Daily records
+		$dailyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '1')->where('ord_required_to >=', $dt)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated)', $today)->orderBy('ord_updated', 'DESC')->findAll();
+		
 		// Monthly breakdown
-		$monthlyData = $model->select("DATE_FORMAT(ord_created, '%Y-%m') AS month")
-			->where('ord_status', '1')
-			->where('ord_required_to >=', $dt)
-			->groupBy("DATE_FORMAT(ord_created, '%Y-%m')")
-			->findAll();
+		$monthlyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '1')->where('ord_required_to >=', $dt)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated) >=', $this_month)->orderBy('ord_updated', 'DESC')->findAll();
 
 		// Yearly breakdown
-		$yearlyData = $model->select("YEAR(ord_created) AS year")
-			->where('ord_status', '1')
-			->where('ord_required_to >=', $dt)
-			->groupBy('YEAR(ord_created)')
-			->findAll();
+		$yearlyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '1')->where('ord_required_to >=', $dt)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated) >=', $this_year)->orderBy('ord_updated', 'DESC')->findAll();
 
 		$data['daily'] = $dailyData;
 		$data['monthly'] = $monthlyData;
@@ -1917,34 +1931,90 @@ class Backend extends BEBaseController
 		return $this->LoadView('admin/pending_order', $data);
 	}
 
-	// public function closed_order()
-	// {
-
-	// 	$data = [];
-	// 	helper(['form']);
-	// 	$model = new ordersModel();
-	// 	$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id')->Join('employee', 'employee.emp_id = orders.emp_id')->where('ord_case_status', 'Closed')->orderBy('ord_updated', 'DESC')->findAll();
-
-	// 	return $this->LoadView('admin/closed_order', $data);
-	// }
 
 	public function ended_order()
 	{
 
+		$timestamp = \time();
 		$data = [];
 		helper(['form']);
+		$today = date('Y-m-d');
+		$this_month = date('Y-m-d', strtotime('first day of this month'));
+		$this_year = date('Y-m-d', strtotime('first day of January this year'));
+		$dt = date('Y-m-d H:i:s', $timestamp);
 		$model = new ordersModel();
+		// Daily records
+		$dailyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '4')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated)', $today)->orderBy('ord_updated', 'DESC')->findAll();
+		
+		// Monthly breakdown
+		$monthlyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '4')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated) >=', $this_month)->orderBy('ord_updated', 'DESC')->findAll();
+
+		// Yearly breakdown
+		$yearlyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '4')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated) >=', $this_year)->orderBy('ord_updated', 'DESC')->findAll();
+		
+
+		$data['daily'] = $dailyData;
+		$data['monthly'] = $monthlyData;
+		$data['yearly'] = $yearlyData;
+
 		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '4')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('admin/ended_order', $data);
 	}
+	public function paid_order()
+	{
+
+		$timestamp = \time();
+		$data = [];
+		helper(['form']);
+		$today = date('Y-m-d');
+		$this_month = date('Y-m-d', strtotime('first day of this month'));
+		$this_year = date('Y-m-d', strtotime('first day of January this year'));
+		$dt = date('Y-m-d H:i:s', $timestamp);
+		$model = new ordersModel();
+		// Daily records
+		$dailyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '5')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated)', $today)->orderBy('ord_updated', 'DESC')->findAll();
+		
+		// Monthly breakdown
+		$monthlyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '5')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated) >=', $this_month)->orderBy('ord_updated', 'DESC')->findAll();
+
+		// Yearly breakdown
+		$yearlyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '5')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated) >=', $this_year)->orderBy('ord_updated', 'DESC')->findAll();
+		
+
+		$data['daily'] = $dailyData;
+		$data['monthly'] = $monthlyData;
+		$data['yearly'] = $yearlyData;
+
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '5')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->orderBy('ord_updated', 'DESC')->findAll();
+
+		return $this->LoadView('admin/paid_order', $data);
+	}
 
 	public function confirm_order()
 	{
-
+		$timestamp = \time();
 		$data = [];
 		helper(['form']);
+		$today = date('Y-m-d');
+		$this_month = date('Y-m-d', strtotime('first day of this month'));
+		$this_year = date('Y-m-d', strtotime('first day of January this year'));
+		$dt = date('Y-m-d H:i:s', $timestamp);
 		$model = new ordersModel();
+		// Daily records
+		$dailyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated)', $today)->orderBy('ord_updated', 'DESC')->findAll();
+		
+		// Monthly breakdown
+		$monthlyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated) >=', $this_month)->orderBy('ord_updated', 'DESC')->findAll();
+
+		// Yearly breakdown
+		$yearlyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated) >=', $this_year)->orderBy('ord_updated', 'DESC')->findAll();
+		
+
+		$data['daily'] = $dailyData;
+		$data['monthly'] = $monthlyData;
+		$data['yearly'] = $yearlyData;
+
 		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('admin/confirm_order', $data);
@@ -1958,7 +2028,7 @@ class Backend extends BEBaseController
 		$dt = date('Y-m-d H:i:s', $timestamp);
 		helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_required_to <=', $dt)->where('ord_status', '1')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_required_to <', $dt)->where('ord_status', '1')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('admin/expired_orders', $data);
 	}
@@ -2991,7 +3061,7 @@ class Backend extends BEBaseController
 		$data['v_ordr'] = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $id)->first();
 		$to = $data['v_ordr']['cl_cont_email'];
 		$cc = '';
-		$subject = 'SRAL | Your Order is being Processed ' . $data['v_ordr']['spec_name'];
+		$subject = 'SRAL | Your Order is being Processed |' . $data['v_ordr']['spec_name'];
 		$message = $this->LoadView('admin/email_responses/1st-response-email', $data);
 
 
@@ -3179,7 +3249,7 @@ class Backend extends BEBaseController
 		$to = $data['v_ordr']['cl_cont_email'];
 		$to2 = $data['v_ordr']['emp_email'];
 		$cc = 'sra@sralocum.com';
-		$subject = 'SRA-Locum Process';
+		$subject = 'SRA-Locum Process |'.$data['v_ordr']['emp_fname'].' '.$data['v_ordr']['emp_lname'] .' | '.$data['v_ordr']['spec_name'] ;
 		$message = $this->LoadView('admin/email_responses/2nd-response-email', $data);
 
 		if ($this->request->getMethod() == 'post') {
@@ -3368,7 +3438,7 @@ class Backend extends BEBaseController
 		$cc = 'sra@sralocum.com';
 		$subject = 'SRA-Locum Confirmation';
 		$message = $this->LoadView('admin/email_responses/3rd-response-email', $data);
-
+		
 		if ($this->request->getMethod() == 'post') {
 
 			// logs
@@ -3405,6 +3475,7 @@ class Backend extends BEBaseController
 			];
 
 			$Nmodel->save($newData2);
+			$Nmodel->save($newData3);
 			$omodel->update($id, $newData);
 			$session = session();
 			if (sendEmail($to, $cc, $subject, $message)) {

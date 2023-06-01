@@ -70,6 +70,7 @@ $routes->match(['get' , 'post'], 'backend/order-publish/(:any)', 'admin\Backend:
 $routes->match(['get' , 'post'], 'backend/order_edit/(:any)', 'admin\Backend::order_edit/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/order_view/(:any)', 'admin\Backend::order_view/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/pending_order', 'admin\Backend::pending_order' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'backend/paid-order', 'admin\Backend::paid_order' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/processed_order', 'admin\Backend::processed_order' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/cancelled_order', 'admin\Backend::cancelled_order' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/closed_order', 'admin\Backend::closed_order' ,['filter' => 'B_auth']);

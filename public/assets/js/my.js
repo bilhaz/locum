@@ -237,6 +237,51 @@ $(document).ready(function () {
             
     });
 });
+$(document).ready(function () {
+    $('#this_month')
+    .dataTable({
+        responsive: true,
+        order: false,
+        columnDefs: [
+            {
+                orderable: true,
+                targets: [0],
+            }
+            
+        ]
+            
+    });
+});
+$(document).ready(function () {
+    $('#this_year')
+    .dataTable({
+        responsive: true,
+        order: false,
+        columnDefs: [
+            {
+                orderable: true,
+                targets: [0],
+            }
+            
+        ]
+            
+    });
+});
+$(document).ready(function () {
+    $('#all_year')
+    .dataTable({
+        responsive: true,
+        order: false,
+        columnDefs: [
+            {
+                orderable: true,
+                targets: [0],
+            }
+            
+        ]
+            
+    });
+});
 
 // Employee profile Script
 $(document).ready(function() {
@@ -373,3 +418,4 @@ $(document).ready(function() {
       }
     });
   }
+ 

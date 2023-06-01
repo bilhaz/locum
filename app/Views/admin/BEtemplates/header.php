@@ -16,9 +16,7 @@
     <link rel="stylesheet" href="<?= base_url('public/assets/css/main.css') ?>">
     <link rel="stylesheet" href="https://parsleyjs.org/src/parsley.css">
 
-    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
     <script src="<?= base_url('public/assets/bundles/libscripts.bundle.js') ?>"></script>
-    <!-- <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script> -->
     <script src="<?= base_url('public/assets/pushjs/push.min.js') ?>"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.min.js" integrity="sha512-eyHL1atYNycXNXZMDndxrDhNAegH2BDWt1TmkXJPoGf1WLlNYt08CSjkqF5lnCRmdm3IrkHid8s2jOUY4NIZVQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
@@ -137,6 +135,8 @@
                                                 <li class="nav-item"><a class="nav-link" href="<?= base_url('backend/processed_order') ?>"><i class="fa fa-list-ul"></i>Processed Orders</a></li>
                                                 <li class="nav-item"><a class="nav-link" href="<?= base_url('backend/confirm_order') ?>"><i class="fa fa-list-ul"></i>Confirmed Orders</a></li>
                                                 <li class="nav-item"><a class="nav-link" href="<?= base_url('backend/ended_order') ?>"><i class="fa fa-list-ul"></i>Ended Orders</a></li>
+                                                <li class="nav-item"><a class="nav-link" href="<?= base_url('backend/paid-order') ?>"><i class="fa fa-list-ul"></i>Paid Orders</a></li>
+                                                <li class="nav-item"><a class="nav-link" href="<?= base_url('backend/cancelled_order') ?>"><i class="fa fa-list-ul"></i>Cancelled Orders</a></li>
                                                 <li class="nav-item"><a class="nav-link" href="<?= base_url('backend/expired-orders') ?>"><i class="fa fa-list-ul"></i>Expired Orders</a></li>
                                             </ul>
                                         </li>

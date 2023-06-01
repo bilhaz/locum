@@ -200,6 +200,16 @@
 </div>
 </div>
 <div class="col-lg-3 col-md-6 col-sm-6 text-center">
+    <a href="<?= base_url('backend/paid-order') ?>">
+        <div class="card chart-color135">
+            <div class="card-body p-lg-4 text-light">
+                <h3><strong><?= $o_paid ?></strong></h3>
+                <span>Paid Orders</span>
+            </div>
+    </a>
+</div>
+</div>
+<div class="col-lg-3 col-md-6 col-sm-6 text-center">
     <a href="<?= base_url('backend/expired-orders') ?>">
         <div class="card chart-color125">
             <div class="card-body p-lg-4 text-light">

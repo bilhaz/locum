@@ -79,7 +79,16 @@
                                         </tr>
                                         <tr>
                                             <th style="border: 1px solid black;"><strong>Rate:</strong></th>
-                                            <td style="border: 1px solid black;"><?= '<b>Normal: </b>' . $em_3['ord_normal_hrs_rt'] . '<br>' . '<b>OnCall: </b>' . $em_3['ord_ocall_rt'] . '<br>' . '<b>OffSite: </b>' . $em_3['ord_osite_rt'] . '<br>' . '<b>Weekend: </b>' . $em_3['ord_bhw_rt'] ?></td>
+                                            <td style="border: 1px solid black;"><b>Normal:</b> &euro;<?=  $em_3['ord_normal_hrs_rt'] ?>&nbsp;<?php if($em_3['nh_p_type'] == 1): echo "/hr"; elseif($em_3['nh_p_type'] == 2): echo "/day"; else: echo "/halfday"; endif; ?><br>
+                                            <?php if($em_3['ord_ocall_rt'] > 0): ?>
+                                            <b>OnCall:</b> &euro;<?= $em_3['ord_ocall_rt']?>&nbsp;<?php if($em_3['oc_p_type'] == 1): echo "/hr"; elseif($em_3['oc_p_type'] == 2): echo "/day"; else: echo "/halfday"; endif; ?> <br>
+                                            <?php endif; ?>
+                                            <?php if($em_3['ord_osite_rt'] > 0): ?>
+                                            <b>OffSite:</b> &euro;<?= $em_3['ord_osite_rt'] ?>&nbsp;<?php if($em_3['os_p_type'] == 1): echo "/hr"; elseif($em_3['os_p_type'] == 2): echo "/day"; else: echo "/halfday"; endif; ?><br>
+                                            <?php endif; ?>
+                                            <?php if($em_3['ord_bhw_rt'] > 0): ?>
+                                            <b>Weekend:</b> &euro;<?= $em_3['ord_bhw_rt'] ?>&nbsp;<?php if($em_3['bhw_p_type'] == 1): echo "/hr"; elseif($em_3['bhw_p_type'] == 2): echo "/day"; else: echo "/halfday"; endif; ?><br></td>
+                                            <?php endif; ?>
                                         </tr>
                                         <tr>
                                             <th style="border: 1px solid black;"><strong>Admin Charges:</strong></th>

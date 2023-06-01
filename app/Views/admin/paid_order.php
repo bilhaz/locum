@@ -15,7 +15,7 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
                     <div class="card-header">
-                        <h6 class="card-title">Confirmed Orders</h6>
+                        <h6 class="card-title">Paid Orders</h6>
                         <ul class="header-dropdown">
                             <li>
                             </li>
@@ -58,7 +58,7 @@
                                                         <th>Created Date</th>
                                                         <th>Status</th>
                                                         <th>View</th>
-
+                                                        
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -85,13 +85,13 @@
                                                                 <?php endforeach; ?></td>
                                                             </td>
                                                             <td><?= date("d-m-y  h:i:s a", strtotime($row['ord_created'])) ?></td>
-                                                            <td><span class="badge bg-success">Confirmed</span></td>
+                                                            <td><span class="badge chart-color135">Paid</span></td>
                                                             <td>
 
                                                                 <a type="button" href="<?= base_url('backend/order_view/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View" data-type="confirm"><i class="fa fa-eye"></i></a>
 
                                                             </td>
-
+                                                            
                                                         </tr>
                                                     <?php endforeach; ?>
 
@@ -118,7 +118,7 @@
                                                         <th>Created Date</th>
                                                         <th>Status</th>
                                                         <th>View</th>
-
+                                                        
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -145,13 +145,13 @@
                                                                 <?php endforeach; ?></td>
                                                             </td>
                                                             <td><?= date("d-m-y  h:i:s a", strtotime($mrow['ord_created'])) ?></td>
-                                                            <td><span class="badge bg-success">Confirmed</span></td>
+                                                            <td><span class="badge chart-color135">Paid</span></td>
                                                             <td>
 
                                                                 <a type="button" href="<?= base_url('backend/order_view/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View" data-type="confirm"><i class="fa fa-eye"></i></a>
 
                                                             </td>
-
+                                                           
                                                         </tr>
                                                     <?php endforeach; ?>
 
@@ -179,7 +179,7 @@
                                                             <th>Created Date</th>
                                                             <th>Status</th>
                                                             <th>View</th>
-
+                                                           
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -206,13 +206,12 @@
                                                                     <?php endforeach; ?></td>
                                                                 </td>
                                                                 <td><?= date("d-m-y  h:i:s a", strtotime($yrow['ord_created'])) ?></td>
-                                                                <td><span class="badge bg-success">Confirmed</span></td>
+                                                                <td><span class="badge chart-color135">Paid</span></td>
                                                                 <td>
 
                                                                     <a type="button" href="<?= base_url('backend/order_view/' . encryptIt($yrow['ord_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View" data-type="confirm"><i class="fa fa-eye"></i></a>
 
                                                                 </td>
-
                                                             </tr>
                                                         <?php endforeach; ?>
 
@@ -225,7 +224,7 @@
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="all">
                                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#All" aria-expanded="true" aria-controls="All">
-                                           All
+                                            All
                                         </button>
                                     </h2>
                                     <div id="All" class="accordion-collapse collapse show" aria-labelledby="all" data-bs-parent="#accordionExample">
@@ -241,7 +240,7 @@
                                                             <th>Created Date</th>
                                                             <th>Status</th>
                                                             <th>View</th>
-
+                                                           
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -268,13 +267,12 @@
                                                                     <?php endforeach; ?></td>
                                                                 </td>
                                                                 <td><?= date("d-m-y  h:i:s a", strtotime($orow['ord_created'])) ?></td>
-                                                                <td><span class="badge bg-success">Confirmed</span></td>
+                                                                <td><span class="badge chart-color135">Paid</span></td>
                                                                 <td>
 
                                                                     <a type="button" href="<?= base_url('backend/order_view/' . encryptIt($orow['ord_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View" data-type="confirm"><i class="fa fa-eye"></i></a>
 
                                                                 </td>
-
                                                             </tr>
                                                         <?php endforeach; ?>
 
