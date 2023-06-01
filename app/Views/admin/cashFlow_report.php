@@ -92,10 +92,10 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <?php $TvashIn = $CashIn->hosp + $CashIn->admin + $CashIn->vos;
+                                    <?php $TcashIn = $CashIn->hosp + $CashIn->admin + $CashIn->vos;
                                     $TcashOut =  $CashOut->dr + $CashOut->vop;
                                     ?>
-                                    <th class="text-primary"><h3> &euro;<?= $TvashIn ?></h3></th>
+                                    <th class="text-primary"><h3> &euro;<?= $TcashIn ?></h3></th>
                                     <th class="text-primary"><h3> &euro;<?= $TcashOut ?></h3></th>
                                     <th class="text-primary"><h3> &euro;<?= $TvashIn - $TcashOut ?></h3></th>
                                 </tr>

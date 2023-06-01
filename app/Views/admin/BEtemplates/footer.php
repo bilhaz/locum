@@ -19,6 +19,9 @@
   const link3 = '<?php echo base_url('backend/notif-count'); ?>';
   const link4 = '<?php echo base_url('backend/notif-seen'); ?>';
   const link5 = '<?php echo base_url('backend/fetch-ChartData'); ?>';
+  const link6 = '<?php echo base_url('backend/getServer-DateTime'); ?>';
+  const link7 = '<?php echo base_url('backend/getPie-ChartData'); ?>';
+  const link8 = '<?php echo base_url('backend/Total-ConfirmedHours'); ?>';
 </script>
 <script src="<?= base_url('public/assets/js/graph.js') ?>"></script>
 <script>

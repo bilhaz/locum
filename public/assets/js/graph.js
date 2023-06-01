@@ -153,36 +153,61 @@ $(document).ready(function() {
 });
 // end WORK REPORT Graph
 
-// Locum Analysis
-    var options = {
-        series: [44, 35, 13],
-        colors: ['var(--chart-color1)', 'var(--chart-color6)', 'var(--chart-color5)'],
-        chart: {
-            width: 200,
-            type: "pie",
-        },
-        legend: {
-            show: false,
-        },
-        dataLabels: {
-            enabled: false,
-        },
-        labels: ["Hospital", "Nurse", "GP"],
-        responsive: [{
-            breakpoint: 480,
-            options: {
-                chart: {
-                    width: 100,
-                },
-                legend: {
-                    show: false,
-                    position: "bottom",
-                },
-            },
-        }, ],
-    };
-    var chart = new ApexCharts(document.querySelector("#income_analysis"), options);
-    chart.render();
+ // Locum Analysis
+ function updatePieChart(data) {
+ 
+var options = {
+  series: [data.hospital, data.nurse, data.gp], // Initialize the series as an empty array
+  colors: ['var(--chart-color1)', 'var(--chart-color6)', 'var(--chart-color8)'],
+  chart: {
+    width: 280,
+    type: "pie",
+  },
+  legend: {
+    show: false,
+  },
+  dataLabels: {
+    enabled: false,
+  },
+  labels: ["Hospital", "Nurse", "GP"],
+  responsive: [{
+    breakpoint: 480,
+    options: {
+      chart: {
+        width: 100,
+      },
+      legend: {
+        show: false,
+        position: "bottom",
+      },
+    },
+  }],
+};
+ 
+
+var chart = new ApexCharts(document.querySelector("#income_analysis"), options);
+chart.render();
+ }
+
+// Fetch the pie chart data and update the series dynamically
+function fetchPieChartData() {
+  $.ajax({
+    url: link7, // Update with your API endpoint
+    type: 'GET',
+    dataType: 'json',
+    success: function(response) {
+      updatePieChart(response);
+
+      // chart.updateSeries([response.hospital, response.nurse, response.gp]); // Update the series with the fetched data
+    },
+    error: function(xhr, status, error) {
+      console.error(error);
+    }
+  });
+}
+
+// Call the fetchPieChartData() function whenever you want to update the chart dynamically
+fetchPieChartData();
     
 // show Browser Notification
 

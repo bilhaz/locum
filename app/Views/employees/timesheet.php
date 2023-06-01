@@ -163,7 +163,7 @@
                         <div class="row mb-3">
                         <div class="col-md-4">
                         <lable>Signature<small class="text-danger">&nbsp;(Click Below to Sign)</small></lable>
-                        <input type="text" id="dateInput" onclick="loadCurrentDateTime()" class="form-control" name="ord_timesheetSign" readonly required>
+                        <input type="text" id="dateInput" onclick="loadServerDateTime()" class="form-control" name="ord_timesheetSign" readonly required>
                         </div>
                         </div>
                         <br>

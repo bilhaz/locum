@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: May 29, 2023 at 11:24 AM
+-- Generation Time: Jun 01, 2023 at 10:20 AM
 -- Server version: 8.0.31
 -- PHP Version: 7.3.33
 
@@ -199,17 +199,21 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `ord_confirmation_date` date DEFAULT NULL,
   `ord_invoice_id` varchar(1500) DEFAULT NULL,
   `ord_normal_hrs` varchar(1500) DEFAULT NULL,
-  `ord_normal_hrs_rt` varchar(255) DEFAULT NULL,
+  `ord_normal_hrs_rt` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL COMMENT 'Employee Rate',
   `nh_p_type` varchar(255) DEFAULT NULL,
   `ord_on_call_hrs` varchar(1500) DEFAULT NULL,
-  `ord_ocall_rt` varchar(255) DEFAULT NULL,
+  `ord_ocall_rt` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL COMMENT 'Employee Rate',
   `oc_p_type` varchar(255) DEFAULT NULL,
   `ord_off_site_hrs` varchar(255) DEFAULT NULL,
-  `ord_osite_rt` varchar(255) DEFAULT NULL,
+  `ord_osite_rt` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL COMMENT 'Employee Rate',
   `os_p_type` varchar(255) DEFAULT NULL,
   `ord_bh_week_hrs` varchar(255) DEFAULT NULL,
-  `ord_bhw_rt` varchar(255) DEFAULT NULL,
+  `ord_bhw_rt` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL COMMENT 'Employee Rate',
   `bhw_p_type` varchar(255) DEFAULT NULL,
+  `ord_Hnormal_hrs_rt` varchar(255) NOT NULL COMMENT 'Hospital Rate',
+  `ord_Hocall_rt` varchar(255) NOT NULL COMMENT 'Hospital Rate',
+  `ord_Hosite_rt` varchar(255) NOT NULL COMMENT 'Hospital Rate',
+  `ord_Hbhw_rt` varchar(255) NOT NULL COMMENT 'Hospital Rate',
   `ord_total_hrs` varchar(255) DEFAULT NULL,
   `ord_approx_cost` varchar(1500) DEFAULT NULL COMMENT 'Hospital Rate',
   `ord_hosp_earn` varchar(155) DEFAULT NULL,
@@ -239,7 +243,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `ord_emp_pay_status` varchar(255) DEFAULT NULL,
   `ord_assignment` varchar(255) DEFAULT NULL,
   `ord_comment2` varchar(1500) DEFAULT NULL,
-  `ord_status` varchar(255) NOT NULL,
+  `ord_status` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
   `ord_cancel_bdr` int NOT NULL COMMENT '1 for cancel and 0 for active',
   `ord_dr_cremarks` varchar(2000) DEFAULT NULL,
   `ord_cancel_bcl` int NOT NULL COMMENT '1 for cancel or 0 for active',

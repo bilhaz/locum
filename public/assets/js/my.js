@@ -22,10 +22,10 @@ function calculateEc() {
     var onc = parseFloat(document.getElementById("ord_on_call_hrs").value);
     var off = parseFloat(document.getElementById("ord_off_site_hrs").value);
     var week = parseFloat(document.getElementById("ord_bh_week_hrs").value);
-    var normr = parseFloat(document.getElementById("ord_normal_hrs_rt").value);
-    var oncr = parseFloat(document.getElementById("ord_ocall_rt").value);
-    var offr = parseFloat(document.getElementById("ord_osite_rt").value);
-    var weekr = parseFloat(document.getElementById("ord_bhw_rt").value);
+    var normr = parseFloat(document.getElementById("ord_Hnormal_hrs_rt").value);
+    var oncr = parseFloat(document.getElementById("ord_Hocall_rt").value);
+    var offr = parseFloat(document.getElementById("ord_Hosite_rt").value);
+    var weekr = parseFloat(document.getElementById("ord_Hbhw_rt").value);
     var tadmin = parseFloat(document.getElementById("Tadmin").value);
 
     var tp = norm * normr + onc * oncr + off * offr + week * weekr + tadmin;
@@ -36,13 +36,50 @@ function calculateEc() {
 //  Calculating Total admin charges
 
 function calculateTa() {
-    var hosp = parseFloat(document.getElementById("ord_hosp_earn").value);
+    var hosp = parseFloat(document.getElementById("TcliEarn").value);
     var admin = parseFloat(document.getElementById("ord_admin_charges").value);
 
     var ta = hosp * admin / 100;
     document.getElementById("Tadmin").value = ta.toFixed(2);
 
 }
+//  Calculating VAT on SALES
+function calculateVosale() {
+    var VrateElement = document.getElementById("vat_rate");
+    var salesElement = document.getElementById("TcliEarn");
+
+    var Vrate = parseFloat(VrateElement.value);
+    if (isNaN(Vrate)) {
+        Vrate = 0;
+    }
+
+    var sales = parseFloat(salesElement.value);
+    if (isNaN(sales)) {
+        sales = 0;
+    }
+
+    var vos = Vrate * sales / 100;
+    document.getElementById("Vatos").value = vos.toFixed(2);
+}
+//  Calculating VAT on Purchase
+function calculateVopurchase() {
+    var VrateElement = document.getElementById("vat_rate");
+    var purchaseElement = document.getElementById("ord_pay_to_dr");
+
+    var Vrate = parseFloat(VrateElement.value);
+    if (isNaN(Vrate)) {
+        Vrate = 0;
+    }
+
+    var purchase = parseFloat(purchaseElement.value);
+    if (isNaN(purchase)) {
+        purchase = 0;
+    }
+
+    var vop = Vrate * purchase / 100;
+    document.getElementById("Vatop").value = vop.toFixed(2);
+}
+
 // Calculate diff + profit
 function calculateDiff() {
     var hosp = parseFloat(document.getElementById("TcliEarn").value);
@@ -54,17 +91,23 @@ function calculateDiff() {
 }
 // Paying to doctor 
 function payingdoc() {
-    var totalh = parseFloat(document.getElementById("total").value);
-    var p2d = parseFloat(document.getElementById("ord_pay_to_dr").value);
+    var norm = parseFloat(document.getElementById("ord_normal_hrs").value);
+    var onc = parseFloat(document.getElementById("ord_on_call_hrs").value);
+    var off = parseFloat(document.getElementById("ord_off_site_hrs").value);
+    var week = parseFloat(document.getElementById("ord_bh_week_hrs").value);
+    var normr = parseFloat(document.getElementById("ord_normal_hrs_rt").value);
+    var oncr = parseFloat(document.getElementById("ord_ocall_rt").value);
+    var offr = parseFloat(document.getElementById("ord_osite_rt").value);
+    var weekr = parseFloat(document.getElementById("ord_bhw_rt").value);
 
-    var pay = totalh * p2d;
-    document.getElementById("ord_paying_to_dr").value = pay.toFixed(2);
+    var pay = norm * normr + onc * oncr + off * offr + week * weekr;
+    document.getElementById("totpay").value = pay.toFixed(2);
 }
 
 // Vat Calculate
 function calculatevat() {
-    var vs = parseFloat(document.getElementById("ord_vat_sale").value);
-    var vp = parseFloat(document.getElementById("ord_vat_purch").value);
+    var vs = parseFloat(document.getElementById("Vatos").value);
+    var vp = parseFloat(document.getElementById("Vatop").value);
     var vat = vs - vp;
     document.getElementById("vat").value = vat.toFixed(2);
 }
@@ -283,16 +326,50 @@ $(document).ready(function() {
         }
     });
 });
-function loadCurrentDateTime() {
+
+  function loadServerDateTime() {
     var dateInput = document.getElementById("dateInput");
-    var currentDateTime = new Date().toLocaleString('en-GB', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: true
+    
+    $.ajax({
+      url: link6,  // Replace with the actual endpoint URL on your server
+      type: "GET",
+      dataType: "json",
+      success: function(response) {
+        var serverDateTime = response.currentDateTime;
+        dateInput.value = serverDateTime;
+      },
+      error: function(xhr, status, error) {
+        console.error(error);
+      }
     });
-    dateInput.value = currentDateTime;
+  }
+// Total Confirmed Hours
+$(document).ready(function() {
+    fetchtotalHours(); // Fetch initial data
+  
+    // Submit form and fetch data on form submission
+    $('#hours_filters').submit(function(event) {
+      event.preventDefault(); // Prevent the default form submission
+      fetchtotalHours();
+    });
+  });
+  
+  function fetchtotalHours() {
+    var form = $('#hours_filters');
+    var url = link8; // Replace with the appropriate URL
+  
+    $.ajax({
+      url: url,
+      type: 'POST', // Or 'GET' depending on your setup
+      data: form.serialize(), // Serialize the form data
+      dataType: 'json',
+      success: function(response) {
+        // Update the hours value with the received data
+        var hours = response.grand_sum;
+        $('#hours_value').html(hours + '<span class="text-dark h3"> Hrs.</span>');
+      },
+      error: function(xhr, status, error) {
+        console.error(error);
+      }
+    });
   }

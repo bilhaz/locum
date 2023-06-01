@@ -62,6 +62,7 @@ $routes->match(['get' , 'post'], 'backend/order-s3/(:any)', 'admin\Backend::orde
 $routes->match(['get' , 'post'], 'backend/sThirdR/(:any)', 'admin\Backend::sThirdR/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/order-s4/(:any)', 'admin\Backend::order_s4/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/sFourthR/(:any)', 'admin\Backend::sFourthR/$1' ,['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'backend/order-s5/(:any)', 'admin\Backend::order_s5/$1' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/locum-ctrack', 'admin\Backend::Locum_confirmation_track' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/locum-intrack', 'admin\Backend::Locum_invoice_track' ,['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/locum-sagtrack', 'admin\Backend::Locum_sage_track' ,['filter' => 'B_auth']);
@@ -120,6 +121,9 @@ $routes->match(['get' , 'post'], 'backend/notif-get', 'admin\Backend::get_notif'
 $routes->match(['get' , 'post'], 'backend/show-notif', 'admin\Backend::show_notif',['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/notif-seen', 'admin\Backend::notif_seen',['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/fetch-ChartData', 'admin\Backend::fetchChartData',['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'backend/getServer-DateTime', 'admin\Backend::getServerDateTime',['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'backend/getPie-ChartData', 'admin\Backend::getPieChartData',['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'backend/Total-ConfirmedHours', 'admin\Backend::TotalConfirmedHours',['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/notif-count', 'admin\Backend::get_notifcount',/*['filter' => 'B_auth']*/);
 
 // });

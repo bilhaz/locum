@@ -40,7 +40,7 @@
                         </div>
                     <?php endif; ?>
                     <div class="card-body">
-                        <table id="employee_List" class="table table-hover">
+                        <table id="employee_List" class="table  table-hover">
                             <thead class="thead-dark">
                                 <tr>
                                     <th>SNo.</th>

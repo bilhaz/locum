@@ -38,8 +38,11 @@
                                 <select id="cl_id" name="cl_id" class="select2 form-control" data-parsley-trigger="change">
                                     <option value="0">All</option>
                                     <?php foreach ($c_det as $crow) : ?>
-                                        <option value="<?= $crow['cl_id'] ?>" <?= set_select('cl_id',
-                                         $crow['cl_id'], ($filter['cl_id'] == $crow['cl_id']) ? TRUE : FALSE );?>>
+                                        <option value="<?= $crow['cl_id'] ?>" <?= set_select(
+                                                                                    'cl_id',
+                                                                                    $crow['cl_id'],
+                                                                                    ($filter['cl_id'] == $crow['cl_id']) ? TRUE : FALSE
+                                                                                ); ?>>
                                             <?= $crow['cl_h_name'] ?>
                                         </option>
                                     <?php endforeach; ?>
@@ -50,8 +53,11 @@
                                 <select id="emp_id" name="emp_id" class="form-control select2" data-parsley-trigger="change">
                                     <option value="0">All</option>
                                     <?php foreach ($emp_row as $erow) : ?>
-                                        <option value="<?= $erow['emp_id'] ?>" <?= set_select('emp_id',
-                                         $erow['emp_id'], ($filter['emp_id'] == $erow['emp_id']) ? TRUE : FALSE );?>>
+                                        <option value="<?= $erow['emp_id'] ?>" <?= set_select(
+                                                                                    'emp_id',
+                                                                                    $erow['emp_id'],
+                                                                                    ($filter['emp_id'] == $erow['emp_id']) ? TRUE : FALSE
+                                                                                ); ?>>
                                             <?= $erow['emp_fname'] . ' ' . $erow['emp_lname'] ?>
                                         </option>
                                     <?php endforeach; ?>
@@ -62,8 +68,11 @@
                                 <select id="ord_speciality" name="ord_speciality" class="form-control select2" data-parsley-trigger="change">
                                     <option value="0">All</option>
                                     <?php foreach ($sp_row as $srow) : ?>
-                                        <option value="<?= $srow['spec_id'] ?>"  <?= set_select('ord_speciality',
-                                         $srow['spec_id'], ($filter['ord_speciality'] == $srow['spec_id']) ? TRUE : FALSE );?>>
+                                        <option value="<?= $srow['spec_id'] ?>" <?= set_select(
+                                                                                    'ord_speciality',
+                                                                                    $srow['spec_id'],
+                                                                                    ($filter['ord_speciality'] == $srow['spec_id']) ? TRUE : FALSE
+                                                                                ); ?>>
                                             <?= $srow['spec_name'] ?>
                                         </option>
                                     <?php endforeach; ?>
@@ -104,7 +113,6 @@
                                     <th>Created Date</th>
                                     <th>Status</th>
                                     <th>Invoice ID</th>
-                                    <th>Emails</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -147,13 +155,13 @@
                                                         <span class="badge chart-color122">Processed</span>
                                                     <?php elseif ($row['ord_status'] == "3") : ?>
                                                         <span class="badge bg-success">Confirmed</span><br>
-                                                        <span><a href="<?= base_url("backend/contract/".encryptIt($row['ord_id']))?>" target="_blank"><?= $row['ord_ref_no'] ?></a></span>
-                                                    <?php elseif($row['ord_status'] == "4") : ?>
+                                                        <span><a href="<?= base_url("backend/contract/" . encryptIt($row['ord_id'])) ?>" target="_blank"><?= $row['ord_ref_no'] ?></a></span>
+                                                    <?php elseif ($row['ord_status'] == "4") : ?>
                                                         <span class="badge chart-color120">Ended</span><br>
-                                                        <span><a href="<?= base_url("backend/contract/".encryptIt($row['ord_id']))?>" target="_blank"><?= $row['ord_ref_no'] ?></a></span>
-                                                        <?php else: ?>
+                                                        <span><a href="<?= base_url("backend/contract/" . encryptIt($row['ord_id'])) ?>" target="_blank"><?= $row['ord_ref_no'] ?></a></span>
+                                                    <?php else : ?>
                                                         <span class="badge bg-success">Paid</span><br>
-                                                        <span><a href="<?= base_url("backend/contract/".encryptIt($row['ord_id']))?>" target="_blank"><?= $row['ord_ref_no'] ?></a></span>
+                                                        <span><a href="<?= base_url("backend/contract/" . encryptIt($row['ord_id'])) ?>" target="_blank"><?= $row['ord_ref_no'] ?></a></span>
                                                     <?php endif; ?>
                                                 <?php endif; ?>
                                             <?php endif; ?>
@@ -162,34 +170,33 @@
                                             <?= $row['ord_invoice_id'] ?><br>
                                             <?= $row['ord_sage_refer_no'] ?>
                                         </td>
-                                        <td>
 
-
-                                            <ul class="nav nav-pills">
-                                                <li class="nav-item dropdown">
-                                                    <a class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Emails</a>
-                                                    <ul class="dropdown-menu shadow-sm">
-                                                        <li><a class="dropdown-item" target="_blank" href="<?= base_url('backend/email-1/' . encryptIt($row['ord_id'])) ?>">First Response</a></li>
-                                                        <li><a class="dropdown-item" target="_blank" href="<?= base_url('backend/email-2/' . encryptIt($row['ord_id'])) ?>">Locum Process</a></li>
-                                                        <li><a class="dropdown-item" target="_blank" href="<?= base_url('backend/email-3/' . encryptIt($row['ord_id'])) ?>">Client Confirmation</a></li>
-                                                        <li><a class="dropdown-item" target="_blank" href="<?= base_url('backend/email-4/' . encryptIt($row['ord_id'])) ?>">Dr. Confirmation</a></li>
-                                                        <li>
-                                                            <hr class="dropdown-divider">
-                                                        </li>
-                                                        <li><a class="dropdown-item" target="_blank" href="<?= base_url('backend/contract/' . encryptIt($row['ord_id'])) ?>">Contract</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </td>
 
                                         <td>
-                                            <?php if (session()->grp_id == 'user' && $row['ord_case_status'] <> "Closed") : ?>
-                                                <a type="button" href="<?= base_url('backend/order_edit/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
-                                            <?php elseif (session()->grp_id == 'admin' && $row['ord_status'] <> "Closed") : ?>
-                                                <a type="button" href="<?= base_url('backend/order_edit/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                            <?php if (session()->grp_id == 'user' || session()->grp_id == 'admin' && $row['ord_status'] <> "5") : ?>
+                                                <?php if ($row['ord_status'] == 1) : ?>
+                                                    <a type="button" href="<?= base_url('backend/order-s2/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                <?php elseif ($row['ord_status'] == 2) : ?>
+                                                    <a type="button" href="<?= base_url('backend/order-s3/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                <?php elseif ($row['ord_status'] == 3) : ?>
+                                                    <a type="button" href="<?= base_url('backend/order-s4/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                <?php elseif ($row['ord_status'] == NULL) : ?>
+                                                    <a type="button" href="<?= base_url('backend/order-s1/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                <?php endif; ?>
                                             <?php elseif (session()->grp_id == 'super_admin') : ?>
-                                                <a type="button" href="<?= base_url('backend/order_edit/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
-                                            <?php endif; ?>
+                                                <?php if ($row['ord_status'] == 1) : ?>
+                                                    <a type="button" href="<?= base_url('backend/order-s2/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                <?php elseif ($row['ord_status'] == 2) : ?>
+                                                    <a type="button" href="<?= base_url('backend/order-s3/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                <?php elseif ($row['ord_status'] == 3) : ?>
+                                                    <a type="button" href="<?= base_url('backend/order-s4/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                <?php elseif ($row['ord_status'] == 4) : ?>
+                                                    <a type="button" href="<?= base_url('backend/order-s5/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                <?php elseif ($row['ord_status'] == 5) : ?>
+                                                    <a type="button" href="<?= base_url('backend/order-s5/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                <?php elseif ($row['ord_status'] == NULL) : ?>
+                                                    <a type="button" href="<?= base_url('backend/order-s1/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                <?php endif; ?> <?php endif; ?>
                                             <a type="button" href="<?= base_url('backend/order_view/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View" data-type="confirm"><i class="fa fa-eye"></i></a>
                                             <?php if ($row['ord_advrtise'] == '0') : ?>
                                                 <a type="button" href="<?= base_url('backend/order-publish/' . encryptIt($row['ord_id'])) ?>" target="_blank" class="btn btn-sm btn-outline-warning js-sweetalert" Onclick="return confirm('Are You sure? You want to advertise this?');" title="Advertise" data-type="confirm"><i class="fa fa-bullhorn"></i></a>

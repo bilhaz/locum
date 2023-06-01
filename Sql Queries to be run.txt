@@ -48,4 +48,10 @@ ALTER TABLE `employee` ADD `emp_gpIndemnity` VARCHAR(255) NULL AFTER `emp_atls`;
 ALTER TABLE `orders` ADD `ord_timesheetSign` VARCHAR(255) NULL AFTER `ord_time_sheet_approved`;
 
 
+ALTER TABLE `orders` ADD `ord_Hnormal_hrs_rt` VARCHAR(255) NOT NULL COMMENT 'Hospital Rate' AFTER `bhw_p_type`, ADD `ord_Hocall_rt` VARCHAR(255) NOT NULL COMMENT 'Hospital Rate' AFTER `ord_Hnormal_hrs_rt`, ADD `ord_Hosite_rt` VARCHAR(255) NOT NULL COMMENT 'Hospital Rate' AFTER `ord_Hocall_rt`, ADD `ord_Hbhw_rt` VARCHAR(255) NOT NULL COMMENT 'Hospital Rate' AFTER `ord_Hosite_rt`;
+
+
+
+
+
 

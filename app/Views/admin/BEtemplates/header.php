@@ -29,7 +29,7 @@
 
 </head>
 
-<body onload="fetchNotifications(); fetchNotificationscount();"> 
+<body onload="fetchNotifications(); fetchNotificationscount();calculateVosale();"> 
     <?php $uri = service('uri'); ?>
     <?php if (session()->get('ALoggedIn')): ?>
 

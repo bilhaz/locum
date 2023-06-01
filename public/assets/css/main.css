@@ -2951,22 +2951,22 @@ fieldset:disabled .btn {
 
 .btn-secondary {
     color: #fff;
-    background-color: #6c757d;
-    border-color: #6c757d
+    background-color: #007bff;
+    border-color: #007bff
 }
 
 .btn-secondary:hover {
     color: #fff;
-    background-color: #5c636a;
-    border-color: #565e64
+    background-color: #007bff;
+    border-color: #83c9ff
 }
 
 .btn-check:focus+.btn-secondary,
 .btn-secondary:focus {
     color: #fff;
-    background-color: #5c636a;
-    border-color: #565e64;
-    box-shadow: 0 0 0 .25rem rgba(130, 138, 145, .5)
+    background-color: #95c3f1;
+    border-color: #95c3f1;
+    box-shadow: 0 0 0 .25rem rgba(26, 148, 254, 0.5)
 }
 
 .btn-check:checked+.btn-secondary,
@@ -14084,6 +14084,7 @@ fieldset:disabled .btn {
 [class=theme-green] {
     --primary-color: #28a745;
     --secondary-color: #A1C45A;
+    --secondaryb-color: #007bff;
     --chart-color1: #28a745;
     --chart-color2: #A1C45A;
     --chart-color3: #F1C550;
@@ -14091,6 +14092,7 @@ fieldset:disabled .btn {
     --chart-color5: #ACC6AA;
     --chart-color6: #157DED;
     --chart-color7: #FF734C;
+    --chart-color8: #FFA500;
     --primary-gradient: linear-gradient(145deg, var(--primary-color), var(--chart-color4))
 }
 
@@ -15742,6 +15744,9 @@ body.rtl_mode .fc .fc-scroller-harness {
 .chart-color7 {
     background-color: var(--chart-color7)!important
 }
+.chart-color8 {
+    background-color: var(--chart-color8)!important
+}
 
 .chart-text-color1 {
     color: var(--chart-color1)!important
@@ -17125,7 +17130,7 @@ ul.choose-skin li span {
 }
 
 .wizard>.steps>ul>li {
-    width: 25%;
+    width: 20%;
     float: left
 }
 

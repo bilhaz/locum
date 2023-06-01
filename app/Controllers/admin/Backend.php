@@ -50,6 +50,7 @@ class Backend extends BEBaseController
 		'order-s3' => ['super_admin', 'admin', 'user'],
 		'order-s4' => ['super_admin', 'admin', 'user'],
 		'sFirstR' => ['super_admin', 'admin', 'user'],
+		'order-s5' => ['super_admin', 'admin', 'user'],
 		'sSecondR' => ['super_admin', 'admin', 'user'],
 		'sThirdR' => ['super_admin', 'admin', 'user'],
 		'sFourthR' => ['super_admin', 'admin', 'user'],
@@ -64,7 +65,10 @@ class Backend extends BEBaseController
 		'vos-vop' => ['super_admin', 'admin', 'user'],
 		'purchase' => ['super_admin', 'admin', 'user'],
 		'cash-flow' => ['super_admin', 'admin', 'user'],
+		'getServer-DateTime' => ['super_admin', 'admin', 'user'],
 		'fetch-ChartData' => ['super_admin', 'admin', 'user'],
+		'getPie-ChartData' => ['super_admin', 'admin', 'user'],
+		'Total-ConfirmedHours' => ['super_admin', 'admin', 'user'],
 		'order_view' => ['super_admin', 'admin', 'user'],
 		'order_edit' => ['super_admin', 'admin', 'user'],
 		'ord_status' => ['super_admin', 'admin', 'user'],
@@ -602,7 +606,7 @@ class Backend extends BEBaseController
 				'emp_atls' => ['label' => 'ATLS', 'rules' => 'uploaded[emp_atls]|ext_in[emp_atls,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_atls,2048]'],
 				'emp_gpIndemnity' => ['label' => 'GP Indemnity', 'rules' => 'uploaded[emp_gpIndemnity]|ext_in[emp_gpIndemnity,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_gpIndemnity,2048]'],
 			];
-			foreach (['emp_cv', 'emp_imc_cert', 'emp_gv_cert', 'emp_rec_refer', 'emp_passport', 'emp_occup_health', 'emp_work_permit','emp_acls','emp_bcls','emp_bls','emp_atls','emp_gpIndemnity'] as $field) {
+			foreach (['emp_cv', 'emp_imc_cert', 'emp_gv_cert', 'emp_rec_refer', 'emp_passport', 'emp_occup_health', 'emp_work_permit', 'emp_acls', 'emp_bcls', 'emp_bls', 'emp_atls', 'emp_gpIndemnity'] as $field) {
 				if (empty($_FILES[$field]['name'])) {
 					unset($rules[$field]);
 				}
@@ -858,7 +862,7 @@ class Backend extends BEBaseController
 				'emp_atls' => ['label' => 'ATLS', 'rules' => 'uploaded[emp_atls]|ext_in[emp_atls,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_atls,2048]'],
 				'emp_gpIndemnity' => ['label' => 'GP Indemnity', 'rules' => 'uploaded[emp_gpIndemnity]|ext_in[emp_gpIndemnity,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_gpIndemnity,2048]'],
 			];
-			foreach (['emp_cv', 'emp_imc_cert', 'emp_gv_cert', 'emp_rec_refer', 'emp_passport', 'emp_occup_health', 'emp_work_permit','emp_acls','emp_bcls','emp_bls','emp_atls','emp_gpIndemnity'] as $field) {
+			foreach (['emp_cv', 'emp_imc_cert', 'emp_gv_cert', 'emp_rec_refer', 'emp_passport', 'emp_occup_health', 'emp_work_permit', 'emp_acls', 'emp_bcls', 'emp_bls', 'emp_atls', 'emp_gpIndemnity'] as $field) {
 				if (empty($_FILES[$field]['name'])) {
 					unset($rules[$field]);
 				}
@@ -1847,10 +1851,10 @@ class Backend extends BEBaseController
 		// Inserting new row for cancelled order by doctor when doctor change
 		if ($id = $model->insert($ordr_row)) {
 			session()->setFlashdata('success', 'Doctor Changed and Order status has been set to active.');
-			return redirect()->to('backend/order_s3/' . encryptIt($id));
+			return redirect()->to('backend/orders');
 		} else {
 			session()->setFlashdata('error', 'Something went wrong!');
-			return redirect()->to('backend/order_s3/' . encryptIt($oid));
+			return redirect()->to('backend/orders');
 		}
 	}
 
@@ -2893,7 +2897,6 @@ class Backend extends BEBaseController
 					'ord_required_from' => $this->request->getVar('ord_required_from'),
 					'ord_required_to' => $this->request->getVar('ord_required_to'),
 					'ord_datetime_detail' => $this->request->getVar('ord_datetime_detail'),
-					'ord_status' => 1,
 					'cl_id' => $this->request->getVar('cl_id'),
 
 				];
@@ -2988,7 +2991,7 @@ class Backend extends BEBaseController
 		$data['v_ordr'] = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $id)->first();
 		$to = $data['v_ordr']['cl_cont_email'];
 		$cc = '';
-		$subject = 'SRA-First Response';
+		$subject = 'SRAL | Your Order is being Processed ' . $data['v_ordr']['spec_name'];
 		$message = $this->LoadView('admin/email_responses/1st-response-email', $data);
 
 
@@ -3048,6 +3051,8 @@ class Backend extends BEBaseController
 		$data['c_det'] = $clmodel->where('cl_status', 1)->where('cl_h_name !=', Null)->where('cl_cont_name !=', Null)->find();
 		$Emodel = new EmpModel();
 		$data['emp_row'] = $Emodel->where('emp_status', 1)->where('emp_fname !=', Null)->Where('emp_spec1', $spec)->orWhere('emp_spec2', $spec)->orWhere('emp_spec2', $spec)->find();
+
+
 		$norm = (float)$this->request->getVar('ord_normal_hrs');
 		$onc = (float)$this->request->getVar('ord_on_call_hrs');
 		$off = (float)$this->request->getVar('ord_off_site_hrs');
@@ -3056,11 +3061,33 @@ class Backend extends BEBaseController
 		$oncr = (float)$this->request->getVar('ord_ocall_rt');
 		$offr = (float)$this->request->getVar('ord_osite_rt');
 		$weekr = (float)$this->request->getVar('ord_bhw_rt');
+		$adminChrges = (float)$this->request->getVar('ord_admin_charges');
+		$hnormr = (float)$this->request->getVar('ord_Hnormal_hrs_rt');
+		$honcr = (float)$this->request->getVar('ord_Hocall_rt');
+		$hoffr = (float)$this->request->getVar('ord_Hosite_rt');
+		$hweekr = (float)$this->request->getVar('ord_Hbhw_rt');
 
+		// For Pay to employee
 		$tp = $norm * $normr + $onc * $oncr + $off * $offr + $week * $weekr;
+
+		// for Earning from Client
+		$te = $norm * $hnormr + $onc * $honcr + $off * $hoffr + $week * $hweekr;
+
+		// for Total of admin charges input
+		$tod = $te * $adminChrges / 100;
+
+		// Grand total by adding total of admin charges to Earning from Client
+		$gte = $te + $tod;
+
 
 		if ($this->request->getMethod() == 'post') {
 			$rules = [
+				'cl_id' => ['label' => 'Client', 'rules' => 'required'],
+				'ord_speciality' => ['label' => 'Speciality', 'rules' => 'required'],
+				'ord_grade' => ['label' => 'Grade', 'rules' => 'required'],
+				'ord_required_from' => ['label' => 'Required From', 'rules' => 'required'],
+				'ord_required_to' => ['label' => 'Required To', 'rules' => 'required'],
+				'ord_datetime_detail' => ['label' => 'Date & Time Details', 'rules' => 'required'],
 				'emp_id' => ['label' => 'Employee', 'rules' => 'required'],
 				'ord_process_details_from' => ['label' => 'Locum Process From', 'rules' => 'required'],
 				'ord_process_details_to' => ['label' => 'Locum Process To', 'rules' => 'required'],
@@ -3068,15 +3095,6 @@ class Backend extends BEBaseController
 				'ord_normal_hrs' => ['label' => 'No of Normal/Flat Hrs', 'rules' => 'required'],
 				'ord_normal_hrs_rt' => ['label' => 'Select Pay Type for Normal Hrs', 'rules' => 'required'],
 				'nh_p_type' => ['label' => 'Hours / Fullday / Halfday', 'rules' => 'required'],
-				'ord_on_call_hrs' => ['label' => 'No of OnCall Hrs', 'rules' => 'required'],
-				'ord_ocall_rt' => ['label' => 'Rate for OnCall Hrs', 'rules' => 'required'],
-				'oc_p_type' => ['label' => 'Select Pay Type for OnCall Hrs', 'rules' => 'required'],
-				'ord_off_site_hrs' => ['label' => 'No of OffSite Hrs', 'rules' => 'required'],
-				'ord_osite_rt' => ['label' => 'Rate for OffSite Hrs', 'rules' => 'required'],
-				'os_p_type' => ['label' => 'Select Pay Type for OffSite Hrs', 'rules' => 'required'],
-				'ord_bh_week_hrs' => ['label' => 'No of BH/Weekend Hrs', 'rules' => 'required'],
-				'ord_bhw_rt' => ['label' => 'Rate for BH/Weekend Hrs', 'rules' => 'required'],
-				'bhw_p_type' => ['label' => 'Select Pay Type for BH/Weekend Hrs', 'rules' => 'required'],
 				'ord_admin_charges' => ['label' => 'Admin Charges', 'rules' => 'required'],
 				'ord_process_date' => ['label' => 'Process Date', 'rules' => 'required'],
 
@@ -3102,6 +3120,13 @@ class Backend extends BEBaseController
 
 
 				$newData = [
+					'ord_speciality' => $this->request->getVar('ord_speciality'),
+					'ord_grade' => $this->request->getVar('ord_grade'),
+					'ord_required_from' => $this->request->getVar('ord_required_from'),
+					'ord_required_to' => $this->request->getVar('ord_required_to'),
+					'ord_datetime_detail' => $this->request->getVar('ord_datetime_detail'),
+					'ord_status' => 1,
+					'cl_id' => $this->request->getVar('cl_id'),
 					'ord_cancel_bcl' => $this->request->getVar('ord_cancel_bcl'),
 					'emp_id' => $this->request->getVar('emp_id'),
 					'ord_process_details_from' => $this->request->getVar('ord_process_details_from'),
@@ -3122,7 +3147,13 @@ class Backend extends BEBaseController
 					'ord_total_hrs' => $this->request->getVar('ord_total_hrs'),
 					'ord_admin_charges' => $this->request->getVar('ord_admin_charges'),
 					'ord_process_date' => $this->request->getVar('ord_process_date'),
+					'ord_Hnormal_hrs_rt' => $this->request->getVar('ord_Hnormal_hrs_rt'),
+					'ord_Hocall_rt' => $this->request->getVar('ord_Hocall_rt'),
+					'ord_Hosite_rt' => $this->request->getVar('ord_Hosite_rt'),
+					'ord_Hbhw_rt' => $this->request->getVar('ord_Hbhw_rt'),
 					'ord_paying_to_dr' => $tp,
+					'ord_hosp_earn' => $gte,
+					'ord_adminchrg_intern' => $tod,
 
 				];
 				$omodel->update($id, $newData);
@@ -3222,8 +3253,30 @@ class Backend extends BEBaseController
 		$omodel = new ordersModel();
 		$data['v_ordr'] = $omodel->where('ord_id', $id)->first();
 
+		$TCearn = (float)$this->request->getVar('ord_hosp_earn');
+		$ToAdmin = (float)$this->request->getVar('ord_adminchrg_intern');
+		$ToPay = $data['v_ordr']['ord_paying_to_dr'];
+
+		// Calculate Diff + Profit
+		$diff = $TCearn + $ToAdmin - $ToPay;
+
 		if ($this->request->getMethod() == 'post') {
 			$rules = [
+				'cl_id' => ['label' => 'Client', 'rules' => 'required'],
+				'ord_speciality' => ['label' => 'Speciality', 'rules' => 'required'],
+				'ord_grade' => ['label' => 'Grade', 'rules' => 'required'],
+				'ord_required_from' => ['label' => 'Required From', 'rules' => 'required'],
+				'ord_required_to' => ['label' => 'Required To', 'rules' => 'required'],
+				'ord_datetime_detail' => ['label' => 'Date & Time Details', 'rules' => 'required'],
+				'emp_id' => ['label' => 'Employee', 'rules' => 'required'],
+				'ord_process_details_from' => ['label' => 'Locum Process From', 'rules' => 'required'],
+				'ord_process_details_to' => ['label' => 'Locum Process To', 'rules' => 'required'],
+				'ord_prosdatetime_detail' => ['label' => 'Locum Process Date & Time Details', 'rules' => 'required'],
+				'ord_normal_hrs' => ['label' => 'No of Normal/Flat Hrs', 'rules' => 'required'],
+				'ord_normal_hrs_rt' => ['label' => 'Select Pay Type for Normal Hrs', 'rules' => 'required'],
+				'nh_p_type' => ['label' => 'Hours / Fullday / Halfday', 'rules' => 'required'],
+				'ord_admin_charges' => ['label' => 'Admin Charges', 'rules' => 'required'],
+				'ord_process_date' => ['label' => 'Process Date', 'rules' => 'required'],
 				'ord_confirmation_date' => ['label' => 'Confirmation Date', 'rules' => 'required'],
 				'ord_adminchrg_intern' => ['label' => 'Total of Admin Charges', 'rules' => 'required'],
 				'ord_hosp_earn' => ['label' => 'Total Earning from Client', 'rules' => 'required'],
@@ -3248,6 +3301,37 @@ class Backend extends BEBaseController
 
 				//store this to database
 				$newData = [
+					'ord_speciality' => $this->request->getVar('ord_speciality'),
+					'ord_grade' => $this->request->getVar('ord_grade'),
+					'ord_required_from' => $this->request->getVar('ord_required_from'),
+					'ord_required_to' => $this->request->getVar('ord_required_to'),
+					'ord_datetime_detail' => $this->request->getVar('ord_datetime_detail'),
+					'ord_status' => 1,
+					'cl_id' => $this->request->getVar('cl_id'),
+					'emp_id' => $this->request->getVar('emp_id'),
+					'ord_process_details_from' => $this->request->getVar('ord_process_details_from'),
+					'ord_process_details_to' => $this->request->getVar('ord_process_details_to'),
+					'ord_prosdatetime_detail' => $this->request->getVar('ord_prosdatetime_detail'),
+					'ord_normal_hrs' => $this->request->getVar('ord_normal_hrs'),
+					'ord_normal_hrs_rt' => $this->request->getVar('ord_normal_hrs_rt'),
+					'nh_p_type' => $this->request->getVar('nh_p_type'),
+					'ord_on_call_hrs' => $this->request->getVar('ord_on_call_hrs'),
+					'ord_ocall_rt' => $this->request->getVar('ord_ocall_rt'),
+					'oc_p_type' => $this->request->getVar('oc_p_type'),
+					'ord_off_site_hrs' => $this->request->getVar('ord_off_site_hrs'),
+					'ord_osite_rt' => $this->request->getVar('ord_osite_rt'),
+					'os_p_type' => $this->request->getVar('os_p_type'),
+					'ord_bh_week_hrs' => $this->request->getVar('ord_bh_week_hrs'),
+					'ord_bhw_rt' => $this->request->getVar('ord_bhw_rt'),
+					'bhw_p_type' => $this->request->getVar('bhw_p_type'),
+					'ord_total_hrs' => $this->request->getVar('ord_total_hrs'),
+					'ord_admin_charges' => $this->request->getVar('ord_admin_charges'),
+					'ord_process_date' => $this->request->getVar('ord_process_date'),
+					'ord_Hnormal_hrs_rt' => $this->request->getVar('ord_Hnormal_hrs_rt'),
+					'ord_Hocall_rt' => $this->request->getVar('ord_Hocall_rt'),
+					'ord_Hosite_rt' => $this->request->getVar('ord_Hosite_rt'),
+					'ord_Hbhw_rt' => $this->request->getVar('ord_Hbhw_rt'),
+					'ord_paying_to_dr' => $this->request->getVar('ord_paying_to_dr'),
 					'ord_cancel_bcl' => $this->request->getVar('ord_cancel_bcl'),
 					'ord_cancel_bdr' => $this->request->getVar('ord_cancel_bdr'),
 					'ord_confirmation_date' => $this->request->getVar('ord_confirmation_date'),
@@ -3255,6 +3339,7 @@ class Backend extends BEBaseController
 					'ord_hosp_earn' => $this->request->getVar('ord_hosp_earn'),
 					'vat_rate' => $this->request->getVar('vat_rate'),
 					'ord_vat_sale' => $this->request->getVar('ord_vat_sale'),
+					'ord_diff_profit_admin' => $diff,
 				];
 
 				$omodel->update($id, $newData);
@@ -3355,6 +3440,26 @@ class Backend extends BEBaseController
 
 		if ($this->request->getMethod() == 'post') {
 			$rules = [
+				'cl_id' => ['label' => 'Client', 'rules' => 'required'],
+				'ord_speciality' => ['label' => 'Speciality', 'rules' => 'required'],
+				'ord_grade' => ['label' => 'Grade', 'rules' => 'required'],
+				'ord_required_from' => ['label' => 'Required From', 'rules' => 'required'],
+				'ord_required_to' => ['label' => 'Required To', 'rules' => 'required'],
+				'ord_datetime_detail' => ['label' => 'Date & Time Details', 'rules' => 'required'],
+				'emp_id' => ['label' => 'Employee', 'rules' => 'required'],
+				'ord_process_details_from' => ['label' => 'Locum Process From', 'rules' => 'required'],
+				'ord_process_details_to' => ['label' => 'Locum Process To', 'rules' => 'required'],
+				'ord_prosdatetime_detail' => ['label' => 'Locum Process Date & Time Details', 'rules' => 'required'],
+				'ord_normal_hrs' => ['label' => 'No of Normal/Flat Hrs', 'rules' => 'required'],
+				'ord_normal_hrs_rt' => ['label' => 'Select Pay Type for Normal Hrs', 'rules' => 'required'],
+				'nh_p_type' => ['label' => 'Hours / Fullday / Halfday', 'rules' => 'required'],
+				'ord_admin_charges' => ['label' => 'Admin Charges', 'rules' => 'required'],
+				'ord_process_date' => ['label' => 'Process Date', 'rules' => 'required'],
+				'ord_confirmation_date' => ['label' => 'Confirmation Date', 'rules' => 'required'],
+				'ord_adminchrg_intern' => ['label' => 'Total of Admin Charges', 'rules' => 'required'],
+				'ord_hosp_earn' => ['label' => 'Total Earning from Client', 'rules' => 'required'],
+				'vat_rate' => ['label' => 'VAT Rate', 'rules' => 'required'],
+				'ord_vat_sale' => ['label' => 'VAT on Sale', 'rules' => 'required'],
 				'ord_ref_no' => ['label' => 'Locum Confirmation No', 'rules' => 'required'],
 				'ord_pay_to_dr' => ['label' => 'Pay to Dr', 'rules' => 'required'],
 				'ord_diff_profit_admin' => ['label' => 'Diff (Profit) + Admin Charges', 'rules' => 'required'],
@@ -3363,15 +3468,7 @@ class Backend extends BEBaseController
 				'ord_time_sheet_mode' => ['label' => 'TimeSheet Mode', 'rules' => 'required'],
 				'ord_time_sheet_process' => ['label' => 'TimeSheet Processed', 'rules' => 'required'],
 				'ord_time_sheet_approved' => ['label' => 'TimeSheet Status', 'rules' => 'required'],
-				'ord_invoice_id' => ['label' => 'SRAL Invoice ID', 'rules' => 'required'],
-				'ord_invoice_date' => ['label' => 'SRAL Invoice Date', 'rules' => 'required'],
-				'ord_invoice_by' => ['label' => 'Invoiced By', 'rules' => 'required'],
-				'ord_sage_refer_no' => ['label' => 'Sage Invoice ID', 'rules' => 'required'],
-				'ord_invoice_refer' => ['label' => 'Invoice Details', 'rules' => 'required'],  // Invoice Details
-				'ord_paymnt_rcvd_date' => ['label' => 'Payment Received', 'rules' => 'required'],
-				'ord_payment_status' => ['label' => 'Payment Status', 'rules' => 'required'],
-				'ord_pay_to_dr_date' => ['label' => 'Paid to Employee', 'rules' => 'required'],
-				'ord_emp_pay_status' => ['label' => 'Employee Payment Status', 'rules' => 'required'],
+
 
 			];
 
@@ -3392,8 +3489,44 @@ class Backend extends BEBaseController
 
 				//store this to database
 				$newData = [
+					'ord_speciality' => $this->request->getVar('ord_speciality'),
+					'ord_grade' => $this->request->getVar('ord_grade'),
+					'ord_required_from' => $this->request->getVar('ord_required_from'),
+					'ord_required_to' => $this->request->getVar('ord_required_to'),
+					'ord_datetime_detail' => $this->request->getVar('ord_datetime_detail'),
+					'ord_status' => 1,
+					'cl_id' => $this->request->getVar('cl_id'),
+					'emp_id' => $this->request->getVar('emp_id'),
+					'ord_process_details_from' => $this->request->getVar('ord_process_details_from'),
+					'ord_process_details_to' => $this->request->getVar('ord_process_details_to'),
+					'ord_prosdatetime_detail' => $this->request->getVar('ord_prosdatetime_detail'),
+					'ord_normal_hrs' => $this->request->getVar('ord_normal_hrs'),
+					'ord_normal_hrs_rt' => $this->request->getVar('ord_normal_hrs_rt'),
+					'nh_p_type' => $this->request->getVar('nh_p_type'),
+					'ord_on_call_hrs' => $this->request->getVar('ord_on_call_hrs'),
+					'ord_ocall_rt' => $this->request->getVar('ord_ocall_rt'),
+					'oc_p_type' => $this->request->getVar('oc_p_type'),
+					'ord_off_site_hrs' => $this->request->getVar('ord_off_site_hrs'),
+					'ord_osite_rt' => $this->request->getVar('ord_osite_rt'),
+					'os_p_type' => $this->request->getVar('os_p_type'),
+					'ord_bh_week_hrs' => $this->request->getVar('ord_bh_week_hrs'),
+					'ord_bhw_rt' => $this->request->getVar('ord_bhw_rt'),
+					'bhw_p_type' => $this->request->getVar('bhw_p_type'),
+					'ord_total_hrs' => $this->request->getVar('ord_total_hrs'),
+					'ord_admin_charges' => $this->request->getVar('ord_admin_charges'),
+					'ord_process_date' => $this->request->getVar('ord_process_date'),
+					'ord_Hnormal_hrs_rt' => $this->request->getVar('ord_Hnormal_hrs_rt'),
+					'ord_Hocall_rt' => $this->request->getVar('ord_Hocall_rt'),
+					'ord_Hosite_rt' => $this->request->getVar('ord_Hosite_rt'),
+					'ord_Hbhw_rt' => $this->request->getVar('ord_Hbhw_rt'),
+					'ord_paying_to_dr' => $this->request->getVar('ord_paying_to_dr'),
 					'ord_cancel_bcl' => $this->request->getVar('ord_cancel_bcl'),
 					'ord_cancel_bdr' => $this->request->getVar('ord_cancel_bdr'),
+					'ord_confirmation_date' => $this->request->getVar('ord_confirmation_date'),
+					'ord_adminchrg_intern' => $this->request->getVar('ord_adminchrg_intern'),
+					'ord_hosp_earn' => $this->request->getVar('ord_hosp_earn'),
+					'vat_rate' => $this->request->getVar('vat_rate'),
+					'ord_vat_sale' => $this->request->getVar('ord_vat_sale'),
 					'ord_ref_no' => $this->request->getVar('ord_ref_no'),	// Locum Confirmation No
 					'ord_pay_to_dr' => $this->request->getVar('ord_pay_to_dr'),
 					'ord_diff_profit_admin' => $this->request->getVar('ord_diff_profit_admin'),
@@ -3404,16 +3537,7 @@ class Backend extends BEBaseController
 					'ord_time_sheet_process' => $this->request->getVar('ord_time_sheet_process'),
 					'ord_time_sheet_approved' => $this->request->getVar('ord_time_sheet_approved'),
 					'ord_comment1' => $this->request->getVar('ord_comment1') ? $this->request->getVar('ord_comment1') : NULL,
-					'ord_invoice_id' => $this->request->getVar('ord_invoice_id'),
-					'ord_invoice_date' => $this->request->getVar('ord_invoice_date'),
-					'ord_invoice_by' => $this->request->getVar('ord_invoice_by'),
-					'ord_sage_refer_no' => $this->request->getVar('ord_sage_refer_no'),
-					'ord_invoice_refer' => $this->request->getVar('ord_invoice_refer'),	// Invoice Details
-					'ord_paymnt_rcvd_date' => $this->request->getVar('ord_paymnt_rcvd_date'),
-					'ord_payment_status' => $this->request->getVar('ord_payment_status'),
-					'ord_pay_to_dr_date' => $this->request->getVar('ord_pay_to_dr_date'),
-					'ord_emp_pay_status' => $this->request->getVar('ord_emp_pay_status'),
-					'ord_comment2' => $this->request->getVar('ord_comment2') ? $this->request->getVar('ord_comment2') : NULL,				// Payment Remarks
+
 
 
 
@@ -3497,13 +3621,127 @@ class Backend extends BEBaseController
 			}
 			if (sendEmail($to2, $cc, $subject, $message)) {
 				$session->setFlashdata('success', 'Employee Confirmation Email Succesfully Sent');
-				return redirect()->to('backend/email-4/' . encryptIt($id));
+				return redirect()->to('backend/order-s5/' . encryptIt($id));
 			} else {
 				$session->setFlashdata('error', 'Employee Confirmation Email Failed');
 				return redirect()->to('backend/email-4/' . encryptIt($id));
 			}
 		}
 	}
+
+	public function order_s5($id = null)
+	{
+		$data = [];
+		helper(['form']);
+		$id = decryptIt($id);
+		$Nmodel = new notificationModel();
+		$Gmodel = new gradeModel();
+		$data['gr_row'] = $Gmodel->findAll();
+		$Smodel = new specialityModel();
+		$data['sp_row'] = $Smodel->findAll();
+		$clmodel = new ClientModel();
+		$data['c_det'] = $clmodel->where('cl_status', 1)->where('cl_h_name !=', Null)->where('cl_cont_name !=', Null)->find();
+		$Emodel = new EmpModel();
+		$data['emp_row'] = $Emodel->where('emp_status', 1)->where('emp_fname !=', Null)->find();
+		$omodel = new ordersModel();
+		$data['v_ordr'] = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $id)->first();
+		$link = 'employee/ord-view';
+		$link2 = 'client/ord-status';
+		$invoice_id = $this->request->getVar('ord_invoice_id');
+
+
+		if ($this->request->getMethod() == 'post') {
+			$rules = [
+				'ord_invoice_id' => ['label' => 'SRAL Invoice ID', 'rules' => 'required'],
+				'ord_invoice_date' => ['label' => 'SRAL Invoice Date', 'rules' => 'required'],
+				'ord_invoice_by' => ['label' => 'Invoiced By', 'rules' => 'required'],
+				'ord_sage_refer_no' => ['label' => 'Sage Invoice ID', 'rules' => 'required'],
+				'ord_invoice_refer' => ['label' => 'Invoice Details', 'rules' => 'required'],  // Invoice Details
+				'ord_paymnt_rcvd_date' => ['label' => 'Payment Received', 'rules' => 'required'],
+				'ord_payment_status' => ['label' => 'Payment Status', 'rules' => 'required'],
+				'ord_pay_to_dr_date' => ['label' => 'Paid to Employee', 'rules' => 'required'],
+				'ord_emp_pay_status' => ['label' => 'Employee Payment Status', 'rules' => 'required'],
+
+
+			];
+
+			if (!$this->validate($rules)) {
+				$data['validation'] = $this->validator;
+			} else {
+
+				// logs
+				$log = array(
+					'row_id' => $id,
+					'adm_id' => session()->usr_id,
+					'action_table' => 'Orders',
+					'content' => $_POST,
+					'event' => 'Order Step 5 Updated',
+				);
+
+				add_log($log);
+
+				$newData2 = [
+					'ord_id' => $id,
+					'emp_id' => $data['v_ordr']['emp_id'], //user id to whom we want to send notification,
+					'link'	=> $link,
+					'notification' => "Locum Payment Paid",
+					'status' => "0",
+					'usr_type' => "employee",
+				];
+				$newData3 = [
+					'ord_id' => $id,
+					'emp_id' => $data['v_ordr']['cl_id'], //user id to whom we want to send notification,
+					'link'	=> $link2,
+					'notification' => "Locum Payment received",
+					'status' => "0",
+					'usr_type' => "client",
+				];
+
+				//store this to database
+				$newData = [
+					'ord_invoice_id' => $this->request->getVar('ord_invoice_id'),
+					'ord_invoice_date' => $this->request->getVar('ord_invoice_date'),
+					'ord_invoice_by' => $this->request->getVar('ord_invoice_by'),
+					'ord_sage_refer_no' => $this->request->getVar('ord_sage_refer_no'),
+					'ord_invoice_refer' => $this->request->getVar('ord_invoice_refer'),	// Invoice Details
+					'ord_paymnt_rcvd_date' => $this->request->getVar('ord_paymnt_rcvd_date'),
+					'ord_payment_status' => $this->request->getVar('ord_payment_status'),
+					'ord_pay_to_dr_date' => $this->request->getVar('ord_pay_to_dr_date'),
+					'ord_emp_pay_status' => $this->request->getVar('ord_emp_pay_status'),
+					'ord_comment2' => $this->request->getVar('ord_comment2') ? $this->request->getVar('ord_comment2') : NULL,				// Payment Remarks
+					'ord_status' => '5',
+				];
+				$omodel->update($id, $newData);
+				$to =  $data['v_ordr']['emp_email'];
+				$to2 =  $data['v_ordr']['cl_cont_email'];
+				$cc = '';
+				$subject = 'SRAL-Your Payment Paid | Locum Confirmation#' . $data['v_ordr']['ord_ref_no'];
+				$subject2 = 'SRAL-Payment Received | Invoice#' . $invoice_id;
+				$message = $this->LoadView('admin/email_responses/emp_payment', $data);
+				$message2 = $this->LoadView('admin/email_responses/client_payment', $data);
+				$session = session();
+				if (sendEmail($to, $cc, $subject, $message)) {
+					$session->setFlashdata('success', 'Payment Done and Order Locked');
+					$Nmodel->insert($newData2);
+				} else {
+					$session->setFlashdata('error', 'Payment Done Email Failed');
+					return redirect()->to('backend/orders');
+				}
+				if (sendEmail($to2, $cc, $subject2, $message2)) {
+					$session->setFlashdata('success', 'Payment Done and Order Locked');
+					$Nmodel->insert($newData3);
+					return redirect()->to('backend/orders');
+				} else {
+					$session->setFlashdata('error', 'Payment Done Email Failed');
+					return redirect()->to('backend/orders');
+				}
+			}
+		}
+
+
+		return $this->LoadView('admin/order_s5', $data);
+	}
+
 	public function Locum_confirmation_track()
 	{
 
@@ -4037,6 +4275,67 @@ class Backend extends BEBaseController
 		}
 		// print_r($responses);exit;
 		// Return the response as JSON
+		return $this->response->setJSON($response);
+	}
+	public function getServerDateTime()
+	{
+		$currentDateTime = date('d:m:Y h:i:s a');
+
+		$response = [
+			'currentDateTime' => $currentDateTime
+		];
+
+		return $this->response->setJSON($response);
+	}
+	public function getPieChartData()
+	{
+		$data = [];
+		$omodel = new ordersModel();
+		$hospital = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->where('cl_reg_as', '1')->countAllResults();
+		$gp = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->where('cl_reg_as', '3')->countAllResults();
+		$nurse = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->where('cl_reg_as', '7')->countAllResults();
+
+		$response = [
+			'gp' => $gp,
+			'hospital' => $hospital,
+			'nurse' => $nurse,
+		];
+
+		return $this->response->setJSON($response);
+	}
+	public function TotalConfirmedHours()
+	{
+		$startDate = $this->request->getPost('start_date');
+		$endDate = $this->request->getPost('end_date');
+		$type = $this->request->getPost('type');
+
+		$model = new ordersModel();
+		$data = $model
+			->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')
+			->selectSum('ord_normal_hrs', 'norm')
+			->selectSum('ord_on_call_hrs', 'onch')
+			->selectSum('ord_off_site_hrs', 'ofsh')
+			->selectSum('ord_bh_week_hrs', 'bhwh');
+
+		if (!empty($startDate) && !empty($endDate)) {
+			$data->where('ord_created >=', $startDate)
+				->where('ord_created <=', $endDate);
+		}
+		if (!empty($type)) {
+			$data->where('cl_reg_as', $type);
+		}
+
+		$result = $data->get()->getRow();
+
+
+		// Calculate the grand sum
+		$grandSum = $result->norm + $result->onch + $result->ofsh + $result->bhwh;
+
+		// Prepare the response
+		$response = [
+			'grand_sum' => $grandSum,
+		];
+
 		return $this->response->setJSON($response);
 	}
 }

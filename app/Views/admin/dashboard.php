@@ -224,7 +224,7 @@
         <div class="card-header">
             <div class="row align-items-center">
                 <div class="col">
-                    <h6 class="card-title">Work Report</h6>
+                    <h4 class="card-title text-primary">Work Report</h4>
                 </div>
                 <form id="chart_filters" class="form-control ">
                     <div class="row float-end">
@@ -245,7 +245,7 @@
                         </div>
                         <div class="col-auto">
                             <div class="form-group mb-0">
-                                <button type="submit" class="btn btn-secondary bt-sm">Get</button>
+                                <button type="submit" class="btn btn-primary bt-sm">Get</button>
                             </div>
                         </div>
                     </div>
@@ -257,9 +257,66 @@
         </div>
     </div>
 </div>
-<div class="row mb-3">
-    <div class="col-md-8">
-        <div class="card" style="height:70%">
+<div class="row">
+<div class="col-md-8" style="padding-left:0;padding-right:0.3%;">
+    <div class="card text-center" style="height:100%;">
+        <div class="card-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h4 class="card-title text-primary">Total Confirmed Hours</h4>
+                </div>
+                <form id="hours_filters" class="form-control ">
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="form-group mb-0">
+                                <input type="date" class="form-control" name="start_date" value="">
+                            </div>
+                        </div>
+                        <div class="col-3">
+                        <div class="form-group mb-0">
+                                <input type="date" class="form-control" name="end_date">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                        <div class="form-group mb-0">
+                                <select class="form-control select2" name="type">
+                                <option value="">Select Type</option>
+                                <option value="1">Hospital</option>
+                                <option value="3">GP</option>
+                                <option value="7">Nurse</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="form-group mb-0">
+                                <button type="submit" class="btn btn-primary bt-sm">Get</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card-body text-center" >
+        <div class="col-md-12 text-center">
+                        
+                        <h1 id="hours_value" class="text-primary"> </h1>
+                        </div>
+        </div>
+        </div>
+        </div>
+    <div class="col-md-4 col-sm-12" style="padding-left:0;padding-right:0.3%;">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title text-primary">Locum Analysis</h4>
+            </div>
+            <div class="card-body text-center">
+                <div id="income_analysis"></div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="col-md-12">
+        <div class="card" style="height:80%">
             <div class="card-header">
                 <h4 class="card-title text-primary">User Work Log List</h4>
             </div>
@@ -290,16 +347,6 @@
 
                     </tbody>
                 </table>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4 col-sm-12">
-        <div class="card">
-            <div class="card-header">
-                <h6 class="card-title text-primary">Locum Analysis</h6>
-            </div>
-            <div class="card-body text-center">
-                <div id="income_analysis"></div>
             </div>
         </div>
     </div>

@@ -24,12 +24,11 @@
                         <ul role="tablist">
                             <li role="tab" class="first done" aria-disabled="false" aria-selected="false"><a id="wizard_horizontal-t-0" aria-controls="wizard_horizontal-p-0"><span class="number">1.</span> First Response</a>
                             </li>
-                            <li role="tab" class="second current" aria-disabled="false" aria-selected="true"><a id="wizard_horizontal-t-1" aria-controls="wizard_horizontal-p-1"><span class="current-info audible">current
-                                        step: </span><span class="number">2.</span> Locum Process</a></li>
+                            <li role="tab" class="second current" aria-disabled="false" aria-selected="true"><a id="wizard_horizontal-t-1" aria-controls="wizard_horizontal-p-1"><span class="number">2.</span> Locum Process</a></li>
                             <li role="tab" class="third disabled" aria-disabled="true"><a id="wizard_horizontal-t-2" aria-controls="wizard_horizontal-p-2"><span class="number">3.</span> Client
                                     Confirmation</a></li>
-                            <li role="tab" class="last disabled" aria-disabled="false"><a id="wizard_horizontal-t-3" aria-controls="wizard_horizontal-p-3"><span class="number">4.</span> Employee
-                                    Confirmation</a></li>
+                                    <li role="tab" class="fourth disabled" aria-disabled="false"><a id="wizard_horizontal-t-3" aria-controls="wizard_horizontal-p-3"><span class="number">4.</span> Emp Confirmation</a></li>
+                            <li role="tab" class="last disabled" aria-disabled="false"><a id="wizard_horizontal-t-3" aria-controls="wizard_horizontal-p-3"><span class="number">5.</span> Payments</a></li>
                         </ul>
                     </div>
 
@@ -77,7 +76,7 @@
                                 <div class="row mb-3">
                                     <div class="form-group">
                                         <label for="cl_id" class="control-label mb-1">Order From</label>
-                                        <select id="cl_id" name="cl_id" class="select2 form-control" data-parsley-trigger="change" disabled>
+                                        <select id="cl_id" name="cl_id" class="select2 form-control" data-parsley-trigger="change" required>
                                             <option value="">Select Client</option>
                                             <?php foreach ($c_det as $crow) : ?>
                                                 <option value="<?= $crow['cl_id'] ?>" <?php if ($v_ordr['cl_id'] == $crow['cl_id']) { ?> echo selected="selected" <?php } ?>><?= $crow['cl_cont_name'] . ' (' . $crow['cl_h_name'] . ')' ?>
@@ -90,7 +89,7 @@
                                 <div class="row mb-3">
                                     <div class="form-group col-md-4">
                                         <label for="ord_speciality" class="control-label mb-1">Speciality</label>
-                                        <select id="ord_speciality" name="ord_speciality" class="form-control select2" data-parsley-trigger="change" disabled>
+                                        <select id="ord_speciality" name="ord_speciality" class="form-control select2" data-parsley-trigger="change" required>
                                             <option value="">Select Speciality</option>
                                             <?php foreach ($sp_row as $srow) : ?>
                                                 <option value="<?= $srow['spec_id'] ?>" <?php if ($v_ordr['ord_speciality'] == $srow['spec_id']) { ?> echo selected="selected" <?php } ?>><?= $srow['spec_name'] ?></option>
@@ -99,7 +98,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <label for="ord_grade" class="control-label mb-1">Grade</label>
-                                        <select id="ord_grade" name="ord_grade" class="form-control select2" data-parsley-trigger="change" disabled>
+                                        <select id="ord_grade" name="ord_grade" class="form-control select2" data-parsley-trigger="change" required>
                                             <option value="">Select Grade</option>
                                             <?php foreach ($gr_row as $grow) : ?>
                                                 <option value="<?= $grow['grade_id'] ?>" <?php if ($v_ordr['ord_grade'] == $grow['grade_id']) { ?> echo selected="selected" <?php } ?>><?= $grow['grade_name'] ?></option>
@@ -120,19 +119,19 @@
                                     <div class="form-group col-md-6 ">
                                         <label for="ord_required_from" class="ord_required_from-label mb-1">Locum
                                             Required From</label>
-                                        <input id="ord_required_from" name="ord_required_from" type="datetime-local" class="form-control" placeholder="Click to enter date and time" disabled title="Click to enter date and time" value="<?= $v_ordr['ord_required_from'] ?>">
+                                        <input id="ord_required_from" name="ord_required_from" type="datetime-local" class="form-control" placeholder="Click to enter date and time" required title="Click to enter date and time" value="<?= $v_ordr['ord_required_from'] ?>">
                                     </div>
 
                                     <div class="form-group col-md-6 ">
                                         <label for="ord_required_to" class="control-label mb-1">Locum Required
                                             To</label>
-                                        <input id="ord_required_to" name="ord_required_to" type="datetime-local" class="form-control" placeholder="Click to enter date and time" disabled title="Click to enter date and time" value="<?= $v_ordr['ord_required_to'] ?>">
+                                        <input id="ord_required_to" name="ord_required_to" type="datetime-local" class="form-control" placeholder="Click to enter date and time" required title="Click to enter date and time" value="<?= $v_ordr['ord_required_to'] ?>">
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <label for="ord_datetime_detail" class="control-label mb-1">Locum Date & Time
                                         Details</label>
-                                    <textarea id="ord_datetime_detail" name="ord_datetime_detail" class="form-control" disabled placeholder="Use comma separation for putting multiple dates and time for e.g: ' 23-02-2024 to 23-03-2024 08 to 21, 28-02-2023 18 to 22' "><?= $v_ordr['ord_datetime_detail'] ?></textarea>
+                                    <textarea id="ord_datetime_detail" name="ord_datetime_detail" class="form-control" required placeholder="Use comma separation for putting multiple dates and time for e.g: ' 23-02-2024 to 23-03-2024 08 to 21, 28-02-2023 18 to 22' "><?= $v_ordr['ord_datetime_detail'] ?></textarea>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="form-group col-md-4 ">
@@ -156,17 +155,22 @@
                                     <textarea id="ord_prosdatetime_detail" name="ord_prosdatetime_detail" class="form-control" placeholder="Use comma separation for putting multiple dates and time for e.g:  '23-02-2024 to 23-03-2024 08 to 21, 28-02-2023 18 to 22'" required=""><?= $v_ordr['ord_prosdatetime_detail'] ? $v_ordr['ord_prosdatetime_detail'] : set_value('ord_prosdatetime_detail') ?></textarea>
                                 </div>
                                 <div class="row mb-3">
-                                    <div class="form-group col-md-4 ">
+                                    <div class="form-group col-md-3 ">
                                         <label for="ord_normal_hrs" class="control-label mb-1">No of Normal/Flat
                                             Hrs</label>
-                                        <input id="ord_normal_hrs" name="ord_normal_hrs" oninput="calculate()" type="text"  class="form-control" value="<?= $v_ordr['ord_normal_hrs'] ? $v_ordr['ord_normal_hrs'] : set_value('ord_normal_hrs') ?>" required="">
+                                        <input id="ord_normal_hrs" name="ord_normal_hrs" oninput="calculate()" type="text"  class="form-control" value="<?= $v_ordr['ord_normal_hrs'] ? $v_ordr['ord_normal_hrs'] : set_value('ord_normal_hrs', '0') ?>" required="">
                                     </div>
-                                    <div class="form-group col-md-4 ">
-                                        <label for="ord_normal_hrs_rt" class="control-label mb-1">Rate for Normal
+                                    <div class="form-group col-md-3 ">
+                                        <label for="ord_Hnormal_hrs_rt" class="control-label mb-1">Rate for Hosp Normal
                                             Hrs</label>
-                                        <input id="ord_normal_hrs_rt" name="ord_normal_hrs_rt" type="text" class="form-control" value="<?= $v_ordr['ord_normal_hrs_rt'] ? $v_ordr['ord_normal_hrs_rt'] : set_value('ord_normal_hrs_rt') ?>" required="">
+                                        <input id="ord_Hnormal_hrs_rt" name="ord_Hnormal_hrs_rt" type="text" class="form-control" value="<?= $v_ordr['ord_Hnormal_hrs_rt'] ? $v_ordr['ord_Hnormal_hrs_rt'] : set_value('ord_Hnormal_hrs_rt', '0') ?>" required="">
                                     </div>
-                                    <div class="form-group col-md-4 ">
+                                    <div class="form-group col-md-3 ">
+                                        <label for="ord_normal_hrs_rt" class="control-label mb-1">Rate for Emp Normal
+                                            Hrs</label>
+                                        <input id="ord_normal_hrs_rt" name="ord_normal_hrs_rt" type="text" class="form-control" value="<?= $v_ordr['ord_normal_hrs_rt'] ? $v_ordr['ord_normal_hrs_rt'] : set_value('ord_normal_hrs_rt', '0') ?>" required="">
+                                    </div>
+                                    <div class="form-group col-md-3 ">
                                         <label for="nh_p_type" class="control-label mb-1">Hours / Fullday /
                                             Halfday</label>
                                         <select id="nh_p_type" name="nh_p_type" class="form-control select2" required="" data-parsley-trigger="change">
@@ -179,17 +183,21 @@
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <div class="form-group col-md-4 ">
+                                    <div class="form-group col-md-3 ">
                                         <label for="ord_on_call_hrs" class="control-label mb-1">No of OnCall Hrs</label>
-                                        <input id="ord_on_call_hrs" name="ord_on_call_hrs" oninput="calculate()" required="" type="text" class="form-control" value="<?= $v_ordr['ord_on_call_hrs'] ? $v_ordr['ord_on_call_hrs'] : set_value('ord_on_call_hrs') ?>">
+                                        <input id="ord_on_call_hrs" name="ord_on_call_hrs" oninput="calculate()"  type="text" class="form-control" value="<?= $v_ordr['ord_on_call_hrs'] ? $v_ordr['ord_on_call_hrs'] : set_value('ord_on_call_hrs', '0') ?>">
                                     </div>
-                                    <div class="form-group col-md-4 ">
-                                        <label for="ord_ocall_rt" class="control-label mb-1">Rate for OnCall Hrs</label>
-                                        <input id="ord_ocall_rt" name="ord_ocall_rt" type="text" class="form-control" required="" value="<?= $v_ordr['ord_ocall_rt'] ? $v_ordr['ord_ocall_rt'] : set_value('ord_ocall_rt') ?>">
+                                    <div class="form-group col-md-3 ">
+                                        <label for="ord_Hocall_rt" class="control-label mb-1">Rate for Hosp OnCall Hrs</label>
+                                        <input id="ord_Hocall_rt" name="ord_Hocall_rt" type="text" class="form-control"  value="<?= $v_ordr['ord_Hocall_rt'] ? $v_ordr['ord_Hocall_rt'] : set_value('ord_Hocall_rt', '0') ?>">
                                     </div>
-                                    <div class="form-group col-md-4 ">
+                                    <div class="form-group col-md-3 ">
+                                        <label for="ord_ocall_rt" class="control-label mb-1">Rate for Emp OnCall Hrs</label>
+                                        <input id="ord_ocall_rt" name="ord_ocall_rt" type="text" class="form-control"  value="<?= $v_ordr['ord_ocall_rt'] ? $v_ordr['ord_ocall_rt'] : set_value('ord_ocall_rt', '0') ?>">
+                                    </div>
+                                    <div class="form-group col-md-3 ">
                                         <label for="oc_p_type" class="control-label mb-1">Hours / Fullday / Halfday</label>
-                                    <select id="oc_p_type" name="oc_p_type"  class="form-control select2" required="" data-parsley-trigger="change" >
+                                    <select id="oc_p_type" name="oc_p_type"  class="form-control select2"  data-parsley-trigger="change" >
                                         <option value="">Select Pay Type</option>
                                         <option value="1" <?= set_select('oc_p_type', '1', ($v_ordr['oc_p_type'] == '1') ? TRUE : FALSE) ?>>Hour</option>
                                         <option value="2" <?= set_select('oc_p_type', '2', ($v_ordr['oc_p_type'] == '2') ? TRUE : FALSE) ?>>FullDay</option>
@@ -198,20 +206,25 @@
                                         </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <div class="form-group col-md-4 ">
+                                    <div class="form-group col-md-3 ">
                                         <label for="ord_off_site_hrs" class="control-label mb-1">No of OffSite
                                             Hrs</label>
-                                        <input id="ord_off_site_hrs" name="ord_off_site_hrs" oninput="calculate()" required="" type="text" class="form-control" value="<?= $v_ordr['ord_off_site_hrs'] ? $v_ordr['ord_off_site_hrs'] : set_value('ord_off_site_hrs') ?>">
+                                        <input id="ord_off_site_hrs" name="ord_off_site_hrs" oninput="calculate()"  type="text" class="form-control" value="<?= $v_ordr['ord_off_site_hrs'] ? $v_ordr['ord_off_site_hrs'] : set_value('ord_off_site_hrs', '0') ?>">
                                     </div>
-                                    <div class="form-group col-md-4 ">
-                                        <label for="ord_osite_rt" class="control-label mb-1">Rate for OffSite
+                                    <div class="form-group col-md-3 ">
+                                        <label for="ord_Hosite_rt" class="control-label mb-1">Rate for Hosp OffSite
                                             Hrs</label>
-                                        <input id="ord_osite_rt" name="ord_osite_rt" type="text" class="form-control" required="" value="<?= $v_ordr['ord_osite_rt'] ? $v_ordr['ord_osite_rt'] : set_value('ord_osite_rt') ?>">
+                                        <input id="ord_Hosite_rt" name="ord_Hosite_rt" type="text" class="form-control"  value="<?= $v_ordr['ord_Hosite_rt'] ? $v_ordr['ord_Hosite_rt'] : set_value('ord_Hosite_rt', '0') ?>">
                                     </div>
-                                    <div class="form-group col-md-4 ">
+                                    <div class="form-group col-md-3 ">
+                                        <label for="ord_osite_rt" class="control-label mb-1">Rate for Emp OffSite
+                                            Hrs</label>
+                                        <input id="ord_osite_rt" name="ord_osite_rt" type="text" class="form-control"  value="<?= $v_ordr['ord_osite_rt'] ? $v_ordr['ord_osite_rt'] : set_value('ord_osite_rt', '0') ?>">
+                                    </div>
+                                    <div class="form-group col-md-3 ">
                                         <label for="os_p_type" class="control-label mb-1">Hours / Fullday /
                                             Halfday</label>
-                                        <select id="os_p_type" name="os_p_type" class="form-control select2" required="" data-parsley-trigger="change">
+                                        <select id="os_p_type" name="os_p_type" class="form-control select2"  data-parsley-trigger="change">
                                             <option value="">Select Pay Type</option>
                                             <option value="1" <?= set_select('os_p_type', '1', ($v_ordr['os_p_type'] == '1') ? TRUE : FALSE) ?>>Hour</option>
                                             <option value="2" <?= set_select('os_p_type', '2', ($v_ordr['os_p_type'] == '2') ? TRUE : FALSE) ?>>FullDay</option>
@@ -220,20 +233,25 @@
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <div class="form-group col-md-4 ">
+                                    <div class="form-group col-md-3 ">
                                         <label for="ord_bh_week_hrs" class="control-label mb-1">No of BH/Weekend
                                             Hrs</label>
-                                        <input id="ord_bh_week_hrs" name="ord_bh_week_hrs" oninput="calculate()" required="" type="text" class="form-control" value="<?= $v_ordr['ord_bh_week_hrs'] ? $v_ordr['ord_bh_week_hrs'] : set_value('ord_bh_week_hrs') ?>">
+                                        <input id="ord_bh_week_hrs" name="ord_bh_week_hrs" oninput="calculate()"  type="text" class="form-control" value="<?= $v_ordr['ord_bh_week_hrs'] ? $v_ordr['ord_bh_week_hrs'] : set_value('ord_bh_week_hrs', '0') ?>">
                                     </div>
-                                    <div class="form-group col-md-4 ">
-                                        <label for="ord_bhw_rt" class="control-label mb-1">Rate for BH/Weekend
+                                    <div class="form-group col-md-3 ">
+                                        <label for="ord_Hbhw_rt" class="control-label mb-1">Rate for Hosp BH/Weekend
                                             Hrs</label>
-                                        <input id="ord_bhw_rt" name="ord_bhw_rt" type="text" class="form-control" required="" value="<?= $v_ordr['ord_bhw_rt'] ? $v_ordr['ord_bhw_rt'] : set_value('ord_bhw_rt') ?>">
+                                        <input id="ord_Hbhw_rt" name="ord_Hbhw_rt" type="text" class="form-control"  value="<?= $v_ordr['ord_Hbhw_rt'] ? $v_ordr['ord_Hbhw_rt'] : set_value('ord_Hbhw_rt', '0') ?>">
                                     </div>
-                                    <div class="form-group col-md-4 ">
+                                    <div class="form-group col-md-3 ">
+                                        <label for="ord_bhw_rt" class="control-label mb-1">Rate for Emp BH/Weekend
+                                            Hrs</label>
+                                        <input id="ord_bhw_rt" name="ord_bhw_rt" type="text" class="form-control"  value="<?= $v_ordr['ord_bhw_rt'] ? $v_ordr['ord_bhw_rt'] : set_value('ord_bhw_rt', '0') ?>">
+                                    </div>
+                                    <div class="form-group col-md-3 ">
                                         <label for="bhw_p_type" class="control-label mb-1">Hours / Fullday /
                                             Halfday</label>
-                                        <select id="bhw_p_type" name="bhw_p_type" class="form-control select2" required="" data-parsley-trigger="change">
+                                        <select id="bhw_p_type" name="bhw_p_type" class="form-control select2"  data-parsley-trigger="change">
                                             <option value="">Select Pay Type</option>
                                             <option value="1" <?= set_select('bhw_p_type', '1', ($v_ordr['bhw_p_type'] == '1') ? TRUE : FALSE) ?>>Hour</option>
                                             <option value="2" <?= set_select('bhw_p_type', '2', ($v_ordr['bhw_p_type'] == '2') ? TRUE : FALSE) ?>>FullDay</option>
@@ -244,7 +262,7 @@
                                 <div class="row mb-3">
                                     <div class="form-group col-md-4 ">
                                         <label for="total" class="control-label mb-1">Total Worked Hours</label>
-                                        <input id="total" name="ord_total_hrs" oninput="payingdoc()" type="text" required="" class="form-control" value="<?= $v_ordr['ord_total_hrs'] ? $v_ordr['ord_total_hrs'] : set_value('ord_total_hrs') ?>">
+                                        <input id="total" name="ord_total_hrs" oninput="payingdoc()" type="text"  class="form-control" value="<?= $v_ordr['ord_total_hrs'] ? $v_ordr['ord_total_hrs'] : set_value('ord_total_hrs') ?>" readonly>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label for="ord_admin_charges" class="control-label mb-1">Admin Charges</label>
