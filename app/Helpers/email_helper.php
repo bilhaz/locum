@@ -40,18 +40,18 @@ function add_log($data = array()) {
     $logModel->insert($log);
     
 }
-function add_notif($data = array()) {
-    $notiModel = new App\Models\notificationModel();
+function em_log($data = array()) {
+    $emailLogModel = new App\Models\emailLogModel();
     
-    $noti = [
-            'ord_id' => $data['ord_id'],
-            'link' => $data['link'],
-            'emp_id' => $data['emp_id'],
-            'usr_type' => $data['usr_type'],
-            'notification' => $data['notification'],
-            'status' => '0',
+    $emLog = [
+            'em_to' => $data['em_to'],
+            'em_subject' => $data['em_subject'],
+            'em_body' => json_encode($data['em_body']),
+            'row_id' => $data['row_id'],
+            'action_table' => $data['action_table'],
+            'em_status' =>  $data['em_status'],
     ];
-    $notiModel->insert($noti);
+    $emailLogModel->insert($emLog);
     
 }
 function show_404(){

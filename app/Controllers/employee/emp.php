@@ -210,6 +210,15 @@ class emp extends EMPBaseController
 		$cc = '';
 		$subject = 'SRA-Password Reset Request';
 		$message = $email_page;
+		$emLog = [
+			'em_to' => $to,
+			'em_subject' => $subject,
+			'em_body' => $message,
+			'row_id' => 'NULL',
+			'action_table' => 'Employee',
+			'em_status' => '1' ,
+	];
+	em_log($emLog);
 		return (sendEmail($to, $cc, $subject, $message));
 	}
 	public function dashboard()
@@ -370,8 +379,26 @@ class emp extends EMPBaseController
 				$session = session();
 				if (sendEmail($to, $cc, $subject, $message)) {
 					$session->setFlashdata('success', 'Assesment Successful Uploaded');
+					$emLog = [
+						'em_to' => $to,
+						'em_subject' => $subject,
+						'em_body' => $message,
+						'row_id' => $id,
+						'action_table' => 'Orders',
+						'em_status' => '1' ,
+				];
+				em_log($emLog);
 					return redirect()->to('employee/ord-view/' . encryptIt($asid));
 				} else {
+					$emLog = [
+						'em_to' => $to,
+						'em_subject' => $subject,
+						'em_body' => $message,
+						'row_id' => $id,
+						'action_table' => 'Orders',
+						'em_status' => '0' ,
+				];
+				em_log($emLog);
 					return redirect()->to('employee/ord-view/' . encryptIt($asid));
 				}
 			}
@@ -442,8 +469,26 @@ class emp extends EMPBaseController
 		$session = session();
 		if (sendEmail($to, $cc, $subject, $message)) {
 			$session->setFlashdata('success', 'TimeSheet Saved');
+			$emLog = [
+				'em_to' => $to,
+				'em_subject' => $subject,
+				'em_body' => $message,
+				'row_id' => $ord_id,
+				'action_table' => 'Timesheet',
+				'em_status' => '1' ,
+		];
+		em_log($emLog);
 			return redirect()->to('employee/ord-view/' . encryptIt($ord_id));
 		} else {
+			$emLog = [
+				'em_to' => $to,
+				'em_subject' => $subject,
+				'em_body' => $message,
+				'row_id' => $ord_id,
+				'action_table' => 'Timesheet',
+				'em_status' => '0' ,
+		];
+		em_log($emLog);
 			return redirect()->to('employee/ord-view/' . encryptIt($ord_id));
 		}
 	}
@@ -508,8 +553,26 @@ class emp extends EMPBaseController
 		$session = session();
 		if (sendEmail($to, $cc, $subject, $message)) {
 			$session->setFlashdata('success', 'TimeSheet Updated');
+			$emLog = [
+				'em_to' => $to,
+				'em_subject' => $subject,
+				'em_body' => $message,
+				'row_id' => $ord_id,
+				'action_table' => 'Timesheet',
+				'em_status' => '1' ,
+		];
+		em_log($emLog);
 			return redirect()->to('employee/t-edit/' . encryptIt($ord_id));
 		} else {
+			$emLog = [
+				'em_to' => $to,
+				'em_subject' => $subject,
+				'em_body' => $message,
+				'row_id' => $ord_id,
+				'action_table' => 'Timesheet',
+				'em_status' => '0' ,
+		];
+		em_log($emLog);
 			return redirect()->to('employee/t-edit/' . encryptIt($ord_id));
 		}
 	}
@@ -900,6 +963,15 @@ class emp extends EMPBaseController
 
 		$session = session();
 		if (sendEmail($to, $cc, $subject, $message)) {
+			$emLog = [
+				'em_to' => $to,
+				'em_subject' => $subject,
+				'em_body' => $message,
+				'row_id' => $id,
+				'action_table' => 'Orders',
+				'em_status' => '1' ,
+		];
+		em_log($emLog);
 			$newdata2 = [
 				'ord_id' => $id,
 				'emp_id' => $eid,
@@ -912,12 +984,21 @@ class emp extends EMPBaseController
 			return redirect()->to('employee/advt_applied');
 		} else {
 			$session->setFlashdata('error', 'Apply Failed');
+			$emLog = [
+				'em_to' => $to,
+				'em_subject' => $subject,
+				'em_body' => $message,
+				'row_id' => $id,
+				'action_table' => 'Orders',
+				'em_status' => '0' ,
+		];
+		em_log($emLog);
 			return redirect()->to('employee/orders');
 		}
 	}
 	public function advt_applied($id = null)
 	{
-
+		$id = decryptIt($id);
 		$to = session()->emp_email;
 		$cc = '';
 		$subject = 'Applied Successfully for Locum';
@@ -926,9 +1007,27 @@ class emp extends EMPBaseController
 		$session = session();
 		if (sendEmail($to, $cc, $subject, $message)) {
 			$session->setFlashdata('success', 'Applied for Locum Successfully');
+			$emLog = [
+				'em_to' => $to,
+				'em_subject' => $subject,
+				'em_body' => $message,
+				'row_id' => $id,
+				'action_table' => 'Orders',
+				'em_status' => '1' ,
+		];
+		em_log($emLog);
 			return redirect()->to('employee/orders');
 		} else {
 			$session->setFlashdata('error', 'Apply Failed');
+			$emLog = [
+				'em_to' => $to,
+				'em_subject' => $subject,
+				'em_body' => $message,
+				'row_id' => $id,
+				'action_table' => 'Orders',
+				'em_status' => '0' ,
+		];
+		em_log($emLog);
 			return redirect()->to('employee/orders');
 		}
 	}

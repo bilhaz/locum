@@ -213,6 +213,15 @@ class cli extends CLIBaseController
 		$cc = '';
 		$subject = 'SRA-Password Reset Request';
 		$message = $email_page;
+		$emLog = [
+			'em_to' => $to,
+			'em_subject' => $subject,
+			'em_body' => $message,
+			'row_id' => 'NULL',
+			'action_table' => 'clients',
+			'em_status' => '1' ,
+	];
+	em_log($emLog);
         return(sendEmail($to, $cc, $subject, $message));
     }
 
@@ -351,9 +360,27 @@ class cli extends CLIBaseController
 			$Nmodel->insert($newdata2);
 			$session = session();
 			if (sendEmail($to, $cc, $subject, $message)) {
+				$emLog = [
+					'em_to' => $to,
+					'em_subject' => $subject,
+					'em_body' => $message,
+					'row_id' => $coid,
+					'action_table' => 'Orders',
+					'em_status' => '1' ,
+			];
+			em_log($emLog);
 				$session->setFlashdata('success', 'Order Cancelled');
 				return redirect()->to('client/orders');
 				} else {
+					$emLog = [
+						'em_to' => $to,
+						'em_subject' => $subject,
+						'em_body' => $message,
+						'row_id' => $coid,
+						'action_table' => 'Orders',
+						'em_status' => '0' ,
+				];
+				em_log($emLog);
 					return redirect()->to('client/orders');
 				}	
 			
@@ -421,8 +448,26 @@ class cli extends CLIBaseController
 		$session = session();
 		if (sendEmail($to, $cc, $subject, $message)) {
 			$session->setFlashdata('success', 'Timesheet Approved');
+			$emLog = [
+				'em_to' => $to,
+				'em_subject' => $subject,
+				'em_body' => $message,
+				'row_id' => $id,
+				'action_table' => 'Orders',
+				'em_status' => '1' ,
+		];
+		em_log($emLog);
 		return redirect()->to('client/timesheet/'.encryptIt($data['e_ord']['ord_id']));
 			} else {
+				$emLog = [
+					'em_to' => $to,
+					'em_subject' => $subject,
+					'em_body' => $message,
+					'row_id' => $id,
+					'action_table' => 'Orders',
+					'em_status' => '0' ,
+			];
+			em_log($emLog);
 				return redirect()->to('client/timesheet/'.encryptIt($data['e_ord']['ord_id']));
 		}	
 		
@@ -506,8 +551,26 @@ class cli extends CLIBaseController
 				$session = session();
 				if (sendEmail($to, $cc, $subject, $message)) {
 					$session->setFlashdata('success', 'Order Successful Created');
+					$emLog = [
+						'em_to' => $to,
+						'em_subject' => $subject,
+						'em_body' => $message,
+						'row_id' => $oid,
+						'action_table' => 'Orders',
+						'em_status' => '1' ,
+				];
+				em_log($emLog);
 					return redirect()->to('client/orders');
 					} else {
+						$emLog = [
+							'em_to' => $to,
+							'em_subject' => $subject,
+							'em_body' => $message,
+							'row_id' => $oid,
+							'action_table' => 'Orders',
+							'em_status' => '0' ,
+					];
+					em_log($emLog);
 						return redirect()->to('client/orders');
 					}	
 				
@@ -592,8 +655,26 @@ class cli extends CLIBaseController
 				$session = session();
 				if (sendEmail($to, $cc, $subject, $message)) {
 					$session->setFlashdata('success', 'Order Successful Updated');
+					$emLog = [
+						'em_to' => $to,
+						'em_subject' => $subject,
+						'em_body' => $message,
+						'row_id' => $eoid,
+						'action_table' => 'Orders',
+						'em_status' => '1' ,
+				];
+				em_log($emLog);
 					return redirect()->to('client/orders');
 					} else {
+						$emLog = [
+							'em_to' => $to,
+							'em_subject' => $subject,
+							'em_body' => $message,
+							'row_id' => $eoid,
+							'action_table' => 'Orders',
+							'em_status' => '0' ,
+					];
+					em_log($emLog);
 						return redirect()->to('client/orders');
 					}	
 				
@@ -710,8 +791,26 @@ public function order_confirm($oid = null)
 				$session = session();
 				if (sendEmail($to, $cc, $subject, $message)) {
 					$session->setFlashdata('success', 'Order Confirmed');
+					$emLog = [
+						'em_to' => $to,
+						'em_subject' => $subject,
+						'em_body' => $message,
+						'row_id' => $oid,
+						'action_table' => 'Orders',
+						'em_status' => '1' ,
+				];
+				em_log($emLog);
 					return redirect()->to('client/orders');
 					} else {
+						$emLog = [
+							'em_to' => $to,
+							'em_subject' => $subject,
+							'em_body' => $message,
+							'row_id' => $oid,
+							'action_table' => 'Orders',
+							'em_status' => '0' ,
+					];
+					em_log($emLog);
 						return redirect()->to('client/orders');
 					}	
 				

@@ -558,9 +558,27 @@ class Backend extends BEBaseController
 				$session = session();
 				if (sendEmail($to, $cc, $subject, $message)) {
 					$session->setFlashdata('success', 'Doctor Registered, Complete the Registration Form');
+					$emLog = [
+						'em_to' => $to,
+						'em_subject' => $subject,
+						'em_body' => $message,
+						'row_id' => $id,
+						'action_table' => 'Employee',
+						'em_status' => '1' ,
+				];
+				em_log($emLog);
 					return redirect()->to('backend/emp_details/' . encryptIt($id));
 				} else {
-					$session->setFlashdata('success', 'Doctor Registered, But Email Failed');
+					$session->setFlashdata('error', 'Doctor Registered, But Email Failed');
+					$emLog = [
+						'em_to' => $to,
+						'em_subject' => $subject,
+						'em_body' => $message,
+						'row_id' => $id,
+						'action_table' => 'Employee',
+						'em_status' => '0' ,
+				];
+				em_log($emLog);
 					return redirect()->to('backend/emp_details/' . encryptIt($id));
 				}
 			}
@@ -1319,9 +1337,27 @@ class Backend extends BEBaseController
 				$session = session();
 				if (sendEmail($to, $cc, $subject, $message)) {
 					$session->setFlashdata('success', 'Client Registered, Complete the Registration Form');
+					$emLog = [
+						'em_to' => $to,
+						'em_subject' => $subject,
+						'em_body' => $message,
+						'row_id' => $id,
+						'action_table' => 'Employee',
+						'em_status' => '1' ,
+				];
+				em_log($emLog);
 					return redirect()->to('backend/client_details/' . encryptIt($id));
 				} else {
 					$session->setFlashdata('success', 'Client Registered, But Email Failed');
+					$emLog = [
+						'em_to' => $to,
+						'em_subject' => $subject,
+						'em_body' => $message,
+						'row_id' => $id,
+						'action_table' => 'Employee',
+						'em_status' => '0' ,
+				];
+				em_log($emLog);
 					return redirect()->to('backend/client_details/' . encryptIt($id));
 				}
 			}
@@ -2575,15 +2611,51 @@ class Backend extends BEBaseController
 		$session = session();
 		if (sendEmail($to, $cc, $subject, $message)) {
 			$session->setFlashdata('success', 'TimeSheet Status Notified');
+			$emLog = [
+				'em_to' => $to,
+				'em_subject' => $subject,
+				'em_body' => $message,
+				'row_id' => $id,
+				'action_table' => 'Orders',
+				'em_status' => '1' ,
+		];
+		em_log($emLog);
 		} else {
 			$session->setFlashdata('error', 'Email Failed to ' . $to);
+			$emLog = [
+				'em_to' => $to,
+				'em_subject' => $subject,
+				'em_body' => $message,
+				'row_id' => $id,
+				'action_table' => 'Orders',
+				'em_status' => '0' ,
+		];
+		em_log($emLog);
 			return redirect()->to('backend/order-s4/' . encryptIt($id));
 		}
 		if (sendEmail($to2, $cc, $subject, $message2)) {
 			$session->setFlashdata('success', 'TimeSheet Status Notified');
+			$emLog = [
+				'em_to' => $to2,
+				'em_subject' => $subject,
+				'em_body' => $message2,
+				'row_id' => $id,
+				'action_table' => 'Orders',
+				'em_status' => '1' ,
+		];
+		em_log($emLog);
 			return redirect()->to('backend/order-s4/' . encryptIt($id));
 		} else {
 			$session->setFlashdata('error', 'Email Failed to ' . $to2);
+			$emLog = [
+				'em_to' => $to2,
+				'em_subject' => $subject,
+				'em_body' => $message2,
+				'row_id' => $id,
+				'action_table' => 'Orders',
+				'em_status' => '0' ,
+		];
+		em_log($emLog);
 			return redirect()->to('backend/order-s4/' . encryptIt($id));
 		}
 
@@ -2738,15 +2810,51 @@ class Backend extends BEBaseController
 			cursor: pointer;">Click to View</a></body</html>';
 		$session = session();
 		if (sendEmail($to, $cc, $subject, $message)) {
+			$emLog = [
+				'em_to' => $to,
+				'em_subject' => $subject,
+				'em_body' => $message,
+				'row_id' => $ord_id,
+				'action_table' => 'Timesheet',
+				'em_status' => '1' ,
+		];
+		em_log($emLog);
 		} else {
 			$session->setFlashdata('error', 'Email Failed to ' . $to);
+			$emLog = [
+				'em_to' => $to,
+				'em_subject' => $subject,
+				'em_body' => $message,
+				'row_id' => $ord_id,
+				'action_table' => 'Timesheet',
+				'em_status' => '0' ,
+		];
+		em_log($emLog);
 			return redirect()->to('backend/timesheet');
 		}
 		if (sendEmail($to2, $cc, $subject, $message2)) {
 			$session->setFlashdata('success', 'TimeSheet Updated');
+			$emLog = [
+				'em_to' => $to2,
+				'em_subject' => $subject,
+				'em_body' => $message2,
+				'row_id' => $ord_id,
+				'action_table' => 'Timesheet',
+				'em_status' => '1' ,
+		];
+		em_log($emLog);
 			return redirect()->to('backend/timesheet');
 		} else {
 			$session->setFlashdata('error', 'Email Failed to ' . $to2);
+			$emLog = [
+				'em_to' => $to2,
+				'em_subject' => $subject,
+				'em_body' => $message2,
+				'row_id' => $ord_id,
+				'action_table' => 'Timesheet',
+				'em_status' => '1' ,
+		];
+		em_log($emLog);
 			return redirect()->to('backend/timesheet');
 		}
 	}
@@ -3097,9 +3205,27 @@ class Backend extends BEBaseController
 			$session = session();
 			if (sendEmail($to, $cc, $subject, $message)) {
 				$session->setFlashdata('success', 'First Response Email Succesfully Sent');
+				$emLog = [
+					'em_to' => $to,
+					'em_subject' => $subject,
+					'em_body' => $message,
+					'row_id' => $id,
+					'action_table' => 'Orders',
+					'em_status' => '1' ,
+			];
+			em_log($emLog);
 				return redirect()->to('backend/order-s2/' . encryptIt($id));
 			} else {
 				$session->setFlashdata('error', 'First Response Email Failed');
+				$emLog = [
+					'em_to' => $to,
+					'em_subject' => $subject,
+					'em_body' => $message,
+					'row_id' => $id,
+					'action_table' => 'Orders',
+					'em_status' => '0' ,
+			];
+			em_log($emLog);
 				return redirect()->to('backend/order-s2/' . encryptIt($id));
 			}
 		}
@@ -3293,15 +3419,51 @@ class Backend extends BEBaseController
 			$session = session();
 			if (sendEmail($to, $cc, $subject, $message)) {
 				$session->setFlashdata('success', 'Locum Process Email Succesfully Sent');
+				$emLog = [
+					'em_to' => $to,
+					'em_subject' => $subject,
+					'em_body' => $message,
+					'row_id' => $id,
+					'action_table' => 'Orders',
+					'em_status' => '1' ,
+			];
+			em_log($emLog);
 			} else {
 				$session->setFlashdata('error', 'Locum Process Email Failed');
+				$emLog = [
+					'em_to' => $to,
+					'em_subject' => $subject,
+					'em_body' => $message,
+					'row_id' => $id,
+					'action_table' => 'Orders',
+					'em_status' => '0' ,
+			];
+			em_log($emLog);
 				return redirect()->to('backend/order-s3/' . encryptIt($id));
 			}
 			if (sendEmail($to2, $cc, $subject, $message)) {
 				$session->setFlashdata('success', 'Locum Process Email Succesfully Sent');
+				$emLog = [
+					'em_to' => $to2,
+					'em_subject' => $subject,
+					'em_body' => $message,
+					'row_id' => $id,
+					'action_table' => 'Orders',
+					'em_status' => '1' ,
+			];
+			em_log($emLog);
 				return redirect()->to('backend/order-s3/' . encryptIt($id));
 			} else {
 				$session->setFlashdata('error', 'Locum Process Email Failed');
+				$emLog = [
+					'em_to' => $to2,
+					'em_subject' => $subject,
+					'em_body' => $message,
+					'row_id' => $id,
+					'action_table' => 'Orders',
+					'em_status' => '0' ,
+			];
+			em_log($emLog);
 				return redirect()->to('backend/order-s3/' . encryptIt($id));
 			}
 		}
@@ -3480,15 +3642,51 @@ class Backend extends BEBaseController
 			$session = session();
 			if (sendEmail($to, $cc, $subject, $message)) {
 				$session->setFlashdata('success', 'Locum Confirmation Email Succesfully Sent');
+				$emLog = [
+					'em_to' => $to,
+					'em_subject' => $subject,
+					'em_body' => $message,
+					'row_id' => $id,
+					'action_table' => 'Orders',
+					'em_status' => '1' ,
+			];
+			em_log($emLog);
 			} else {
 				$session->setFlashdata('error', 'Locum Confirmation Email Failed');
+				$emLog = [
+					'em_to' => $to,
+					'em_subject' => $subject,
+					'em_body' => $message,
+					'row_id' => $id,
+					'action_table' => 'Orders',
+					'em_status' => '0' ,
+			];
+			em_log($emLog);
 				return redirect()->to('backend/order-s4/' . encryptIt($id));
 			}
 			if (sendEmail($to2, $cc, $subject, $message)) {
 				$session->setFlashdata('success', 'Locum Confirmation Email Succesfully Sent');
+				$emLog = [
+					'em_to' => $to2,
+					'em_subject' => $subject,
+					'em_body' => $message,
+					'row_id' => $id,
+					'action_table' => 'Orders',
+					'em_status' => '1' ,
+			];
+			em_log($emLog);
 				return redirect()->to('backend/order-s4/' . encryptIt($id));
 			} else {
 				$session->setFlashdata('error', 'Locum Confirmation Email Failed');
+				$emLog = [
+					'em_to' => $to,
+					'em_subject' => $subject,
+					'em_body' => $message,
+					'row_id' => $id,
+					'action_table' => 'Orders',
+					'em_status' => '0' ,
+			];
+			em_log($emLog);
 				return redirect()->to('backend/order-s4/' . encryptIt($id));
 			}
 		}
@@ -3686,15 +3884,51 @@ class Backend extends BEBaseController
 			$session = session();
 			if (sendEmail($to, $cc, $subject, $message)) {
 				$session->setFlashdata('success', 'Employee Confirmation Email Succesfully Sent');
+				$emLog = [
+					'em_to' => $to,
+					'em_subject' => $subject,
+					'em_body' => $message,
+					'row_id' => $id,
+					'action_table' => 'Orders',
+					'em_status' => '1' ,
+			];
+			em_log($emLog);
 			} else {
 				$session->setFlashdata('error', 'Employee Confirmation Email Failed');
+				$emLog = [
+					'em_to' => $to,
+					'em_subject' => $subject,
+					'em_body' => $message,
+					'row_id' => $id,
+					'action_table' => 'Orders',
+					'em_status' => '0' ,
+			];
+			em_log($emLog);
 				return redirect()->to('backend/email-4/' . encryptIt($id));
 			}
 			if (sendEmail($to2, $cc, $subject, $message)) {
 				$session->setFlashdata('success', 'Employee Confirmation Email Succesfully Sent');
+				$emLog = [
+					'em_to' => $to2,
+					'em_subject' => $subject,
+					'em_body' => $message,
+					'row_id' => $id,
+					'action_table' => 'Orders',
+					'em_status' => '1' ,
+			];
+			em_log($emLog);
 				return redirect()->to('backend/order-s5/' . encryptIt($id));
 			} else {
 				$session->setFlashdata('error', 'Employee Confirmation Email Failed');
+				$emLog = [
+					'em_to' => $to,
+					'em_subject' => $subject,
+					'em_body' => $message,
+					'row_id' => $id,
+					'action_table' => 'Orders',
+					'em_status' => '0' ,
+			];
+			em_log($emLog);
 				return redirect()->to('backend/email-4/' . encryptIt($id));
 			}
 		}
@@ -3793,17 +4027,53 @@ class Backend extends BEBaseController
 				$session = session();
 				if (sendEmail($to, $cc, $subject, $message)) {
 					$session->setFlashdata('success', 'Payment Done and Order Locked');
+					$emLog = [
+						'em_to' => $to,
+						'em_subject' => $subject,
+						'em_body' => $message,
+						'row_id' => $id,
+						'action_table' => 'Orders',
+						'em_status' => '1' ,
+				];
+				em_log($emLog);
 					$Nmodel->insert($newData2);
 				} else {
 					$session->setFlashdata('error', 'Payment Done Email Failed');
+					$emLog = [
+						'em_to' => $to,
+						'em_subject' => $subject,
+						'em_body' => $message,
+						'row_id' => $id,
+						'action_table' => 'Orders',
+						'em_status' => '0' ,
+				];
+				em_log($emLog);
 					return redirect()->to('backend/orders');
 				}
 				if (sendEmail($to2, $cc, $subject2, $message2)) {
 					$session->setFlashdata('success', 'Payment Done and Order Locked');
+					$emLog = [
+						'em_to' => $to2,
+						'em_subject' => $subject2,
+						'em_body' => $message2,
+						'row_id' => $id,
+						'action_table' => 'Orders',
+						'em_status' => '1' ,
+				];
+				em_log($emLog);
 					$Nmodel->insert($newData3);
 					return redirect()->to('backend/orders');
 				} else {
 					$session->setFlashdata('error', 'Payment Done Email Failed');
+					$emLog = [
+						'em_to' => $to2,
+						'em_subject' => $subject2,
+						'em_body' => $message2,
+						'row_id' => $id,
+						'action_table' => 'Orders',
+						'em_status' => '0' ,
+				];
+				em_log($emLog);
 					return redirect()->to('backend/orders');
 				}
 			}
@@ -3908,6 +4178,15 @@ class Backend extends BEBaseController
 
 			if (sendEmail($to, $cc, $subject, $message)) {
 				$sucees[] = $to;
+				$emLog = [
+					'em_to' => $to,
+					'em_subject' => $subject,
+					'em_body' => $message,
+					'row_id' => $id,
+					'action_table' => 'Orders',
+					'em_status' => '1' ,
+			];
+			em_log($emLog);
 			} else {
 				$failedEmails[] = $to; // Store the failed email address in the array
 			}
@@ -3915,6 +4194,15 @@ class Backend extends BEBaseController
 		if (!empty($failedEmails)) {
 			// Store the failed email addresses in the error session message
 			$session->setFlashdata('error', 'Order Published Failed. Emails failed to send to:<br> <b>' . implode(',', $failedEmails) . '</b>');
+			$emLog = [
+				'em_to' => $to,
+				'em_subject' => $subject,
+				'em_body' => $message,
+				'row_id' => $id,
+				'action_table' => 'Orders',
+				'em_status' => '0' ,
+		];
+		em_log($emLog);
 			return redirect()->to('backend/orders');
 		} else {
 
