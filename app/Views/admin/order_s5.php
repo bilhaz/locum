@@ -93,11 +93,11 @@
                                             Status</label>
                                         <select id="ord_payment_status" name="ord_payment_status" required class="form-control select2" data-parsley-trigger="change">
                                             <option value="">Select status</option>
-                                            <option value="Paid" <?= set_select(
+                                            <option value="Sent" <?= set_select(
                                                                         'ord_payment_status',
-                                                                        'Paid',
-                                                                        ($v_ordr['ord_payment_status'] == 'Paid') ? TRUE : False
-                                                                    ) ?>>Paid
+                                                                        'Sent',
+                                                                        ($v_ordr['ord_payment_status'] == 'Sent') ? TRUE : False
+                                                                    ) ?>>Sent
                                             </option>
                                             <option value="Due" <?= set_select(
                                                                     'ord_payment_status',
@@ -108,7 +108,7 @@
                                                                         'ord_payment_status',
                                                                         'Rceived',
                                                                         ($v_ordr['ord_payment_status'] == 'Rceived') ? TRUE : False
-                                                                    ) ?>>Rceived
+                                                                    ) ?>>Received
                                             </option>
                                         </select>
                                     </div>

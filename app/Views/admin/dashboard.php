@@ -128,6 +128,7 @@
                     </div>
                 </div>
             </div>
+            <?php  if (session()->grp_id == 'super_admin'): ?>
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-header">
@@ -157,6 +158,7 @@
                     </div>
                 </div>
             </div>
+            <?php endif;?>
         </div>
         <div class="row g-2 row-deck mb-2">
             <div class="col-lg-3 col-md-6 col-sm-6 text-center">
