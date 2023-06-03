@@ -97,7 +97,7 @@
                                     ?>
                                     <th class="text-primary"><h3> &euro;<?= $TcashIn ?></h3></th>
                                     <th class="text-primary"><h3> &euro;<?= $TcashOut ?></h3></th>
-                                    <th class="text-primary"><h3> &euro;<?= $TvashIn - $TcashOut ?></h3></th>
+                                    <th class="text-primary"><h3> &euro;<?= $TcashIn - $TcashOut ?></h3></th>
                                 </tr>
                             </tbody>
                         </table>
