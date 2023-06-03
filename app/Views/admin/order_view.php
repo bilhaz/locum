@@ -152,15 +152,15 @@
                                             </span>
                                         <?php endif; ?>
                                         </p>
-                                        <p class="mb-0"><strong>Case Status: </strong>
+                                        <p class="mb-0"><strong>Emp Payment Status: </strong>
                                             <?php if ($ordr_row['ord_case_status'] == 'Pending') : ?>
                                             <span class="badge chart-color123">
-                                                <?= $ordr_row['ord_case_status'] ?>
+                                                <?= $ordr_row['ord_emp_pay_status'] ?>
                                             </span>
 
                                             <?php else : ?>
                                             <span class="badge bg-success">
-                                                <?= $ordr_row['ord_case_status'] ?>
+                                                <?= $ordr_row['ord_emp_pay_status'] ?>
                                             </span>
                                         <?php endif; ?>
                                         </p>

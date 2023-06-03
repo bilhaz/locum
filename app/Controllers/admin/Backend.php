@@ -550,7 +550,7 @@ class Backend extends BEBaseController
 
 				$data['empr'] = $model->where('emp_id', $id)->first();
 				$to = $data['empr']['emp_email'];
-				$cc = '';
+				$cc = 'info@sralocum.com';
 				$subject = 'SRA Employee Registration';
 				$message = '<p><b>' . $data['empr']['emp_email'] . '</b> Your Email has been succesfully registered on our platform</p><br>
 				<p>Please Make sure to complete your Employee Profile when you login to <b>SRA Locum</b> on this URL: ' . base_url('employee/login') . '</p><br>
@@ -1329,7 +1329,7 @@ class Backend extends BEBaseController
 				add_log($log);
 				$data['clr'] = $model->where('cl_id', $id)->first();
 				$to = $data['clr']['cl_cont_email'];
-				$cc = '';
+				$cc = 'info@sralocum.com';
 				$subject = 'SRA Client Registration';
 				$message = '<p>Dear &nbsp;' . $data['clr']['cl_usr'] . ' Your account has been succesfully registered on our platform</p><br>
 				<p>Please Make sure to complete your client Profile when you login to <b>SRA Locum</b> on this URL: ' . base_url('client/login') . '</p><br>
@@ -2579,11 +2579,10 @@ class Backend extends BEBaseController
 			'status' => "0",
 			'usr_type' => "employee",
 		];
-		$to2 = 'okashaali88@gmail.com';
-		$to = 'okashaali88@gmail.com';
-		// $to2 = $data['e_ord']['emp_email'];
-		// $to = $data['e_ord']['cl_cont_email'];
-		$cc = '';
+		
+		$to2 = $data['e_ord']['emp_email'];
+		$to = $data['e_ord']['cl_cont_email'];
+		$cc = 'info@sralocum.com';
 		$subject = 'SRAL Timesheet Sent for Verification';
 		$message = '<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href=' . base_url('client/timesheet/' . encryptIt($id)) . ' style="background-color:#157DED;color:white;border: none;
 			color: white;
@@ -2659,7 +2658,6 @@ class Backend extends BEBaseController
 			return redirect()->to('backend/order-s4/' . encryptIt($id));
 		}
 
-		return $this->LoadView('admin/timesheet', $data);
 	}
 
 	public function timesheet()
@@ -2787,7 +2785,7 @@ class Backend extends BEBaseController
 		}
 		$to2 = $data['e_ord']['emp_email'];
 		$to = $data['e_ord']['cl_cont_email'];
-		$cc = '';
+		$cc = 'info@sralocum.com';
 		$subject = 'SRAL Updated Timesheet';
 		$message = '<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href=' . base_url('client/timesheet/' . encryptIt($ord_id)) . ' style="background-color:#157DED;color:white;border: none;
 			color: white;
@@ -2808,6 +2806,7 @@ class Backend extends BEBaseController
 			font-size: 16px;
 			margin: 4px 2px;
 			cursor: pointer;">Click to View</a></body</html>';
+
 		$session = session();
 		if (sendEmail($to, $cc, $subject, $message)) {
 			$emLog = [
@@ -2852,7 +2851,7 @@ class Backend extends BEBaseController
 				'em_body' => $message2,
 				'row_id' => $ord_id,
 				'action_table' => 'Timesheet',
-				'em_status' => '1' ,
+				'em_status' => '0' ,
 		];
 		em_log($emLog);
 			return redirect()->to('backend/timesheet');
@@ -2881,11 +2880,12 @@ class Backend extends BEBaseController
 	{
 		$id = decryptIt($id);
 		$data = [];
-
+		$link = 'employee/t-view';
 		$model = new ordersModel();
+		$Nmodel = new notificationModel();
 		$data['e_ord'] = $model->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $id)->first();
 		$to = $data['e_ord']['emp_email'];
-		$cc = '';
+		$cc = 'info@sralocum.com';
 		$subject = 'SRAL Approved your Timesheet';
 		$message = '<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href=' . base_url('backend/t-view/' . encryptIt($id)) . ' style="background-color:#157DED;color:white;border: none;
 			color: white;
@@ -2910,13 +2910,46 @@ class Backend extends BEBaseController
 			'ord_time_sheet_approved' => "Approved",
 
 		];
+		$newdata2 = [
+			'ord_id' => $id,
+			'emp_id' => $data['e_ord']['emp_id'],
+			'link'	=> $link,
+			'notification' => "Timesheet Updated by SRAL",
+			'status' => "0",
+			'usr_type' => "client",
+		];
 
-
+		$Nmodel->insert($newdata2);
 
 		$model->update($id, $newData);
 		$session = session();
-		$session->setFlashdata('success', 'Timesheet Approved');
+		if (sendEmail($to, $cc, $subject, $message)) {
+			$session->setFlashdata('success', 'TimeSheet Approved & Notified');
+			$emLog = [
+				'em_to' => $to,
+				'em_subject' => $subject,
+				'em_body' => $message,
+				'row_id' => $id,
+				'action_table' => 'Orders',
+				'em_status' => '1' ,
+		];
+		em_log($emLog);
 		return redirect()->to('backend/t-view/' . encryptIt($data['e_ord']['ord_id']));
+		} else {
+			$session->setFlashdata('error', 'Timesheet Approved & Email Failed to ' . $to);
+			$emLog = [
+				'em_to' => $to,
+				'em_subject' => $subject,
+				'em_body' => $message,
+				'row_id' => $id,
+				'action_table' => 'orders',
+				'em_status' => '0' ,
+		];
+		em_log($emLog);
+		return redirect()->to('backend/t-view/' . encryptIt($data['e_ord']['ord_id']));
+		}
+		// $session->setFlashdata('success', 'Timesheet Approved');
+		// return redirect()->to('backend/t-view/' . encryptIt($data['e_ord']['ord_id']));
 	}
 	public function formula()
 	{
@@ -3168,7 +3201,7 @@ class Backend extends BEBaseController
 		$link = 'client/ord-status';
 		$data['v_ordr'] = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $id)->first();
 		$to = $data['v_ordr']['cl_cont_email'];
-		$cc = '';
+		$cc = 'info@sralocum.com';
 		$subject = 'SRAL | Your Order is being Processed |' . $data['v_ordr']['spec_name'];
 		$message = $this->LoadView('admin/email_responses/1st-response-email', $data);
 
@@ -3374,7 +3407,7 @@ class Backend extends BEBaseController
 		$link2 = 'employee/ord-view';
 		$to = $data['v_ordr']['cl_cont_email'];
 		$to2 = $data['v_ordr']['emp_email'];
-		$cc = 'sra@sralocum.com';
+		$cc = 'info@sralocum.com';
 		$subject = 'SRA-Locum Process |'.$data['v_ordr']['emp_fname'].' '.$data['v_ordr']['emp_lname'] .' | '.$data['v_ordr']['spec_name'] ;
 		$message = $this->LoadView('admin/email_responses/2nd-response-email', $data);
 
@@ -3597,7 +3630,7 @@ class Backend extends BEBaseController
 		$link2 = 'employee/ord-view';
 		$to = $data['v_ordr']['cl_cont_email'];
 		$to2 = $data['v_ordr']['emp_email'];
-		$cc = 'sra@sralocum.com';
+		$cc = 'info@sralocum.com';
 		$subject = 'SRA-Locum Confirmation';
 		$message = $this->LoadView('admin/email_responses/3rd-response-email', $data);
 		
@@ -3837,7 +3870,7 @@ class Backend extends BEBaseController
 		// $to = $ord['cl_cont_email'];
 		$to =  $data['v_ordr']['emp_email'];
 		$to2 =  $data['v_ordr']['cl_cont_email'];
-		$cc = '';
+		$cc = 'info@sralocum.com';
 		$subject = 'SRA-Employee Confirmation';
 		$message = $this->LoadView('admin/email_responses/4th-response-email', $data);
 
@@ -4019,7 +4052,7 @@ class Backend extends BEBaseController
 				$omodel->update($id, $newData);
 				$to =  $data['v_ordr']['emp_email'];
 				$to2 =  $data['v_ordr']['cl_cont_email'];
-				$cc = '';
+				$cc = 'info@sralocum.com';
 				$subject = 'SRAL-Your Payment Paid | Locum Confirmation#' . $data['v_ordr']['ord_ref_no'];
 				$subject2 = 'SRAL-Payment Received | Invoice#' . $invoice_id;
 				$message = $this->LoadView('admin/email_responses/emp_payment', $data);
@@ -4172,7 +4205,7 @@ class Backend extends BEBaseController
 		foreach ($data['doc'] as $doc) {
 
 			$to = $doc['emp_email'];
-			$cc = '';
+			$cc = 'info@sralocum.com';
 			$subject = 'SRA-New Locum';
 			$message = $this->LoadView('admin/email_responses/job-advertisement', $data);
 

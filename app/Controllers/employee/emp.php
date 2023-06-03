@@ -321,7 +321,7 @@ class emp extends EMPBaseController
 		$Nmodel = new notificationModel();
 		$model = new ordersModel();
 		$data['e_ord'] = $model->where('ord_id', $asid)->first();
-		$to = 'sralocum@sra.com';
+		$to = 'info@sralocum.com';
 		$cc = '';
 		$subject = '' . session()->emp_email . ' Uploaded Assesment';
 		$message = '<html><body><p> Here is the Assesment Link</p><br><a target="_blank" href=' . base_url('public/uploads/doc_assesment/' . encryptIt($data['e_ord']['ord_assignment'])) . ' style="background-color:#157DED;color:white;border: none;
@@ -435,8 +435,8 @@ class emp extends EMPBaseController
 		$omodel = new ordersModel();
 		$data['v_ordr'] = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $ord_id)->first();
 		$Nmodel = new notificationModel();
-		$to = 'sralocum@sra.com,' . $data['v_ordr']['emp_email'];
-		$cc = '';
+		$to =  $data['v_ordr']['emp_email'];
+		$cc = 'info@sralocum.com';
 		$subject = '' . session()->emp_email . 'Submitted Timesheet';
 		$message = '<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href=' . base_url('backend/t-view/' . encryptIt($ord_id)) . ' style="background-color:#157DED;color:white;border: none;
 			color: white;
@@ -522,8 +522,8 @@ class emp extends EMPBaseController
 		$omodel = new ordersModel();
 		$data['v_ordr'] = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $ord_id)->first();
 		$Nmodel = new notificationModel();
-		$to = 'sralocum@sra.com,' . $data['v_ordr']['emp_email'];
-		$cc = '';
+		$to = $data['v_ordr']['emp_email'];
+		$cc = 'info@sralocum.com';
 		$subject = '' . session()->emp_email . ' Updated Timesheet';
 		$message = '<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href=' . base_url('backend/t-view/' . encryptIt($ord_id)) . ' style="background-color:#157DED;color:white;border: none;
 			color: white;
@@ -956,7 +956,7 @@ class emp extends EMPBaseController
 			->orderBy('orders.ord_updated', 'DESC')
 			->first();
 
-		$to = 'sralocum@sra.com';
+		$to = 'info@sralocum.com';
 		$cc = '';
 		$subject = '' . session()->emp_email . ' Applied for Locum';
 		$message = $this->LoadView('employees/emails/advt_apply', $data);
@@ -1000,7 +1000,7 @@ class emp extends EMPBaseController
 	{
 		$id = decryptIt($id);
 		$to = session()->emp_email;
-		$cc = '';
+		$cc = 'info@sralocum.com';
 		$subject = 'Applied Successfully for Locum';
 		$message = $this->LoadView('employees/emails/advt_applied');
 

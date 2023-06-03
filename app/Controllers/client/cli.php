@@ -318,7 +318,7 @@ class cli extends CLIBaseController
 		$model = new ordersModel();
 		$del = $model->where('ord_id', $coid)->first();
 		$Nmodel = new notificationModel();
-			$to = 'sralocum@sra.com';
+			$to = 'info@sralocum.com';
 			$cc = '';
 			$subject = ''.session()->cl_h_name.' Cancelled Order';
 			$message = '<html><body><p> Here is the Order Link</p><br><a target="_blank" href='.base_url('backend/order_view/'.encryptIt($coid)).' style="background-color:#157DED;color:white;border: none;
@@ -416,8 +416,8 @@ class cli extends CLIBaseController
 		$omodel = new ordersModel();
 		$data['e_ord'] = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $id)->first();
 		// $data['e_ord'] = $model->where('ord_id', $id)->first();
-			$to = 'sralocum@sra.com,'.$data['e_ord']['emp_email'];
-			$cc = '';
+			$to = $data['e_ord']['emp_email'];
+			$cc = 'info@sralocum.com';
 			$subject = ''.session()->cl_h_name.' Approved your Timesheet';
 			$message = '<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href='.base_url('backend/t-view/'.encryptIt($id)).' style="background-color:#157DED;color:white;border: none;
 			color: white;
@@ -527,7 +527,7 @@ class cli extends CLIBaseController
 				];
 				$model->insert($newData);
 				$oid = $model->insertID;
-			$to = 'sralocum@sra.com';
+			$to = 'info@sralocum.com';
 			$cc = '';
 			$subject = ''.session()->cl_h_name.' Created New Order';
 			$message = '<html><body><p> Here is the Order Link</p><br><a target="_blank" href='.base_url('backend/order-s1/'.encryptIt($oid)).' style="background-color:#157DED;color:white;border: none;
@@ -589,12 +589,14 @@ class cli extends CLIBaseController
 		$link = "backend/order_view";
 		$data = [];
 		helper(['form']);
+		$model = new ordersModel();
+		$data['e_ord'] = $model->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->where('ord_id', $eoid)->first();
 		$Gmodel = new gradeModel();
 		$data['gr_row'] = $Gmodel->findAll();
 		$Smodel = new specialityModel();
 		$data['sp_row'] = $Smodel->findAll();
 		$Nmodel = new notificationModel();
-			$to = 'sralocum@sra.com';
+			$to = 'info@sralocum.com';
 			$cc = '';
 			$subject = ''.session()->cl_h_name.' Updated Order';
 			$message = '<html><body><p> Here is the Order Link</p><br><a target="_blank" href='.base_url('backend/order-s1/'.encryptIt($eoid)).' style="background-color:#157DED;color:white;border: none;
@@ -608,8 +610,7 @@ class cli extends CLIBaseController
 			cursor: pointer;">Click to View</a></body</html>';
 		
 
-		$model = new ordersModel();
-		$data['e_ord'] = $model->where('ord_id', $eoid)->first();
+		
 
 		if ($this->request->getMethod() == 'post') {
 			//let's do the validation here
@@ -756,13 +757,15 @@ public function order_confirm($oid = null)
 		$oid = decryptIt($oid);
 		$id = session()->cl_id;
 		$link = "backend/order_view";
+		$link2 = "employee/ord-view";
 		$data = [];
 
 		$e2model = new ordersModel();
+		$data['e_ord'] = $e2model->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $oid)->first();
 		$Nmodel = new notificationModel();
 
-			$to = 'sralocum@sra.com';
-			$cc = '';
+			$to = $data['e_ord']['emp_email'];
+			$cc = 'info@sralocum.com';
 			$subject = ''.session()->cl_h_name.' Confirmed Order';
 			$message = '<html><body><p> Here is the Order Link</p><br><a target="_blank" href='.base_url('backend/order-s1/'.encryptIt($oid)).' style="background-color:#157DED;color:white;border: none;
 			color: white;
@@ -787,7 +790,16 @@ public function order_confirm($oid = null)
 			'usr_type' => "admin",
 		];
 		$e2model->update($oid, $newData);
+		$newdata3 = [
+			'ord_id' => $oid,
+			'emp_id' =>$data['e_ord']['emp_id'],
+			'link'	=> $link2,
+			'notification' => "Locum Confirmed by Client",
+			'status' => "0",
+			'usr_type' => "employee",
+		];
 		$Nmodel->insert($newdata2);
+		$Nmodel->insert($newdata3);
 				$session = session();
 				if (sendEmail($to, $cc, $subject, $message)) {
 					$session->setFlashdata('success', 'Order Confirmed');
