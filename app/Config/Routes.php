@@ -125,6 +125,8 @@ $routes->match(['get' , 'post'], 'backend/fetch-ChartData', 'admin\Backend::fetc
 $routes->match(['get' , 'post'], 'backend/getServer-DateTime', 'admin\Backend::getServerDateTime',['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/getPie-ChartData', 'admin\Backend::getPieChartData',['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/Total-ConfirmedHours', 'admin\Backend::TotalConfirmedHours',['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'backend/timeSheet_LoopNotify', 'admin\Backend::timeSheet_LoopNotify',['filter' => 'B_auth']);
+$routes->match(['get' , 'post'], 'backend/orderReport', 'admin\Backend::orderReport',['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/notif-count', 'admin\Backend::get_notifcount',/*['filter' => 'B_auth']*/);
 
 // });

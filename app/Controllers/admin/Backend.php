@@ -92,6 +92,8 @@ class Backend extends BEBaseController
 		't-upd' => ['super_admin', 'admin', 'user'],
 		'timesheet_save' => ['super_admin', 'admin', 'user'],
 		'timesheet-approve' => ['super_admin', 'admin', 'user'],
+		'timeSheet_LoopNotify' => ['super_admin', 'admin', 'user'],
+		'orderReport' => ['super_admin', 'admin', 'user'],
 		'speciality' => ['super_admin', 'admin'],
 		'new_spec' => ['super_admin', 'admin'],
 		'edit_spec' => ['super_admin', 'admin'],
@@ -564,9 +566,9 @@ class Backend extends BEBaseController
 						'em_body' => $message,
 						'row_id' => $id,
 						'action_table' => 'Employee',
-						'em_status' => '1' ,
-				];
-				em_log($emLog);
+						'em_status' => '1',
+					];
+					em_log($emLog);
 					return redirect()->to('backend/emp_details/' . encryptIt($id));
 				} else {
 					$session->setFlashdata('error', 'Doctor Registered, But Email Failed');
@@ -576,9 +578,9 @@ class Backend extends BEBaseController
 						'em_body' => $message,
 						'row_id' => $id,
 						'action_table' => 'Employee',
-						'em_status' => '0' ,
-				];
-				em_log($emLog);
+						'em_status' => '0',
+					];
+					em_log($emLog);
 					return redirect()->to('backend/emp_details/' . encryptIt($id));
 				}
 			}
@@ -1343,9 +1345,9 @@ class Backend extends BEBaseController
 						'em_body' => $message,
 						'row_id' => $id,
 						'action_table' => 'Employee',
-						'em_status' => '1' ,
-				];
-				em_log($emLog);
+						'em_status' => '1',
+					];
+					em_log($emLog);
 					return redirect()->to('backend/client_details/' . encryptIt($id));
 				} else {
 					$session->setFlashdata('success', 'Client Registered, But Email Failed');
@@ -1355,9 +1357,9 @@ class Backend extends BEBaseController
 						'em_body' => $message,
 						'row_id' => $id,
 						'action_table' => 'Employee',
-						'em_status' => '0' ,
-				];
-				em_log($emLog);
+						'em_status' => '0',
+					];
+					em_log($emLog);
 					return redirect()->to('backend/client_details/' . encryptIt($id));
 				}
 			}
@@ -1911,18 +1913,18 @@ class Backend extends BEBaseController
 		$model = new ordersModel();
 		// Daily records
 		$dailyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '2')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated)', $today)->orderBy('ord_updated', 'DESC')->findAll();
-		
+
 		// Monthly breakdown
 		$monthlyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '2')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated) >=', $this_month)->orderBy('ord_updated', 'DESC')->findAll();
 
 		// Yearly breakdown
 		$yearlyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '2')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated) >=', $this_year)->orderBy('ord_updated', 'DESC')->findAll();
-		
+
 
 		$data['daily'] = $dailyData;
 		$data['monthly'] = $monthlyData;
 		$data['yearly'] = $yearlyData;
-		
+
 		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '2')->where('ord_cancel_bcl', '0')->Where('ord_cancel_bdr', '0')->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('admin/processed_order', $data);
@@ -1951,7 +1953,7 @@ class Backend extends BEBaseController
 		$model = new ordersModel();
 		// Daily records
 		$dailyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '1')->where('ord_required_to >=', $dt)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated)', $today)->orderBy('ord_updated', 'DESC')->findAll();
-		
+
 		// Monthly breakdown
 		$monthlyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '1')->where('ord_required_to >=', $dt)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated) >=', $this_month)->orderBy('ord_updated', 'DESC')->findAll();
 
@@ -1981,13 +1983,13 @@ class Backend extends BEBaseController
 		$model = new ordersModel();
 		// Daily records
 		$dailyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '4')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated)', $today)->orderBy('ord_updated', 'DESC')->findAll();
-		
+
 		// Monthly breakdown
 		$monthlyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '4')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated) >=', $this_month)->orderBy('ord_updated', 'DESC')->findAll();
 
 		// Yearly breakdown
 		$yearlyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '4')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated) >=', $this_year)->orderBy('ord_updated', 'DESC')->findAll();
-		
+
 
 		$data['daily'] = $dailyData;
 		$data['monthly'] = $monthlyData;
@@ -2010,13 +2012,13 @@ class Backend extends BEBaseController
 		$model = new ordersModel();
 		// Daily records
 		$dailyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '5')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated)', $today)->orderBy('ord_updated', 'DESC')->findAll();
-		
+
 		// Monthly breakdown
 		$monthlyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '5')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated) >=', $this_month)->orderBy('ord_updated', 'DESC')->findAll();
 
 		// Yearly breakdown
 		$yearlyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '5')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated) >=', $this_year)->orderBy('ord_updated', 'DESC')->findAll();
-		
+
 
 		$data['daily'] = $dailyData;
 		$data['monthly'] = $monthlyData;
@@ -2039,13 +2041,13 @@ class Backend extends BEBaseController
 		$model = new ordersModel();
 		// Daily records
 		$dailyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated)', $today)->orderBy('ord_updated', 'DESC')->findAll();
-		
+
 		// Monthly breakdown
 		$monthlyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated) >=', $this_month)->orderBy('ord_updated', 'DESC')->findAll();
 
 		// Yearly breakdown
 		$yearlyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated) >=', $this_year)->orderBy('ord_updated', 'DESC')->findAll();
-		
+
 
 		$data['daily'] = $dailyData;
 		$data['monthly'] = $monthlyData;
@@ -2579,7 +2581,7 @@ class Backend extends BEBaseController
 			'status' => "0",
 			'usr_type' => "employee",
 		];
-		
+
 		$to2 = $data['e_ord']['emp_email'];
 		$to = $data['e_ord']['cl_cont_email'];
 		$cc = 'info@sralocum.com';
@@ -2616,9 +2618,9 @@ class Backend extends BEBaseController
 				'em_body' => $message,
 				'row_id' => $id,
 				'action_table' => 'Orders',
-				'em_status' => '1' ,
-		];
-		em_log($emLog);
+				'em_status' => '1',
+			];
+			em_log($emLog);
 		} else {
 			$session->setFlashdata('error', 'Email Failed to ' . $to);
 			$emLog = [
@@ -2627,9 +2629,9 @@ class Backend extends BEBaseController
 				'em_body' => $message,
 				'row_id' => $id,
 				'action_table' => 'Orders',
-				'em_status' => '0' ,
-		];
-		em_log($emLog);
+				'em_status' => '0',
+			];
+			em_log($emLog);
 			return redirect()->to('backend/order-s4/' . encryptIt($id));
 		}
 		if (sendEmail($to2, $cc, $subject, $message2)) {
@@ -2640,9 +2642,9 @@ class Backend extends BEBaseController
 				'em_body' => $message2,
 				'row_id' => $id,
 				'action_table' => 'Orders',
-				'em_status' => '1' ,
-		];
-		em_log($emLog);
+				'em_status' => '1',
+			];
+			em_log($emLog);
 			return redirect()->to('backend/order-s4/' . encryptIt($id));
 		} else {
 			$session->setFlashdata('error', 'Email Failed to ' . $to2);
@@ -2652,12 +2654,11 @@ class Backend extends BEBaseController
 				'em_body' => $message2,
 				'row_id' => $id,
 				'action_table' => 'Orders',
-				'em_status' => '0' ,
-		];
-		em_log($emLog);
+				'em_status' => '0',
+			];
+			em_log($emLog);
 			return redirect()->to('backend/order-s4/' . encryptIt($id));
 		}
-
 	}
 
 	public function timesheet()
@@ -2815,9 +2816,9 @@ class Backend extends BEBaseController
 				'em_body' => $message,
 				'row_id' => $ord_id,
 				'action_table' => 'Timesheet',
-				'em_status' => '1' ,
-		];
-		em_log($emLog);
+				'em_status' => '1',
+			];
+			em_log($emLog);
 		} else {
 			$session->setFlashdata('error', 'Email Failed to ' . $to);
 			$emLog = [
@@ -2826,9 +2827,9 @@ class Backend extends BEBaseController
 				'em_body' => $message,
 				'row_id' => $ord_id,
 				'action_table' => 'Timesheet',
-				'em_status' => '0' ,
-		];
-		em_log($emLog);
+				'em_status' => '0',
+			];
+			em_log($emLog);
 			return redirect()->to('backend/timesheet');
 		}
 		if (sendEmail($to2, $cc, $subject, $message2)) {
@@ -2839,9 +2840,9 @@ class Backend extends BEBaseController
 				'em_body' => $message2,
 				'row_id' => $ord_id,
 				'action_table' => 'Timesheet',
-				'em_status' => '1' ,
-		];
-		em_log($emLog);
+				'em_status' => '1',
+			];
+			em_log($emLog);
 			return redirect()->to('backend/timesheet');
 		} else {
 			$session->setFlashdata('error', 'Email Failed to ' . $to2);
@@ -2851,9 +2852,9 @@ class Backend extends BEBaseController
 				'em_body' => $message2,
 				'row_id' => $ord_id,
 				'action_table' => 'Timesheet',
-				'em_status' => '0' ,
-		];
-		em_log($emLog);
+				'em_status' => '0',
+			];
+			em_log($emLog);
 			return redirect()->to('backend/timesheet');
 		}
 	}
@@ -2931,10 +2932,10 @@ class Backend extends BEBaseController
 				'em_body' => $message,
 				'row_id' => $id,
 				'action_table' => 'Orders',
-				'em_status' => '1' ,
-		];
-		em_log($emLog);
-		return redirect()->to('backend/t-view/' . encryptIt($data['e_ord']['ord_id']));
+				'em_status' => '1',
+			];
+			em_log($emLog);
+			return redirect()->to('backend/t-view/' . encryptIt($data['e_ord']['ord_id']));
 		} else {
 			$session->setFlashdata('error', 'Timesheet Approved & Email Failed to ' . $to);
 			$emLog = [
@@ -2943,10 +2944,10 @@ class Backend extends BEBaseController
 				'em_body' => $message,
 				'row_id' => $id,
 				'action_table' => 'orders',
-				'em_status' => '0' ,
-		];
-		em_log($emLog);
-		return redirect()->to('backend/t-view/' . encryptIt($data['e_ord']['ord_id']));
+				'em_status' => '0',
+			];
+			em_log($emLog);
+			return redirect()->to('backend/t-view/' . encryptIt($data['e_ord']['ord_id']));
 		}
 		// $session->setFlashdata('success', 'Timesheet Approved');
 		// return redirect()->to('backend/t-view/' . encryptIt($data['e_ord']['ord_id']));
@@ -3244,9 +3245,9 @@ class Backend extends BEBaseController
 					'em_body' => $message,
 					'row_id' => $id,
 					'action_table' => 'Orders',
-					'em_status' => '1' ,
-			];
-			em_log($emLog);
+					'em_status' => '1',
+				];
+				em_log($emLog);
 				return redirect()->to('backend/order-s2/' . encryptIt($id));
 			} else {
 				$session->setFlashdata('error', 'First Response Email Failed');
@@ -3256,9 +3257,9 @@ class Backend extends BEBaseController
 					'em_body' => $message,
 					'row_id' => $id,
 					'action_table' => 'Orders',
-					'em_status' => '0' ,
-			];
-			em_log($emLog);
+					'em_status' => '0',
+				];
+				em_log($emLog);
 				return redirect()->to('backend/order-s2/' . encryptIt($id));
 			}
 		}
@@ -3408,7 +3409,7 @@ class Backend extends BEBaseController
 		$to = $data['v_ordr']['cl_cont_email'];
 		$to2 = $data['v_ordr']['emp_email'];
 		$cc = 'info@sralocum.com';
-		$subject = 'SRA-Locum Process |'.$data['v_ordr']['emp_fname'].' '.$data['v_ordr']['emp_lname'] .' | '.$data['v_ordr']['spec_name'] ;
+		$subject = 'SRA-Locum Process |' . $data['v_ordr']['emp_fname'] . ' ' . $data['v_ordr']['emp_lname'] . ' | ' . $data['v_ordr']['spec_name'];
 		$message = $this->LoadView('admin/email_responses/2nd-response-email', $data);
 
 		if ($this->request->getMethod() == 'post') {
@@ -3458,9 +3459,9 @@ class Backend extends BEBaseController
 					'em_body' => $message,
 					'row_id' => $id,
 					'action_table' => 'Orders',
-					'em_status' => '1' ,
-			];
-			em_log($emLog);
+					'em_status' => '1',
+				];
+				em_log($emLog);
 			} else {
 				$session->setFlashdata('error', 'Locum Process Email Failed');
 				$emLog = [
@@ -3469,9 +3470,9 @@ class Backend extends BEBaseController
 					'em_body' => $message,
 					'row_id' => $id,
 					'action_table' => 'Orders',
-					'em_status' => '0' ,
-			];
-			em_log($emLog);
+					'em_status' => '0',
+				];
+				em_log($emLog);
 				return redirect()->to('backend/order-s3/' . encryptIt($id));
 			}
 			if (sendEmail($to2, $cc, $subject, $message)) {
@@ -3482,9 +3483,9 @@ class Backend extends BEBaseController
 					'em_body' => $message,
 					'row_id' => $id,
 					'action_table' => 'Orders',
-					'em_status' => '1' ,
-			];
-			em_log($emLog);
+					'em_status' => '1',
+				];
+				em_log($emLog);
 				return redirect()->to('backend/order-s3/' . encryptIt($id));
 			} else {
 				$session->setFlashdata('error', 'Locum Process Email Failed');
@@ -3494,9 +3495,9 @@ class Backend extends BEBaseController
 					'em_body' => $message,
 					'row_id' => $id,
 					'action_table' => 'Orders',
-					'em_status' => '0' ,
-			];
-			em_log($emLog);
+					'em_status' => '0',
+				];
+				em_log($emLog);
 				return redirect()->to('backend/order-s3/' . encryptIt($id));
 			}
 		}
@@ -3633,7 +3634,7 @@ class Backend extends BEBaseController
 		$cc = 'info@sralocum.com';
 		$subject = 'SRA-Locum Confirmation';
 		$message = $this->LoadView('admin/email_responses/3rd-response-email', $data);
-		
+
 		if ($this->request->getMethod() == 'post') {
 
 			// logs
@@ -3681,9 +3682,9 @@ class Backend extends BEBaseController
 					'em_body' => $message,
 					'row_id' => $id,
 					'action_table' => 'Orders',
-					'em_status' => '1' ,
-			];
-			em_log($emLog);
+					'em_status' => '1',
+				];
+				em_log($emLog);
 			} else {
 				$session->setFlashdata('error', 'Locum Confirmation Email Failed');
 				$emLog = [
@@ -3692,9 +3693,9 @@ class Backend extends BEBaseController
 					'em_body' => $message,
 					'row_id' => $id,
 					'action_table' => 'Orders',
-					'em_status' => '0' ,
-			];
-			em_log($emLog);
+					'em_status' => '0',
+				];
+				em_log($emLog);
 				return redirect()->to('backend/order-s4/' . encryptIt($id));
 			}
 			if (sendEmail($to2, $cc, $subject, $message)) {
@@ -3705,9 +3706,9 @@ class Backend extends BEBaseController
 					'em_body' => $message,
 					'row_id' => $id,
 					'action_table' => 'Orders',
-					'em_status' => '1' ,
-			];
-			em_log($emLog);
+					'em_status' => '1',
+				];
+				em_log($emLog);
 				return redirect()->to('backend/order-s4/' . encryptIt($id));
 			} else {
 				$session->setFlashdata('error', 'Locum Confirmation Email Failed');
@@ -3717,9 +3718,9 @@ class Backend extends BEBaseController
 					'em_body' => $message,
 					'row_id' => $id,
 					'action_table' => 'Orders',
-					'em_status' => '0' ,
-			];
-			em_log($emLog);
+					'em_status' => '0',
+				];
+				em_log($emLog);
 				return redirect()->to('backend/order-s4/' . encryptIt($id));
 			}
 		}
@@ -3923,9 +3924,9 @@ class Backend extends BEBaseController
 					'em_body' => $message,
 					'row_id' => $id,
 					'action_table' => 'Orders',
-					'em_status' => '1' ,
-			];
-			em_log($emLog);
+					'em_status' => '1',
+				];
+				em_log($emLog);
 			} else {
 				$session->setFlashdata('error', 'Employee Confirmation Email Failed');
 				$emLog = [
@@ -3934,9 +3935,9 @@ class Backend extends BEBaseController
 					'em_body' => $message,
 					'row_id' => $id,
 					'action_table' => 'Orders',
-					'em_status' => '0' ,
-			];
-			em_log($emLog);
+					'em_status' => '0',
+				];
+				em_log($emLog);
 				return redirect()->to('backend/email-4/' . encryptIt($id));
 			}
 			if (sendEmail($to2, $cc, $subject, $message)) {
@@ -3947,9 +3948,9 @@ class Backend extends BEBaseController
 					'em_body' => $message,
 					'row_id' => $id,
 					'action_table' => 'Orders',
-					'em_status' => '1' ,
-			];
-			em_log($emLog);
+					'em_status' => '1',
+				];
+				em_log($emLog);
 				return redirect()->to('backend/order-s5/' . encryptIt($id));
 			} else {
 				$session->setFlashdata('error', 'Employee Confirmation Email Failed');
@@ -3959,9 +3960,9 @@ class Backend extends BEBaseController
 					'em_body' => $message,
 					'row_id' => $id,
 					'action_table' => 'Orders',
-					'em_status' => '0' ,
-			];
-			em_log($emLog);
+					'em_status' => '0',
+				];
+				em_log($emLog);
 				return redirect()->to('backend/email-4/' . encryptIt($id));
 			}
 		}
@@ -4066,9 +4067,9 @@ class Backend extends BEBaseController
 						'em_body' => $message,
 						'row_id' => $id,
 						'action_table' => 'Orders',
-						'em_status' => '1' ,
-				];
-				em_log($emLog);
+						'em_status' => '1',
+					];
+					em_log($emLog);
 					$Nmodel->insert($newData2);
 				} else {
 					$session->setFlashdata('error', 'Payment Done Email Failed');
@@ -4078,9 +4079,9 @@ class Backend extends BEBaseController
 						'em_body' => $message,
 						'row_id' => $id,
 						'action_table' => 'Orders',
-						'em_status' => '0' ,
-				];
-				em_log($emLog);
+						'em_status' => '0',
+					];
+					em_log($emLog);
 					return redirect()->to('backend/orders');
 				}
 				if (sendEmail($to2, $cc, $subject2, $message2)) {
@@ -4091,9 +4092,9 @@ class Backend extends BEBaseController
 						'em_body' => $message2,
 						'row_id' => $id,
 						'action_table' => 'Orders',
-						'em_status' => '1' ,
-				];
-				em_log($emLog);
+						'em_status' => '1',
+					];
+					em_log($emLog);
 					$Nmodel->insert($newData3);
 					return redirect()->to('backend/orders');
 				} else {
@@ -4104,9 +4105,9 @@ class Backend extends BEBaseController
 						'em_body' => $message2,
 						'row_id' => $id,
 						'action_table' => 'Orders',
-						'em_status' => '0' ,
-				];
-				em_log($emLog);
+						'em_status' => '0',
+					];
+					em_log($emLog);
 					return redirect()->to('backend/orders');
 				}
 			}
@@ -4217,9 +4218,9 @@ class Backend extends BEBaseController
 					'em_body' => $message,
 					'row_id' => $id,
 					'action_table' => 'Orders',
-					'em_status' => '1' ,
-			];
-			em_log($emLog);
+					'em_status' => '1',
+				];
+				em_log($emLog);
 			} else {
 				$failedEmails[] = $to; // Store the failed email address in the array
 			}
@@ -4233,9 +4234,9 @@ class Backend extends BEBaseController
 				'em_body' => $message,
 				'row_id' => $id,
 				'action_table' => 'Orders',
-				'em_status' => '0' ,
-		];
-		em_log($emLog);
+				'em_status' => '0',
+			];
+			em_log($emLog);
 			return redirect()->to('backend/orders');
 		} else {
 
@@ -4729,5 +4730,95 @@ class Backend extends BEBaseController
 		];
 
 		return $this->response->setJSON($response);
+	}
+	public function timeSheet_LoopNotify()
+	{
+		$data = [];
+		$omodel = new ordersModel();
+		$Nmodel = new notificationModel();
+
+		$data['v_ordr'] = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')
+			->join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')
+			->where('orders.ord_status >', '3')->where("NOT EXISTS (
+        SELECT 1
+        FROM timesheets
+        WHERE timesheets.order_id = orders.ord_id
+    )")->groupBy('orders.ord_id')->orderBy('orders.ord_id', 'DESC')
+			->findAll();
+			
+	
+			$sucees = [];
+			$failedEmails = [];
+			$link = 'employee/timesheet';
+	
+			foreach ($data['v_ordr'] as $v_ordr) {
+				// logs
+			$log = array(
+				'row_id' => $v_ordr['ord_id'],
+				'adm_id' => session()->usr_id,
+				'action_table' => 'Orders',
+				'content' => $v_ordr['emp_email'],
+				'event' => 'TimeSheet Reminder',
+			);
+	
+			add_log($log);
+	
+				$to = $v_ordr['emp_email'];
+				$cc = 'info@sralocum.com';
+				$subject = 'SRAl | TimeSheet Remider';
+				$message = view('admin/email_responses/timesheet_reminder', ['v_ordr' => $v_ordr]);
+	
+				if (sendEmail($to, $cc, $subject, $message)) {
+					$sucees[] = $to;
+					$emLog = [
+						'em_to' => $to,
+						'em_subject' => $subject,
+						'em_body' => $message,
+						'row_id' => $v_ordr['ord_id'],
+						'action_table' => 'Orders',
+						'em_status' => '1',
+					];
+					em_log($emLog);
+					$newdata = [
+						'ord_id' => $v_ordr['ord_id'],
+						'emp_id' => $v_ordr['emp_id'], //user id to whom we want to send notification
+						'link'	=> $link,
+						'notification' => "Fill Timesheet Reminder",
+						'status' => "0",
+						'usr_type' => "employee",];
+						$Nmodel->insert($newdata);
+				} else {
+					$failedEmails[] = $to; // Store the failed email address in the array
+				}
+			}
+			if (!empty($failedEmails)) {
+				// Store the failed email addresses in the error session message
+				$emLog = [
+					'em_to' => $to,
+					'em_subject' => $subject,
+					'em_body' => $message,
+					'row_id' => $v_ordr['ord_id'],
+					'action_table' => 'Orders',
+					'em_status' => '0',
+				];
+				em_log($emLog);
+				echo 'Emails Failed <b>' . implode(',', $failedEmails) . '</b>';
+			} else {
+				echo 'Succesfully Done <b>' . implode(',', $sucees) . '</b>';
+			}
+	}
+	public function orderReport()
+	{
+		$data = [];
+		$omodel = new ordersModel();
+
+		$data['v_ordr'] = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')
+			->join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')
+			->groupBy('orders.ord_id')
+			->orderBy('orders.ord_id', 'DESC')
+			->findAll();
+
+
+		dd($data['v_ordr']);
 	}
 }

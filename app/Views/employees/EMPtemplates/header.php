@@ -25,7 +25,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     
     <link rel="stylesheet" href="<?= base_url('public/assets/css/my.css') ?>">
-    <script src="<?= base_url('public/assets/bundles/libscripts.bundle.js') ?>"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
@@ -76,7 +75,7 @@
                                             <i class="fa fa-bell"></i>
                                             <span id="notif-count" class="badge bg-danger"></span>
                                         </a>
-                                        <div class="dropdown-menu notification-dropdown dropdown-menu-end p-0 shadow notification">
+                                        <div class="dropdown-menu notification-dropdown dropdown-menu-end p-0 shadow notification overflow">
                                             <ul class="list-unstyled feeds_widget" id="notif">
                                                 <li class="d-flex">
                                                     <div class="feeds-body flex-grow-1">

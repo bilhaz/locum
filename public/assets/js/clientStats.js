@@ -10,10 +10,10 @@ function showNotification(title, body, url) {
       }
 
     });
-    console.log("Title: " + title);
-    console.log("Body: " + body);
-    console.log("URL: " + url);
-    console.log("Break");
+    // console.log("Title: " + title);
+    // console.log("Body: " + body);
+    // console.log("URL: " + url);
+    // console.log("Break");
   }
 
   // Fetch notifications for browser notification
@@ -38,9 +38,9 @@ function showNotification(title, body, url) {
             var extractedValue = notification.link.split('/').pop(); // Extract the value after the last '/'
             var url = extractedValue + '/' + notification.ord_id; // Use the extracted value as the URL
 
-            console.log("Title: " + title);
-            console.log("Body: " + body);
-            console.log("URL: " + url);
+            // console.log("Title: " + title);
+            // console.log("Body: " + body);
+            // console.log("URL: " + url);
 
             showNotification(title, body, url);
 

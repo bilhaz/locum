@@ -71,7 +71,7 @@
                                         <i class="fa fa-bell"></i>
                                         <span id="notif-count" class="badge bg-danger"></span>
                                         </a>
-                                        <div class="dropdown-menu notification-dropdown dropdown-menu-end p-0 shadow notification">
+                                        <div class="dropdown-menu notification-dropdown dropdown-menu-end p-0 shadow notification tab-content overflow">
                                         <ul class="list-unstyled feeds_widget" id="notif">
                                         <li class="d-flex">
                                                 <div class="feeds-body flex-grow-1">

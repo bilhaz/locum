@@ -428,3 +428,26 @@ input[type=file] {
 .equal-width {
     width: 100%;
 }
+.overflow {
+    max-height: 500px;
+    height: auto;
+    overflow-y: scroll;
+  overflow-x: hidden;
+
+  }
+  .overflow::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  .overflow::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+  }
+  
+  .overflow::-webkit-scrollbar-thumb {
+    background-color: #34d359;
+    border-radius: 5px;
+  }
+  
+  .overflow::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }

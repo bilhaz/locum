@@ -10,10 +10,10 @@ function showNotification(title, body, url) {
       }
 
     });
-    console.log("Title: " + title);
-    console.log("Body: " + body);
-    console.log("URL: " + url);
-    console.log("Break");
+    // console.log("Title: " + title);
+    // console.log("Body: " + body);
+    // console.log("URL: " + url);
+    // console.log("Break");
   }
 
   // Fetch notifications for browser notification
