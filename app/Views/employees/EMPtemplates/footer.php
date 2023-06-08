@@ -14,7 +14,7 @@
   const link2 = '<?php echo base_url('employee/notif-get'); ?>';
   const link3 = '<?php echo base_url('employee/notif-count'); ?>';
   const link4 = '<?php echo base_url('employee/notif-seen'); ?>'; 
-  const link6 = '<?php echo base_url('backend/getServer-DateTime'); ?>';
+  const link6 = '<?php echo base_url('employee/getServer-DateTime'); ?>';
 
 </script>
 <script src="<?= base_url('public/assets/js/EmpStats.js') ?>"></script>

@@ -1100,4 +1100,14 @@ class emp extends EMPBaseController
 		return json_encode(['success' => true]); // return JSON response
 
 	}
+	public function getServerDateTime()
+	{
+		$currentDateTime = date('d:m:Y h:i:s a');
+
+		$response = [
+			'currentDateTime' => $currentDateTime
+		];
+
+		return $this->response->setJSON($response);
+	}
 }

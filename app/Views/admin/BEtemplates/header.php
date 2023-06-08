@@ -14,10 +14,12 @@
     <link rel="stylesheet" href="<?= base_url('public/assets/css/dataTables.min.css') ?>">
 
     <link rel="stylesheet" href="<?= base_url('public/assets/css/main.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('public/assets/css/summernote.min.css') ?>">
     <link rel="stylesheet" href="https://parsleyjs.org/src/parsley.css">
 
     <script src="<?= base_url('public/assets/bundles/libscripts.bundle.js') ?>"></script>
     <script src="<?= base_url('public/assets/pushjs/push.min.js') ?>"></script>
+    <script src="<?= base_url('public/assets/bundles/summernote.bundle.js') ?>"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.min.js" integrity="sha512-eyHL1atYNycXNXZMDndxrDhNAegH2BDWt1TmkXJPoGf1WLlNYt08CSjkqF5lnCRmdm3IrkHid8s2jOUY4NIZVQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="<?= base_url('public/assets/css/my.css') ?>">
@@ -108,6 +110,7 @@
 
                         <ul class="nav nav-tabs text-center mb-2" role="tablist">
                             <li class="nav-item flex-fill"><a class="nav-link active" data-bs-toggle="tab" href="#hr_menu" role="tab">SRA Admin</a></li>
+                            <li class="nav-item flex-fill"><a class="nav-link" data-bs-toggle="tab" href="#project_menu" role="tab">Emails</a></li>
                             <li class="nav-item flex-fill"><a class="nav-link" data-bs-toggle="tab" href="#setting_menu" role="tab"><i class="fa fa-cog"></i></a></li>
                         </ul>
 
@@ -155,6 +158,16 @@
                                     </ul>
                                 </nav>
                             </div>
+                            
+                            <div class="tab-pane fade" id="project_menu" role="tabpanel">
+                                <nav class="sidebar-nav">
+                                <ul class="main-menu metismenu list-unstyled">
+                                <li><a href="<?= base_url('emails/compose')?>"><i class="fa fa-comments"></i><span>Compose</span></a></li>
+                                <li><a href="<?= base_url('emails/inbox/1')?>"><i class="fa fa-envelope-o"></i>Inbox</a></li>
+                                <li><a href="<?= base_url('emails/sent')?>"><i class="fa fa-send"></i>Sent</a></li>
+                                </ul>
+                                </nav>
+                                </div>
 
 
                             <div class="tab-pane fade" id="setting_menu" role="tabpanel">

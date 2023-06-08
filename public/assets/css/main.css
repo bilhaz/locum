@@ -16506,13 +16506,13 @@ ul.choose-skin li span {
 }
 
 .mail-inbox .mail-right {
-    width: calc(100% - 200px);
+    width: calc(100% - 12px);
     position: relative
 }
 
 @media(min-width:992px) {
     .mail-inbox .mail-right {
-        width: calc(100% - 260px)
+        width: calc(100% - 10px)
     }
 }
 

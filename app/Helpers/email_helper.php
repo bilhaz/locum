@@ -57,4 +57,26 @@ function em_log($data = array()) {
 function show_404(){
     throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
 }
+function composeEmail($to, $cc, $bcc, $subject, $message)
+    {
+        $email = \Config\Services::email();
+
+        $email->setFrom('no-reply@sralocum.com');
+        $email->setTo($to);
+        $email->setBCC($bcc);
+        $email->setCC($cc);
+        $email->setSubject($subject);
+        $email->setMessage($message);
+        $email->setMailType('html'); // Set email content type to HTML
+
+
+
+        if ($email->send()) {
+            // echo $email->printDebugger();exit;
+            return true;
+        } else {
+            // echo $email->printDebugger();exit;
+            return false;
+        }
+    }
 }

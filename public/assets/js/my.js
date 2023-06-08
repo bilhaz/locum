@@ -138,7 +138,6 @@ $(function() {
 
 });
 
-
 function copyLink() {
     var flashMessage = document.getElementById("flash-message");
     var link = document.querySelector("#tocopy").href;
@@ -372,22 +371,7 @@ $(document).ready(function() {
     });
 });
 
-  function loadServerDateTime() {
-    var dateInput = document.getElementById("dateInput");
-    
-    $.ajax({
-      url: link6,  // Replace with the actual endpoint URL on your server
-      type: "GET",
-      dataType: "json",
-      success: function(response) {
-        var serverDateTime = response.currentDateTime;
-        dateInput.value = serverDateTime;
-      },
-      error: function(xhr, status, error) {
-        console.error(error);
-      }
-    });
-  }
+  
 // Total Confirmed Hours
 $(document).ready(function() {
     fetchtotalHours(); // Fetch initial data
@@ -418,4 +402,4 @@ $(document).ready(function() {
       }
     });
   }
- 
+  

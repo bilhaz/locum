@@ -129,3 +129,4 @@ function showNotification(title, body, url) {
       }
     });
   }
+  

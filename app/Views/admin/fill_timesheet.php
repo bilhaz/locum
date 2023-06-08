@@ -210,3 +210,26 @@
       <?php } ?>
         }
     </script>
+    <script>
+    function loadServerDateTime() {
+    var dateInput = document.getElementById("dateInput");
+    // Assuming you have stored the session username in a PHP variable called `username`
+  var username = "<?php echo $_SESSION['usr_email']; ?>";
+    
+    $.ajax({
+      url: link6,  // Replace with the actual endpoint URL on your server
+      type: "GET",
+      dataType: "json",
+      success: function(response) {
+        var serverDateTime = response.currentDateTime;
+        // Concatenate the session username with the server date and time
+      var dateTimeWithUsername = username + " - " + serverDateTime;
+
+      dateInput.value = dateTimeWithUsername;
+      },
+      error: function(xhr, status, error) {
+        console.error(error);
+      }
+    });
+  }
+</script>
