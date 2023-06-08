@@ -128,8 +128,8 @@ $routes->match(['get' , 'post'], 'backend/Total-ConfirmedHours', 'admin\Backend:
 $routes->match(['get' , 'post'], 'backend/timeSheet_LoopNotify', 'admin\Backend::timeSheet_LoopNotify',['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/orderReport', 'admin\Backend::orderReport',['filter' => 'B_auth']);
 $routes->match(['get' , 'post'], 'backend/notif-count', 'admin\Backend::get_notifcount',/*['filter' => 'B_auth']*/);
-// $routes->match(['get' , 'post'], 'emails/inbox', 'emails\emails::inbox',['filter' => 'EM_auth']);
-$routes->match(['get' , 'post'], 'emails/inbox/(:any)', 'emails\emails::inbox/$1',['filter' => 'EM_auth']);
+$routes->match(['get' , 'post'], 'emails/inbox', 'emails\emails::inbox',['filter' => 'EM_auth']);
+// $routes->match(['get' , 'post'], 'emails/inbox/(:any)', 'emails\emails::inbox/$1',['filter' => 'EM_auth']);
 $routes->match(['get' , 'post'], 'emails/compose', 'emails\emails::compose',['filter' => 'EM_auth']);
 // });
 

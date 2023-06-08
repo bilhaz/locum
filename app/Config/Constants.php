@@ -83,3 +83,4 @@ defined('EXIT__AUTO_MIN')      || define('EXIT__AUTO_MIN', 9); // lowest automat
 defined('EXIT__AUTO_MAX')      || define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 define('ENCRYPTION_IV','OKASHAaliabcdykk');
 define('ENCRYPTION_KEY','hsbfhjsf');
+define('Per_Page_Emails',10);

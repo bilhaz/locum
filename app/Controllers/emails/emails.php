@@ -10,7 +10,7 @@ class emails extends EMBaseController
 {
 
 
-    public function inbox($page = 1, $perPage = 10)
+    public function inbox()
     {
         $hostname = '{mail.sralocum.com:993/imap/ssl}INBOX';
         $username = 'Info@sralocum.com';
@@ -24,6 +24,9 @@ class emails extends EMBaseController
 
         // Retrieve all email IDs matching the search criteria
         $mailIds = $mailbox->searchMailbox($searchCriteria, $sortingOrder);
+
+        $page = isset($_GET['page']) ? $_GET['page'] : 1;
+        $perPage = Per_Page_Emails;
 
         // Reverse the array to get descending order
         $mailIds = array_reverse($mailIds);
@@ -41,12 +44,44 @@ class emails extends EMBaseController
         // Process the retrieved emails
         $emails = [];
         foreach ($mailIdsPage as $mailId) {
-            $emails[] = $mailbox->getMail($mailId);
+            // $emails[] = $mailbox->getMail($mailId);
+            $email = $mailbox->getMail($mailId);
+            // Retrieve attachments for each email
+            $attachments = [];
+            $attachments = '<ul>';
+            foreach ($email->getAttachments() as $attachment) {
+                $attachmentFilename = $attachment->filePath;
+                
+                // If the filePath property is not available, you can try using the name property instead
+                if (empty($attachmentFilename)) {
+                    $attachmentFilename = $attachment->name;
+                }
+                $attachments .= '<li><a href="data:application/octet-stream;base64,' . base64_encode($attachment->getContents()) . '" download="' . $attachmentFilename . '">' . $attachmentFilename . '</a></li>';
+
+                // $attachments[] = [
+                //     'name' => $attachmentFilename,
+                //     'content' => $attachment->getContents()
+                // ];
+            }
+            $attachments .= '<ul>';
+
+            $emails[] = [
+                'subject' => $email->subject,
+                'from' => $email->fromAddress,
+                'to' => $email->to,
+                'cc' => $email->cc,
+                'bcc' => $email->bcc,
+                'seen' => $email->isSeen,
+                'date' => $email->date,
+                'body' => (isset($email->textHtml)&&!empty($email->textHtml)?$email->textHtml : $email->textPlain),
+                'attachments' => $attachments
+            ];
         }
 
         // Disconnect from the IMAP server
         $mailbox->disconnect();
-
+        // print_r($emails);
+        // exit;
         $totalPages = ceil($totalEmails / $perPage); // Calculate the total number of pages
 
         $data['emails'] = $emails;

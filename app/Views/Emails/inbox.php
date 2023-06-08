@@ -64,7 +64,7 @@
                                 <ul class="list-unstyled mb-0">
                                     <?php $i = 1;
                                     foreach ($emails as $row) : ?>
-                                        <li class="clearfix <?php if ($row->isSeen != "1") echo "unread"; ?>">
+                                        <li class="clearfix <?php if ($row['seen'] != "1") echo "unread"; ?>">
                                             <div class="mail-detail-left float-start">
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault7">
@@ -73,17 +73,17 @@
                                             </div>
                                             <div class="mail-detail-right float-start">
                                                 <h6 class="sub">
-                                                    <a href="javascript:void(0);" class="mail-detail-expand" data-index="<?= $i ?>"><?= isset($row->subject) ? $row->subject : 'No-Subject' ?></a>
-                                                    <?php if ($row->isSeen != "1") : ?>
+                                                    <a href="javascript:void(0);" class="mail-detail-expand" data-index="<?= $i ?>"><?= isset($row['subject'])&&!empty($row['subject']) ? $row['subject'] : 'No-Subject' ?></a>
+                                                    <?php if ($row['seen'] != "1") : ?>
                                                         <span class="badge bg-success mb-0">New</span>
                                                     <?php else : ?>
                                                         <span class="badge bg-info mb-0">Read</span>
                                                     <?php endif; ?>
                                                 </h6>
                                                 <p class="dep">
-                                                    <span class=""><?= $row->senderAddress ?></span>
+                                                    <span class=""><?= $row['from'] ?></span>
                                                 </p>
-                                                <span class="time "><?= date("j F", strtotime($row->date)) ?></span>
+                                                <span class="time "><?= date("j F", strtotime($row['date'])) ?></span>
                                             </div>
                                         </li>
                                     <?php $i++;
@@ -112,27 +112,29 @@
                                             <div class="media-body w-100">
                                                 <p class="mb-0">
                                                     <strong class="text-muted me-1">From:</strong>
-                                                    <a class="text-default" href="javascript:void(0);"><span class="__cf_email__"><?= $brow->senderAddress ?></span></a>
-                                                    <span class="text-muted text-sm float-end"><?= date("d-m-Y H:m:s A", strtotime($brow->date)) ?></span>
+                                                    <a class="text-default" href="javascript:void(0);"><span class="__cf_email__"><?= $brow['from'] ?></span></a>
+                                                    <span class="text-muted text-sm float-end"><?= date("d-m-Y H:i:s A", strtotime($brow['date'])) ?></span>
                                                 </p>
                                                 <p class="mb-0">
-                                                    <strong class="text-muted me-1">To:</strong><?php $to = implode(',', $brow->to);
+                                                    <strong class="text-muted me-1">To:</strong><?php $to = implode(',', $brow['to']);
                                                                                                 echo $to;  ?><small class="text-muted float-end"><i class="zmdi zmdi-attachment me-1"></i></small>
                                                 </p>
                                                 <p class="mb-0">
                                                     <strong class="text-muted me-1">CC:</strong>
-                                                    <a class="text-default" href="javascript:void(0);"><span class="__cf_email__"><?php $cc = implode(',', $brow->cc);
+                                                    <a class="text-default" href="javascript:void(0);"><span class="__cf_email__"><?php $cc = implode(',', $brow['cc']);
                                                                                                                                     echo $cc; ?></span></a>
                                                 </p>
                                             </div>
                                         </div>
                                         <h5 class="mb-0">
                                             <strong class="text-muted me-1">Subject:</strong>
-                                            <a class="text-default" href="javascript:void(0);"><span class="__cf_email__"><?= isset($brow->subject) ? $brow->subject : 'No-Subject' ?></span></a>
+                                            <a class="text-default" href="javascript:void(0);"><span class="__cf_email__"><?= isset($brow['subject'])&&!empty($brow['subject']) ? $brow['subject'] : 'No-Subject' ?></span></a>
                                         </h5>
                                     </div>
                                     <div class="mail-cnt">
-                                        <p><?= isset($brow->textHtml) ? $brow->textHtml : $brow->textPlain ?></p>
+                                        <iframe width="100%" height="100%" srcdoc="<?php echo htmlspecialchars($brow['body']); ?>"></iframe>
+                                        <?=$brow['attachments']?>
+                                    
                                     </div>
                                     <strong>Click here to</strong>
                                     <a class="btn btn-link" href="app-compose.html">Reply</a>
