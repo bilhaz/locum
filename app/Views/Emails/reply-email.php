@@ -22,23 +22,25 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <form action="<?= base_url('emails/compose') ?>" method="post" enctype="multipart/form-data" accept-charset="utf-8" data-parsley-validate="" id="forma">
+                        <form action="<?= base_url('emails/reply_email_send/'.encryptIt($id)) ?>" method="post" enctype="multipart/form-data" accept-charset="utf-8" data-parsley-validate="" id="forma">
                             <div class="mb-3">
-                                <select type="text" name="email" class="form-control" id="emailTags" multiple="multiple" placeholder="To"></select>
+                                <input type="text" name="to" class="form-control"  value="<?= $to ?>" placeholder="To">
                             </div>
                             <div class="mb-3">
-                                <input type="text" name="subject" class="form-control" placeholder="Subject">
+                                <input type="text" name="subject" class="form-control" placeholder="Subject" value="<?= $subject?>">
                             </div>
                             <div class="mb-3">
-                                <select type="text" name="cc" class="form-control" id="ccTags" multiple="multiple" placeholder="CC"></select>
+                            <?php if(!empty($cc)) : $ccc = implode(',',$cc); ?>
+                                <input type="text" name="cc" value="<?=$ccc?>" disabled class="form-control" id="ccTags" multiple="multiple" placeholder="CC">
                             </div>
-                            <div class="mb-3">
-                                <select type="text" name="bcc" class="form-control" id="bccTags" multiple="multiple" placeholder="BCC"></select>
-                            </div>
+                            <?php endif; ?>
+                        <hr>
+                        <strong><?= $attachments ?></strong>
                         <hr>
                         <textarea class="summernote" name="body" data-placeholder="Email Body" height="40%">
-   
+                        <?php echo htmlspecialchars($body); ?>
                             </textarea>
+                            
                         <div class="mt-5">
                             <button type="submit" class="btn btn-success">Send Mail</button>
                             <a href="<?= base_url('emails/inbox')?>" class="btn btn-outline-secondary">Cancel</a>

@@ -55,7 +55,7 @@
                                                 </div>
                                             </div>
                                             <div class="float-end ms-auto">
-                                            <a href="<?= base_url('emails/inbox')?>" class="mail-back btn btn-primary btn-sm">Reply &nbsp;<i class="fa fa-mail-reply"></i></a>
+                                            <a href="<?= base_url('emails/reply_email/'.encryptIt($emails['id']))?>" target="_blank" class="mail-back btn btn-primary btn-sm">Reply &nbsp;<i class="fa fa-mail-reply"></i></a>
                                             </div>
                                         </div>
                                         <div class="detail-header" style="background-color:white;">

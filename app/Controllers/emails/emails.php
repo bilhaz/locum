@@ -246,8 +246,120 @@ public function inboxUpdate_data()
             
  }
 
+ public function reply_email($id = null)
+ {
+     $id = decryptIt($id);
+     $hostname = '{mail.sralocum.com:993/imap/ssl}INBOX';
+     $username = 'Info@sralocum.com';
+     $password = 'Tesco1234';
+ 
+     $mailbox = new Mailbox($hostname, $username, $password);
+ 
+     $email = $mailbox->getMail($id);
+    // print_r($email);exit;
 
+     if ($email) {
+            $attachments = [];
+            $attachmentLinks = '<ul>';
+    
+            foreach ($email->getAttachments() as $attachment) {
+                $attachmentFilename = $attachment->filePath;
+    
+                // If the filePath property is not available, you can try using the name property instead
+                if (empty($attachmentFilename)) {
+                    $attachmentFilename = $attachment->name;
+                }
+    
+                $attachmentLinks .= '<li><a href="data:application/octet-stream;base64,' . base64_encode($attachment->getContents()) . '" download="' . $attachmentFilename . '">' . $attachmentFilename . '</a></li>';
+    
+                $attachments[] = [
+                    'name' => $attachmentFilename,
+                    'content' => $attachment->getContents()
+                ];
+            }
+    
+            $attachmentLinks .= '</ul>';
+         // Retrieve the necessary data from the email
+         $id = $email->id;
+         $subject = 'Re: ' . $email->subject;
+         $to = $email->fromAddress;
+         $cc = $email->cc;
+        //  $bcc = $email->bcc;
+         $body = (isset($email->textHtml) && !empty($email->textHtml)) ? $email->textHtml : $email->textPlain; // Use the plain text version of the email as the default body
+        
+ 
+         // Prepare the data to be passed to the view
+         $data['id'] = $id;
+         $data['subject'] = $subject;
+         $data['to'] = $to;
+         $data['cc'] = $cc;
+        //  $data['bcc'] = $bcc;
+         $data['body'] = $body;
+         $data['attachments'] = $attachmentLinks;
+            // print_r($data['body']);exit;
+         // Disconnect from the IMAP server
+         $mailbox->disconnect();
+ 
+         // Load the reply email view with the retrieved data
+         return $this->LoadView('emails/reply-email', $data);
+     } else {
+         // Email not found
+         return 'Email not found';
+     }
+ }
+ public function reply_email_send($id = null)
+ {
+    $id = decryptIt($id);
+     $data = [];
 
+    //  $hostname = '{mail.sralocum.com:993/imap/ssl}INBOX';
+    //  $username = 'Info@sralocum.com';
+    //  $password = 'Tesco1234';
+ 
+    //  // Connect to the IMAP server
+    //  $mailbox = imap_open($hostname, $username, $password);
+ 
+    //  // Mark the email as answered
+    //  imap_setflag_full($mailbox, $id, "\\Answered");
+ 
+    //  // Close the mailbox
+    //  imap_close($mailbox);
+
+     if ($this->request->getMethod() == 'post') {
+         $to = $this->request->getVar('to');
+         $subject = $this->request->getVar('subject');
+         $cc = $this->request->getVar('cc');
+         $bcc = $this->request->getVar('bcc');
+         $message = $this->request->getVar('body');
+         
+         $session = session();
+         if (composeEmail($to, $cc, $bcc, $subject, $message)) {
+             $session->setFlashdata('success', 'Email sent Successfully');
+             $emLog = [
+                 'em_to' => $to,
+                 'em_subject' => $subject,
+                 'em_body' => $message,
+                 'row_id' => 'NULL',
+                 'action_table' => 'Webmail',
+                 'em_status' => '1',
+             ];
+             em_log($emLog);
+             return redirect()->to('emails/inbox');
+         } else {
+             $session->setFlashdata('error', 'Email Failed, might be issue in your Internet');
+             $emLog = [
+                 'em_to' => $to,
+                 'em_subject' => $subject,
+                 'em_body' => $message,
+                 'row_id' => 'NULL',
+                 'action_table' => 'Webmail',
+                 'em_status' => '0',
+             ];
+             em_log($emLog);
+             return redirect()->to('emails/inbox');
+         }
+     }
+ }
     // Compose Email
     public function compose()
     {
