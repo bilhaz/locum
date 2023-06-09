@@ -163,7 +163,7 @@
                                 <nav class="sidebar-nav">
                                 <ul class="main-menu metismenu list-unstyled">
                                 <li><a href="<?= base_url('emails/compose')?>"><i class="fa fa-comments"></i><span>Compose</span></a></li>
-                                <li><a href="<?= base_url('emails/inbox/1')?>"><i class="fa fa-envelope-o"></i>Inbox</a></li>
+                                <li><a href="<?= base_url('emails/inbox')?>"><i class="fa fa-envelope-o"></i>Inbox</a></li>
                                 <li><a href="<?= base_url('emails/sent')?>"><i class="fa fa-send"></i>Sent</a></li>
                                 </ul>
                                 </nav>

@@ -24,13 +24,13 @@ class emails extends EMBaseController
 
         // Retrieve all email IDs matching the search criteria
         $mailIds = $mailbox->searchMailbox($searchCriteria, $sortingOrder);
-
+        
         $page = isset($_GET['page']) ? $_GET['page'] : 1;
         $perPage = Per_Page_Emails;
 
         // Reverse the array to get descending order
         $mailIds = array_reverse($mailIds);
-
+        
         $totalEmails = count($mailIds); // Calculate the total number of emails
 
         // Calculate the starting and ending index for the current page
@@ -46,38 +46,40 @@ class emails extends EMBaseController
         foreach ($mailIdsPage as $mailId) {
             // $emails[] = $mailbox->getMail($mailId);
             $email = $mailbox->getMail($mailId);
+            // print_r($email);exit;
             // Retrieve attachments for each email
-            $attachments = [];
-            $attachments = '<ul>';
-            foreach ($email->getAttachments() as $attachment) {
-                $attachmentFilename = $attachment->filePath;
+            // $attachments = [];
+            // $attachments = '<ul>';
+            // foreach ($email->getAttachments() as $attachment) {
+            //     $attachmentFilename = $attachment->filePath;
                 
-                // If the filePath property is not available, you can try using the name property instead
-                if (empty($attachmentFilename)) {
-                    $attachmentFilename = $attachment->name;
-                }
-                $attachments .= '<li><a href="data:application/octet-stream;base64,' . base64_encode($attachment->getContents()) . '" download="' . $attachmentFilename . '">' . $attachmentFilename . '</a></li>';
+            //     // If the filePath property is not available, you can try using the name property instead
+            //     if (empty($attachmentFilename)) {
+            //         $attachmentFilename = $attachment->name;
+            //     }
+            //     $attachments .= '<li><a href="data:application/octet-stream;base64,' . base64_encode($attachment->getContents()) . '" download="' . $attachmentFilename . '">' . $attachmentFilename . '</a></li>';
 
                 // $attachments[] = [
                 //     'name' => $attachmentFilename,
                 //     'content' => $attachment->getContents()
                 // ];
-            }
-            $attachments .= '<ul>';
-
+            // }
+            // $attachments .= '<ul>';
+            
             $emails[] = [
+                'id'=> $email->id,
                 'subject' => $email->subject,
                 'from' => $email->fromAddress,
-                'to' => $email->to,
-                'cc' => $email->cc,
-                'bcc' => $email->bcc,
+                // 'to' => $email->to,
+                // 'cc' => $email->cc,
+                // 'bcc' => $email->bcc,
                 'seen' => $email->isSeen,
                 'date' => $email->date,
-                'body' => (isset($email->textHtml)&&!empty($email->textHtml)?$email->textHtml : $email->textPlain),
-                'attachments' => $attachments
+                // 'body' => (isset($email->textHtml)&&!empty($email->textHtml)?$email->textHtml : $email->textPlain),
+                // 'attachments' => $attachments
             ];
         }
-
+        
         // Disconnect from the IMAP server
         $mailbox->disconnect();
         // print_r($emails);
@@ -91,10 +93,159 @@ class emails extends EMBaseController
         $data['endIndex'] = $endIndex;
         $data['totalEmails'] = $totalEmails;
         $data['totalPages'] = $totalPages;
-
+       
         // Load the inbox view with the retrieved emails and pagination data
         return $this->LoadView('emails/inbox', $data);
     }
+    public function view_email($id = null)
+{
+    $id = decryptIt($id);
+    $hostname = '{mail.sralocum.com:993/imap/ssl}INBOX';
+    $username = 'Info@sralocum.com';
+    $password = 'Tesco1234';
+
+    $mailbox = new Mailbox($hostname, $username, $password);
+
+    $email = $mailbox->getMail($id);
+
+    if ($email) {
+        $attachments = [];
+        $attachmentLinks = '<ul>';
+
+        foreach ($email->getAttachments() as $attachment) {
+            $attachmentFilename = $attachment->filePath;
+
+            // If the filePath property is not available, you can try using the name property instead
+            if (empty($attachmentFilename)) {
+                $attachmentFilename = $attachment->name;
+            }
+
+            $attachmentLinks .= '<li><a href="data:application/octet-stream;base64,' . base64_encode($attachment->getContents()) . '" download="' . $attachmentFilename . '">' . $attachmentFilename . '</a></li>';
+
+            $attachments[] = [
+                'name' => $attachmentFilename,
+                'content' => $attachment->getContents()
+            ];
+        }
+
+        $attachmentLinks .= '</ul>';
+
+        // If the email is not marked as seen, set isSeen to true
+        if (!$email->isSeen) {
+            $mailbox->markMailAsRead($id);
+        }
+
+        $emailData = [
+                'id' => $email->id,
+                'subject' => $email->subject,
+                'from' => $email->fromAddress,
+                'to' => $email->to,
+                'cc' => $email->cc,
+                'bcc' => $email->bcc,
+                'seen' => $email->isSeen,
+                'date' => $email->date,
+                'body' => (isset($email->textHtml) && !empty($email->textHtml)) ? $email->textHtml : $email->textPlain,
+                'attachments' => $attachmentLinks
+        ];
+
+        // Disconnect from the IMAP server
+        $mailbox->disconnect();
+
+
+    // Prepare the data to be passed to the view
+    $data['emails'] = $emailData;
+    $data['currentPage'] = 1;
+    $data['perPage'] = 1;
+    $data['startIndex'] = 0;
+    $data['endIndex'] = 0;
+    $data['totalEmails'] = 1;
+    $data['totalPages'] = 1;
+    // print_r($data['emails']);exit;
+    // Load the email view with the retrieved email data
+    return $this->LoadView('emails/view-email', $data);
+    
+    } else {
+        // Email not found
+        return 'Email not found';
+    }
+}
+
+// Updating through ajax function
+public function inboxUpdate_data()
+{
+    $hostname = '{mail.sralocum.com:993/imap/ssl}INBOX';
+    $username = 'Info@sralocum.com';
+    $password = 'Tesco1234';
+
+    $mailbox = new Mailbox($hostname, $username, $password);
+
+    // Set the sorting order to descending
+    $sortingOrder = 'SORTDATE';
+    $searchCriteria = 'ALL';
+
+    // Retrieve all email IDs matching the search criteria
+    $mailIds = $mailbox->searchMailbox($searchCriteria, $sortingOrder);
+
+    // Reverse the array to get descending order
+    $mailIds = array_reverse($mailIds);
+
+    $totalEmails = count($mailIds); // Calculate the total number of emails
+
+    $page = isset($_GET['page']) ? $_GET['page'] : 1;
+    $perPage = Per_Page_Emails;
+
+    // Calculate the starting and ending index for the current page
+    $startIndex = ($page - 1) * $perPage;
+    $endIndex = $startIndex + $perPage - 1;
+    $endIndex = min($endIndex, $totalEmails - 1);
+
+    // Get the current page's email IDs
+    $mailIdsPage = array_slice($mailIds, $startIndex, $perPage);
+
+    // Process the retrieved emails
+    $emails = [];
+    foreach ($mailIdsPage as $mailId) {
+        $email = $mailbox->getMail($mailId);
+
+        $emails[] = [
+            'id' => $email->id,
+            'subject' => $email->subject,
+            'from' => $email->fromAddress,
+            'seen' => $email->isSeen,
+            'date' => $email->date,
+        ];
+    }
+
+    // Disconnect from the IMAP server
+    $mailbox->disconnect();
+
+    foreach ($emails as $row) {
+        echo '<li class="clearfix';
+        if ($row['seen'] != "1") {
+            echo ' unread';
+        }
+        echo '">';
+        echo '<div class="mail-detail-left float-start">';
+        echo '<div class="form-check">';
+        echo '<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault7">';
+        echo '<label class="form-check-label" for="flexCheckDefault7"></label>';
+        echo '</div>';
+        echo '</div>';
+        echo '<div class="mail-detail-right float-start">';
+        echo '<h6 class="sub">';
+        echo '<a href="' . base_url('emails/view_email/' . encryptIt($row['id'])) . '" target="_blank" class="mail-detail-expand">' . (isset($row['subject']) && !empty($row['subject']) ? $row['subject'] : 'No-Subject') . '</a>';
+        echo ($row['seen'] != "1") ? '<span class="badge bg-success mb-0">New</span>' : '<span class="badge bg-info mb-0">Read</span>';
+        echo '</h6>';
+        echo '<p class="dep">';
+        echo '<span class="">' . $row['from'] . '</span>';
+        echo '</p>';
+        echo '<span class="time">' . date("j F", strtotime($row['date'])) . '</span>';
+        echo '</div>';
+        echo '</li>';
+    }
+            
+ }
+
 
 
     // Compose Email

@@ -59,9 +59,11 @@
 
 
                             </div>
+                            <div id="update_data">
                             <div class="mail-list">
 
                                 <ul class="list-unstyled mb-0">
+                                    <div id="emailData">
                                     <?php $i = 1;
                                     foreach ($emails as $row) : ?>
                                         <li class="clearfix <?php if ($row['seen'] != "1") echo "unread"; ?>">
@@ -73,7 +75,7 @@
                                             </div>
                                             <div class="mail-detail-right float-start">
                                                 <h6 class="sub">
-                                                    <a href="javascript:void(0);" class="mail-detail-expand" data-index="<?= $i ?>"><?= isset($row['subject'])&&!empty($row['subject']) ? $row['subject'] : 'No-Subject' ?></a>
+                                                    <a href="<?= base_url('emails/view_email/' .encryptIt($row['id'])) ?>" target="_blank" class="mail-detail-expand" data-index="<?= $i ?>"><?= isset($row['subject'])&&!empty($row['subject']) ? $row['subject'] : 'No-Subject' ?></a>
                                                     <?php if ($row['seen'] != "1") : ?>
                                                         <span class="badge bg-success mb-0">New</span>
                                                     <?php else : ?>
@@ -88,60 +90,11 @@
                                         </li>
                                     <?php $i++;
                                     endforeach; ?>
+                                    </div>
                                 </ul>
                             </div>
-                            <?php $b = 1;
-                            foreach ($emails as $brow) : ?>
-                                <div class="mail-detail-full" id="mail-detail-open-<?= $b ?>" style="display: none;">
-                                    <div class="mail-action clearfix">
-                                        <div class="float-start">
-                                            <div class="d-inline-block">
-                                                <a href="javascript:void(0);" class="mail-back btn btn-primary btn-sm"><i class="fa fa-arrow-left"></i>Back</a>
-                                            </div>
-                                            <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                            </div>
-                                        </div>
-                                        <div class="float-end ms-auto">
-                                        </div>
-                                    </div>
-                                    <div class="detail-header">
-                                        <div class="media d-flex mb-3">
-                                            <div class="float-start me-3">
-
-                                            </div>
-                                            <div class="media-body w-100">
-                                                <p class="mb-0">
-                                                    <strong class="text-muted me-1">From:</strong>
-                                                    <a class="text-default" href="javascript:void(0);"><span class="__cf_email__"><?= $brow['from'] ?></span></a>
-                                                    <span class="text-muted text-sm float-end"><?= date("d-m-Y H:i:s A", strtotime($brow['date'])) ?></span>
-                                                </p>
-                                                <p class="mb-0">
-                                                    <strong class="text-muted me-1">To:</strong><?php $to = implode(',', $brow['to']);
-                                                                                                echo $to;  ?><small class="text-muted float-end"><i class="zmdi zmdi-attachment me-1"></i></small>
-                                                </p>
-                                                <p class="mb-0">
-                                                    <strong class="text-muted me-1">CC:</strong>
-                                                    <a class="text-default" href="javascript:void(0);"><span class="__cf_email__"><?php $cc = implode(',', $brow['cc']);
-                                                                                                                                    echo $cc; ?></span></a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <h5 class="mb-0">
-                                            <strong class="text-muted me-1">Subject:</strong>
-                                            <a class="text-default" href="javascript:void(0);"><span class="__cf_email__"><?= isset($brow['subject'])&&!empty($brow['subject']) ? $brow['subject'] : 'No-Subject' ?></span></a>
-                                        </h5>
-                                    </div>
-                                    <div class="mail-cnt">
-                                        <iframe width="100%" height="100%" srcdoc="<?php echo htmlspecialchars($brow['body']); ?>"></iframe>
-                                        <?=$brow['attachments']?>
-                                    
-                                    </div>
-                                    <strong>Click here to</strong>
-                                    <a class="btn btn-link" href="app-compose.html">Reply</a>
-                                </div>
-
-                            <?php $b++;
-                            endforeach; ?>
+                            
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -163,3 +116,27 @@
         });
     });
 </script>
+<!-- updating emails -->
+<script>
+    $(document).ready(function() {
+        function updateEmailData() {
+            // Perform AJAX request
+            $.ajax({
+                url: '<?= base_url('emails/inboxUpdate_data')?>',
+                type: 'GET',
+                success: function(response) {
+                    // Replace the updated data with the old data
+                    $('#emailData').html(response);
+                },
+                error: function(xhr, status, error) {
+                    // Handle error if needed
+                    console.error(error);
+                }
+            });
+        }
+
+        // Set interval to call the updateEmailData function every 30 seconds
+        setInterval(updateEmailData, 80000);
+    });
+</script>
+
