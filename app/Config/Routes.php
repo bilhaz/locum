@@ -133,8 +133,10 @@ $routes->match(['get' , 'post'], 'emails/inboxUpdate_data', 'emails\emails::inbo
 // $routes->match(['get' , 'post'], 'emails/inbox/(:any)', 'emails\emails::inbox/$1',['filter' => 'EM_auth']);
 $routes->match(['get' , 'post'], 'emails/compose', 'emails\emails::compose',['filter' => 'EM_auth']);
 $routes->match(['get' , 'post'], 'emails/view_email/(:any)', 'emails\emails::view_email/$1',['filter' => 'EM_auth']);
+$routes->match(['get' , 'post'], 'emails/view_SentEmail/(:any)', 'emails\emails::view_SentEmail/$1',['filter' => 'EM_auth']);
 $routes->match(['get' , 'post'], 'emails/reply_email/(:any)', 'emails\emails::reply_email/$1',['filter' => 'EM_auth']);
 $routes->match(['get' , 'post'], 'emails/reply_email_send/(:any)', 'emails\emails::reply_email_send/$1',['filter' => 'EM_auth']);
+$routes->match(['get' , 'post'], 'emails/SentMail', 'emails\emails::SentMail',['filter' => 'EM_auth']);
 // });
 
 

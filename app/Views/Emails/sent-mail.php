@@ -75,7 +75,7 @@
                                             </div>
                                             <div class="mail-detail-right float-start">
                                                 <h6 class="sub">
-                                                    <a href="<?= base_url('emails/view_email/' .encryptIt($row['id'])) ?>" target="_blank" class="mail-detail-expand" data-index="<?= $i ?>"><?= isset($row['subject'])&&!empty($row['subject']) ? $row['subject'] : 'No-Subject' ?>&nbsp;<?php if($row['hasAttachment'] == "1"): echo '<i class="fa fa-paperclip"></i>'; endif;?></a>
+                                                    <a href="<?= base_url('emails/view_SentEmail/' .encryptIt($row['id'])) ?>" target="_blank" class="mail-detail-expand" data-index="<?= $i ?>"><?= isset($row['subject'])&&!empty($row['subject']) ? $row['subject'] : 'No-Subject' ?>&nbsp;<?php if($row['hasAttachment'] == "1"): echo '<i class="fa fa-paperclip"></i>'; endif;?></a>
                                                     <?php if ($row['seen'] != "1") : ?>
                                                         &nbsp;<span class="badge bg-success mb-0">New</span>
                                                     <?php else : ?>
@@ -83,7 +83,7 @@
                                                     <?php endif; ?>
                                                 </h6>
                                                 <p class="dep">
-                                                    <span class=""><?= $row['from'] ?></span>
+                                                    <span class=""><?php $too = implode(',', $row['to']); echo $too; ?></span>
                                                 </p>
                                                 <span class="time "><?= date("j F", strtotime($row['date'])) ?></span>
                                             </div>
