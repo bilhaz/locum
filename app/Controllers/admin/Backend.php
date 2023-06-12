@@ -4674,7 +4674,7 @@ class Backend extends BEBaseController
 				'ord_canc_bcl_count' => $row['ord_canc_bcl_count']
 			];
 		}
-		print_r($response);exit;
+		// print_r($response);exit;
 		// Return the response as JSON
 		return $this->response->setJSON($response);
 	}
