@@ -4649,6 +4649,14 @@ class Backend extends BEBaseController
 			$data->where('ord_created >=', $startDate)
 				->where('ord_created <=', $endDate);
 		}
+		else{
+			// Retrieve data for the current year
+			$currentYear = date('Y');
+			$startDate = $currentYear . '-01-01';
+			$endDate = $currentYear . '-12-31';
+			$data->where('ord_created >=', $startDate)
+				->where('ord_created <=', $endDate);
+		}
 
 		$data = $data->groupBy('month')
 			->get()
@@ -4666,7 +4674,7 @@ class Backend extends BEBaseController
 				'ord_canc_bcl_count' => $row['ord_canc_bcl_count']
 			];
 		}
-		// print_r($responses);exit;
+		print_r($response);exit;
 		// Return the response as JSON
 		return $this->response->setJSON($response);
 	}
