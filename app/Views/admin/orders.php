@@ -103,111 +103,116 @@
                         </div>
                     <?php endif; ?>
                     <div class="card-body">
-                        <table id="employee_List" class="table table-hover">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Hospital Name</th>
-                                    <th>Employee</th>
-                                    <th>Order Date/Time</th>
-                                    <th>Created Date</th>
-                                    <th>Status</th>
-                                    <th>Invoice ID</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                <?php
-
-                                foreach ($ord_row as $row) : ?>
+                        <div class="table-responsive">
+                            <div class="col-md-3 col-sm-3 float-end">
+                                <input name="tblSearch" id="tblSearch" class="form-control" placeholder="Search here">
+                            </div>
+                            <table id="employee_List2" class="table table-hover">
+                                <thead class="thead-dark">
                                     <tr>
-                                        <td>
-                                            <?= $row['ord_id'] ?>
-                                        </td>
+                                        <th>ID</th>
+                                        <th>Hospital Name</th>
+                                        <th>Employee</th>
+                                        <th>Order Date/Time</th>
+                                        <th>Created Date</th>
+                                        <th>Status</th>
+                                        <th>Invoice ID</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <?php
+
+                                    foreach ($ord_row as $row) : ?>
+                                        <tr>
+                                            <td>
+                                                <?= $row['ord_id'] ?>
+                                            </td>
 
 
-                                        <td>
-                                            <span><b><?= $row['cl_h_name'] ?></b></span><br>
-                                            <small><?= $row['spec_name'] . '-' . $row['grade_name'] ?></small>
-                                        </td>
-                                        <td><span><?= $row['emp_fname'] . ' ' . $row['emp_lname'] ?></span><br>
-                                            <small><?= $row['emp_imcr_no'] ?></small>
-                                        </td>
-                                        <td><?php $pros = explode(",", $row['ord_prosdatetime_detail']);
-                                            foreach ($pros as $var) : ?>
-                                                <?= $var ?> <br>
-                                            <?php endforeach; ?></td>
-                                        </td>
-                                        <td><?= date("d-m-y  h:i:s a", strtotime($row['ord_created'])) ?></td>
-                                        <td>
-                                            <?php if ($row['ord_cancel_bcl'] == 1) : ?>
-                                                <span class="badge bg-danger">Cancelled By Client</span><br>
-                                                <span class="badge bg-warning text-dark"><?= $row['ord_cl_cremarks'] ?></span>
-                                            <?php else : ?>
-                                                <?php if ($row['ord_cancel_bdr'] == 1) : ?>
-                                                    <span class="badge bg-danger">Cancelled By Dr.</span><br>
-                                                    <span class="badge bg-warning text-dark"><?= $row['ord_dr_cremarks'] ?></span>
+                                            <td>
+                                                <span><b><?= $row['cl_h_name'] ?></b></span><br>
+                                                <small><?= $row['spec_name'] . '-' . $row['grade_name'] ?></small>
+                                            </td>
+                                            <td><span><?= $row['emp_fname'] . ' ' . $row['emp_lname'] ?></span><br>
+                                                <small><?= $row['emp_imcr_no'] ?></small>
+                                            </td>
+                                            <td><?php $pros = explode(",", $row['ord_prosdatetime_detail']);
+                                                foreach ($pros as $var) : ?>
+                                                    <?= $var ?> <br>
+                                                <?php endforeach; ?></td>
+                                            </td>
+                                            <td><?= date("d-m-y  h:i:s a", strtotime($row['ord_created'])) ?></td>
+                                            <td>
+                                                <?php if ($row['ord_cancel_bcl'] == 1) : ?>
+                                                    <span class="badge bg-danger">Cancelled By Client</span><br>
+                                                    <span class="badge bg-warning text-dark"><?= $row['ord_cl_cremarks'] ?></span>
                                                 <?php else : ?>
-                                                    <?php if ($row['ord_status'] == "1") : ?>
-                                                        <span class="badge chart-color123">Pending</span>
-                                                    <?php elseif ($row['ord_status'] == "2") : ?>
-                                                        <span class="badge chart-color122">Processed</span>
-                                                    <?php elseif ($row['ord_status'] == "3") : ?>
-                                                        <span class="badge bg-success">Confirmed</span><br>
-                                                        <span><a href="<?= base_url("backend/contract/" . encryptIt($row['ord_id'])) ?>" target="_blank"><?= $row['ord_ref_no'] ?></a></span>
-                                                    <?php elseif ($row['ord_status'] == "4") : ?>
-                                                        <span class="badge chart-color120">Ended</span><br>
-                                                        <span><a href="<?= base_url("backend/contract/" . encryptIt($row['ord_id'])) ?>" target="_blank"><?= $row['ord_ref_no'] ?></a></span>
+                                                    <?php if ($row['ord_cancel_bdr'] == 1) : ?>
+                                                        <span class="badge bg-danger">Cancelled By Dr.</span><br>
+                                                        <span class="badge bg-warning text-dark"><?= $row['ord_dr_cremarks'] ?></span>
                                                     <?php else : ?>
-                                                        <span class="badge chart-color135">Paid</span><br>
-                                                        <span><a href="<?= base_url("backend/contract/" . encryptIt($row['ord_id'])) ?>" target="_blank"><?= $row['ord_ref_no'] ?></a></span>
+                                                        <?php if ($row['ord_status'] == "1") : ?>
+                                                            <span class="badge chart-color123">Pending</span>
+                                                        <?php elseif ($row['ord_status'] == "2") : ?>
+                                                            <span class="badge chart-color122">Processed</span>
+                                                        <?php elseif ($row['ord_status'] == "3") : ?>
+                                                            <span class="badge bg-success">Confirmed</span><br>
+                                                            <span><a href="<?= base_url("backend/contract/" . encryptIt($row['ord_id'])) ?>" target="_blank"><?= $row['ord_ref_no'] ?></a></span>
+                                                        <?php elseif ($row['ord_status'] == "4") : ?>
+                                                            <span class="badge chart-color120">Ended</span><br>
+                                                            <span><a href="<?= base_url("backend/contract/" . encryptIt($row['ord_id'])) ?>" target="_blank"><?= $row['ord_ref_no'] ?></a></span>
+                                                        <?php else : ?>
+                                                            <span class="badge chart-color135">Paid</span><br>
+                                                            <span><a href="<?= base_url("backend/contract/" . encryptIt($row['ord_id'])) ?>" target="_blank"><?= $row['ord_ref_no'] ?></a></span>
+                                                        <?php endif; ?>
                                                     <?php endif; ?>
                                                 <?php endif; ?>
-                                            <?php endif; ?>
-                                        </td>
-                                        <td>
-                                            <?= $row['ord_invoice_id'] ?><br>
-                                            <?= $row['ord_sage_refer_no'] ?>
-                                        </td>
+                                            </td>
+                                            <td>
+                                                <?= $row['ord_invoice_id'] ?><br>
+                                                <?= $row['ord_sage_refer_no'] ?>
+                                            </td>
 
 
-                                        <td>
-                                            <?php if (session()->grp_id == 'user' || session()->grp_id == 'admin' && $row['ord_status'] <> "5") : ?>
-                                                <?php if ($row['ord_status'] == 1) : ?>
-                                                    <a type="button" href="<?= base_url('backend/order-s2/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
-                                                <?php elseif ($row['ord_status'] == 2) : ?>
-                                                    <a type="button" href="<?= base_url('backend/order-s3/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
-                                                <?php elseif ($row['ord_status'] == 3) : ?>
-                                                    <a type="button" href="<?= base_url('backend/order-s4/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
-                                                <?php elseif ($row['ord_status'] == NULL) : ?>
-                                                    <a type="button" href="<?= base_url('backend/order-s1/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                            <td>
+                                                <?php if (session()->grp_id == 'user' || session()->grp_id == 'admin' && $row['ord_status'] <> "5") : ?>
+                                                    <?php if ($row['ord_status'] == 1) : ?>
+                                                        <a type="button" href="<?= base_url('backend/order-s2/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                    <?php elseif ($row['ord_status'] == 2) : ?>
+                                                        <a type="button" href="<?= base_url('backend/order-s3/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                    <?php elseif ($row['ord_status'] == 3) : ?>
+                                                        <a type="button" href="<?= base_url('backend/order-s4/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                    <?php elseif ($row['ord_status'] == NULL) : ?>
+                                                        <a type="button" href="<?= base_url('backend/order-s1/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                    <?php endif; ?>
+                                                <?php elseif (session()->grp_id == 'super_admin') : ?>
+                                                    <?php if ($row['ord_status'] == 1) : ?>
+                                                        <a type="button" href="<?= base_url('backend/order-s2/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                    <?php elseif ($row['ord_status'] == 2) : ?>
+                                                        <a type="button" href="<?= base_url('backend/order-s3/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                    <?php elseif ($row['ord_status'] == 3) : ?>
+                                                        <a type="button" href="<?= base_url('backend/order-s4/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                    <?php elseif ($row['ord_status'] == 4) : ?>
+                                                        <a type="button" href="<?= base_url('backend/order-s5/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                    <?php elseif ($row['ord_status'] == 5) : ?>
+                                                        <a type="button" href="<?= base_url('backend/order-s5/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                    <?php elseif ($row['ord_status'] == NULL) : ?>
+                                                        <a type="button" href="<?= base_url('backend/order-s1/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                    <?php endif; ?> <?php endif; ?>
+                                                <a type="button" href="<?= base_url('backend/order_view/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View" data-type="confirm"><i class="fa fa-eye"></i></a>
+                                                <?php if ($row['ord_advrtise'] == '0') : ?>
+                                                    <a type="button" href="<?= base_url('backend/order-publish/' . encryptIt($row['ord_id'])) ?>" target="_blank" class="btn btn-sm btn-outline-warning js-sweetalert" Onclick="return confirm('Are You sure? You want to advertise this?');" title="Advertise" data-type="confirm"><i class="fa fa-bullhorn"></i></a>
                                                 <?php endif; ?>
-                                            <?php elseif (session()->grp_id == 'super_admin') : ?>
-                                                <?php if ($row['ord_status'] == 1) : ?>
-                                                    <a type="button" href="<?= base_url('backend/order-s2/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
-                                                <?php elseif ($row['ord_status'] == 2) : ?>
-                                                    <a type="button" href="<?= base_url('backend/order-s3/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
-                                                <?php elseif ($row['ord_status'] == 3) : ?>
-                                                    <a type="button" href="<?= base_url('backend/order-s4/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
-                                                <?php elseif ($row['ord_status'] == 4) : ?>
-                                                    <a type="button" href="<?= base_url('backend/order-s5/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
-                                                <?php elseif ($row['ord_status'] == 5) : ?>
-                                                    <a type="button" href="<?= base_url('backend/order-s5/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
-                                                <?php elseif ($row['ord_status'] == NULL) : ?>
-                                                    <a type="button" href="<?= base_url('backend/order-s1/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
-                                                <?php endif; ?> <?php endif; ?>
-                                            <a type="button" href="<?= base_url('backend/order_view/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View" data-type="confirm"><i class="fa fa-eye"></i></a>
-                                            <?php if ($row['ord_advrtise'] == '0') : ?>
-                                                <a type="button" href="<?= base_url('backend/order-publish/' . encryptIt($row['ord_id'])) ?>" target="_blank" class="btn btn-sm btn-outline-warning js-sweetalert" Onclick="return confirm('Are You sure? You want to advertise this?');" title="Advertise" data-type="confirm"><i class="fa fa-bullhorn"></i></a>
-                                            <?php endif; ?>
 
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

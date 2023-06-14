@@ -57,7 +57,7 @@ function em_log($data = array()) {
 function show_404(){
     throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
 }
-function composeEmail($to, $cc, $bcc, $subject, $message, $attachments = [])
+function composeEmail($to, $cc, $bcc, $subject, $message, $attachments = [],$inReplyTo = null)
 {
     $email = \Config\Services::email();
 
@@ -74,6 +74,10 @@ function composeEmail($to, $cc, $bcc, $subject, $message, $attachments = [])
         foreach ($attachments as $attachment) {
             $email->attach($attachment);
         }
+    }
+     // Set In-Reply-To and References headers
+     if (!empty($inReplyTo)) {
+        $email->setHeader('In-Reply-To', $inReplyTo);
     }
         // print_r($email);exit;
     if ($email->send()) {

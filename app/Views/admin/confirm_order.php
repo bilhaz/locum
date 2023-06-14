@@ -225,7 +225,7 @@
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="all">
                                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#All" aria-expanded="true" aria-controls="All">
-                                           All
+                                            All
                                         </button>
                                     </h2>
                                     <div id="All" class="accordion-collapse collapse show" aria-labelledby="all" data-bs-parent="#accordionExample">

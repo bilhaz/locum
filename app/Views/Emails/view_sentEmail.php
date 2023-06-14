@@ -3,7 +3,7 @@
         <div class="block-header py-lg-4 py-3">
             <div class="row g-3">
                 <div class="col-md-6 col-sm-12">
-                    <h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> View Email</h2>
+                    <h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> View Sent Email</h2>
                 </div>
             </div>
         </div>
@@ -78,6 +78,11 @@
                                                     <a class="text-default" href="javascript:void(0);"><span class="__cf_email__"><?php $cc = implode(',', $emails['cc']);
                                                                                                                                     echo $cc; ?></span></a>
                                                 </p>
+                                                <p class="mb-0">
+                                                    <strong class="text-muted me-1">BCC:</strong>
+                                                    <a class="text-default" href="javascript:void(0);"><span class="__cf_email__"><?php $bcc = implode(',', $emails['bcc']);
+                                                                                                                                    echo $bcc; ?></span></a>
+                                                </p>
                                             </div>
                                         </div>
                                         <h5 class="mb-0">
@@ -90,7 +95,15 @@
                                     </div>
 
                                     <div class="mail-cnt" style="background-color:white;">
-                                        <iframe width="100%" height="300px" srcdoc="<?php echo htmlspecialchars($emails['body']); ?>"></iframe>
+                                    <?php if(!empty($emails['tbody'])): ?>
+                                    <div class="pre">
+                                        <textarea data-placeholder="Email Body" class="form-control" style="height:140px;" disabled >
+                                        <?php echo htmlspecialchars($emails['tbody']); ?>
+                                        </textarea>
+                                        </div>
+                                        <?php else: ?>
+                                            <iframe width="100%" height="300px" srcdoc="<?php echo htmlspecialchars($emails['hbody']); ?>"></iframe>
+                                            <?php endif;?>
 
 
                                     </div>
@@ -102,5 +115,4 @@
             </div>
         </div>
     </div>
-</div>
 </div>

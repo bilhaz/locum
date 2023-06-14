@@ -41,6 +41,9 @@
                     <?php endif; ?>
                     <div class="card-body">
                     <div class="table-responsive">
+                        <div class="col-md-3 col-sm-3 float-end">
+                        <input name="tblSearch" id="tblSearch" class="form-control" placeholder="Search here">
+                        </div>
                         <table id="employee_List2" class="table table-hover">
                             <thead class="thead-dark">
                                 <tr>

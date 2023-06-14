@@ -44,6 +44,9 @@
                                 <input type="text" name="to" class="form-control" value="<?= $to ?>" placeholder="To">
                             </div>
                             <div class="mb-3">
+                                <input type="hidden" name="inReplyTo" class="form-control" value="<?= encryptIt($inReplyTo) ?>" placeholder="To">
+                            </div>
+                            <div class="mb-3">
                                 <input type="text" name="subject" class="form-control" placeholder="Subject" value="<?= $subject ?>">
                             </div>
                             <div class="mb-3">
@@ -61,9 +64,9 @@
                         <strong><?= $attachments ?></strong>
 
                         <textarea class="summernote" name="body" data-placeholder="Email Body" height="40%">
-                        <?php echo htmlspecialchars($body); ?>
+                        
                             </textarea>
-
+                            <iframe width="100%" height="300px" srcdoc="<?php echo htmlspecialchars($body); ?>"></iframe>
                         <div class="mt-5">
                             <button type="submit" class="btn btn-success">Send Mail</button>
                             <a href="<?= base_url('emails/inbox') ?>" class="btn btn-outline-secondary">Cancel</a>

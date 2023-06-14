@@ -108,6 +108,9 @@ class emails extends EMBaseController
         $mailbox = new Mailbox($hostname, $username, $password);
 
         $email = $mailbox->getMail($id);
+        // echo '<pre>';
+        // print_r($email);exit;
+        // echo '</pre>';
 
         if ($email) {
             $attachments = [];
@@ -135,7 +138,6 @@ class emails extends EMBaseController
             if (!$email->isSeen) {
                 $mailbox->markMailAsRead($id);
             }
-            
             $emailData = [
                 'id' => $email->id,
                 'subject' => $email->subject,
@@ -278,15 +280,17 @@ class emails extends EMBaseController
                     'content' => $attachment->getContents()
                 ];
             }
-
+           
             $attachmentLinks .= '</ul>';
             // Retrieve the necessary data from the email
             $id = $email->id;
-            $subject = 'Re: ' . $email->subject;
+            $subject = $email->subject;
             $to = $email->fromAddress;
             $cc = $email->cc;
             //  $bcc = $email->bcc;
+            $inReplyTo = $email->headers->message_id;
             $body = (isset($email->textHtml) && !empty($email->textHtml)) ? $email->textHtml : $email->textPlain; // Use the plain text version of the email as the default body
+            
 
 
             // Prepare the data to be passed to the view
@@ -297,6 +301,7 @@ class emails extends EMBaseController
             //  $data['bcc'] = $bcc;
             $data['body'] = $body;
             $data['attachments'] = $attachmentLinks;
+            $data['inReplyTo'] = $inReplyTo;
             // print_r($data['body']);exit;
             // Disconnect from the IMAP server
             $mailbox->disconnect();
@@ -328,6 +333,8 @@ class emails extends EMBaseController
 
         if ($this->request->getMethod() == 'post') {
             $to = $this->request->getVar('to');
+            $inReplyToo = $this->request->getVar('inReplyTo');
+            $inReplyTo = decryptIt($inReplyToo);
             $subject = $this->request->getVar('subject');
             $cc = $this->request->getVar('cc');
             $bcc = $this->request->getVar('bcc');
@@ -349,7 +356,7 @@ class emails extends EMBaseController
             // print_r($attachments);exit;
 
             $session = session();
-            if (composeEmail($to, $cc, $bcc, $subject, $message, $attachments)) {
+            if (composeEmail($to, $cc, $bcc, $subject, $message, $attachments, $inReplyTo)) {
                 $session->setFlashdata('success', 'Email sent Successfully');
                 $emLog = [
                     'em_to' => $to,
@@ -383,6 +390,7 @@ class emails extends EMBaseController
         if ($this->request->getMethod() == 'post') {
             $to = $this->request->getVar('email_to');
             $subject = $this->request->getVar('subject');
+            $inReplyTo ='';
             $cc = $this->request->getVar('cc');
             $bcc = $this->request->getVar('bcc');
             $message = $this->request->getVar('body');
@@ -403,7 +411,7 @@ class emails extends EMBaseController
             // print_r($attachments);exit;
             $session = session();
 
-            if (composeEmail($to, $cc, $bcc, $subject, $message, $attachments)) {
+            if (composeEmail($to, $cc, $bcc, $subject, $message, $attachments, $inReplyTo)) {
                 $session->setFlashdata('success', 'Email sent Successfully');
                 $emLog = [
                     'em_to' => $to,
@@ -446,8 +454,8 @@ class emails extends EMBaseController
         // Retrieve all email IDs matching the search criteria
         $mailIds = $mailbox->searchMailbox($searchCriteria, $sortingOrder);
 
-        $page = isset($_GET['page']) ? $_GET['page'] : 1;
-        $perPage = Per_Page_Emails;
+        $spage = isset($_GET['page']) ? $_GET['page'] : 1;
+        $sperPage = Per_Page_Emails;
 
         // Reverse the array to get descending order
         $mailIds = array_reverse($mailIds);
@@ -455,12 +463,12 @@ class emails extends EMBaseController
         $totalEmails = count($mailIds); // Calculate the total number of emails
 
         // Calculate the starting and ending index for the current page
-        $startIndex = ($page - 1) * $perPage;
-        $endIndex = $startIndex + $perPage - 1;
+        $startIndex = ($spage - 1) * $sperPage;
+        $endIndex = $startIndex + $sperPage - 1;
         $endIndex = min($endIndex, $totalEmails - 1);
 
         // Get the current page's email IDs
-        $mailIdsPage = array_slice($mailIds, $startIndex, $perPage);
+        $mailIdsPage = array_slice($mailIds, $startIndex, $sperPage);
 
         // Process the retrieved emails
         $emails = [];
@@ -487,11 +495,22 @@ class emails extends EMBaseController
             // }
             // $attachments .= '<ul>';
             $hasAttachments = $email->hasAttachments();
+            if(isset($email->headers->to[0]->mailbox)){
+            $mail = $email->headers->to[0]->mailbox;
+            $host = $email->headers->to[0]->host;
+            $to = $mail.'@'.$host;
+            }else{
+                $mail = $email->headers->bcc[0]->mailbox;
+            $host = $email->headers->bcc[0]->host;
+            $to = $mail.'@'.$host;
+            }
+            // $tt  = $email->headers;
+            // var_dump($to);
             
             $emails[] = [
                 'id' => $email->id,
                 'subject' => $email->subject,
-                'to' => $email->to,
+                'to' => $to,
                 // 'to' => $email->to,
                 // 'cc' => $email->cc,
                 // 'bcc' => $email->bcc,
@@ -507,11 +526,11 @@ class emails extends EMBaseController
         $mailbox->disconnect();
         // print_r($emails);
         // exit;
-        $totalPages = ceil($totalEmails / $perPage); // Calculate the total number of pages
+        $totalPages = ceil($totalEmails / $sperPage); // Calculate the total number of pages
 
         $data['emails'] = $emails;
-        $data['currentPage'] = $page;
-        $data['perPage'] = $perPage;
+        $data['currentPage'] = $spage;
+        $data['perPage'] = $sperPage;
         $data['startIndex'] = $startIndex;
         $data['endIndex'] = $endIndex;
         $data['totalEmails'] = $totalEmails;
@@ -530,7 +549,9 @@ class emails extends EMBaseController
         $mailbox = new Mailbox($hostname, $username, $password);
 
         $email = $mailbox->getMail($id);
-
+        // echo'<pre>';
+        // print_r($email);
+        // echo'</pre>';exit;
         if ($email) {
             $attachments = [];
             $attachmentLinks = '<ul>';
@@ -552,7 +573,11 @@ class emails extends EMBaseController
             }
 
             $attachmentLinks .= '</ul>';
-
+            if(!empty($email->textHtml)){
+                $hbody = $email->textHtml;
+            }else{
+                $tbody = $email->textPlain;
+            }
             
             $emailData = [
                 'id' => $email->id,
@@ -563,7 +588,8 @@ class emails extends EMBaseController
                 'bcc' => $email->bcc,
                 'seen' => $email->isSeen,
                 'date' => $email->date,
-                'body' => (isset($email->textHtml) && !empty($email->textHtml)) ? $email->textHtml : $email->textPlain,
+                'hbody' => (isset($hbody) && !empty($hbody)) ? $hbody : '',
+                'tbody' => (isset($tbody) && !empty($tbody)) ? $tbody : '',
                 'attachments' => $attachmentLinks
             ];
 

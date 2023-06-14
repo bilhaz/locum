@@ -3,7 +3,7 @@
         <div class="block-header py-lg-4 py-3">
             <div class="row g-3">
                 <div class="col-md-6 col-sm-12">
-                    <h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> Inbox</h2>
+                    <h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> Sent Mail1</h2>
                 </div>
             </div>
         </div>
@@ -43,13 +43,13 @@
                                         <p><?= ($startIndex + 1) ?>-<?= ($startIndex + count($emails)) ?>/<?= $totalEmails ?></p>
                                         <div class="btn-group ms-2" role="group" aria-label="Basic outlined example">
                                             <?php if ($currentPage > 1) : ?>
-                                                <a href="<?= base_url('emails/inbox?page=' . ($currentPage - 1) . '&perPage=' . $perPage) ?>" class="btn btn-outline-secondary btn-sm"><i class="fa fa-angle-left"></i></a>
+                                                <a href="<?= base_url('emails/SentMail?page=' . ($currentPage - 1) . '&perPage=' . $perPage) ?>" class="btn btn-outline-secondary btn-sm"><i class="fa fa-angle-left"></i></a>
                                             <?php else : ?>
                                                 <button type="button" class="btn btn-outline-secondary btn-sm" disabled><i class="fa fa-angle-left"></i></button>
                                             <?php endif; ?>
 
                                             <?php if ($currentPage < $totalPages) : ?>
-                                                <a href="<?= base_url('emails/inbox?page=' . ($currentPage + 1) . '&perPage=' . $perPage) ?>" class="btn btn-outline-secondary btn-sm"><i class="fa fa-angle-right"></i></a>
+                                                <a href="<?= base_url('emails/SentMail?page=' . ($currentPage + 1) . '&perPage=' . $perPage) ?>" class="btn btn-outline-secondary btn-sm"><i class="fa fa-angle-right"></i></a>
                                             <?php else : ?>
                                                 <button type="button" class="btn btn-outline-secondary btn-sm" disabled><i class="fa fa-angle-right"></i></button>
                                             <?php endif; ?>
@@ -59,7 +59,7 @@
 
 
                             </div>
-                            <div id="update_data">
+                            <div id="update_data2">
                             <div class="mail-list">
 
                                 <ul class="list-unstyled mb-0">
@@ -83,7 +83,7 @@
                                                     <?php endif; ?>
                                                 </h6>
                                                 <p class="dep">
-                                                    <span class=""><?php $too = implode(',', $row['to']); echo $too; ?></span>
+                                                    <span class=""><?= $row['to'] ?></span>
                                                 </p>
                                                 <span class="time "><?= date("j F", strtotime($row['date'])) ?></span>
                                             </div>
@@ -117,26 +117,4 @@
     });
 </script>
 <!-- updating emails -->
-<script>
-    $(document).ready(function() {
-        function updateEmailData() {
-            // Perform AJAX request
-            $.ajax({
-                url: '<?= base_url('emails/inboxUpdate_data')?>',
-                type: 'GET',
-                success: function(response) {
-                    // Replace the updated data with the old data
-                    $('#emailData').html(response);
-                },
-                error: function(xhr, status, error) {
-                    // Handle error if needed
-                    console.error(error);
-                }
-            });
-        }
-
-        // Set interval to call the updateEmailData function every 30 seconds
-        setInterval(updateEmailData, 80000);
-    });
-</script>
 

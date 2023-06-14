@@ -37,65 +37,70 @@
                     <?php endif; ?>
                     <div class="card-body">
 
-                        <table id="employee_List" class="table table-hover">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Hospital Name</th>
-                                    <th>Employee</th>
-                                    <th>Order Date/Time</th>
-                                    <th>Timesheet Status</th>
-                                    <th>View Timesheet</th>
-                                    <th>Action</th>
-                                    <th>Created Date</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                <?php
-                                $i = 1;
-                                foreach ($t_order as $row) : ?>
+                        <div class="table-responsive">
+                            <div class="col-md-3 col-sm-3 float-end">
+                                <input name="tblSearch" id="tblSearch" class="form-control" placeholder="Search here">
+                            </div>
+                            <table id="employee_List2" class="table table-hover">
+                                <thead class="thead-dark">
                                     <tr>
-                                        <td>
-                                            <?= $row['ord_id'] ?>
-                                        </td>
-
-
-                                        <td>
-                                            <span><b><?= $row['cl_h_name'] ?></b></span><br>
-                                            <small><?= $row['spec_name'] . '-' . $row['grade_name'] ?></small>
-
-                                        </td>
-                                        <td>
-                                            <span><?= $row['emp_fname'] . ' ' . $row['emp_lname'] ?></span><br>
-                                            <small><?= $row['emp_imcr_no'] ?></small>
-                                        </td>
-                                        <td><?php $pros = explode(",", $row['ord_prosdatetime_detail']);
-                                            foreach ($pros as $var) : ?>
-                                                <?= $var ?> <br>
-                                            <?php endforeach; ?></td>
-                                        </td>
-
-
-                                        <td><?php if ($row['ord_time_sheet_approved'] == "Due") : ?> <span class="badge chart-color123">Due</span> <?php elseif ($row['ord_time_sheet_approved'] == "Received") : ?><span class="badge chart-color122">Received</span><?php elseif ($row['ord_time_sheet_approved'] == "Sent_for_verification") : ?><span class="badge bg-warning text-dark">Sent for verification</span><?php elseif ($row['ord_time_sheet_approved'] == "Approved") : ?><span class="badge bg-success">Approved</span><?php endif; ?></td>
-                                        <td>
-                                            <a type="button" href="<?= base_url('client/timesheet/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-info" title="TimeSheet"><i class="fa fa-eye"></i> View</a>
-                                        </td>
-                                        <td>
-                                            <?php if ($row['ord_time_sheet_approved'] <> "Approved") : ?>
-                                                <a type="button" href="<?= base_url('client/timesheet-approve/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-primary">Approve Sheet</a>
-                                            <?php else : ?>
-                                                <span class="badge h3 chart-color122">Timesheet is Approved</span>
-                                            <?php endif; ?>
-                                        </td>
-                                        <td><?= date("d-m-y  h:i:s a", strtotime($row['ord_created'])) ?></td>
+                                        <th>ID</th>
+                                        <th>Hospital Name</th>
+                                        <th>Employee</th>
+                                        <th>Order Date/Time</th>
+                                        <th>Timesheet Status</th>
+                                        <th>View Timesheet</th>
+                                        <th>Action</th>
+                                        <th>Created Date</th>
 
                                     </tr>
-                                <?php endforeach; ?>
+                                </thead>
+                                <tbody>
 
-                            </tbody>
-                        </table>
+                                    <?php
+                                    $i = 1;
+                                    foreach ($t_order as $row) : ?>
+                                        <tr>
+                                            <td>
+                                                <?= $row['ord_id'] ?>
+                                            </td>
+
+
+                                            <td>
+                                                <span><b><?= $row['cl_h_name'] ?></b></span><br>
+                                                <small><?= $row['spec_name'] . '-' . $row['grade_name'] ?></small>
+
+                                            </td>
+                                            <td>
+                                                <span><?= $row['emp_fname'] . ' ' . $row['emp_lname'] ?></span><br>
+                                                <small><?= $row['emp_imcr_no'] ?></small>
+                                            </td>
+                                            <td><?php $pros = explode(",", $row['ord_prosdatetime_detail']);
+                                                foreach ($pros as $var) : ?>
+                                                    <?= $var ?> <br>
+                                                <?php endforeach; ?></td>
+                                            </td>
+
+
+                                            <td><?php if ($row['ord_time_sheet_approved'] == "Due") : ?> <span class="badge chart-color123">Due</span> <?php elseif ($row['ord_time_sheet_approved'] == "Received") : ?><span class="badge chart-color122">Received</span><?php elseif ($row['ord_time_sheet_approved'] == "Sent_for_verification") : ?><span class="badge bg-warning text-dark">Sent for verification</span><?php elseif ($row['ord_time_sheet_approved'] == "Approved") : ?><span class="badge bg-success">Approved</span><?php endif; ?></td>
+                                            <td>
+                                                <a type="button" href="<?= base_url('client/timesheet/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-info" title="TimeSheet"><i class="fa fa-eye"></i> View</a>
+                                            </td>
+                                            <td>
+                                                <?php if ($row['ord_time_sheet_approved'] <> "Approved") : ?>
+                                                    <a type="button" href="<?= base_url('client/timesheet-approve/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-primary">Approve Sheet</a>
+                                                <?php else : ?>
+                                                    <span class="badge h3 chart-color122">Timesheet is Approved</span>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td><?= date("d-m-y  h:i:s a", strtotime($row['ord_created'])) ?></td>
+
+                                        </tr>
+                                    <?php endforeach; ?>
+
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

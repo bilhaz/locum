@@ -40,55 +40,60 @@
                         </div>
                     <?php endif; ?>
                     <div class="card-body">
-                        <table id="employee_List" class="table  table-hover">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th>SNo.</th>
-                                    <th>Hospital Name</th>
-                                    <th>Email</th>
-                                    <th>Username</th>
-                                    <th>Registration Date</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                <?php
-                                $i = 1;
-                                foreach ($cl_row as $row) : ?>
+                        <div class="table-responsive">
+                            <div class="col-md-3 col-sm-3 float-end">
+                                <input name="tblSearch" id="tblSearch" class="form-control" placeholder="Search here">
+                            </div>
+                            <table id="employee_List2" class="table table-hover">
+                                <thead class="thead-dark">
                                     <tr>
-                                        <td>
-                                            <?= $i++ ?>
-                                        </td>
-
-
-                                        <td>
-                                            <h6 class="mb-0"><?= $row['cl_h_name'] ?></h6>
-                                        </td>
-                                        <td><span><?= $row['cl_cont_email'] ?></span></td>
-                                        <td><span><?= $row['cl_usr'] ?></span></td>
-                                        <td><?= date("d-m-y  h:i:s a", strtotime($row['cl_created'])) ?></td>
-                                        <td>
-                                            <?php if (!empty($row['cl_h_name'])) : ?>
-                                                <a type="button" href="<?= base_url('backend/client_edit/' . encryptIt($row['cl_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
-                                            <?php else : ?>
-                                                <a type="button" href="<?= base_url('backend/client_details/' . encryptIt($row['cl_id'])) ?>" class="btn btn-sm btn-outline-warning" title="Registration Form Pending"><i class="fa fa-wpforms"></i></a>
-                                            <?php endif; ?>
-                                            <?php if($row['cl_status'] == 1): ?>
-                                            <a type="button" href="<?= base_url('backend/client_block/' . encryptIt($row['cl_id'])) ?>" class="btn btn-sm btn-outline-danger js-sweetalert" title="Block" Onclick="return confirm('Are You sure?');" data-type="confirm"><i class="fa fa-ban"></i></a>
-                                            <?php elseif($row['cl_status'] == 0): ?>
-                                                <a type="button" href="<?= base_url('backend/client_unblock/'.encryptIt($row['cl_id']))?>" class="btn btn-sm btn-outline-danger js-sweetalert" title="Block" Onclick="return confirm('Are You sure?');" data-type="confirm"><i class="fa fa-unlock"></i></a>
-                                                <?php endif; ?>
-                                            <?php if (session()->grp_id == 'super_admin'): ?>
-                                            <a type="button" href="<?= base_url('backend/client-pwd/' . encryptIt($row['cl_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="Change Password" Onclick="return confirm('Are You sure?');" data-type="confirm"><i class="fa fa-key"></i></a>
-                                            <?php endif; ?>
-
-                                        </td>
+                                        <th>SNo.</th>
+                                        <th>Hospital Name</th>
+                                        <th>Email</th>
+                                        <th>Username</th>
+                                        <th>Registration Date</th>
+                                        <th>Action</th>
                                     </tr>
-                                <?php endforeach; ?>
+                                </thead>
+                                <tbody>
 
-                            </tbody>
-                        </table>
+                                    <?php
+                                    $i = 1;
+                                    foreach ($cl_row as $row) : ?>
+                                        <tr>
+                                            <td>
+                                                <?= $i++ ?>
+                                            </td>
+
+
+                                            <td>
+                                                <h6 class="mb-0"><?= $row['cl_h_name'] ?></h6>
+                                            </td>
+                                            <td><span><?= $row['cl_cont_email'] ?></span></td>
+                                            <td><span><?= $row['cl_usr'] ?></span></td>
+                                            <td><?= date("d-m-y  h:i:s a", strtotime($row['cl_created'])) ?></td>
+                                            <td>
+                                                <?php if (!empty($row['cl_h_name'])) : ?>
+                                                    <a type="button" href="<?= base_url('backend/client_edit/' . encryptIt($row['cl_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                <?php else : ?>
+                                                    <a type="button" href="<?= base_url('backend/client_details/' . encryptIt($row['cl_id'])) ?>" class="btn btn-sm btn-outline-warning" title="Registration Form Pending"><i class="fa fa-wpforms"></i></a>
+                                                <?php endif; ?>
+                                                <?php if ($row['cl_status'] == 1) : ?>
+                                                    <a type="button" href="<?= base_url('backend/client_block/' . encryptIt($row['cl_id'])) ?>" class="btn btn-sm btn-outline-danger js-sweetalert" title="Block" Onclick="return confirm('Are You sure?');" data-type="confirm"><i class="fa fa-ban"></i></a>
+                                                <?php elseif ($row['cl_status'] == 0) : ?>
+                                                    <a type="button" href="<?= base_url('backend/client_unblock/' . encryptIt($row['cl_id'])) ?>" class="btn btn-sm btn-outline-danger js-sweetalert" title="Block" Onclick="return confirm('Are You sure?');" data-type="confirm"><i class="fa fa-unlock"></i></a>
+                                                <?php endif; ?>
+                                                <?php if (session()->grp_id == 'super_admin') : ?>
+                                                    <a type="button" href="<?= base_url('backend/client-pwd/' . encryptIt($row['cl_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="Change Password" Onclick="return confirm('Are You sure?');" data-type="confirm"><i class="fa fa-key"></i></a>
+                                                <?php endif; ?>
+
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
