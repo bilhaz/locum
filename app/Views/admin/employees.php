@@ -40,7 +40,8 @@
                         </div>
                     <?php endif; ?>
                     <div class="card-body">
-                        <table id="employee_List" class="table table-hover">
+                    <div class="table-responsive">
+                        <table id="employee_List2" class="table table-hover">
                             <thead class="thead-dark">
                                 <tr>
                                     <th>SNo.</th>
@@ -90,6 +91,7 @@
 
                             </tbody>
                         </table>
+                    </div>
                     </div>
                 </div>
             </div>
