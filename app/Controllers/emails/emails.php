@@ -12,7 +12,7 @@ class emails extends EMBaseController
 
     public function inbox()
     {
-        $hostname = '{mail.sralocum.com:993/imap/ssl}INBOX';
+        $hostname = '{hp215.hostpapa.com:993/imap/ssl}INBOX';
         $username = 'Info@sralocum.com';
         $password = 'Tesco1234';
 

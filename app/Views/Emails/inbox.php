@@ -69,7 +69,7 @@
                                         <li class="clearfix <?php if ($row['seen'] != "1") echo "unread"; ?>">
                                             <div class="mail-detail-left float-start">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault7">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault7" disabled>
                                                     <label class="form-check-label" for="flexCheckDefault7"></label>
                                                 </div>
                                             </div>
@@ -79,13 +79,13 @@
                                                     <?php if ($row['seen'] != "1") : ?>
                                                         &nbsp;<span class="badge bg-success mb-0">New</span>
                                                     <?php else : ?>
-                                                        &nbsp;<span class="badge bg-info mb-0">Read</span>
+                                                        
                                                     <?php endif; ?>
                                                 </h6>
                                                 <p class="dep">
                                                     <span class=""><?= $row['from'] ?></span>
                                                 </p>
-                                                <span class="time "><?= date("j F", strtotime($row['date'])) ?></span>
+                                                <span class="time "><?= date("d-m-Y H:m A", strtotime($row['date'])) ?></span>
                                             </div>
                                         </li>
                                     <?php $i++;

@@ -69,18 +69,14 @@
                                         <li class="clearfix <?php if ($row['seen'] != "1") echo "unread"; ?>">
                                             <div class="mail-detail-left float-start">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault7">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault7" disabled>
                                                     <label class="form-check-label" for="flexCheckDefault7"></label>
                                                 </div>
                                             </div>
                                             <div class="mail-detail-right float-start">
                                                 <h6 class="sub">
                                                     <a href="<?= base_url('emails/view_SentEmail/' .encryptIt($row['id'])) ?>" target="_blank" class="mail-detail-expand" data-index="<?= $i ?>"><?= isset($row['subject'])&&!empty($row['subject']) ? $row['subject'] : 'No-Subject' ?>&nbsp;<?php if($row['hasAttachment'] == "1"): echo '<i class="fa fa-paperclip"></i>'; endif;?></a>
-                                                    <?php if ($row['seen'] != "1") : ?>
-                                                        &nbsp;<span class="badge bg-success mb-0">New</span>
-                                                    <?php else : ?>
-                                                        &nbsp;<span class="badge bg-info mb-0">Read</span>
-                                                    <?php endif; ?>
+                                                    
                                                 </h6>
                                                 <p class="dep">
                                                     <span class=""><?= $row['to'] ?></span>
