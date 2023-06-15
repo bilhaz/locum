@@ -84,23 +84,37 @@
                     </form>
                     <hr class="text-success">
                     <div class="card-body">
-                        <table class="table ">
-                            <thead class="thead-dark">
-                                <th><h5>CashIn Total</h5></th>
-                                <th><h5>CashOut Total</h5></th>
-                                <th><h5>Cash Flow</h5></th>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <?php $TcashIn = $CashIn->hosp + $CashIn->admin + $CashIn->vos;
-                                    $TcashOut =  $CashOut->dr + $CashOut->vop;
-                                    ?>
-                                    <th class="text-primary"><h3> &euro;<?= $TcashIn ?></h3></th>
-                                    <th class="text-primary"><h3> &euro;<?= $TcashOut ?></h3></th>
-                                    <th class="text-primary"><h3> &euro;<?= $TcashIn - $TcashOut ?></h3></th>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table class="table ">
+                                <thead class="thead-dark">
+                                    <th>
+                                        <h5>CashIn Total</h5>
+                                    </th>
+                                    <th>
+                                        <h5>CashOut Total</h5>
+                                    </th>
+                                    <th>
+                                        <h5>Cash Flow</h5>
+                                    </th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <?php $TcashIn = $CashIn->hosp + $CashIn->admin + $CashIn->vos;
+                                        $TcashOut =  $CashOut->dr + $CashOut->vop;
+                                        ?>
+                                        <th class="text-primary">
+                                            <h3> &euro;<?= $TcashIn ?></h3>
+                                        </th>
+                                        <th class="text-primary">
+                                            <h3> &euro;<?= $TcashOut ?></h3>
+                                        </th>
+                                        <th class="text-primary">
+                                            <h3> &euro;<?= $TcashIn - $TcashOut ?></h3>
+                                        </th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
