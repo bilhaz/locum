@@ -16432,6 +16432,15 @@ ul.choose-skin li span {
         width: 100%;
         height: 100%
     }
+    
+}
+@media(max-width:600px) {
+   
+    .mail-inbox .mail-right .mail-list ul li .mail-detail-right span.time {
+        position: relative !important;
+        top: 0;
+        right: 0
+    }
 }
 
 @media(max-width:767.98px) {

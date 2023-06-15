@@ -249,7 +249,7 @@ class emails extends EMBaseController
             echo '<p class="dep">';
             echo '<span class="">' . $row['from'] . '</span>';
             echo '</p>';
-            echo '<span class="time">' . date("j F", strtotime($row['date'])) . '</span>';
+            echo '<span class="time">' . date("d-m-Y H:m A", strtotime($row['date'])) . '</span>';
             echo '</div>';
             echo '</li>';
         }
