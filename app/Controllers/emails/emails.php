@@ -244,7 +244,7 @@ class emails extends EMBaseController
             echo '<h6 class="sub">';
             echo '<a href="' . base_url('emails/view_email/' . encryptIt($row['id'])) . '" target="_blank" class="mail-detail-expand">' . (isset($row['subject']) && !empty($row['subject']) ? $row['subject'] : 'No-Subject') .'&nbsp;'.'</a>';
             echo ($row['hasAttachment'] == "1") ? '<i class="fa fa-paperclip"></i>' : '';
-            echo ($row['seen'] != "1") ? '&nbsp;<span class="badge bg-success mb-0">New</span>' : '&nbsp;<span class="badge bg-info mb-0">Read</span>';
+            echo ($row['seen'] != "1") ? '&nbsp;<span class="badge bg-success mb-0">New</span>' : '';
             echo '</h6>';
             echo '<p class="dep">';
             echo '<span class="">' . $row['from'] . '</span>';
