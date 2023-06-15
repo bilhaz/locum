@@ -23,7 +23,7 @@ if (!function_exists('SendEmail')) {
         }
     }
 function add_log($data = array()) {
-    $logModel = new App\Models\LogModel();
+    $logModel = new App\Models\logModel();
     
     $log = [
             'adm_id' => $data['adm_id'],
