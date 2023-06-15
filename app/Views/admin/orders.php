@@ -153,7 +153,7 @@
                                                         <span class="badge bg-danger">Cancelled By Dr.</span><br>
                                                         <span class="badge bg-warning text-dark"><?= $row['ord_dr_cremarks'] ?></span>
                                                     <?php else : ?>
-                                                        <?php if ($row['ord_status'] == "1") : ?>
+                                                        <?php if ($row['ord_status'] == "1" || $row['ord_status'] == NULL) : ?>
                                                             <span class="badge chart-color123">Pending</span>
                                                         <?php elseif ($row['ord_status'] == "2") : ?>
                                                             <span class="badge chart-color122">Processed</span>
@@ -163,7 +163,7 @@
                                                         <?php elseif ($row['ord_status'] == "4") : ?>
                                                             <span class="badge chart-color120">Ended</span><br>
                                                             <span><a href="<?= base_url("backend/contract/" . encryptIt($row['ord_id'])) ?>" target="_blank"><?= $row['ord_ref_no'] ?></a></span>
-                                                        <?php else : ?>
+                                                        <?php elseif ($row['ord_status'] == "5") : ?>
                                                             <span class="badge chart-color135">Paid</span><br>
                                                             <span><a href="<?= base_url("backend/contract/" . encryptIt($row['ord_id'])) ?>" target="_blank"><?= $row['ord_ref_no'] ?></a></span>
                                                         <?php endif; ?>
