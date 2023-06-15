@@ -171,7 +171,7 @@
                                                         <span class="badge chart-color123">Due</span>
                                                     <?php elseif ($ordr_row['ord_payment_status'] == 'Rceived') : ?>
                                                         <span class="badge bg-success">Received</span>
-                                                    <?php else : ?>
+                                                    <?php elseif($ordr_row['ord_payment_status'] == 'Sent') : ?>
                                                         <span class="badge chart-color122">Sent</span>
                                                     <?php endif; ?>
                                                 </p>
@@ -182,7 +182,7 @@
                                                         <span class="badge bg-success">Paid</span>
                                                     <?php elseif ($ordr_row['ord_emp_pay_status'] == 'Rceived') : ?>
                                                         <span class="badge chart-color135">Received</span>
-                                                    <?php else : ?>
+                                                    <?php elseif($ordr_row['ord_emp_pay_status'] == 'Sent') : ?>
                                                         <span class="badge chart-color122">Sent</span>
                                                     <?php endif; ?>
                                                 </p>
