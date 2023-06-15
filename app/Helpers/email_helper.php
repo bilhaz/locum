@@ -6,7 +6,7 @@ if (!function_exists('SendEmail')) {
     {
         $email = \Config\Services::email();
 
-        $email->setFrom('no-reply@sralocum.com');
+        $email->setFrom('info@sralocum.com');
         $email->setTo($to);
         $email->setBCC($cc);
         $email->setSubject($subject);
