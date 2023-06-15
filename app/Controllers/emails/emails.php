@@ -138,6 +138,11 @@ class emails extends EMBaseController
             if (!$email->isSeen) {
                 $mailbox->markMailAsRead($id);
             }
+            if(!empty($email->textHtml)){
+                $hbody = $email->textHtml;
+            }else{
+                $tbody = $email->textPlain;
+            }
             $emailData = [
                 'id' => $email->id,
                 'subject' => $email->subject,
@@ -147,7 +152,8 @@ class emails extends EMBaseController
                 'bcc' => $email->bcc,
                 'seen' => $email->isSeen,
                 'date' => $email->date,
-                'body' => (isset($email->textHtml) && !empty($email->textHtml)) ? $email->textHtml : $email->textPlain,
+                'hbody' => (isset($hbody) && !empty($hbody)) ? $hbody : '',
+                'tbody' => (isset($tbody) && !empty($tbody)) ? $tbody : '',
                 'attachments' => $attachmentLinks
             ];
 

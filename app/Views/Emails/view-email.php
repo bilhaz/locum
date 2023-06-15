@@ -90,7 +90,15 @@
                                         </div>
                                         
                                         <div class="mail-cnt" style="background-color:white;">
-                                            <iframe width="100%" height="300px" srcdoc="<?php echo htmlspecialchars($emails['body']); ?>"></iframe>
+                                        <?php if(!empty($emails['tbody'])): ?>
+                                    <div class="pre">
+                                        <textarea data-placeholder="Email Body" class="form-control" style="height:140px;" disabled >
+                                        <?php echo htmlspecialchars($emails['tbody']); ?>
+                                        </textarea>
+                                        </div>
+                                        <?php else: ?>
+                                            <iframe width="100%" height="300px" srcdoc="<?php echo htmlspecialchars($emails['hbody']); ?>"></iframe>
+                                            <?php endif;?>
                                             
 
                                         </div>
