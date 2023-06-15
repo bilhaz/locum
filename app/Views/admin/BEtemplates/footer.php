@@ -10,7 +10,6 @@
 <script src="<?= base_url('public/assets/bundles/dataTables.bundle.js') ?>"></script>
 <script src="<?= base_url('public/assets/js/my.js') ?>"></script>
 <script src="<?= base_url('public/assets/bundles/mainscripts.bundle.js') ?>"></script>
-<script src="<?= base_url('public/assets/js/index2.js') ?>"></script>
 <script>
   const link1 = '<?php echo base_url('backend/show-notif'); ?>';
   const IconPic = '<?php echo base_url('public/images/sralogo-icon.png'); ?>';
