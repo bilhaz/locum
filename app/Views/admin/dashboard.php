@@ -128,7 +128,7 @@
                     </div>
                 </div>
             </div>
-            <?php if (session()->grp_id == 'super_admin') : ?>
+            <?php if (session()->grp_id == 'super_admin' || session()->grp_id == 'admin') : ?>
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-header">
