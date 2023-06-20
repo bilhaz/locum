@@ -57,6 +57,87 @@
 
                             <form action="<?= base_url('backend/order-s5/' . encryptIt($v_ordr['ord_id'])) ?>) ?>" method="post" autocomplete="off" enctype="multipart/form-data" accept-charset="utf-8" data-parsley-validate="" id="forma">
                                 <div class="row mb-3">
+                                    <div class="form-group col-md-6">
+                                        <label for="ord_time_sheet_rcvd" class="control-label mb-1">TimeSheet
+                                            received</label>
+                                        <input id="ord_time_sheet_rcvd" name="ord_time_sheet_rcvd" type="date" title="Click to enter date" class="form-control" required="" value="<?= $v_ordr['ord_time_sheet_rcvd'] ? $v_ordr['ord_time_sheet_rcvd'] : set_value('ord_time_sheet_rcvd') ?>">
+                                    </div>
+                                    <div class="form-group col-md-6 ">
+                                        <label for="ord_time_sheet_mode" class="control-label mb-1">TimeSheet
+                                            Mode</label>
+                                        <select id="ord_time_sheet_mode" name="ord_time_sheet_mode" required="" dataid="<?= $v_ordr['ord_id'] ?>" class="form-control select2" data-parsley-trigger="change">
+                                            <option value="">Select Mode</option>
+                                            <option value="whatsapp" <?= set_select(
+                                                                            'ord_time_sheet_mode',
+                                                                            'whatsapp',
+                                                                            ($v_ordr['ord_time_sheet_mode'] == 'whatsapp') ? TRUE : FALSE
+                                                                        ) ?>>whatsapp</option>
+                                            <option value="email" <?= set_select(
+                                                                        'ord_time_sheet_mode',
+                                                                        'email',
+                                                                        ($v_ordr['ord_time_sheet_mode'] == 'email') ? TRUE : FALSE
+                                                                    ) ?>>email
+                                            </option>
+                                            <option value="fax" <?= set_select(
+                                                                    'ord_time_sheet_mode',
+                                                                    'fax',
+                                                                    ($v_ordr['ord_time_sheet_mode'] == 'fax') ? TRUE : FALSE
+                                                                ) ?>>fax</option>
+                                            <option value="online" <?= set_select(
+                                                                        'ord_time_sheet_mode',
+                                                                        'online',
+                                                                        ($v_ordr['ord_time_sheet_mode'] == 'online') ? TRUE : FALSE
+                                                                    ) ?>>Online Submitted</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+
+                                    <div class="form-group col-md-6">
+                                        <label for="ord_time_sheet_process" class="control-label mb-1">TimeSheet
+                                            Processed</label>
+                                        <input id="ord_time_sheet_process" name="ord_time_sheet_process" type="date" title="Click to enter date" class="form-control" required="" value="<?= $v_ordr['ord_time_sheet_process'] ? $v_ordr['ord_time_sheet_process'] : set_value('ord_time_sheet_process') ?>">
+                                    </div>
+                                    <div class="form-group col-md-6 ">
+                                        <label for="ord_time_sheet_approved" class="control-label mb-1">Time Sheet
+                                            Status</label>
+                                        <select id="ord_time_sheet_approved" name="ord_time_sheet_approved" onchange="sentVerificationEmail()" type="text" required="" class="form-control select2" data-parsley-trigger="change">
+                                            <option value="">Select Status</option>
+                                            <option value="Due" <?= set_select(
+                                                                    'ord_time_sheet_approved',
+                                                                    'Due',
+                                                                    ($v_ordr['ord_time_sheet_approved'] == 'Due') ? TRUE : FALSE
+                                                                ) ?>>Due
+                                            </option>
+                                            <option value="Received" <?=
+                                                                        set_select(
+                                                                            'ord_time_sheet_approved',
+                                                                            'Received',
+                                                                            ($v_ordr['ord_time_sheet_approved'] == 'Received') ? TRUE : FALSE
+                                                                        ) ?>>Received</option>
+                                            <option value="Sent_for_verification" <?=
+                                                                                    set_select(
+                                                                                        'ord_time_sheet_approved',
+                                                                                        'Sent_for_verification',
+                                                                                        ($v_ordr['ord_time_sheet_approved'] == 'Sent_for_verification') ? TRUE :
+                                                                                            FALSE
+                                                                                    ) ?>>Sent For Verification</option>
+                                            <option value="Approved" <?=
+                                                                        set_select(
+                                                                            'ord_time_sheet_approved',
+                                                                            'Approved',
+                                                                            ($v_ordr['ord_time_sheet_approved'] == 'Approved') ? TRUE : FALSE
+                                                                        ) ?>>Approved</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="form-group col-md-12">
+                                        <label for="ord_comment1" class="control-label mb-1">Comment</label>
+                                        <textarea id="ord_comment1" name="ord_comment1" type="text" placeholder="Drop Comments here..." class="form-control"><?= $v_ordr['ord_comment1'] ? $v_ordr['ord_comment1'] : set_value('ord_comment1') ?></textarea>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
                                     <div class="form-group col-md-3 ">
                                         <label for="ord_invoice_id" class="control-label mb-1">SRAL Invoice ID</label>
                                         <input id="ord_invoice_id" name="ord_invoice_id" type="text" class="form-control" required value="<?= $v_ordr['ord_invoice_id'] ? $v_ordr['ord_invoice_id'] : set_value('ord_invoice_id') ?>">
@@ -84,12 +165,12 @@
                                     </div>
 
                                     <div class="form-group col-md-3 ">
-                                        <label for="ord_paymnt_rcvd_date" class="control-label mb-1">Payment
+                                        <label for="ord_paymnt_rcvd_date" class="control-label mb-1">Client Payment
                                             Received</label>
                                         <input id="ord_paymnt_rcvd_date" name="ord_paymnt_rcvd_date" type="date" title="Click to enter date" class="form-control" required value="<?= $v_ordr['ord_paymnt_rcvd_date'] ? $v_ordr['ord_paymnt_rcvd_date'] : set_value('ord_paymnt_rcvd_date') ?>">
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label for="ord_payment_status" class="control-label mb-1">Payment
+                                        <label for="ord_payment_status" class="control-label mb-1">Client Payment
                                             Status</label>
                                         <select id="ord_payment_status" name="ord_payment_status" required class="form-control select2" data-parsley-trigger="change">
                                             <option value="">Select status</option>

@@ -3767,10 +3767,7 @@ class Backend extends BEBaseController
 				'ord_pay_to_dr' => ['label' => 'Pay to Dr', 'rules' => 'required'],
 				'ord_diff_profit_admin' => ['label' => 'Diff (Profit) + Admin Charges', 'rules' => 'required'],
 				'ord_vat_purch' => ['label' => 'VAT on Purchase', 'rules' => 'required'],
-				'ord_time_sheet_rcvd' => ['label' => 'TimeSheet Received', 'rules' => 'required'],
-				'ord_time_sheet_mode' => ['label' => 'TimeSheet Mode', 'rules' => 'required'],
-				'ord_time_sheet_process' => ['label' => 'TimeSheet Processed', 'rules' => 'required'],
-				'ord_time_sheet_approved' => ['label' => 'TimeSheet Status', 'rules' => 'required'],
+
 
 
 			];
@@ -3835,11 +3832,7 @@ class Backend extends BEBaseController
 					'ord_diff_profit_admin' => $this->request->getVar('ord_diff_profit_admin'),
 					'ord_vat_purch' => $this->request->getVar('ord_vat_purch'),
 					'ord_vat_save' => $this->request->getVar('ord_vat_save'),
-					'ord_time_sheet_rcvd' => $this->request->getVar('ord_time_sheet_rcvd'),
-					'ord_time_sheet_mode' => $this->request->getVar('ord_time_sheet_mode'),
-					'ord_time_sheet_process' => $this->request->getVar('ord_time_sheet_process'),
-					'ord_time_sheet_approved' => $this->request->getVar('ord_time_sheet_approved'),
-					'ord_comment1' => $this->request->getVar('ord_comment1') ? $this->request->getVar('ord_comment1') : NULL,
+					
 
 
 
@@ -3991,6 +3984,10 @@ class Backend extends BEBaseController
 
 		if ($this->request->getMethod() == 'post') {
 			$rules = [
+				'ord_time_sheet_rcvd' => ['label' => 'TimeSheet Received', 'rules' => 'required'],
+				'ord_time_sheet_mode' => ['label' => 'TimeSheet Mode', 'rules' => 'required'],
+				'ord_time_sheet_process' => ['label' => 'TimeSheet Processed', 'rules' => 'required'],
+				'ord_time_sheet_approved' => ['label' => 'TimeSheet Status', 'rules' => 'required'],
 				'ord_invoice_id' => ['label' => 'SRAL Invoice ID', 'rules' => 'required'],
 				'ord_invoice_date' => ['label' => 'SRAL Invoice Date', 'rules' => 'required'],
 				'ord_invoice_by' => ['label' => 'Invoiced By', 'rules' => 'required'],
@@ -4038,6 +4035,11 @@ class Backend extends BEBaseController
 
 				//store this to database
 				$newData = [
+					'ord_time_sheet_rcvd' => $this->request->getVar('ord_time_sheet_rcvd'),
+					'ord_time_sheet_mode' => $this->request->getVar('ord_time_sheet_mode'),
+					'ord_time_sheet_process' => $this->request->getVar('ord_time_sheet_process'),
+					'ord_time_sheet_approved' => $this->request->getVar('ord_time_sheet_approved'),
+					'ord_comment1' => $this->request->getVar('ord_comment1') ? $this->request->getVar('ord_comment1') : NULL,
 					'ord_invoice_id' => $this->request->getVar('ord_invoice_id'),
 					'ord_invoice_date' => $this->request->getVar('ord_invoice_date'),
 					'ord_invoice_by' => $this->request->getVar('ord_invoice_by'),
@@ -4648,8 +4650,7 @@ class Backend extends BEBaseController
 		if (!empty($startDate) && !empty($endDate)) {
 			$data->where('ord_created >=', $startDate)
 				->where('ord_created <=', $endDate);
-		}
-		else{
+		} else {
 			// Retrieve data for the current year
 			$currentYear = date('Y');
 			$startDate = $currentYear . '-01-01';
@@ -4753,14 +4754,14 @@ class Backend extends BEBaseController
         WHERE timesheets.order_id = orders.ord_id
     )")->groupBy('orders.ord_id')->orderBy('orders.ord_id', 'DESC')
 			->findAll();
-			
-	
-			$sucees = [];
-			$failedEmails = [];
-			$link = 'employee/timesheet';
-	
-			foreach ($data['v_ordr'] as $v_ordr) {
-				// logs
+
+
+		$sucees = [];
+		$failedEmails = [];
+		$link = 'employee/timesheet';
+
+		foreach ($data['v_ordr'] as $v_ordr) {
+			// logs
 			$log = array(
 				'row_id' => $v_ordr['ord_id'],
 				'adm_id' => session()->usr_id,
@@ -4768,52 +4769,53 @@ class Backend extends BEBaseController
 				'content' => $v_ordr['emp_email'],
 				'event' => 'TimeSheet Reminder',
 			);
-	
+
 			add_log($log);
-	
-				$to = $v_ordr['emp_email'];
-				$cc = 'info@sralocum.com';
-				$subject = 'SRAl | TimeSheet Remider';
-				$message = view('admin/email_responses/timesheet_reminder', ['v_ordr' => $v_ordr]);
-	
-				if (sendEmail($to, $cc, $subject, $message)) {
-					$sucees[] = $to;
-					$emLog = [
-						'em_to' => $to,
-						'em_subject' => $subject,
-						'em_body' => $message,
-						'row_id' => $v_ordr['ord_id'],
-						'action_table' => 'Orders',
-						'em_status' => '1',
-					];
-					em_log($emLog);
-					$newdata = [
-						'ord_id' => $v_ordr['ord_id'],
-						'emp_id' => $v_ordr['emp_id'], //user id to whom we want to send notification
-						'link'	=> $link,
-						'notification' => "Fill Timesheet Reminder",
-						'status' => "0",
-						'usr_type' => "employee",];
-						$Nmodel->insert($newdata);
-				} else {
-					$failedEmails[] = $to; // Store the failed email address in the array
-				}
-			}
-			if (!empty($failedEmails)) {
-				// Store the failed email addresses in the error session message
+
+			$to = $v_ordr['emp_email'];
+			$cc = 'info@sralocum.com';
+			$subject = 'SRAl | TimeSheet Remider';
+			$message = view('admin/email_responses/timesheet_reminder', ['v_ordr' => $v_ordr]);
+
+			if (sendEmail($to, $cc, $subject, $message)) {
+				$sucees[] = $to;
 				$emLog = [
 					'em_to' => $to,
 					'em_subject' => $subject,
 					'em_body' => $message,
 					'row_id' => $v_ordr['ord_id'],
 					'action_table' => 'Orders',
-					'em_status' => '0',
+					'em_status' => '1',
 				];
 				em_log($emLog);
-				echo 'Emails Failed <b>' . implode(',', $failedEmails) . '</b>';
+				$newdata = [
+					'ord_id' => $v_ordr['ord_id'],
+					'emp_id' => $v_ordr['emp_id'], //user id to whom we want to send notification
+					'link'	=> $link,
+					'notification' => "Fill Timesheet Reminder",
+					'status' => "0",
+					'usr_type' => "employee",
+				];
+				$Nmodel->insert($newdata);
 			} else {
-				echo 'Succesfully Done <b>' . implode(',', $sucees) . '</b>';
+				$failedEmails[] = $to; // Store the failed email address in the array
 			}
+		}
+		if (!empty($failedEmails)) {
+			// Store the failed email addresses in the error session message
+			$emLog = [
+				'em_to' => $to,
+				'em_subject' => $subject,
+				'em_body' => $message,
+				'row_id' => $v_ordr['ord_id'],
+				'action_table' => 'Orders',
+				'em_status' => '0',
+			];
+			em_log($emLog);
+			echo 'Emails Failed <b>' . implode(',', $failedEmails) . '</b>';
+		} else {
+			echo 'Succesfully Done <b>' . implode(',', $sucees) . '</b>';
+		}
 	}
 	public function orderReport()
 	{
