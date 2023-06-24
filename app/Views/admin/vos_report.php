@@ -22,7 +22,7 @@
                             </li>
                         </ul>
                     </div>
-                    <form action="<?= base_url('backend/vop') ?>" method="post" autocomplete="off">
+                    <form action="<?= base_url('backend/vos') ?>" method="post" autocomplete="off">
                         <div class="row clearfix px-2">
                             <div class="form-group col-md-2 ">
                                 <label for="from">From</label>

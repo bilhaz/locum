@@ -78,15 +78,15 @@
                                         </tr>
                                         <tr>
                                             <th style="border: 1px solid black;"><strong>Rate:</strong></th>
-                                            <td style="border: 1px solid black;"><b>Normal:</b> &euro;<?=  $em_2['ord_normal_hrs_rt'] ?>&nbsp;<?php if($em_2['nh_p_type'] == 1): echo "/hr"; elseif($em_2['nh_p_type'] == 2): echo "/day"; else: echo "/halfday"; endif; ?><br>
+                                            <td style="border: 1px solid black;"><b>Normal:</b> &euro;<?=  $em_2['ord_Hnormal_hrs_rt'] ?>&nbsp;<?php if($em_2['nh_p_type'] == 1): echo "/hr"; elseif($em_2['nh_p_type'] == 2): echo "/day"; else: echo "/halfday"; endif; ?><br>
                                             <?php if($em_2['ord_ocall_rt'] > 0): ?>
-                                            <b>OnCall:</b> &euro;<?= $em_2['ord_ocall_rt']?>&nbsp;<?php if($em_2['oc_p_type'] == 1): echo "/hr"; elseif($em_2['oc_p_type'] == 2): echo "/day"; else: echo "/halfday"; endif; ?> <br>
+                                            <b>OnCall:</b> &euro;<?= $em_2['ord_Hocall_rt']?>&nbsp;<?php if($em_2['oc_p_type'] == 1): echo "/hr"; elseif($em_2['oc_p_type'] == 2): echo "/day"; else: echo "/halfday"; endif; ?> <br>
                                             <?php endif; ?>
                                             <?php if($em_2['ord_osite_rt'] > 0): ?>
-                                            <b>OffSite:</b> &euro;<?= $em_2['ord_osite_rt'] ?>&nbsp;<?php if($em_2['os_p_type'] == 1): echo "/hr"; elseif($em_2['os_p_type'] == 2): echo "/day"; else: echo "/halfday"; endif; ?><br>
+                                            <b>OffSite:</b> &euro;<?= $em_2['ord_Hosite_rt'] ?>&nbsp;<?php if($em_2['os_p_type'] == 1): echo "/hr"; elseif($em_2['os_p_type'] == 2): echo "/day"; else: echo "/halfday"; endif; ?><br>
                                             <?php endif; ?>
                                             <?php if($em_2['ord_bhw_rt'] > 0): ?>
-                                            <b>Weekend:</b> &euro;<?= $em_2['ord_bhw_rt'] ?>&nbsp;<?php if($em_2['bhw_p_type'] == 1): echo "/hr"; elseif($em_2['bhw_p_type'] == 2): echo "/day"; else: echo "/halfday"; endif; ?><br></td>
+                                            <b>Weekend:</b> &euro;<?= $em_2['ord_Hbhw_rt'] ?>&nbsp;<?php if($em_2['bhw_p_type'] == 1): echo "/hr"; elseif($em_2['bhw_p_type'] == 2): echo "/day"; else: echo "/halfday"; endif; ?><br></td>
                                             <?php endif; ?>
                                         </tr>
                                         <tr>

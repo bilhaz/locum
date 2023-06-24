@@ -211,13 +211,13 @@ class Backend extends BEBaseController
 		$data['o_exp'] = $model->where('ord_required_to <', $dt)->where('ord_status', '1')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
 		$data['o_canc'] = $model->where('ord_cancel_bcl', '1')->orWhere('ord_cancel_bdr', '1')->countAllResults();
 		// Confirm Order Statistics
-		$data['today'] = $model->where('ord_status', '3')->where('DATE(ord_updated)', $today)->countAllResults();
+		$data['today'] = $model->where('ord_status >=', '3')->where('DATE(ord_updated)', $today)->countAllResults();
 		// Confirm Order Statistics
-		$data['this_week'] = $model->where('ord_status', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated) >=', $this_week)->countAllResults();
+		$data['this_week'] = $model->where('ord_status >=', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated) >=', $this_week)->countAllResults();
 		// Confirm Order Statistics
-		$data['this_month'] = $model->where('ord_status', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated) >=', $this_month)->countAllResults();
+		$data['this_month'] = $model->where('ord_status >=', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated) >=', $this_month)->countAllResults();
 		// Confirm Order Statistics
-		$data['this_year'] = $model->where('ord_status', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated) >=', $this_year)->countAllResults();
+		$data['this_year'] = $model->where('ord_status >=', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated) >=', $this_year)->countAllResults();
 		// Todays Actitvity
 		$data['ord_rcvd'] = $model->where('DATE(ord_created)', $today)->countAllResults();
 		// Todays Actitvity
@@ -3283,34 +3283,35 @@ class Backend extends BEBaseController
 		$data['emp_row'] = $Emodel->where('emp_status', 1)->where('emp_fname !=', Null)->Where('emp_spec1', $spec)->orWhere('emp_spec2', $spec)->orWhere('emp_spec2', $spec)->find();
 
 
-		$norm = (float)$this->request->getVar('ord_normal_hrs');
-		$onc = (float)$this->request->getVar('ord_on_call_hrs');
-		$off = (float)$this->request->getVar('ord_off_site_hrs');
-		$week = (float)$this->request->getVar('ord_bh_week_hrs');
-		$normr = (float)$this->request->getVar('ord_normal_hrs_rt');
-		$oncr = (float)$this->request->getVar('ord_ocall_rt');
-		$offr = (float)$this->request->getVar('ord_osite_rt');
-		$weekr = (float)$this->request->getVar('ord_bhw_rt');
-		$adminChrges = (float)$this->request->getVar('ord_admin_charges');
-		$hnormr = (float)$this->request->getVar('ord_Hnormal_hrs_rt');
-		$honcr = (float)$this->request->getVar('ord_Hocall_rt');
-		$hoffr = (float)$this->request->getVar('ord_Hosite_rt');
-		$hweekr = (float)$this->request->getVar('ord_Hbhw_rt');
 
-		// For Pay to employee
-		$tp = $norm * $normr + $onc * $oncr + $off * $offr + $week * $weekr;
-
-		// for Earning from Client
-		$te = $norm * $hnormr + $onc * $honcr + $off * $hoffr + $week * $hweekr;
-
-		// for Total of admin charges input
-		$tod = $te * $adminChrges / 100;
-
-		// Grand total by adding total of admin charges to Earning from Client
-		$gte = $te + $tod;
 
 
 		if ($this->request->getMethod() == 'post') {
+			$norm = (float)$this->request->getVar('ord_normal_hrs');
+			$onc = (float)$this->request->getVar('ord_on_call_hrs');
+			$off = (float)$this->request->getVar('ord_off_site_hrs');
+			$week = (float)$this->request->getVar('ord_bh_week_hrs');
+			$normr = (float)$this->request->getVar('ord_normal_hrs_rt');
+			$oncr = (float)$this->request->getVar('ord_ocall_rt');
+			$offr = (float)$this->request->getVar('ord_osite_rt');
+			$weekr = (float)$this->request->getVar('ord_bhw_rt');
+			$adminChrges = (float)$this->request->getVar('ord_admin_charges');
+			$hnormr = (float)$this->request->getVar('ord_Hnormal_hrs_rt');
+			$honcr = (float)$this->request->getVar('ord_Hocall_rt');
+			$hoffr = (float)$this->request->getVar('ord_Hosite_rt');
+			$hweekr = (float)$this->request->getVar('ord_Hbhw_rt');
+
+			// For Pay to employee
+			$tp = $norm * $normr + $onc * $oncr + $off * $offr + $week * $weekr;
+
+			// for Earning from Client
+			$te = $norm * $hnormr + $onc * $honcr + $off * $hoffr + $week * $hweekr;
+
+			// for Total of admin charges input
+			$tod = $te * $adminChrges / 100;
+
+			// Grand total by adding total of admin charges to Earning from Client
+			$gte = $te + $tod;
 			$rules = [
 				'cl_id' => ['label' => 'Client', 'rules' => 'required'],
 				'ord_speciality' => ['label' => 'Speciality', 'rules' => 'required'],
@@ -3832,7 +3833,7 @@ class Backend extends BEBaseController
 					'ord_diff_profit_admin' => $this->request->getVar('ord_diff_profit_admin'),
 					'ord_vat_purch' => $this->request->getVar('ord_vat_purch'),
 					'ord_vat_save' => $this->request->getVar('ord_vat_save'),
-					
+
 
 
 
@@ -4717,7 +4718,8 @@ class Backend extends BEBaseController
 			->selectSum('ord_normal_hrs', 'norm')
 			->selectSum('ord_on_call_hrs', 'onch')
 			->selectSum('ord_off_site_hrs', 'ofsh')
-			->selectSum('ord_bh_week_hrs', 'bhwh');
+			->selectSum('ord_bh_week_hrs', 'bhwh')
+			->where('ord_status >=', '3');
 
 		if (!empty($startDate) && !empty($endDate)) {
 			$data->where('ord_created >=', $startDate)

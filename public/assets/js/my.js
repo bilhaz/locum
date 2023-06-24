@@ -83,10 +83,10 @@ function calculateVopurchase() {
 // Calculate diff + profit
 function calculateDiff() {
     var hosp = parseFloat(document.getElementById("TcliEarn").value);
-    var tadmin = parseFloat(document.getElementById("Tadmin").value);
+    //var tadmin = parseFloat(document.getElementById("Tadmin").value);
     var dr = parseFloat(document.getElementById("totpay").value);
 
-    var diff = hosp + tadmin - dr;
+    var diff = hosp - dr;
     document.getElementById("diff").value = diff.toFixed(2);
 }
 // Paying to doctor 

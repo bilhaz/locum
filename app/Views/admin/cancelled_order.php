@@ -15,7 +15,7 @@
             <div class="col-lg-12">
                 <div class="card mb-4">
                     <div class="card-header">
-                        <h6 class="card-title">Processed Orders</h6>
+                        <h6 class="card-title">Cancelled Orders</h6>
                         <ul class="header-dropdown">
                             <li>
                             </li>

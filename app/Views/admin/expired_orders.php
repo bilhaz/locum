@@ -72,8 +72,6 @@
                                         foreach($pros as $var): ?>
                                        <?= $var ?> <br>
                                        <?php endforeach; ?></td>
-                                        </td>
-                                        <td><?= date("d-m-y  h:i:s a", strtotime($row['ord_required_to'])) ?></td>
                                         <td><?= date("d-m-y  h:i:s a", strtotime($row['ord_created'])) ?></td>
                                         <td>
                                         

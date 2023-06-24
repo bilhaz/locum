@@ -149,7 +149,7 @@
                                                             <td><span class="badge chart-color123">Pending</span></td>
                                                             <td>
 
-                                                                <a type="button" href="<?= base_url('backend/order_view/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View" data-type="confirm"><i class="fa fa-eye"></i></a>
+                                                                <a type="button" href="<?= base_url('backend/order_view/' . encryptIt($mrow['ord_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View" data-type="confirm"><i class="fa fa-eye"></i></a>
 
                                                             </td>
                                                            
