@@ -1,7 +1,7 @@
 <html><body>
 			<div class="card-body">
                     <div class="row mb-3 " id="email" >
-                               <h3 style="color:#157DED">Dear Employee</h3>
+                               <h3 style="color:#157DED">Dear <?= $ord['emp_lname'] ?></h3>
                                 <br>
                                 <p style="color:#000000">We are pleased to inform you that we have a new Locum as you mentioned in your profile's Speciality.</p>
                                 <h4 style="color:#fd1f1f">Here are the Details of Locum</h4>
