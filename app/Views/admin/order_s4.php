@@ -318,7 +318,7 @@
                                     <div class="form-group col-md-4 ">
                                         <label for="totpay" class="control-label mb-1">Total Paying to
                                             Employee&nbsp;<small class="text-danger">(Office use only)</small></label>
-                                        <input id="totpay" name="ord_paying_to_dr" oninput="calculateDiff()" type="text" required class="form-control" value="<?= $v_ordr['ord_paying_to_dr'] ? $v_ordr['ord_paying_to_dr'] : set_value('ord_paying_to_dr') ?>" required>
+                                        <input id="totpay" name="ord_paying_to_dr" oninput="calculateDiff()" type="text" required class="form-control" value="<?= $v_ordr['ord_paying_to_dr'] ? $v_ordr['ord_paying_to_dr'] : set_value('ord_paying_to_dr') ?>">
                                     </div>
 
                                 </div>
@@ -391,6 +391,13 @@
                                         <span id="payment-button-amount">Cancel</span>
                                     </a>
                                     &nbsp; &nbsp;
+                                    <?php if(isset($v_ordr['ord_vat_save'])): ?>
+                                    <a id="payment-button" href="<?= base_url('backend/order-s5/'.encryptIt($v_ordr['ord_id'])) ?>" class="btn btn-lg btn-secondary btn-block">
+
+                                        <span id="payment-button-amount">Step 5</span>
+                                    </a>
+                                    &nbsp; &nbsp;
+                                    <?php endif; ?>
                                     <button id="payment-button" type="submit" class="btn btn-lg btn-primary btn-block">
                                         <span id="payment-button-amount">View Email</span>
                                     </button>

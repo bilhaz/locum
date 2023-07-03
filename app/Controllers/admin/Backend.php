@@ -51,6 +51,7 @@ class Backend extends BEBaseController
 		'order-s4' => ['super_admin', 'admin', 'user'],
 		'sFirstR' => ['super_admin', 'admin', 'user'],
 		'order-s5' => ['super_admin', 'admin', 'user'],
+		'end-locum' => ['super_admin', 'admin', 'user'],
 		'sSecondR' => ['super_admin', 'admin', 'user'],
 		'sThirdR' => ['super_admin', 'admin', 'user'],
 		'sFourthR' => ['super_admin', 'admin', 'user'],
@@ -3177,7 +3178,6 @@ class Backend extends BEBaseController
 					'ord_required_from' => $this->request->getVar('ord_required_from'),
 					'ord_required_to' => $this->request->getVar('ord_required_to'),
 					'ord_datetime_detail' => $this->request->getVar('ord_datetime_detail'),
-					'ord_status' => 1,
 					'cl_id' => $this->request->getVar('cl_id'),
 
 				];
@@ -3356,7 +3356,6 @@ class Backend extends BEBaseController
 					'ord_required_from' => $this->request->getVar('ord_required_from'),
 					'ord_required_to' => $this->request->getVar('ord_required_to'),
 					'ord_datetime_detail' => $this->request->getVar('ord_datetime_detail'),
-					'ord_status' => 1,
 					'cl_id' => $this->request->getVar('cl_id'),
 					'ord_cancel_bcl' => $this->request->getVar('ord_cancel_bcl'),
 					'emp_id' => $this->request->getVar('emp_id'),
@@ -3382,7 +3381,7 @@ class Backend extends BEBaseController
 					'ord_Hocall_rt' => $this->request->getVar('ord_Hocall_rt'),
 					'ord_Hosite_rt' => $this->request->getVar('ord_Hosite_rt'),
 					'ord_Hbhw_rt' => $this->request->getVar('ord_Hbhw_rt'),
-					'ord_paying_to_dr' => $tp,
+					'ord_pay_to_dr' => $tp,
 					'ord_hosp_earn' => $gte,
 					'ord_adminchrg_intern' => $tod,
 
@@ -3573,7 +3572,6 @@ class Backend extends BEBaseController
 					'ord_required_from' => $this->request->getVar('ord_required_from'),
 					'ord_required_to' => $this->request->getVar('ord_required_to'),
 					'ord_datetime_detail' => $this->request->getVar('ord_datetime_detail'),
-					'ord_status' => 1,
 					'cl_id' => $this->request->getVar('cl_id'),
 					'emp_id' => $this->request->getVar('emp_id'),
 					'ord_process_details_from' => $this->request->getVar('ord_process_details_from'),
@@ -3795,7 +3793,6 @@ class Backend extends BEBaseController
 					'ord_required_from' => $this->request->getVar('ord_required_from'),
 					'ord_required_to' => $this->request->getVar('ord_required_to'),
 					'ord_datetime_detail' => $this->request->getVar('ord_datetime_detail'),
-					'ord_status' => 1,
 					'cl_id' => $this->request->getVar('cl_id'),
 					'emp_id' => $this->request->getVar('emp_id'),
 					'ord_process_details_from' => $this->request->getVar('ord_process_details_from'),
@@ -3932,7 +3929,7 @@ class Backend extends BEBaseController
 					'em_status' => '0',
 				];
 				em_log($emLog);
-				return redirect()->to('backend/email-4/' . encryptIt($id));
+				return redirect()->to('backend/order-s5/' . encryptIt($id));
 			}
 			if (sendEmail($to2, $cc, $subject, $message)) {
 				$session->setFlashdata('success', 'Employee Confirmation Email Succesfully Sent');
@@ -4832,5 +4829,39 @@ class Backend extends BEBaseController
 
 
 		dd($data['v_ordr']);
+	}
+	public function EndLocum($id = null)
+	{
+		$id = decryptIt($id);
+		$data = [];
+		$omodel = new ordersModel();
+
+		$ordr = $omodel->where('ord_id',$id)->first();
+
+					// logs
+					$log = array(
+						'row_id' => $id,
+						'adm_id' => session()->usr_id,
+						'action_table' => 'Orders',
+						'content' => 'Locum Status Ended',
+						'event' => 'Locum Ended',
+					);
+		
+					add_log($log);
+		
+					$newData = [
+						'ord_status' => 4,
+		
+					];
+		
+		
+		
+					$omodel->update($id, $newData);
+		
+					$session = session();
+					$session->setFlashdata('success', 'Locum Status Ended');
+					return redirect()->to('backend/order-s5/'.encryptIt($id));
+
+		
 	}
 }

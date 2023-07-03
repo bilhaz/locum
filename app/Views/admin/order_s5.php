@@ -243,6 +243,13 @@
                                         <span id="payment-button-amount">Back to Step 4 </span>
                                     </a>
                                     &nbsp; &nbsp;
+                                    <?php if(isset($v_ordr['ord_vat_save'])): ?>
+                                    <a id="payment-button" href="<?= base_url('backend/end-locum/'.encryptIt($v_ordr['ord_id'])) ?>" class="btn btn-lg btn-warning btn-block" Onclick="return confirm('Are You sure? You want to END Locum?');">
+
+                                        <span id="payment-button-amount">End Locum</span>
+                                    </a>
+                                    &nbsp; &nbsp;
+                                    <?php endif; ?>
                                     <button id="payment-button" type="submit" class="btn btn-lg btn-primary btn-block" Onclick="return confirm('Are You sure? You want to Finish and Lock this?');">
                                         <span id="payment-button-amount">Save & Lock</span>
                                     </button>

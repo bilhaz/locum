@@ -177,7 +177,7 @@
 
 
                                             <td>
-                                                <?php if (session()->grp_id == 'user' || session()->grp_id == 'admin' && $row['ord_status'] <> "5") : ?>
+                                                <?php if (session()->grp_id == 'user' && $row['ord_status'] <> "5") : ?>
                                                     <?php if ($row['ord_status'] == 1) : ?>
                                                         <a type="button" href="<?= base_url('backend/order-s2/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
                                                     <?php elseif ($row['ord_status'] == 2) : ?>
@@ -187,7 +187,7 @@
                                                     <?php elseif ($row['ord_status'] == NULL) : ?>
                                                         <a type="button" href="<?= base_url('backend/order-s1/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
                                                     <?php endif; ?>
-                                                <?php elseif (session()->grp_id == 'super_admin') : ?>
+                                                <?php elseif (session()->grp_id == 'super_admin' || session()->grp_id == 'admin') : ?>
                                                     <?php if ($row['ord_status'] == 1) : ?>
                                                         <a type="button" href="<?= base_url('backend/order-s2/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
                                                     <?php elseif ($row['ord_status'] == 2) : ?>
@@ -202,7 +202,7 @@
                                                         <a type="button" href="<?= base_url('backend/order-s1/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
                                                     <?php endif; ?> <?php endif; ?>
                                                 <a type="button" href="<?= base_url('backend/order_view/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View" data-type="confirm"><i class="fa fa-eye"></i></a>
-                                                <?php if ($row['ord_advrtise'] == '0') : ?>
+                                                <?php if ($row['ord_advrtise'] <= '1') : ?>
                                                     <a type="button" href="<?= base_url('backend/order-publish/' . encryptIt($row['ord_id'])) ?>" target="_blank" class="btn btn-sm btn-outline-warning js-sweetalert" Onclick="return confirm('Are You sure? You want to advertise this?');" title="Advertise" data-type="confirm"><i class="fa fa-bullhorn"></i></a>
                                                 <?php endif; ?>
 

@@ -1,3 +1,4 @@
+<?php if($em_2['ord_status'] <= '1'){ ?>
 <div id="main-content">
     <div class="container-fluid">
         <div class="block-header py-lg-4 py-3">
@@ -159,3 +160,8 @@
         </div>
     </div>
 </div>
+<?php }else{
+    header('location: '.base_url().'/backend/order-s3/'.encryptIt($em_2['ord_id']));
+    exit();
+}
+    ?>
