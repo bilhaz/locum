@@ -136,7 +136,7 @@
         }
 
         // Set interval to call the updateEmailData function every 30 seconds
-        setInterval(updateEmailData, 80000);
+        setInterval(updateEmailData, 30000);
     });
 </script>
 
