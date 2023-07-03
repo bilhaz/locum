@@ -3883,7 +3883,7 @@ class Backend extends BEBaseController
 			//store this to database
 
 			$newData = [
-				'ord_status' => '4',
+				'ord_status' => '3',
 
 			];
 			$newData2 = [
