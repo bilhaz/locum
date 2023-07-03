@@ -58,7 +58,7 @@
 <p><strong>“SRA Locum”: Shamrock Assist, incorporated in Ireland under registration number 599436, Registered office is at 2nd Floor, 13 Upper Baggot St, Dublin 4 .</strong></p>
 
    <br>
-   <h3 class="text-danger" style="color:red;">SRA Locum standard terms and conditions are applicable to the above assignment. For the avoidance of doubt,</h3>
+   <h3 class="text-danger" style="color:red;">SRA Locum standard <a href="https://sralocum.com/public/uploads/files/termsandconditions.pdf" target="_blank">terms and conditions</a> are applicable to the above assignment. For the avoidance of doubt,</h3>
 <ol type="a" class="text-danger" style="color:red;">
     <li>The Client acknowledges that they are being provided locum doctor through the SRA Locum,</li>
     <li>That all payments will be made to SRA Locum, under no circumstances the client will pay the locum doctor directly. </li>

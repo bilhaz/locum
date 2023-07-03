@@ -222,9 +222,9 @@ class Backend extends BEBaseController
 		// Todays Actitvity
 		$data['ord_rcvd'] = $model->where('DATE(ord_created)', $today)->countAllResults();
 		// Todays Actitvity
-		$data['ord_proc'] = $model->where('ord_status', '2')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated)', $today)->countAllResults();
+		$data['ord_proc'] = $model->where('ord_status >=', '2')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated)', $today)->countAllResults();
 		// Todays Actitvity
-		$data['ord_conf'] = $model->where('ord_status', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated)', $today)->countAllResults();
+		$data['ord_conf'] = $model->where('ord_status >=', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated)', $today)->countAllResults();
 		// Todays Actitvity
 		$data['ord_canc'] = $model->where('ord_cancel_bcl', '1')->where('DATE(ord_updated)', $today)->orWhere('ord_cancel_bdr', '1')->where('DATE(ord_updated)', $today)->countAllResults();
 
@@ -3405,12 +3405,13 @@ class Backend extends BEBaseController
 		$Nmodel = new notificationModel();
 		$data['v_ordr'] = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $id)->first();
 		$link = 'client/ord-status';
-		$link2 = 'employee/ord-view';
+		$link2 = 'employee/orders';
 		$to = $data['v_ordr']['cl_cont_email'];
 		$to2 = $data['v_ordr']['emp_email'];
 		$cc = 'info@sralocum.com';
 		$subject = 'SRA-Locum Process |' . $data['v_ordr']['emp_fname'] . ' ' . $data['v_ordr']['emp_lname'] . ' | ' . $data['v_ordr']['spec_name'];
 		$message = $this->LoadView('admin/email_responses/2nd-response-email', $data);
+		$message2 = $this->LoadView('admin/email_responses/2nd-response-email-emp', $data);
 
 		if ($this->request->getMethod() == 'post') {
 			// logs
@@ -3439,7 +3440,7 @@ class Backend extends BEBaseController
 				'usr_type' => "client",
 			];
 			$newData3 = [
-				'ord_id' => $id,
+				'ord_id' => '',
 				'emp_id' => $data['v_ordr']['emp_id'], //user id to whom we want to send notification
 				'link'	=> $link2,
 				'notification' => "Locum Processed",
@@ -3475,12 +3476,12 @@ class Backend extends BEBaseController
 				em_log($emLog);
 				return redirect()->to('backend/order-s3/' . encryptIt($id));
 			}
-			if (sendEmail($to2, $cc, $subject, $message)) {
+			if (sendEmail($to2, $cc, $subject, $message2)) {
 				$session->setFlashdata('success', 'Locum Process Email Succesfully Sent');
 				$emLog = [
 					'em_to' => $to2,
 					'em_subject' => $subject,
-					'em_body' => $message,
+					'em_body' => $message2,
 					'row_id' => $id,
 					'action_table' => 'Orders',
 					'em_status' => '1',
@@ -3492,7 +3493,7 @@ class Backend extends BEBaseController
 				$emLog = [
 					'em_to' => $to2,
 					'em_subject' => $subject,
-					'em_body' => $message,
+					'em_body' => $message2,
 					'row_id' => $id,
 					'action_table' => 'Orders',
 					'em_status' => '0',
@@ -3633,6 +3634,7 @@ class Backend extends BEBaseController
 		$cc = 'info@sralocum.com';
 		$subject = 'SRA-Locum Confirmation';
 		$message = $this->LoadView('admin/email_responses/3rd-response-email', $data);
+		$message2 = $this->LoadView('admin/email_responses/3rd-response-email-emp', $data);
 
 		if ($this->request->getMethod() == 'post') {
 

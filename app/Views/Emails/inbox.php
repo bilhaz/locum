@@ -66,7 +66,7 @@
                                     <div id="emailData">
                                     <?php $i = 1;
                                     foreach ($emails as $row) : ?>
-                                        <li class="clearfix <?php if ($row['seen'] != "1") echo "unread"; ?>">
+                                        <li class="clearfix <?php if ($row['seen'] != "1") echo "unread"; ?>" onclick="window.open('<?= base_url('emails/view_email/' . encryptIt($row['id'])) ?>')">
                                             <div class="mail-detail-left float-start">
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault7" disabled>

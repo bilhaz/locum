@@ -214,7 +214,7 @@
     function loadServerDateTime() {
     var dateInput = document.getElementById("dateInput");
     // Assuming you have stored the session username in a PHP variable called `username`
-  var username = "<?php echo $_SESSION['usr_email']; ?>";
+  var username = "<?php echo $_SESSION['usr_name']; ?>";
     
     $.ajax({
       url: link6,  // Replace with the actual endpoint URL on your server

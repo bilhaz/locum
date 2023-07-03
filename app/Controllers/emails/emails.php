@@ -233,7 +233,7 @@ class emails extends EMBaseController
             if ($row['seen'] != "1") {
                 echo ' unread';
             }
-            echo '">';
+            echo '" onclick="window.open('. base_url('emails/view_email/' . encryptIt($row['id'])).')">';
             echo '<div class="mail-detail-left float-start">';
             echo '<div class="form-check">';
             echo '<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault7">';
