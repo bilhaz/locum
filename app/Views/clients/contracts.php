@@ -82,7 +82,7 @@
                                                 <small><?= $row['emp_imcr_no'] ?></small>
                                             </td>
                                             <td> <?php if ($row['ord_cancel_bcl'] <> 1) : ?>
-                                                    <?php if ($row['ord_status'] > 1 && $row['ord_status'] < 3) : ?>
+                                                    <?php if ($row['ord_status'] == 3) : ?>
                                                         <h6 class="mb-0"><a href="<?= base_url('client/ord-confirm/' . encryptIt($row['ord_id'])) ?>" class="btn btn-primary">Click to Confirm</a></h6>
                                                     <?php elseif ($row['ord_status'] > 2) : ?>
                                                         <span class="badge bg-success">Confirmed</span>

@@ -17,7 +17,7 @@
             <div class="card mb-4">
                <div class="card-header">
                   <div class="col-md-3 offset-md-5">
-                     <span id="flash-message" class="alert alert-success"></span>
+
                   </div>
                   <h6 class="card-title">You Order Details</h6>
                   <ul class="header-dropdown">
@@ -35,6 +35,20 @@
                <hr class="primary">
                <div class="card-body">
                   <div class="row mb-3 " id="email">
+                     <div class="col-md-6">
+                        <span class="float-start">
+                           <?php if (!empty($em_2['ord_paymnt_rcvd_date'])) : ?>
+                              <label><strong>Payment Date:</strong> <span class=" badge bg-success"><?= $em_2['ord_paymnt_rcvd_date']; ?> </span> </label>
+                           <?php endif; ?></span>
+                     </div>
+                     <div class="col-md-6">
+                        <span class="float-end">
+                           <?php if (!empty($em_2['ord_payment_status']) && $em_2['ord_payment_status'] == 'Paid') : ?>
+                              <label><strong>Payment Status:</strong> <span class=" badge chart-color135">Paid</span></label>
+                           <?php endif; ?></span>
+                     </div>
+                        <br>
+                        <br>
                      <h6>Dear<?php $fname = explode(' ', $em_2['cl_cont_name']) ?>
                         <?php if (!empty($fname[0])) : echo $fname[0];
                         endif; ?></h6>
@@ -128,7 +142,22 @@
                         <p class="mb-0"><strong>Work Permit</strong></p>
                         <a target="_blank" href="<?= base_url('public/uploads/employee_attach/' . $em_2['emp_work_permit']) ?>">Click To View</a>
                      <?php endif; ?>
-
+                     <?php if (!empty($em_2['emp_acls'])) : ?>
+                        <p class="mb-0"><strong>ACLS</strong></p>
+                        <a target="_blank" href="<?= base_url('public/uploads/employee_attach/' . $em_2['emp_acls']) ?>">Click To View</a>
+                     <?php endif; ?>
+                     <?php if (!empty($em_2['emp_bcls'])) : ?>
+                        <p class="mb-0"><strong>BCLS</strong></p>
+                        <a target="_blank" href="<?= base_url('public/uploads/employee_attach/' . $em_2['emp_bcls']) ?>">Click To View</a>
+                     <?php endif; ?>
+                     <?php if (!empty($em_2['emp_bls'])) : ?>
+                        <p class="mb-0"><strong>BLS</strong></p>
+                        <a target="_blank" href="<?= base_url('public/uploads/employee_attach/' . $em_2['emp_bls']) ?>">Click To View</a>
+                     <?php endif; ?>
+                     <?php if (!empty($em_2['emp_atls'])) : ?>
+                        <p class="mb-0"><strong>ATLS</strong></p>
+                        <a target="_blank" href="<?= base_url('public/uploads/employee_attach/' . $em_2['emp_atls']) ?>">Click To View</a>
+                     <?php endif; ?>
 
                      <br>
 

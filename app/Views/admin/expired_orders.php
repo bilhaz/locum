@@ -79,7 +79,10 @@
                                            
                                     </td>
                                         <td>
-                                        <a type="button" href="<?= base_url('backend/order_edit/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                        <?php if (session()->grp_id == 'super_admin' || session()->grp_id == 'admin') : ?>
+                                                    
+                                                        <a type="button" href="<?= base_url('backend/order-s1/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                    <?php endif; ?>
                                             <a type="button" href="<?= base_url('backend/order_view/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View" data-type="confirm"><i class="fa fa-eye"></i></a>
 
                                         </td>

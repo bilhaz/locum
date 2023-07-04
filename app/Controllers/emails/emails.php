@@ -101,7 +101,7 @@ class emails extends EMBaseController
     public function view_email($id = null)
     {
         $id = decryptIt($id);
-        $hostname = '{mail.sralocum.com:993/imap/ssl}INBOX';
+        $hostname = '{hp215.hostpapa.com:993/imap/ssl}INBOX';
         $username = 'Info@sralocum.com';
         $password = 'Tesco1234';
 
@@ -143,11 +143,20 @@ class emails extends EMBaseController
             }else{
                 $tbody = $email->textPlain;
             }
+            if(isset($email->headers->to[0]->mailbox)){
+                $mail = $email->headers->to[0]->mailbox;
+                $host = $email->headers->to[0]->host;
+                $to = $mail.'@'.$host;
+                }else{
+                    $mail = $email->headers->bcc[0]->mailbox;
+                $host = $email->headers->bcc[0]->host;
+                $to = $mail.'@'.$host;
+                }
             $emailData = [
                 'id' => $email->id,
                 'subject' => $email->subject,
                 'from' => $email->fromAddress,
-                'to' => $email->to,
+                'to' => $to,
                 'cc' => $email->cc,
                 'bcc' => $email->bcc,
                 'seen' => $email->isSeen,
@@ -181,7 +190,7 @@ class emails extends EMBaseController
     // Updating through ajax function
     public function inboxUpdate_data()
     {
-        $hostname = '{mail.sralocum.com:993/imap/ssl}INBOX';
+        $hostname = '{hp215.hostpapa.com:993/imap/ssl}INBOX';
         $username = 'Info@sralocum.com';
         $password = 'Tesco1234';
 
@@ -258,7 +267,7 @@ class emails extends EMBaseController
     public function reply_email($id = null)
     {
         $id = decryptIt($id);
-        $hostname = '{mail.sralocum.com:993/imap/ssl}INBOX';
+        $hostname = '{hp215.hostpapa.com:993/imap/ssl}INBOX';
         $username = 'Info@sralocum.com';
         $password = 'Tesco1234';
 
@@ -324,7 +333,7 @@ class emails extends EMBaseController
         $id = decryptIt($id);
         $data = [];
 
-        //  $hostname = '{mail.sralocum.com:993/imap/ssl}INBOX';
+        //  $hostname = '{hp215.hostpapa.com:993/imap/ssl}INBOX';
         //  $username = 'Info@sralocum.com';
         //  $password = 'Tesco1234';
 
@@ -447,7 +456,7 @@ class emails extends EMBaseController
     }
     public function SentMail()
     {
-        $hostname = '{mail.sralocum.com:993/imap/ssl}INBOX.Sent';
+        $hostname = '{hp215.hostpapa.com:993/imap/ssl}INBOX.Sent';
         $username = 'Info@sralocum.com';
         $password = 'Tesco1234';
 
@@ -548,7 +557,7 @@ class emails extends EMBaseController
     public function view_SentEmail($id = null)
     {
         $id = decryptIt($id);
-        $hostname = '{mail.sralocum.com:993/imap/ssl}INBOX.Sent';
+        $hostname = '{hp215.hostpapa.com:993/imap/ssl}INBOX.Sent';
         $username = 'Info@sralocum.com';
         $password = 'Tesco1234';
 
@@ -584,12 +593,20 @@ class emails extends EMBaseController
             }else{
                 $tbody = $email->textPlain;
             }
-            
+            if(isset($email->headers->to[0]->mailbox)){
+                $mail = $email->headers->to[0]->mailbox;
+                $host = $email->headers->to[0]->host;
+                $to = $mail.'@'.$host;
+                }else{
+                    $mail = $email->headers->bcc[0]->mailbox;
+                $host = $email->headers->bcc[0]->host;
+                $to = $mail.'@'.$host;
+                }
             $emailData = [
                 'id' => $email->id,
                 'subject' => $email->subject,
                 'from' => $email->fromAddress,                    //$email->fromAddress,
-                'to' => $email->to,
+                'to' => $to,
                 'cc' => $email->cc,
                 'bcc' => $email->bcc,
                 'seen' => $email->isSeen,

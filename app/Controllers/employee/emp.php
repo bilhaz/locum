@@ -431,14 +431,26 @@ class emp extends EMPBaseController
 		$ord_id = decryptIt($ord_id);
 		$eid = session()->emp_id;
 		$link = "backend/t-view";
+		$link2 = "client/timesheet";
 		$model = new timesheetModel();
 		$omodel = new ordersModel();
 		$data['v_ordr'] = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $ord_id)->first();
 		$Nmodel = new notificationModel();
-		$to =  $data['v_ordr']['emp_email'];
+		$to =  'info@sralocum.com';
+		$to2 =  $data['v_ordr']['cl_cont_email'];
 		$cc = 'info@sralocum.com';
+		$cc2 = '';
 		$subject = '' . session()->emp_email . 'Submitted Timesheet';
 		$message = '<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href=' . base_url('backend/t-view/' . encryptIt($ord_id)) . ' style="background-color:#157DED;color:white;border: none;
+			color: white;
+			padding: 5px 10px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;">Click to View</a></body</html>';
+			$message2 = '<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href=' . base_url('client/timesheet/' . encryptIt($ord_id)) . ' style="background-color:#157DED;color:white;border: none;
 			color: white;
 			padding: 5px 10px;
 			text-align: center;
@@ -463,7 +475,15 @@ class emp extends EMPBaseController
 			'status' => "0",
 			'usr_type' => "admin",
 		];
-		
+		$newData5 = [
+			'ord_id' => $ord_id,
+			'emp_id' => $eid,
+			'link'	=> $link2,
+			'notification' => "Timesheet submitted Online",
+			'status' => "0",
+			'usr_type' => "client",
+		];
+		$Nmodel->save($newData5);
 		$Nmodel->save($newData);
 		$omodel->update($ord_id, $status);
 		$session = session();
@@ -478,7 +498,6 @@ class emp extends EMPBaseController
 				'em_status' => '1' ,
 		];
 		em_log($emLog);
-			return redirect()->to('employee/ord-view/' . encryptIt($ord_id));
 		} else {
 			$emLog = [
 				'em_to' => $to,
@@ -489,9 +508,31 @@ class emp extends EMPBaseController
 				'em_status' => '0' ,
 		];
 		em_log($emLog);
+		if (sendEmail($to2, $cc2, $subject, $message2)) {
+			$session->setFlashdata('success', 'TimeSheet Saved');
+			$emLog = [
+				'em_to' => $to2,
+				'em_subject' => $subject,
+				'em_body' => $message2,
+				'row_id' => $ord_id,
+				'action_table' => 'Timesheet',
+				'em_status' => '1' ,
+		];
+		em_log($emLog);
+		} else {
+			$emLog = [
+				'em_to' => $to2,
+				'em_subject' => $subject,
+				'em_body' => $message2,
+				'row_id' => $ord_id,
+				'action_table' => 'Timesheet',
+				'em_status' => '0' ,
+		];
+		em_log($emLog);
 			return redirect()->to('employee/ord-view/' . encryptIt($ord_id));
 		}
 	}
+}
 
 	public function edit_timesheet($ord_id)
 	{

@@ -70,8 +70,7 @@
                                                         <span class="text-muted text-sm float-end"><?= date("d-m-Y H:i:s A", strtotime($emails['date'])) ?></span>
                                                     </p>
                                                     <p class="mb-0">
-                                                        <strong class="text-muted me-1">To:</strong><?php $to = implode(',', $emails['to']);
-                                                                                                    echo $to;  ?><small class="text-muted float-end"><i class="zmdi zmdi-attachment me-1"></i></small>
+                                                        <strong class="text-muted me-1">To:</strong><?= $emails['to'] ?><small class="text-muted float-end"><i class="zmdi zmdi-attachment me-1"></i></small>
                                                     </p>
                                                     <p class="mb-0">
                                                         <strong class="text-muted me-1">CC:</strong>

@@ -55,8 +55,10 @@
                                                                     <span class="badge chart-color122">Processed</span>
                                                                 <?php elseif ($order['ord_status'] == "3") : ?>
                                                                     <span class="badge bg-success">Confirmed</span>
-                                                                <?php else : ?>
+                                                                <?php elseif ($order['ord_status'] == "4") : ?>
                                                                     <span class="badge chart-color120">Ended</span>
+                                                                <?php elseif ($order['ord_status'] == "5") : ?>
+                                                                    <span class="badge chart-color135">Paid</span><br>
                                                                 <?php endif; ?>
                                                             <?php endif; ?>
                                                         <?php endif; ?></small></span></h4>

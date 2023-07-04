@@ -54,8 +54,11 @@
                                 <p style="color:#157DED">Congratulations and thank you for taking up this Locum assignment with SRA Locum. Please find attached the confirmation of your booking.</p>
                                 <h5 style="color:#157DED">Attachment</h5>
                                 <ul class="spbull" style="line-height: 2em;">
+                                <li style="color:#157DED">Attached is the Confirmation of Locum Details with Term & Conditions and Contract<br>
+                                        <a type="button" target="_blank" href="<?= base_url('employee/ord-view/'.encryptIt($em_4['ord_id']))?>" class="btn" style="background-color:#157DED;color:white;">Click to View Contract</a>
+                                    </li>
                                     <li style="color:#157DED">Attached is the Confirmation of Locum Details with Term & Conditions, Timesheet and Assessment form.<br>
-                                        <a type="button" href="<?= base_url('public/uploads/SRAL-timesheet.pdf') ?>" class="btn" style="background-color:#157DED;color:white;">Click to Download Timesheet</a>
+                                        <a type="button" target="_blank" href="<?= base_url('public/uploads/SRAL-timesheet.pdf') ?>" class="btn" style="background-color:#157DED;color:white;">Click to Download Timesheet</a>
                                     </li>
                                     <li style="color:#157DED">Timesheet you are required to complete and get signed by your consultant when you have finished the shifts.</li>
                                     <li style="color:#157DED">Kindly ensure that you get your timesheet signed off at the end of the assignment. This is to make sure that you receive your payment promptly SRA Locum will only pay once Time sheet(s) is confirmed and the Client has paid SRA Locum (T&C applies).</li>

@@ -507,10 +507,64 @@
                 <p class="s2" style="padding-left: 4pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Professional Fee:</p>
             </td>
             <td style="width:367pt;border-left-style:solid;border-left-width:1pt;border-left-color:#9BBA58" bgcolor="#C2D59B">
-                <p class="s4" style="padding-left: 4pt;text-indent: 0pt;text-align: left;">€ <?= $cont['ord_pay_to_dr']?>/hr <span class="s5">(Limited Company Rate)</span></p>
-                <?php $form = $forml['formula']; $pay = $cont['ord_pay_to_dr']; ?>
-                <p class="s4" style="padding-left: 4pt;text-indent: 0pt;text-align: left;">€ <?php if(!empty($pay)): echo number_format($pay * $form/100,2); endif;?>/hr  <span class="s5">(PAYE Rate)</span></p>
-            </td>
+                                    <p class="s4" style="padding-left: 4pt;text-indent: 0pt;text-align: left;"><b>Normal:</b> &euro;<?= $cont['ord_normal_hrs_rt'] ?>&nbsp;<?php if ($cont['nh_p_type'] == 1) : echo "/hr";
+                                                                                                                                                                            elseif ($cont['nh_p_type'] == 2) : echo "/day";
+                                                                                                                                                                            else : echo "/halfday";
+                                                                                                                                                                            endif; ?> <span class="s5">(Limited Company Rate)</span> <br>
+                                        <?php if ($cont['ord_ocall_rt'] > 0) : ?>
+                                            <b>OnCall:</b> &euro;<?= $cont['ord_ocall_rt'] ?>&nbsp;<?php if ($cont['oc_p_type'] == 1) : echo "/hr";
+                                                                                                    elseif ($cont['oc_p_type'] == 2) : echo "/day";
+                                                                                                    else : echo "/halfday";
+                                                                                                    endif; ?> <span class="s5">(Limited Company Rate)</span> <br>
+                                        <?php endif; ?>
+                                        <?php if ($cont['ord_osite_rt'] > 0) : ?>
+                                            <b>OffSite:</b> &euro;<?= $cont['ord_osite_rt'] ?>&nbsp;<?php if ($cont['os_p_type'] == 1) : echo "/hr";
+                                                                                                    elseif ($cont['os_p_type'] == 2) : echo "/day";
+                                                                                                    else : echo "/halfday";
+                                                                                                    endif; ?> <span class="s5">(Limited Company Rate)</span> <br>
+                                        <?php endif; ?>
+                                        <?php if ($cont['ord_bhw_rt'] > 0) : ?>
+                                            <b>Weekend:</b> &euro;<?= $cont['ord_bhw_rt'] ?>&nbsp;<?php if ($cont['bhw_p_type'] == 1) : echo "/hr";
+                                                                                                    elseif ($cont['bhw_p_type'] == 2) : echo "/day";
+                                                                                                    else : echo "/halfday";
+                                                                                                    endif; ?><span class="s5">(Limited Company Rate)</span> <br>
+                                        <?php endif; ?>
+                                    </p>
+                                    <?php $form = $forml['formula']; ?>
+                                    <p class="s4" style="padding-left: 4pt;text-indent: 0pt;text-align: left;"><b>Normal:</b> €<?php if (!empty($cont['ord_normal_hrs_rt'])) : echo number_format($cont['ord_normal_hrs_rt'] * $form / 100, 2);
+                                                                                                                                endif;
+                                                                                                                                if ($cont['nh_p_type'] == 1) : echo "/hr";
+                                                                                                                                elseif ($cont['nh_p_type'] == 2) : echo "/day";
+                                                                                                                                else : echo "/halfday";
+                                                                                                                                endif; ?> <span class="s5">(PAYE Rate)</span><br>
+                                        <?php if ($cont['ord_ocall_rt'] > 0) : ?>
+                                            <b>OnCall:</b> €<?php if (!empty($cont['ord_ocall_rt'])) : echo number_format($cont['ord_ocall_rt'] * $form / 100, 2);
+                                                            endif;
+                                                            if ($cont['oc_p_type'] == 1) : echo "/hr";
+                                                            elseif ($cont['oc_p_type'] == 2) : echo "/day";
+                                                            else : echo "/halfday";
+                                                            endif; ?> <span class="s5">(PAYE Rate)</span><br>
+                                        <?php endif; ?>
+
+                                        <?php if ($cont['ord_osite_rt'] > 0) : ?>
+                                            <b>OffSite:</b> €<?php if (!empty($cont['ord_osite_rt'])) : echo number_format($cont['ord_osite_rt'] * $form / 100, 2);
+                                                                endif;
+                                                                if ($cont['os_p_type'] == 1) : echo "/hr";
+                                                                elseif ($cont['os_p_type'] == 2) : echo "/day";
+                                                                else : echo "/halfday";
+                                                                endif; ?> <span class="s5">(PAYE Rate)</span><br>
+                                        <?php endif; ?>
+
+                                        <?php if ($cont['ord_bhw_rt'] > 0) : ?>
+                                            <b>Weekend:</b> €<?php if (!empty($cont['ord_bhw_rt'])) : echo number_format($cont['ord_bhw_rt'] * $form / 100, 2);
+                                                                endif;
+                                                                if ($cont['nh_p_type'] == 1) : echo "/hr";
+                                                                elseif ($cont['nh_p_type'] == 2) : echo "/day";
+                                                                else : echo "/halfday";
+                                                                endif; ?> <span class="s5">(PAYE Rate)</span>
+                                        <?php endif; ?>
+                                    </p>
+                                </td>
         </tr>
         <tr style="height:14pt">
             <td style="width:151pt;border-bottom-style:solid;border-bottom-width:5pt;border-bottom-color:#9BBA58;border-right-style:solid;border-right-width:1pt;border-right-color:#9BBA58">

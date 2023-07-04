@@ -59,6 +59,7 @@ class Backend extends BEBaseController
 		'locum-intrack' => ['super_admin', 'admin', 'user'],
 		'locum-sagtrack' => ['super_admin', 'admin', 'user'],
 		'order-publish' => ['super_admin', 'admin', 'user'],
+		'order-publish-view' => ['super_admin', 'admin', 'user'],
 		'order-unpublish' => ['super_admin', 'admin', 'user'],
 		'sales' => ['super_admin', 'admin', 'user'],
 		'vos' => ['super_admin', 'admin', 'user'],
@@ -71,7 +72,7 @@ class Backend extends BEBaseController
 		'getPie-ChartData' => ['super_admin', 'admin', 'user'],
 		'Total-ConfirmedHours' => ['super_admin', 'admin', 'user'],
 		'order_view' => ['super_admin', 'admin', 'user'],
-		'order_edit' => ['super_admin', 'admin', 'user'],
+		// 'order_edit' => ['super_admin', 'admin', 'user'],
 		'ord_status' => ['super_admin', 'admin', 'user'],
 		'email-1' => ['super_admin', 'admin', 'user'],
 		'email-2' => ['super_admin', 'admin', 'user'],
@@ -3628,7 +3629,7 @@ class Backend extends BEBaseController
 		$Nmodel = new notificationModel();
 		$data['v_ordr'] = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $id)->first();
 		$link = 'client/ord-status';
-		$link2 = 'employee/ord-view';
+		$link2 = 'employee/orders';
 		$to = $data['v_ordr']['cl_cont_email'];
 		$to2 = $data['v_ordr']['emp_email'];
 		$cc = 'info@sralocum.com';
@@ -3663,7 +3664,7 @@ class Backend extends BEBaseController
 				'usr_type' => "client",
 			];
 			$newData3 = [
-				'ord_id' => $id,
+				'ord_id' => '',
 				'emp_id' => $data['v_ordr']['emp_id'], //user id to whom we want to send notification
 				'link'	=> $link2,
 				'notification' => "Locum Confirmation",
@@ -3863,7 +3864,7 @@ class Backend extends BEBaseController
 
 		// $to = $ord['cl_cont_email'];
 		$to =  $data['v_ordr']['emp_email'];
-		$to2 =  $data['v_ordr']['cl_cont_email'];
+		// $to2 =  $data['v_ordr']['cl_cont_email'];
 		$cc = 'info@sralocum.com';
 		$subject = 'SRA-Employee Confirmation';
 		$message = $this->LoadView('admin/email_responses/4th-response-email', $data);
@@ -3933,33 +3934,33 @@ class Backend extends BEBaseController
 				em_log($emLog);
 				return redirect()->to('backend/order-s5/' . encryptIt($id));
 			}
-			if (sendEmail($to2, $cc, $subject, $message)) {
-				$session->setFlashdata('success', 'Employee Confirmation Email Succesfully Sent');
-				$emLog = [
-					'em_to' => $to2,
-					'em_subject' => $subject,
-					'em_body' => $message,
-					'row_id' => $id,
-					'action_table' => 'Orders',
-					'em_status' => '1',
-				];
-				em_log($emLog);
-				return redirect()->to('backend/order-s5/' . encryptIt($id));
-			} else {
-				$session->setFlashdata('error', 'Employee Confirmation Email Failed');
-				$emLog = [
-					'em_to' => $to,
-					'em_subject' => $subject,
-					'em_body' => $message,
-					'row_id' => $id,
-					'action_table' => 'Orders',
-					'em_status' => '0',
-				];
-				em_log($emLog);
-				return redirect()->to('backend/email-4/' . encryptIt($id));
+			// if (sendEmail($to2, $cc, $subject, $message)) {
+			// 	$session->setFlashdata('success', 'Employee Confirmation Email Succesfully Sent');
+			// 	$emLog = [
+			// 		'em_to' => $to2,
+			// 		'em_subject' => $subject,
+			// 		'em_body' => $message,
+			// 		'row_id' => $id,
+			// 		'action_table' => 'Orders',
+			// 		'em_status' => '1',
+			// 	];
+			// 	em_log($emLog);
+			// 	return redirect()->to('backend/order-s5/' . encryptIt($id));
+			// } else {
+			// 	$session->setFlashdata('error', 'Employee Confirmation Email Failed');
+			// 	$emLog = [
+			// 		'em_to' => $to,
+			// 		'em_subject' => $subject,
+			// 		'em_body' => $message,
+			// 		'row_id' => $id,
+			// 		'action_table' => 'Orders',
+			// 		'em_status' => '0',
+			// 	];
+			// 	em_log($emLog);
+			// 	return redirect()->to('backend/email-4/' . encryptIt($id));
+		// }
 			}
 		}
-	}
 
 	public function order_s5($id = null)
 	{
@@ -4179,7 +4180,7 @@ class Backend extends BEBaseController
 		$data = [];
 		$model = new ordersModel();
 		$Emodel = new EmpModel();
-		$data['doc'] = $Emodel->findAll();
+		// $data['doc'] = $Emodel->findAll();
 		$data['ord'] = $model->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $id)->first();
 		$ord = $data['ord'];
 		$data['doc'] = $Emodel->select('emp_id,emp_email')->where('emp_spec1', $ord['ord_speciality'])->orWhere('emp_spec2', $ord['ord_speciality'])->orWhere('emp_spec3', $ord['ord_speciality'])->findAll();
@@ -4229,7 +4230,7 @@ class Backend extends BEBaseController
 		}
 		if (!empty($failedEmails)) {
 			// Store the failed email addresses in the error session message
-			$session->setFlashdata('error', 'Order Published Failed. Emails failed to send to:<br> <b>' . implode(',', $failedEmails) . '</b>');
+			$session->setFlashdata('error', 'Order Published Failed. Failed Emails:<br> <b>' . implode(',', $failedEmails) . '</b>');
 			$emLog = [
 				'em_to' => $to,
 				'em_subject' => $subject,
@@ -4738,7 +4739,7 @@ class Backend extends BEBaseController
 		$response = [
 			'grand_sum' => $grandSum,
 		];
-
+		
 		return $this->response->setJSON($response);
 	}
 	public function timeSheet_LoopNotify()
@@ -4866,4 +4867,25 @@ class Backend extends BEBaseController
 
 		
 	}
+	public function order_publish_view($id = null)
+	{
+		$id = decryptIt($id);
+		$data = [];
+		$model = new ordersModel();
+		$Emodel = new EmpModel();
+		// $data['doc'] = $Emodel->findAll();
+		$data['subject'] = 'SRA-New Locum';
+		$data['ord'] = $model->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $id)->first();
+		$ord = $data['ord'];
+		$data['doc'] = $Emodel->select('emp_id,emp_email')->where('emp_spec1', $ord['ord_speciality'])->orWhere('emp_spec2', $ord['ord_speciality'])->orWhere('emp_spec3', $ord['ord_speciality'])->findAll();
+		$emp_id = $data['doc'];
+		foreach ($data['doc'] as &$item) {
+			unset($item['emp_id']);
+		}
+
+		unset($item); // Unset the reference variable
+
+		
+		return $this->LoadView('admin/job_publish_view', $data);
+			}
 }

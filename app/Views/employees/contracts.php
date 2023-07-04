@@ -111,8 +111,9 @@
                                                         <?php endif; ?>
                                                     </td>
                                                     <td>
+                                                        <?php if($row['ord_status'] >= '3'): ?>
                                                         <a type="button" href="<?= base_url('employee/ord-view/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View" data-type="confirm"><i class="fa fa-eye"></i></a>
-
+                                                        <?php endif; ?>
 
                                                     </td>
                                                 </tr>

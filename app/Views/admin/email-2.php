@@ -127,6 +127,22 @@
                                     <p class="mb-0"><strong>Work Permit</strong></p>
                                     <a target="_blank" href="<?= base_url('public/uploads/employee_attach/' . $em_2['emp_work_permit']) ?>">Click To View</a>
                                 <?php endif; ?>
+                                <?php if (!empty($em_2['emp_acls'])) : ?>
+                                    <p class="mb-0"><strong>ACLS</strong></p>
+                                    <a target="_blank" href="<?= base_url('public/uploads/employee_attach/' . $em_2['emp_acls']) ?>">Click To View</a>
+                                <?php endif; ?>
+                                <?php if (!empty($em_2['emp_bcls'])) : ?>
+                                    <p class="mb-0"><strong>BCLS</strong></p>
+                                    <a target="_blank" href="<?= base_url('public/uploads/employee_attach/' . $em_2['emp_bcls']) ?>">Click To View</a>
+                                <?php endif; ?>
+                                <?php if (!empty($em_2['emp_bls'])) : ?>
+                                    <p class="mb-0"><strong>BLS</strong></p>
+                                    <a target="_blank" href="<?= base_url('public/uploads/employee_attach/' . $em_2['emp_bls']) ?>">Click To View</a>
+                                <?php endif; ?>
+                                <?php if (!empty($em_2['emp_atls'])) : ?>
+                                    <p class="mb-0"><strong>ATLS</strong></p>
+                                    <a target="_blank" href="<?= base_url('public/uploads/employee_attach/' . $em_2['emp_atls']) ?>">Click To View</a>
+                                <?php endif; ?>
 
 
                                 <br>

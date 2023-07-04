@@ -89,7 +89,20 @@
                                                 <?php endif; ?>
                                             </td>
                                             <td>
-
+                                            <?php if (session()->grp_id == 'super_admin') : ?>
+                                                    <?php if ($row['ord_status'] == 1) : ?>
+                                                        <a type="button" href="<?= base_url('backend/order-s2/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                    <?php elseif ($row['ord_status'] == 2) : ?>
+                                                        <a type="button" href="<?= base_url('backend/order-s3/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                    <?php elseif ($row['ord_status'] == 3) : ?>
+                                                        <a type="button" href="<?= base_url('backend/order-s4/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                    <?php elseif ($row['ord_status'] == 4) : ?>
+                                                        <a type="button" href="<?= base_url('backend/order-s5/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                    <?php elseif ($row['ord_status'] == 5) : ?>
+                                                        <a type="button" href="<?= base_url('backend/order-s5/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                    <?php elseif ($row['ord_status'] == NULL) : ?>
+                                                        <a type="button" href="<?= base_url('backend/order-s1/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                    <?php endif; ?> <?php endif; ?>
                                                 <a type="button" href="<?= base_url('backend/order_view/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View" data-type="confirm"><i class="fa fa-eye"></i></a>
 
                                             </td>

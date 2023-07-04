@@ -58,7 +58,7 @@
                                                         <th>Created Date</th>
                                                         <th>Status</th>
                                                         <th>View</th>
-                                                        
+
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -87,11 +87,14 @@
                                                             <td><?= date("d-m-y  h:i:s a", strtotime($row['ord_created'])) ?></td>
                                                             <td><span class="badge chart-color135">Paid</span></td>
                                                             <td>
-
+                                                                <?php if (session()->grp_id == 'super_admin') : ?>
+                                                                    
+                                                                        <a type="button" href="<?= base_url('backend/order-s5/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                                    <?php endif; ?>
                                                                 <a type="button" href="<?= base_url('backend/order_view/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View" data-type="confirm"><i class="fa fa-eye"></i></a>
 
                                                             </td>
-                                                            
+
                                                         </tr>
                                                     <?php endforeach; ?>
 
@@ -118,7 +121,7 @@
                                                         <th>Created Date</th>
                                                         <th>Status</th>
                                                         <th>View</th>
-                                                        
+
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -147,11 +150,15 @@
                                                             <td><?= date("d-m-y  h:i:s a", strtotime($mrow['ord_created'])) ?></td>
                                                             <td><span class="badge chart-color135">Paid</span></td>
                                                             <td>
+                                                                <?php if (session()->grp_id == 'super_admin') : ?>
+                                                                    
+                                                                        <a type="button" href="<?= base_url('backend/order-s5/' . encryptIt($mrow['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                                   <?php endif; ?>
 
                                                                 <a type="button" href="<?= base_url('backend/order_view/' . encryptIt($mrow['ord_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View" data-type="confirm"><i class="fa fa-eye"></i></a>
 
                                                             </td>
-                                                           
+
                                                         </tr>
                                                     <?php endforeach; ?>
 
@@ -179,7 +186,7 @@
                                                             <th>Created Date</th>
                                                             <th>Status</th>
                                                             <th>View</th>
-                                                           
+
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -208,6 +215,10 @@
                                                                 <td><?= date("d-m-y  h:i:s a", strtotime($yrow['ord_created'])) ?></td>
                                                                 <td><span class="badge chart-color135">Paid</span></td>
                                                                 <td>
+                                                                    <?php if (session()->grp_id == 'super_admin') : ?>
+                                                                        
+                                                                            <a type="button" href="<?= base_url('backend/order-s5/' . encryptIt($yrow['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                                        <?php endif; ?>
 
                                                                     <a type="button" href="<?= base_url('backend/order_view/' . encryptIt($yrow['ord_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View" data-type="confirm"><i class="fa fa-eye"></i></a>
 
@@ -240,7 +251,7 @@
                                                             <th>Created Date</th>
                                                             <th>Status</th>
                                                             <th>View</th>
-                                                           
+
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -269,6 +280,10 @@
                                                                 <td><?= date("d-m-y  h:i:s a", strtotime($orow['ord_created'])) ?></td>
                                                                 <td><span class="badge chart-color135">Paid</span></td>
                                                                 <td>
+                                                                <?php if (session()->grp_id == 'super_admin') : ?>
+                                                                        
+                                                                            <a type="button" href="<?= base_url('backend/order-s5/' . encryptIt($orow['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                                        <?php endif; ?>
 
                                                                     <a type="button" href="<?= base_url('backend/order_view/' . encryptIt($orow['ord_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View" data-type="confirm"><i class="fa fa-eye"></i></a>
 

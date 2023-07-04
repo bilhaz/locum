@@ -8,6 +8,16 @@
                                 <p style="color:#157DED">Congratulations and thank you for taking up this Locum assignment with SRA Locum. Please find attached the confirmation of your booking.</p>
                                 <h4 style="color:#157DED">Attachment</h4>
                                 <ul class="spbull" style="line-height: 2em;">
+                                <li style="color:#157DED">Attached is the Confirmation of Locum Details with Term & Conditions and Contract<br>
+                                        <a type="button" target="_blank" href="<?= base_url('employee/ord-view/'.encryptIt($v_ordr['ord_id']))?>" class="btn" style="background-color:#157DED;color:white;border: none;
+										color: white;
+										padding: 5px 10px;
+										text-align: center;
+										text-decoration: none;
+										display: inline-block;
+										font-size: 16px;
+										margin: 4px 2px;
+										cursor: pointer;">Click to View Contract</a></li>
                                     <li style="color:#157DED">Attached is the Confirmation of Locum Details with Term & Conditions, Timesheet and Assessment form.<br>
                                         <a type="button" target="_blank" href="<?= base_url('public/uploads/SRAL-timesheet.pdf')?>" class="btn" style="background-color:#157DED;color:white;border: none;
 										color: white;

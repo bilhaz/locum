@@ -65,8 +65,7 @@
                                             </div>
                                             <div class="media-body w-100">
                                                 <p class="mb-0">
-                                                    <strong class="text-muted me-1">To:</strong><?php $to = implode(',', $emails['to']);
-                                                                                                echo $to;  ?><small class="text-muted float-end"><i class="zmdi zmdi-attachment me-1"></i></small>
+                                                    <strong class="text-muted me-1">To:</strong><?= $emails['to'] ?><small class="text-muted float-end"><i class="zmdi zmdi-attachment me-1"></i></small>
                                                 </p>
                                                 <p class="mb-0">
                                                     <strong class="text-muted me-1">From:</strong>

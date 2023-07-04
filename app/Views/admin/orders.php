@@ -205,7 +205,7 @@
                                                 <?php if (session()->grp_id == 'user' && $row['ord_advrtise'] <= '1') : ?>
                                                     <a type="button" href="<?= base_url('backend/order-publish/' . encryptIt($row['ord_id'])) ?>" target="_blank" class="btn btn-sm btn-outline-warning js-sweetalert" Onclick="return confirm('Are You sure? You want to advertise this?');" title="Advertise" data-type="confirm"><i class="fa fa-bullhorn"></i></a>
                                                     <?php elseif(session()->grp_id == 'super_admin' || session()->grp_id == 'admin'): ?>
-                                                        <a type="button" href="<?= base_url('backend/order-publish/' . encryptIt($row['ord_id'])) ?>" target="_blank" class="btn btn-sm btn-outline-warning js-sweetalert" Onclick="return confirm('Are You sure? You want to advertise this?');" title="Advertise" data-type="confirm"><i class="fa fa-bullhorn"></i></a>
+                                                        <a type="button" href="<?= base_url('backend/order-publish-view/' . encryptIt($row['ord_id'])) ?>" target="_blank" class="btn btn-sm btn-outline-warning js-sweetalert" Onclick="return confirm('Are You sure? You want to advertise this?');" title="Advertise" data-type="confirm"><i class="fa fa-bullhorn"></i></a>
                                                 <?php endif; ?>
 
                                             </td>

@@ -757,17 +757,16 @@ public function order_confirm($oid = null)
 		$oid = decryptIt($oid);
 		$id = session()->cl_id;
 		$link = "backend/order_view";
-		$link2 = "employee/ord-view";
 		$data = [];
 
 		$e2model = new ordersModel();
 		$data['e_ord'] = $e2model->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $oid)->first();
 		$Nmodel = new notificationModel();
 
-			$to = $data['e_ord']['emp_email'];
-			$cc = 'info@sralocum.com';
+			$to = 'info@sralocum.com';
+			$cc = '';
 			$subject = ''.session()->cl_h_name.' Confirmed Order';
-			$message = '<html><body><p> Here is the Order Link</p><br><a target="_blank" href='.base_url('backend/order-s1/'.encryptIt($oid)).' style="background-color:#157DED;color:white;border: none;
+			$message = '<html><body><p> Here is the Order Link</p><br><a target="_blank" href='.base_url('backend/order-s4/'.encryptIt($oid)).' style="background-color:#157DED;color:white;border: none;
 			color: white;
 			padding: 5px 10px;
 			text-align: center;
@@ -778,9 +777,7 @@ public function order_confirm($oid = null)
 			cursor: pointer;">Click to View</a></body</html>';
 
 
-		$newData = [
-			'ord_status' => 3,
-		];
+		
 		$newdata2 = [
 			'ord_id' => $oid,
 			'emp_id' =>$id,
@@ -789,17 +786,8 @@ public function order_confirm($oid = null)
 			'status' => "0",
 			'usr_type' => "admin",
 		];
-		$e2model->update($oid, $newData);
-		$newdata3 = [
-			'ord_id' => $oid,
-			'emp_id' =>$data['e_ord']['emp_id'],
-			'link'	=> $link2,
-			'notification' => "Locum Confirmed by Client",
-			'status' => "0",
-			'usr_type' => "employee",
-		];
 		$Nmodel->insert($newdata2);
-		$Nmodel->insert($newdata3);
+		
 				$session = session();
 				if (sendEmail($to, $cc, $subject, $message)) {
 					$session->setFlashdata('success', 'Order Confirmed');
@@ -956,7 +944,7 @@ public function get_notif()
 		$model = new ordersModel();
 		$data['t_order'] = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')
 			->Join('timesheets', 'timesheets.order_id = orders.ord_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')
-			->where('ord_status >', '2')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('ord_time_sheet_approved', 'Sent_for_verification')->where('orders.cl_id', session()->cl_id)->groupBy('orders.ord_id')->orderBy('orders.ord_id', 'DESC')
+			->where('ord_status >', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('ord_time_sheet_approved', 'Sent_for_verification')->where('orders.cl_id', session()->cl_id)->groupBy('orders.ord_id')->orderBy('orders.ord_id', 'DESC')
 			->findAll();
 
 		return $this->LoadView('clients/await_rimesheets', $data);
