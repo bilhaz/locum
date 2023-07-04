@@ -83,7 +83,7 @@
                                             </td>
                                             <td> <?php if ($row['ord_cancel_bcl'] <> 1) : ?>
                                                     <?php if ($row['ord_status'] == 3) : ?>
-                                                        <h6 class="mb-0"><a href="<?= base_url('client/ord-confirm/' . encryptIt($row['ord_id'])) ?>" class="btn btn-primary">Click to Confirm</a></h6>
+                                                        <h6 class="mb-0"><a id="confrmButton" href="<?= base_url('client/ord-confirm/' . encryptIt($row['ord_id'])) ?>" class="btn btn-primary">Click to Confirm</a></h6>
                                                     <?php elseif ($row['ord_status'] > 2) : ?>
                                                         <span class="badge bg-success">Confirmed</span>
                                                     <?php endif; ?>
@@ -193,4 +193,33 @@
                                             ?>";
             document.getElementById("cancelOrderForms").setAttribute("action", "<?= base_url('client/canc-ord/') ?>/" + document.getElementById("orderId").value);
         }
+    </script>
+    <script>
+        // Get the button element
+const button = document.getElementById('confrmButton');
+
+// Check if the button is stored in local storage
+const buttonClickedAt = localStorage.getItem('buttonClickedAt');
+if (buttonClickedAt) {
+  // Compare the current time with the stored time
+  const currentTime = new Date().getTime();
+  const elapsedTime = currentTime - buttonClickedAt;
+  const twentyFourHours = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+
+  if (elapsedTime < twentyFourHours) {
+    // Less than 24 hours have passed, hide the button
+    button.style.display = 'none';
+  }
+}
+
+// Button click event handler
+button.addEventListener('click', function () {
+  // Store the current time in local storage
+  const currentTime = new Date().getTime();
+  localStorage.setItem('buttonClickedAt', currentTime);
+
+  // Show the button again
+  button.style.display = 'block';
+});
+
     </script>
