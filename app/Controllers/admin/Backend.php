@@ -3523,7 +3523,7 @@ class Backend extends BEBaseController
 
 		$TCearn = (float)$this->request->getVar('ord_hosp_earn');
 		$ToAdmin = (float)$this->request->getVar('ord_adminchrg_intern');
-		$ToPay = $data['v_ordr']['ord_paying_to_dr'];
+		$ToPay = $data['v_ordr']['ord_pay_to_dr'];
 
 		// Calculate Diff + Profit
 		$diff = $TCearn + $ToAdmin - $ToPay;
