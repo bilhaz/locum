@@ -245,8 +245,8 @@ class emails extends EMBaseController
             echo '" onclick="window.open(\'' . base_url('emails/view_email/' . encryptIt($row['id'])) . '\')">'; 
             echo '<div class="mail-detail-left float-start">';
             echo '<div class="form-check">';
-            echo '<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault7">';
-            echo '<label class="form-check-label" for="flexCheckDefault7"></label>';
+            echo '<input class="form-check-input" disabled type="checkbox" value="" id="flexCheckDefault7">';
+            echo '<label class="form-check-label" disabled for="flexCheckDefault7"></label>';
             echo '</div>';
             echo '</div>';
             echo '<div class="mail-detail-right float-start">';
