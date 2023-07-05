@@ -12,23 +12,23 @@
       <p><strong>Your Order Details are;</strong></p>
       <div class="table-responsive">
         <table class="table table-bordered align-middle d-inline" style="border-collapse: collapse;" width="70%">
-          <tr>
+          <tr >
             <th style="border: 1px solid black;"><strong>Hospital Name & Address:</strong></th>
             <td style="border: 1px solid black;"><strong><?= $v_ordr['cl_h_name'] . ', ' . $v_ordr['cl_address'] . ' | ' . $v_ordr['cl_eircode'] ?></strong></td>
           </tr>
-          <tr>
+          <tr >
             <th style="border: 1px solid black;"><strong>Client Contact Name:</strong></th>
             <td style="border: 1px solid black;"><strong><?= $v_ordr['cl_cont_name'] ?></strong></td>
           </tr>
-          <tr>
+          <tr >
             <th style="border: 1px solid black;"><strong>Covering Specialty:</strong></th>
             <td style="border: 1px solid black;"><strong><?= $v_ordr['spec_name'] . ' ' . $v_ordr['grade_name'] ?></strong></td>
           </tr>
-          <tr>
+          <tr >
             <th style="border: 1px solid black;"><strong>Offered Doctor (s):</strong></th>
             <td style="border: 1px solid black;"><strong>Dr.<?= $v_ordr['emp_fname'] . ' ' . $v_ordr['emp_lname'] . '( ' . $v_ordr['emp_imcr_no'] . ')' ?></strong></td>
           </tr>
-          <tr>
+          <tr >
             <th style="border: 1px solid black;"><strong>Covering Date & Time:</strong></th>
             <td style="border: 1px solid black;"><strong>
                 <?php $pros = explode(",", $v_ordr['ord_prosdatetime_detail']);
@@ -37,7 +37,7 @@
                 <?php endforeach; ?>
               </strong></td>
           </tr>
-          <tr>
+          <tr >
             <th style="border: 1px solid black;"><strong>Rate:</strong></th>
             <td style="border: 1px solid black;"><b>Normal:</b> &euro;<?= $v_ordr['ord_Hnormal_hrs_rt'] ?>&nbsp;<?php if ($v_ordr['nh_p_type'] == 1) : echo "/hr";
                                                                                                                   elseif ($v_ordr['nh_p_type'] == 2) : echo "/day";
@@ -63,7 +63,7 @@
             </td>
           <?php endif; ?>
           </tr>
-          <tr>
+          <tr >
             <th style="border: 1px solid black;"><strong>Admin Charges:</strong></th>
             <td class="text-danger" style="border: 1px solid black;color:red;"><strong><?= $v_ordr['ord_admin_charges'] ?>%</strong></td>
           </tr>

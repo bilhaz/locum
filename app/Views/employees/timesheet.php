@@ -162,7 +162,7 @@
                         </table>
                         <div class="row mb-3">
                         <div class="col-md-4">
-                        <lable>Signature<small class="text-danger">&nbsp;(Click Below to Sign)</small></lable>
+                        <lable>Locum Signature<small class="text-danger">&nbsp;(Click Below to Sign)</small></lable>
                         <input type="text" id="dateInput" onclick="loadServerDateTime()" class="form-control" name="ord_timesheetSign" readonly required>
                         </div>
                         </div>
@@ -219,7 +219,7 @@
     function loadServerDateTime() {
     var dateInput = document.getElementById("dateInput");
     // Assuming you have stored the session username in a PHP variable called `username`
-  var username = "<?php echo 'Locum Dr.'. $_SESSION['emp_fname'] .''. $_SESSION['emp_lname']; ?>";
+  var username = "<?php echo 'Dr. '. $_SESSION['emp_fname'] .''. $_SESSION['emp_lname']; ?>";
     
     $.ajax({
       url: link6,  // Replace with the actual endpoint URL on your server

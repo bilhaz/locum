@@ -191,6 +191,12 @@
                                                                         ($v_ordr['ord_payment_status'] == 'Rceived') ? TRUE : False
                                                                     ) ?>>Received
                                             </option>
+                                            <option value="Paid" <?= set_select(
+                                                                        'ord_payment_status',
+                                                                        'Paid',
+                                                                        ($v_ordr['ord_payment_status'] == 'Paid') ? TRUE : False
+                                                                    ) ?>>Paid
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
