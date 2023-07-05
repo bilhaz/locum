@@ -24,10 +24,9 @@
                         <ul role="tablist">
                             <li role="tab" class="first current" aria-disabled="false" aria-selected="false"><a id="wizard_horizontal-t-0" aria-controls="wizard_horizontal-p-0"><span class="number">1.</span> First Response</a>
                             </li>
-                            <li role="tab" class="second disabled" aria-disabled="false" aria-selected="true"><a id="wizard_horizontal-t-1" aria-controls="wizard_horizontal-p-1"><span class="current-info audible">current
-                                        step: </span><span class="number">2.</span> Locum Process</a></li>
+                            <li role="tab" class="second disabled" aria-disabled="false" aria-selected="true"><a id="wizard_horizontal-t-1" aria-controls="wizard_horizontal-p-1"><span class="number">2.</span> Locum Process</a></li>
                             <li role="tab" class="third disabled" aria-disabled="true"><a id="wizard_horizontal-t-2" aria-controls="wizard_horizontal-p-2"><span class="number">3.</span> Client Confirmation</a></li>
-                            <li role="tab" class="last disabled" aria-disabled="false"><a id="wizard_horizontal-t-3" aria-controls="wizard_horizontal-p-3"><span class="number">4.</span> Employee Confirmation</a></li>
+                            <li role="tab" class="fourth disabled" aria-disabled="false"><a id="wizard_horizontal-t-3" aria-controls="wizard_horizontal-p-3"><span class="number">4.</span> Emp Confirmation</a></li>
                             <li role="tab" class="last disabled" aria-disabled="false"><a id="wizard_horizontal-t-3" aria-controls="wizard_horizontal-p-3"><span class="number">5.</span> Payments</a></li>
                         </ul>
                     </div>

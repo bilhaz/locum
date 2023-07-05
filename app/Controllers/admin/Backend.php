@@ -3921,6 +3921,7 @@ class Backend extends BEBaseController
 					'em_status' => '1',
 				];
 				em_log($emLog);
+				return redirect()->to('backend/order-s5/' . encryptIt($id));
 			} else {
 				$session->setFlashdata('error', 'Employee Confirmation Email Failed');
 				$emLog = [

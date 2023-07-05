@@ -55,7 +55,7 @@
                             <?php endif; ?>
 
 
-                            <form action="<?= base_url('backend/order-s4/' . encryptIt($v_ordr['ord_id'])) ?>) ?>" method="post" autocomplete="off" enctype="multipart/form-data" accept-charset="utf-8" data-parsley-validate="" id="forma">
+                            <form action="<?= base_url('backend/order-s4/' . encryptIt($v_ordr['ord_id'])) ?>" method="post" autocomplete="off" enctype="multipart/form-data" accept-charset="utf-8" data-parsley-validate="" id="forma">
                                 <div class="row mb-3">
                                     <div class="form-group col-md-4 ">
                                         <label for="ord_ref_no" class="control-label mb-1">Locum Confirmation
@@ -318,7 +318,7 @@
                                     <div class="form-group col-md-4 ">
                                         <label for="totpay" class="control-label mb-1">Total Paying to
                                             Employee&nbsp;<small class="text-danger">(Office use only)</small></label>
-                                        <input id="totpay" name="ord_paying_to_dr" oninput="calculateDiff()" type="text" required class="form-control" value="<?= $v_ordr['ord_paying_to_dr'] ? $v_ordr['ord_paying_to_dr'] : set_value('ord_paying_to_dr') ?>">
+                                        <input id="totpay" name="ord_paying_to_dr" oninput="calculateDiff()" type="text" class="form-control" value="<?= $v_ordr['ord_paying_to_dr'] ? $v_ordr['ord_paying_to_dr'] : set_value('ord_paying_to_dr') ?>">
                                     </div>
 
                                 </div>
