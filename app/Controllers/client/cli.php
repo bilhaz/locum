@@ -776,7 +776,9 @@ public function order_confirm($oid = null)
 			margin: 4px 2px;
 			cursor: pointer;">Click to View</a></body</html>';
 
-
+            $newData1 = [
+                'ord_client_confirnFlag' => '1',
+                ];
 		
 		$newdata2 = [
 			'ord_id' => $oid,
@@ -787,7 +789,7 @@ public function order_confirm($oid = null)
 			'usr_type' => "admin",
 		];
 		$Nmodel->insert($newdata2);
-		
+		$e2model->update($oid,$newData1);
 				$session = session();
 				if (sendEmail($to, $cc, $subject, $message)) {
 					$session->setFlashdata('success', 'Order Confirmed');

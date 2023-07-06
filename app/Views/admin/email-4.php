@@ -1,4 +1,4 @@
-<?php if($em_4['ord_status'] <= '3'){ ?>
+<?php if($em_4['ord_step4_flag'] != '1'){ ?>
 <div id="main-content">
     <div class="container-fluid">
         <div class="block-header py-lg-4 py-3">
@@ -45,7 +45,7 @@
                     <hr class="primary">
                     <div class="card-body">
                         <div class="row mb-3 " id="email">
-                            <form action="<?= base_url('backend/sFourthR/' . encryptIt($em_4['ord_id'])) ?>)?>" method="post">
+                            <form action="<?= base_url('backend/sFourthR/' . encryptIt($em_4['ord_id']))?>" method="post">
 
                                 <h5 style="color:#157DED">Dear Dr.
 
@@ -104,7 +104,7 @@
     </div>
 </div>
 <?php }else{
-    header('location: '.base_url().'/backend/order-s4/'.encryptIt($em_4['ord_id']));
+    header('location: '.base_url().'/backend/order-s5/'.encryptIt($em_4['ord_id']));
     exit();
 }
     ?>

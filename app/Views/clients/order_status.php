@@ -34,6 +34,7 @@
                </div>
                <hr class="primary">
                <div class="card-body">
+                   <label><strong>Invoice ID:</strong> &nbsp; <?= $em_2['ord_invoice_id']; ?> </label>
                   <div class="row mb-3 " id="email">
                      <div class="col-md-6">
                         <span class="float-start">

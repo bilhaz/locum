@@ -16,6 +16,7 @@ use App\Models\logModel;
 use App\Models\usrgrpModel;
 use App\Models\timesheetModel;
 use App\Models\notificationModel;
+use App\Models\sessionModel;
 
 class Backend extends BEBaseController
 {
@@ -350,12 +351,13 @@ class Backend extends BEBaseController
 		$data = [];
 		$grps = new usrgrpModel();
 		$data['grp'] = $grps->findAll();
-
+        $Sessmodel = new sessionModel();
 		$model = new UserModel();
 		$data['euser'] = $model->where('usr_id', $uid)->first();
 
 		helper(['form']);
 		if ($this->request->getMethod() == 'post') {
+		    $BlockStatus= $this->request->getVar('usr_status');
 			//let's do the validation here
 			$rules = [
 				'usr_email' => ['label' => 'Email', 'rules' => 'required|min_length[8]|max_length[50]|valid_email'],
@@ -371,6 +373,18 @@ class Backend extends BEBaseController
 			if (!$this->validate($rules)) {
 				$data['validation'] = $this->validator;
 			} else {
+			    
+			    if($BlockStatus == 0){
+			       
+                // $query = $Sessmodel->where("CAST(data AS CHAR) LIKE '%usr_id|s:1:\"" . $uid . "\"%'");
+                // $Sessmodel->delete();
+                 $query = "DELETE FROM ci_sessions WHERE CAST(data AS CHAR) REGEXP 'usr_id\\\\|s:[0-9]+:\"$uid\"'";
+            $Sessmodel->query($query);
+                                // print_r($query);exit;
+                // Regenerate the session ID
+                // session()->regenerate();
+                
+			    }
 
 				// logs
 				$log = array(
@@ -1184,11 +1198,23 @@ class Backend extends BEBaseController
 	{
 		$id = decryptIt($id);
 		$model = new EmpModel();
+		$Sessmodel = new sessionModel();
 		$del = $model->where('emp_id', $id)->first();
 
 
 
 		if ($del['emp_status'] == 1) {
+		    
+		    
+		  
+		  $query = "DELETE FROM ci_sessions WHERE CAST(data AS CHAR) REGEXP 'emp_id\\\\|s:[0-9]+:\"$id\"'";
+            $Sessmodel->query($query);
+
+            
+                // Regenerate the session ID
+                // session()->regenerate();
+                
+			    
 
 			// logs
 			$log = array(
@@ -1260,7 +1286,7 @@ class Backend extends BEBaseController
 
 			$session = session();
 			$session->setFlashdata('success', 'Employee Unblocked');
-			return redirect()->to('backend/block_employees');
+			return redirect()->to('backend/employees');
 		}
 	}
 
@@ -1536,11 +1562,19 @@ class Backend extends BEBaseController
 	{
 		$id = decryptIt($id);
 		$model = new ClientModel();
+		$Sessmodel = new sessionModel();
 		$del = $model->where('cl_id', $id)->first();
 
 
 
 		if ($del['cl_status'] == 1) {
+		    
+		   
+
+        // $query = "Select * FROM ci_sessions WHERE CAST(data AS CHAR) REGEXP 'cl_id\\\\|s:[0-9]+:\"$id\"'";
+        // $Sessmodel->query($query);
+
+        //     echo $Sessmodel->getLastQuery();exit;
 
 			// logs
 			$log = array(
@@ -1599,7 +1633,7 @@ class Backend extends BEBaseController
 
 			$session = session();
 			$session->setFlashdata('success', 'Client Unblocked');
-			return redirect()->to('backend/block_clients');
+			return redirect()->to('backend/clients');
 		}
 	}
 
@@ -3861,7 +3895,7 @@ class Backend extends BEBaseController
 		$link = 'employee/ord-view';
 		$link2 = 'client/ord-status';
 		$data['v_ordr'] = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $id)->first();
-
+		
 		// $to = $ord['cl_cont_email'];
 		$to =  $data['v_ordr']['emp_email'];
 		// $to2 =  $data['v_ordr']['cl_cont_email'];
@@ -3886,7 +3920,7 @@ class Backend extends BEBaseController
 			//store this to database
 
 			$newData = [
-				'ord_status' => '3',
+				'ord_step4_flag' => '1',
 
 			];
 			$newData2 = [
@@ -4062,6 +4096,7 @@ class Backend extends BEBaseController
 				$subject2 = 'SRAL-Payment Received | Invoice#' . $invoice_id;
 				$message = $this->LoadView('admin/email_responses/emp_payment', $data);
 				$message2 = $this->LoadView('admin/email_responses/client_payment', $data);
+	
 				$session = session();
 				if (sendEmail($to, $cc, $subject, $message)) {
 					$session->setFlashdata('success', 'Payment Done and Order Locked');

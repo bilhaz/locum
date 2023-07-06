@@ -52,6 +52,9 @@ ALTER TABLE `orders` ADD `ord_Hnormal_hrs_rt` VARCHAR(255) NOT NULL COMMENT 'Hos
 
 
 
+ALTER TABLE `orders` ADD `ord_step4_flag` TINYINT(1) NOT NULL DEFAULT '0' AFTER `ord_comment2`;
+
+ALTER TABLE `orders` ADD `ord_client_confirnFlag` TINYINT(1) NOT NULL DEFAULT '0' AFTER `ord_step4_flag`;
 
 
 

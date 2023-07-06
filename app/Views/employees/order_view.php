@@ -407,7 +407,9 @@
                         <?php if(isset($ord['order_id']) && $cont['ord_time_sheet_approved'] <> "Approved"): ?>
                             <a type="button" href="<?= base_url('employee/t-edit/' .encryptIt($cont['ord_id'])) ?>" class="btn btn-sm btn-primary d-print-none"><i class="fa fa-calendar text-light">&nbsp;</i>Edit TimeSheet</a>
                             <?php endif; ?>
-                        <?php if(!isset($ord['order_id']) && $cont['ord_status'] > "3"): ?>
+                            <?php $ordDate = $cont['ord_process_details_to'];
+                                $today = date('Y-m-d H:m:s');?>
+                        <?php if(!isset($ord['order_id']) && $today > $ordDate): ?>
                             <a type="button" href="<?= base_url('employee/timesheet/' .encryptIt($cont['ord_id'])) ?>" class="btn btn-sm btn-primary d-print-none"><i class="fa fa-calendar text-light">&nbsp;</i>Fill Time Sheet Online</a>
                             <?php elseif(isset($ord['order_id'])): ?>
                             <a type="button" href="<?= base_url('employee/t-view/' .encryptIt($cont['ord_id'])) ?>" class="btn btn-sm btn-warning d-print-none"><i class="fa fa-eye ">&nbsp;</i>View TimeSheet</a>
