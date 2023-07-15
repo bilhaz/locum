@@ -20,7 +20,7 @@ class emails extends EMBaseController
 
         // Get the search keyword from the query string
         $searchKeyword = isset($_GET['search']) ? $_GET['search'] : '';
-
+        
         // Set the sorting order to descending
         $sortingOrder = 'SORTDATE';
         $searchCriteria = 'ALL';
@@ -77,6 +77,20 @@ class emails extends EMBaseController
             $hasAttachments = $email->hasAttachments();
             // Only add the email to the list if it matches the search keyword
             if (stripos($email->subject, $searchKeyword) !== false) {
+                $emails[] = [
+                    'id' => $email->id,
+                    'subject' => $email->subject,
+                    'from' => $email->fromAddress,
+                    // 'to' => $email->to,
+                    // 'cc' => $email->cc,
+                    // 'bcc' => $email->bcc,
+                    'seen' => $email->isSeen,
+                    'date' => $email->date,
+                    'hasAttachment' => $hasAttachments,
+                    // 'body' => (isset($email->textHtml)&&!empty($email->textHtml)?$email->textHtml : $email->textPlain),
+                    // 'attachments' => $attachments
+                ];
+            }else{
                 $emails[] = [
                     'id' => $email->id,
                     'subject' => $email->subject,
