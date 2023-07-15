@@ -120,6 +120,7 @@ class emails extends EMBaseController
         $data['endIndex'] = $endIndex;
         $data['totalEmails'] = $totalEmails;
         $data['totalPages'] = $totalPages;
+        $data['search'] = $searchKeyword;
 
         // Load the inbox view with the retrieved emails and pagination data
         return $this->LoadView('emails/inbox', $data);

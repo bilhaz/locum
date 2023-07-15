@@ -49,14 +49,14 @@
                                     <div class="pagination-email d-flex">
                                         <p><?= ($startIndex + 1) ?>-<?= ($startIndex + count($emails)) ?>/<?= $totalEmails ?></p>
                                         <div class="btn-group ms-2" role="group" aria-label="Basic outlined example">
-                                            <?php if ($currentPage > 1) : ?>
-                                                <a href="<?= base_url('emails/inbox?page=' . ($currentPage - 1) . '&perPage=' . $perPage) ?>" class="btn btn-outline-secondary btn-sm"><i class="fa fa-angle-left"></i></a>
+                                        <?php if ($currentPage > 1) : ?>
+                                                <a href="<?= base_url('emails/inbox?page=' . ($currentPage - 1) . '&perPage=' . $perPage. '&search=' .$search) ?>" class="btn btn-outline-secondary btn-sm"><i class="fa fa-angle-left"></i></a>
                                             <?php else : ?>
                                                 <button type="button" class="btn btn-outline-secondary btn-sm" disabled><i class="fa fa-angle-left"></i></button>
                                             <?php endif; ?>
 
                                             <?php if ($currentPage < $totalPages) : ?>
-                                                <a href="<?= base_url('emails/inbox?page=' . ($currentPage + 1) . '&perPage=' . $perPage) ?>" class="btn btn-outline-secondary btn-sm"><i class="fa fa-angle-right"></i></a>
+                                                <a href="<?= base_url('emails/inbox?page=' . ($currentPage + 1) . '&perPage=' . $perPage. '&search=' .$search) ?>" class="btn btn-outline-secondary btn-sm"><i class="fa fa-angle-right"></i></a>
                                             <?php else : ?>
                                                 <button type="button" class="btn btn-outline-secondary btn-sm" disabled><i class="fa fa-angle-right"></i></button>
                                             <?php endif; ?>
