@@ -55,7 +55,7 @@
                             <?php endif; ?>
 
 
-                            <form action="<?= base_url('backend/order-s5/' . encryptIt($v_ordr['ord_id'])) ?>) ?>" method="post" autocomplete="off" enctype="multipart/form-data" accept-charset="utf-8" data-parsley-validate="" id="forma">
+                            <form action="<?= base_url('backend/order-s5/' . encryptIt($v_ordr['ord_id'])) ?>)" method="post" autocomplete="off" enctype="multipart/form-data" accept-charset="utf-8" data-parsley-validate="" id="forma">
                                 <div class="row mb-3">
                                     <div class="form-group col-md-6">
                                         <label for="ord_time_sheet_rcvd" class="control-label mb-1">TimeSheet
@@ -269,3 +269,15 @@
             </div>
         </div>
     </div>
+  </div>
+    <script>
+       function sentVerificationEmail() {
+        if (document.getElementById("ord_time_sheet_approved").value === "Sent_for_verification") {
+            if (confirm("Are you sure? You want to Notify?")) {
+                
+                var url = "<?= base_url("backend/timesheet_verificatioNotify/" . encryptIt($v_ordr['ord_id'])) ?>";
+                window.location.href = url;
+            }
+        }
+    }
+    </script>

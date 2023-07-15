@@ -293,7 +293,8 @@
                                 <div class="form-group mb-0">
                                     <select class="form-control select2" name="type">
                                         <option value="">Select Type</option>
-                                        <option value="1">Hospital</option>
+                                        <option value="1">HSE Hospital</option>
+                                        <option value="2">Private Hospital</option>
                                         <option value="3">GP</option>
                                         <option value="7">Nurse</option>
                                     </select>

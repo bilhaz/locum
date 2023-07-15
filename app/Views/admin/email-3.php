@@ -114,10 +114,10 @@
                                 <hr class="primary">
                                 <p><strong>Order status:</strong>
                                 <ol>
-                                    <li><b>Order confirmation.</b></li>
-                                    <li><b>Order processing initiated.</b></li>
-                                    <li><b>Proposal of locum to you.</b></li>
-                                    <li><b>Acceptance or declining a locum.</b></li>
+                                    <li style="opacity:0.5;"><b>Order confirmation.</b></li>
+                                    <li style="opacity:0.5;"><b>Order processing initiated.</b></li>
+                                    <li style="opacity:0.5;"><b>Proposal of locum to you.</b></li>
+                                    <li style="opacity:0.5;"><b>Acceptance or declining a locum.</b></li>
                                     <li><b>Locum Confirmation.</b></li>
                                 </ol>
                                 </p>

@@ -153,7 +153,7 @@
                                                         <span class="badge bg-danger">Cancelled By Dr.</span><br>
                                                         <span class="badge bg-warning text-dark"><?= $row['ord_dr_cremarks'] ?></span>
                                                     <?php else : ?>
-                                                        <?php if ($row['ord_status'] == "1" || $row['ord_status'] == NULL) : ?>
+                                                    <?php if ($row['ord_status'] == "1" || $row['ord_status'] == NULL || $row['ord_status'] == "0") : ?>
                                                             <span class="badge chart-color123">Pending</span>
                                                         <?php elseif ($row['ord_status'] == "2") : ?>
                                                             <span class="badge chart-color122">Processed</span>
@@ -186,6 +186,8 @@
                                                         <a type="button" href="<?= base_url('backend/order-s4/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
                                                     <?php elseif ($row['ord_status'] == NULL) : ?>
                                                         <a type="button" href="<?= base_url('backend/order-s1/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
+                                                         <?php elseif ($row['ord_status'] == 5) : ?>
+                                                        <a type="button" href="<?= base_url('backend/order-s5/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
                                                     <?php endif; ?>
                                                 <?php elseif (session()->grp_id == 'super_admin' || session()->grp_id == 'admin') : ?>
                                                     <?php if ($row['ord_status'] == 1) : ?>
@@ -198,12 +200,12 @@
                                                         <a type="button" href="<?= base_url('backend/order-s5/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
                                                     <?php elseif ($row['ord_status'] == 5) : ?>
                                                         <a type="button" href="<?= base_url('backend/order-s5/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
-                                                    <?php elseif ($row['ord_status'] == NULL) : ?>
+                                                    <?php elseif ($row['ord_status'] == 0 || $row['ord_status'] == NULL) : ?>
                                                         <a type="button" href="<?= base_url('backend/order-s1/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-success" title="Edit"><i class="fa fa-edit"></i></a>
                                                     <?php endif; ?> <?php endif; ?>
                                                 <a type="button" href="<?= base_url('backend/order_view/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-info js-sweetalert" title="View" data-type="confirm"><i class="fa fa-eye"></i></a>
-                                                <?php if (session()->grp_id == 'user' && $row['ord_advrtise'] <= '1') : ?>
-                                                    <a type="button" href="<?= base_url('backend/order-publish/' . encryptIt($row['ord_id'])) ?>" target="_blank" class="btn btn-sm btn-outline-warning js-sweetalert" Onclick="return confirm('Are You sure? You want to advertise this?');" title="Advertise" data-type="confirm"><i class="fa fa-bullhorn"></i></a>
+                                                <?php if (session()->grp_id == 'user' && $row['ord_advrtise'] <= '1' && $row['ord_status'] == '1' || $row['ord_status'] == NULL) : ?>
+                                                    <a type="button" href="<?= base_url('backend/order-publish-view/' . encryptIt($row['ord_id'])) ?>" target="_blank" class="btn btn-sm btn-outline-warning js-sweetalert" Onclick="return confirm('Are You sure? You want to advertise this?');" title="Advertise" data-type="confirm"><i class="fa fa-bullhorn"></i></a>
                                                     <?php elseif(session()->grp_id == 'super_admin' || session()->grp_id == 'admin'): ?>
                                                         <a type="button" href="<?= base_url('backend/order-publish-view/' . encryptIt($row['ord_id'])) ?>" target="_blank" class="btn btn-sm btn-outline-warning js-sweetalert" Onclick="return confirm('Are You sure? You want to advertise this?');" title="Advertise" data-type="confirm"><i class="fa fa-bullhorn"></i></a>
                                                 <?php endif; ?>

@@ -2,6 +2,7 @@
 <body>
 		<div class="card-body">
                     <div class="row mb-3 " id="email">
+                        <h5 style="color:red;">LOCUM CONFIRMATION</h5>
                                <h3>Dear 
                                <?php $lname = explode(' ',$v_ordr['cl_cont_name']) ?>
                                 <?php if(!empty($lname[0])): echo $lname[0]; endif; ?> </h3>
@@ -71,13 +72,19 @@
 <hr class="primary">
 <p><strong>Order status:</strong>
 <ol>
-   <li><b>Order confirmation.</b></li>
-   <li><b>Order processing initiated.</b></li>
-   <li><b>Proposal of locum to you.</b></li>
-   <li><b>Acceptance or declining a locum.</b></li>
+   <li style="opacity:0.5;"><b>Order confirmation.</b></li>
+   <li style="opacity:0.5;"><b>Order processing initiated.</b></li>
+   <li style="opacity:0.5;"><b>Proposal of locum to you.</b></li>
+   <li style="opacity:0.5;"><b>Acceptance or declining a locum.</b></li>
    <li><b>Locum Confirmation.</b></li>
 </ol>
 </p>
                                 </div>
                     </div>
+                    <br>
+                    <h5 style="color:#157DED">Regards with Thanks</h5>
+                                    <h6 style="color:#157DED">SRA Locum</h6>
+                                    <p style="color:#157DED">2nd Floor, 13 Baggot St Upper</p>
+                                    <p style="color:#157DED">Saint Peter's, Dublin 4 D04 W7K5</p>
+                                    <p style="color:#157DED"><a href="mailto:info@sralocum.com">info@sralocum.com</a> | 01 685 4700 | 01 699 4321</p>
 		</body></html>

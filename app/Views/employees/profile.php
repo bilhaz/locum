@@ -234,18 +234,6 @@
                             </div>
 
                             <div class="row mb-3">
-                                <label for="formFile" class="form-label">Garda Vetting Certificate</label>
-                                <input class="form-control" type="file" name="emp_gv_cert" id="formFile" data-parsley-max-file-size="2000" data-parsley-fileextension="jpg,JPEG,pdf,PDF,png,PNG,doc,docx" />
-                            </div>
-
-                            <div class="row mb-3">
-                                <?php if (!empty($emp['emp_gv_cert'])) : ?>
-                                    <a href="<?= base_url('public/uploads/employee_attach/' . $emp['emp_gv_cert']) ?>" target="_blank">View Document</a>
-                                    <input type="hidden" name="emp_gv_certt" value="<?= $emp['emp_gv_cert'] ?>">
-                                <?php endif; ?>
-                            </div>
-
-                            <div class="row mb-3">
                                 <label for="formFile" class="form-label">Recent Reference</label>
                                 <input class="form-control" type="file" name="emp_rec_refer" id="formFile" data-parsley-max-file-size="2000" data-parsley-fileextension="jpg,JPEG,pdf,PDF,png,PNG,doc,docx" />
                             </div>

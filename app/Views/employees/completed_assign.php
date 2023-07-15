@@ -21,6 +21,15 @@
                         <h6 class="card-title">Completed Assignments</h6>
                         <p class="mb-0 text-danger">For Filling Timesheet and uploading Assesment go to Order view and do the required.</p>
                     </div>
+                    <div class="card-header float-end">
+                        <ul class="header-dropdown">
+                            <li>
+                                <div class="col-md-12 col-sm-12 float-end">
+                                <input name="tblSearch" id="tblSearch" class="form-control" placeholder="Search here">
+                            </div>
+                            </li>
+                        </ul>
+                        </div>
                     <?php if (isset($validation)) : ?>
                         <div class="alert alert-danger" role="alert">
                             <?= $validation->listErrors() ?>
@@ -38,7 +47,8 @@
                         </div>
                     <?php endif; ?>
                     <div class="card-body">
-                        <table id="employee_List" class="table table-hover">
+                        <div class="table-responsive">
+                        <table id="employee_List2" class="table table-hover">
                             <thead class="thead-dark">
                                 <tr>
                                     <th>ID</th>
@@ -111,6 +121,7 @@
 
                             </tbody>
                         </table>
+                        </div>
                     </div>
                 </div>
             </div>

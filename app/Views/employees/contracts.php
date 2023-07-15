@@ -86,7 +86,7 @@
                                                             <?php if ($row['ord_cancel_bcl'] == 1) : ?>
                                                                 <span class="badge bg-danger">Client Cancelled</span>
                                                             <?php else : ?>
-                                                                <?php if ($row['ord_status'] == "1") : ?>
+                                                                <?php if ($row['ord_status'] == "1" || $row['ord_status'] == NULL) : ?>
                                                                     <span class="badge chart-color123">Pending</span>
                                                                 <?php elseif ($row['ord_status'] == "2") : ?>
                                                                     <span class="badge chart-color122">Processed</span>

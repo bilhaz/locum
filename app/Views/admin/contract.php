@@ -483,7 +483,7 @@
                         <h2 style="text-indent: 0pt;text-align: left;">Confirmation of Assignment</h2>
                         <hr class="primary">
                         <p style="text-indent: 0pt;line-height: 1pt;text-align: left;"></p>
-                        <h2 style="text-indent: 0pt;text-align: left;">Dear Dr. <?= $cont['emp_fname'] . ' ' . $cont['emp_lname'] . ' ( ' . $cont['emp_imcr_no'] . ')' ?></h2>
+                        <h2 style="text-indent: 0pt;text-align: left;">Dear <?= $cont['emp_fname'] . ' ' . $cont['emp_lname'] . ' ( ' . $cont['emp_imcr_no'] . ')' ?></h2>
 
                         <p style="text-indent: 0pt;text-align: left;">We are now in a position to confirm your placement as Locum doctor with following details:</p>
 

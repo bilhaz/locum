@@ -206,12 +206,12 @@ class Backend extends BEBaseController
 		$this_month = date('Y-m-d', strtotime('first day of this month'));
 		$this_year = date('Y-m-d', strtotime('first day of January this year'));
 		$model = new ordersModel();
-		$data['o_pen'] = $model->where('ord_status', '1')->where('ord_cancel_bcl', '0')->where('ord_required_to >=', $dt)->where('ord_cancel_bdr', '0')->countAllResults();
+		$data['o_pen'] = $model->where('ord_status', '1')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('ord_required_to >=', $dt)->orWhere('ord_status', NULL)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('ord_required_to >=', $dt)->countAllResults();
 		$data['o_pro'] = $model->where('ord_status', '2')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
 		$data['o_con'] = $model->where('ord_status', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
 		$data['o_end'] = $model->where('ord_status', '4')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
 		$data['o_paid'] = $model->where('ord_status', '5')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
-		$data['o_exp'] = $model->where('ord_required_to <', $dt)->where('ord_status', '1')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
+		$data['o_exp'] = $model->where('ord_status', '1')->where('ord_required_to <', $dt)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->orWhere('ord_status', NULL)->where('ord_required_to <', $dt)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
 		$data['o_canc'] = $model->where('ord_cancel_bcl', '1')->orWhere('ord_cancel_bdr', '1')->countAllResults();
 		// Confirm Order Statistics
 		$data['today'] = $model->where('ord_status >=', '3')->where('DATE(ord_updated)', $today)->countAllResults();
@@ -378,7 +378,18 @@ class Backend extends BEBaseController
 			       
                 // $query = $Sessmodel->where("CAST(data AS CHAR) LIKE '%usr_id|s:1:\"" . $uid . "\"%'");
                 // $Sessmodel->delete();
-                 $query = "DELETE FROM ci_sessions WHERE CAST(data AS CHAR) REGEXP 'usr_id\\\\|s:[0-9]+:\"$uid\"'";
+                //  $query = "DELETE FROM ci_sessions WHERE CAST(data AS CHAR) REGEXP 'usr_id\\\\|s:[0-9]+:\"$uid\"'";
+                // $query = "UPDATE ci_sessions SET data = REPLACE(data, CAST(data AS CHAR) REGEXP 'usr_id\\\\|s:[0-9]+:\"$uid\"', '') WHERE CAST(data AS CHAR) REGEXP 'usr_id\\\\|s:[0-9]+:\"$uid\"'" ;
+                
+            //      $query = "UPDATE ci_sessions SET data = REPLACE(data, 'ALoggedIn|b:1;', '')
+            // WHERE CAST(data AS CHAR) REGEXP CONCAT('usr_id', CHAR(124), 's:[0-9]+:', $uid) 
+            // AND data LIKE '%ALoggedIn|b:1;%'";
+            
+            $query = "UPDATE ci_sessions 
+          SET data = REPLACE(data, 'ALoggedIn|b:1;', '')
+          WHERE CAST(data AS CHAR) REGEXP 'usr_id\\\\|s:[0-9]+\\\\:\"$uid\"'
+          AND BINARY data LIKE '%ALoggedIn|b:1%'";
+            
             $Sessmodel->query($query);
                                 // print_r($query);exit;
                 // Regenerate the session ID
@@ -570,9 +581,26 @@ class Backend extends BEBaseController
 				$to = $data['empr']['emp_email'];
 				$cc = 'info@sralocum.com';
 				$subject = 'SRA Employee Registration';
-				$message = '<p><b>' . $data['empr']['emp_email'] . '</b> Your Email has been succesfully registered on our platform</p><br>
-				<p>Please Make sure to complete your Employee Profile when you login to <b>SRA Locum</b> on this URL: ' . base_url('employee/login') . '</p><br>
-				<h3>Thank You</h3>';
+				$message = '<p>Thank you for your interest in our Locum service.</p>
+				<p>This message means your email ('. $data['empr']['emp_email'].') is registered with the following login details.</p>
+				<p><strong>Email:</strong>&nbsp;'. $data['empr']['emp_email'].' </p>
+				<p><strong>Password:</strong>&nbsp; Letsdoit123</p>
+				<p style="color:red;"><b>Note:</b> This is a temporary password and we strongly advise you to change it.</p>
+				 <a type="button" target="_blank" href="'.base_url('employee/login') .'" class="btn" style="background-color:#157DED;color:white;border: none;
+										color: white;
+										padding: 5px 10px;
+										text-align: center;
+										text-decoration: none;
+										display: inline-block;
+										font-size: 16px;
+										margin: 4px 2px;
+										cursor: pointer;">Click to Login</a>
+										<br>
+                <h5 style="color:#157DED">Regards with Thanks</h5>
+                                    <h6 style="color:#157DED">SRA Locum</h6>
+                                    <p style="color:#157DED">2nd Floor, 13 Baggot St Upper</p>
+                                    <p style="color:#157DED">Saint Peter`s, Dublin 4 D04 W7K5</p>
+                                    <p style="color:#157DED"><a href="mailto:info@sralocum.com">info@sralocum.com</a> | 01 685 4700 | 01 699 4321</p>';
 				$session = session();
 				if (sendEmail($to, $cc, $subject, $message)) {
 					$session->setFlashdata('success', 'Doctor Registered, Complete the Registration Form');
@@ -1207,8 +1235,29 @@ class Backend extends BEBaseController
 		    
 		    
 		  
-		  $query = "DELETE FROM ci_sessions WHERE CAST(data AS CHAR) REGEXP 'emp_id\\\\|s:[0-9]+:\"$id\"'";
+		  //$query = "DELETE FROM ci_sessions WHERE CAST(data AS CHAR) REGEXP 'emp_id\\\\|s:[0-9]+:\"$id\"'";
+		  //$query = "UPDATE ci_sessions SET data = REPLACE(data, CAST(data AS CHAR) REGEXP 'emp_id\\\\|s:[0-9]+:\"$id\"', '') WHERE CAST(data AS CHAR) REGEXP 'emp_id\\\\|s:[0-9]+:\"$id\"'" ;
+//             $query = "UPDATE ci_sessions SET data = 
+//     CONCAT(
+//         SUBSTRING(data, 1, INSTR(data, 'EmpLoggedIn|b:1;') - 1),
+//         SUBSTRING(data, INSTR(data, 'EmpLoggedIn|b:1;') + LENGTH('EmpLoggedIn|b:1;') + 1)
+    
+// )
+// WHERE CAST(data AS CHAR) REGEXP CONCAT('emp_id', CHAR(124), 's:[0-9]+:', $id)";
+            // $query = "UPDATE ci_sessions SET data = REPLACE(data, 'EmpLoggedIn|b:1;', '')
+            // WHERE CAST(data AS CHAR) REGEXP CONCAT('emp_id', CHAR(124), 's:[0-9]+:', $id) 
+            // AND data LIKE '%EmpLoggedIn|b:1;%'";
+            
+            $query = "UPDATE ci_sessions 
+          SET data = REPLACE(data, 'EmpLoggedIn|b:1;', '')
+          WHERE CAST(data AS CHAR) REGEXP 'emp_id\\\\|s:[0-9]+\\\\:\"$id\"'
+          AND BINARY data LIKE '%EmpLoggedIn|b:1%'";
+
+
+
+
             $Sessmodel->query($query);
+            // print_r($query);exit;
 
             
                 // Regenerate the session ID
@@ -1361,9 +1410,26 @@ class Backend extends BEBaseController
 				$to = $data['clr']['cl_cont_email'];
 				$cc = 'info@sralocum.com';
 				$subject = 'SRA Client Registration';
-				$message = '<p>Dear &nbsp;' . $data['clr']['cl_usr'] . ' Your account has been succesfully registered on our platform</p><br>
-				<p>Please Make sure to complete your client Profile when you login to <b>SRA Locum</b> on this URL: ' . base_url('client/login') . '</p><br>
-				<h3>Thank You</h3>';
+				$message = '<p>Thank you for your interest in our Locum service.</p>
+                            <p>This message means your email ('. $data['clr'] ['cl_cont_email'].') is registered with the following login details.</p>
+                            <p><strong>Username:</strong>&nbsp; ' . $data['clr']['cl_usr'] . ' </p>
+                            <p><strong>Password:</strong>&nbsp; Letsdoit123</p>
+                            <p style="color:red;"><b>Note:</b> This is a temporary password and we strongly advise you to change it.</p>
+                            <a type="button" target="_blank" href="'.base_url('client/login') .'" class="btn" style="background-color:#157DED;color:white;border: none;
+										color: white;
+										padding: 5px 10px;
+										text-align: center;
+										text-decoration: none;
+										display: inline-block;
+										font-size: 16px;
+										margin: 4px 2px;
+										cursor: pointer;">Click to Login</a>
+                            <br>
+                            <h5 style="color:#157DED">Regards with Thanks</h5>
+                                    <h6 style="color:#157DED">SRA Locum</h6>
+                                    <p style="color:#157DED">2nd Floor, 13 Baggot St Upper</p>
+                                    <p style="color:#157DED">Saint Peter`s, Dublin 4 D04 W7K5</p>
+                                    <p style="color:#157DED"><a href="mailto:info@sralocum.com">info@sralocum.com</a> | 01 685 4700 | 01 699 4321</p>';
 				$session = session();
 				if (sendEmail($to, $cc, $subject, $message)) {
 					$session->setFlashdata('success', 'Client Registered, Complete the Registration Form');
@@ -1572,9 +1638,35 @@ class Backend extends BEBaseController
 		   
 
         // $query = "Select * FROM ci_sessions WHERE CAST(data AS CHAR) REGEXP 'cl_id\\\\|s:[0-9]+:\"$id\"'";
-        // $Sessmodel->query($query);
+        //  $query = "UPDATE ci_sessions SET data = REPLACE(data, 'CliLoggedIn|b:1;', '')
+        //     WHERE CAST(data AS CHAR) REGEXP CONCAT('cl_id', CHAR(124), 's:[0-9]+:', $id) 
+        //     AND data LIKE '%CliLoggedIn|b:1;%'";
+        
+    //  $query = "UPDATE ci_sessions SET data = REPLACE(data, 'CliLoggedIn|b:1;', '')
+    //       WHERE CAST(data AS CHAR) LIKE '%cl_id|s:[0-9]+:\"".$id."\"%'
+    //       AND BINARY data LIKE '%CliLoggedIn|b:1%'";
+    $query = "UPDATE ci_sessions 
+          SET data = REPLACE(data, 'CliLoggedIn|b:1;', '')
+          WHERE CAST(data AS CHAR) REGEXP 'cl_id\\\\|s:[0-9]+\\\\:\"$id\"'
+          AND BINARY data LIKE '%CliLoggedIn|b:1%'";
+    
+    // $query = "UPDATE ci_sessions 
+    //       SET data = CONCAT(
+    //           SUBSTRING(data, 1, LOCATE('CliLoggedIn|b:1;', data) - 1),
+    //           SUBSTRING(data, LOCATE('CliLoggedIn|b:1;', data) + LENGTH('CliLoggedIn|b:1;') + 1)
+    //       )
+    //       WHERE CAST(data AS CHAR) LIKE '%cl_id|s:1:\"5\"%' AND BINARY data LIKE '%CliLoggedIn|b:1%'";
 
-        //     echo $Sessmodel->getLastQuery();exit;
+
+// $Sessmodel->query($query, [$id]);
+
+
+
+
+            // print_r($query);exit;
+        $Sessmodel->query($query);
+
+            // echo $Sessmodel->getLastQuery();exit;
 
 			// logs
 			$log = array(
@@ -1681,11 +1773,33 @@ class Backend extends BEBaseController
 		// Build your query using the filter values
 		// $query = ->table('orders');
 		$query = $omodel->select('*');
-		$query->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->orderBy('orders.ord_created', 'DESC');
+// 		$query->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->orderBy('orders.ord_created', 'DESC');
+//     $query->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')
+// 	->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')
+// 	->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')
+// 	->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')
+// 	->orderBy('orders.ord_created', 'DESC')
+// 	->groupStart()
+// 	->whereNotIn('orders.ord_status', [1])
+// 	->orWhere('orders.ord_status', NULL)
+// 	->where('orders.ord_required_to >=', $dt)
+// 	->groupEnd();
+
+$query->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')
+    ->join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')
+    ->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')
+    ->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')
+    ->orderBy('orders.ord_created', 'DESC')
+    ->groupStart()
+        ->where('orders.ord_status !=', 1)
+        ->orWhere('orders.ord_status IS NOT NULL')
+        ->Where('orders.ord_required_to >', $dt)
+    ->groupEnd();
+	
 
 		if (!empty($fromDate) && !empty($toDate)) {
-			$query->where('ord_created >=', $fromDate);
-			$query->where('ord_created <=', $toDate);
+			$query->where('DATE(ord_created) >=', $fromDate);
+			$query->where('DATE(ord_created) <=', $toDate);
 		}
 
 		if (!empty($hospital) && $hospital !== '0') {
@@ -1945,7 +2059,6 @@ class Backend extends BEBaseController
 		$this_month = date('Y-m-d', strtotime('first day of this month'));
 		$this_year = date('Y-m-d', strtotime('first day of January this year'));
 		$dt = date('Y-m-d H:i:s', $timestamp);
-		helper(['form']);
 		$model = new ordersModel();
 		// Daily records
 		$dailyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '2')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated)', $today)->orderBy('ord_updated', 'DESC')->findAll();
@@ -1969,9 +2082,25 @@ class Backend extends BEBaseController
 	{
 
 		$data = [];
-		helper(['form']);
+		$timestamp = \time();
+		$today = date('Y-m-d');
+		$this_month = date('Y-m-d', strtotime('first day of this month'));
+		$this_year = date('Y-m-d', strtotime('first day of January this year'));
+		$dt = date('Y-m-d H:i:s', $timestamp);
+			helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_cancel_bcl', '1')->orWhere('ord_cancel_bdr', '1')->orderBy('ord_updated', 'DESC')->findAll();
+		// Daily records
+		$dailyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_cancel_bcl', '1')->orWhere('ord_cancel_bdr', '1')->where('DATE(ord_updated)', $today)->orderBy('ord_updated', 'DESC')->findAll();
+		// Monthly breakdown
+		$monthlyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_cancel_bcl', '1')->orWhere('ord_cancel_bdr', '1')->where('DATE(ord_updated)>=', $this_month)->orderBy('ord_updated', 'DESC')->findAll();
+		// Yearly breakdown
+		$yearlyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_cancel_bcl', '1')->orWhere('ord_cancel_bdr', '1')->where('DATE(ord_updated)>=', $this_year)->orderBy('ord_updated', 'DESC')->findAll();
+		
+		$data['daily'] = $dailyData;
+		$data['monthly'] = $monthlyData;
+		$data['yearly'] = $yearlyData;
+	
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_cancel_bcl', '1')->orWhere('ord_cancel_bdr', '1')->orderBy('DATE(ord_updated)', 'DESC')->findAll();
 
 		return $this->LoadView('admin/cancelled_order', $data);
 	}
@@ -1988,19 +2117,19 @@ class Backend extends BEBaseController
 		helper(['form']);
 		$model = new ordersModel();
 		// Daily records
-		$dailyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '1')->where('ord_required_to >=', $dt)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated)', $today)->orderBy('ord_updated', 'DESC')->findAll();
+		$dailyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '1')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('ord_required_to >=', $dt)->orWhere('ord_status', NULL)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('ord_required_to >=', $dt)->orderBy('ord_updated', 'DESC')->findAll();
 
 		// Monthly breakdown
-		$monthlyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '1')->where('ord_required_to >=', $dt)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated) >=', $this_month)->orderBy('ord_updated', 'DESC')->findAll();
+		$monthlyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '1')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('ord_required_to >=', $dt)->orWhere('ord_status', NULL)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('ord_required_to >=', $dt)->orderBy('ord_updated', 'DESC')->findAll();
 
 		// Yearly breakdown
-		$yearlyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '1')->where('ord_required_to >=', $dt)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_updated) >=', $this_year)->orderBy('ord_updated', 'DESC')->findAll();
+		$yearlyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '1')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('ord_required_to >=', $dt)->orWhere('ord_status', NULL)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('ord_required_to >=', $dt)->orderBy('ord_updated', 'DESC')->findAll();
 
 		$data['daily'] = $dailyData;
 		$data['monthly'] = $monthlyData;
 		$data['yearly'] = $yearlyData;
 		// $data['o_pen'] = $model->where('ord_status', '1')->where('ord_required_to >=', $dt)->countAllResults();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '1')->where('ord_required_to >=', $dt)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '1')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('ord_required_to >=', $dt)->orWhere('ord_status', NULL)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('ord_required_to >=', $dt)->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('admin/pending_order', $data);
 	}
@@ -2099,10 +2228,24 @@ class Backend extends BEBaseController
 
 		$data = [];
 		$timestamp = \time();
+		$today = date('Y-m-d');
+		$this_month = date('Y-m-d', strtotime('first day of this month'));
+		$this_year = date('Y-m-d', strtotime('first day of January this year'));
 		$dt = date('Y-m-d H:i:s', $timestamp);
-		helper(['form']);
+			helper(['form']);
 		$model = new ordersModel();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_required_to <', $dt)->where('ord_status', '1')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->orderBy('ord_updated', 'DESC')->findAll();
+		// Daily records
+		$dailyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->groupStart()->where('ord_status', '1')->orWhere('ord_status', NULL)->groupEnd()->where('ord_required_to <', $dt)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_created)', $today)->orderBy('ord_created', 'DESC')->findAll();
+		// Monthly breakdown
+		$monthlyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->groupStart()->where('ord_status', '1')->orWhere('ord_status', NULL)->groupEnd()->where('ord_required_to <', $dt)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_created)>=', $this_month)->orderBy('ord_created', 'DESC')->findAll();
+		// Yearly breakdown
+		$yearlyData = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->groupStart()->where('ord_status', '1')->orWhere('ord_status', NULL)->groupEnd()->where('ord_required_to <', $dt)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('DATE(ord_created)>=', $this_year)->orderBy('ord_created', 'DESC')->findAll();
+		
+		$data['daily'] = $dailyData;
+		$data['monthly'] = $monthlyData;
+		$data['yearly'] = $yearlyData;
+	
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_status', '1')->where('ord_required_to <', $dt)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->orWhere('ord_status', NULL)->where('ord_required_to <', $dt)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->orderBy('ord_created', 'DESC')->findAll();
 
 		return $this->LoadView('admin/expired_orders', $data);
 	}
@@ -2621,26 +2764,12 @@ class Backend extends BEBaseController
 		$to2 = $data['e_ord']['emp_email'];
 		$to = $data['e_ord']['cl_cont_email'];
 		$cc = 'info@sralocum.com';
-		$subject = 'SRAL Timesheet Sent for Verification';
-		$message = '<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href=' . base_url('client/timesheet/' . encryptIt($id)) . ' style="background-color:#157DED;color:white;border: none;
-			color: white;
-			padding: 5px 10px;
-			text-align: center;
-			text-decoration: none;
-			display: inline-block;
-			font-size: 16px;
-			margin: 4px 2px;
-			cursor: pointer;">Click to View</a></body</html>';
+		$subject2 = 'SRAL Timesheet Sent for Verification';
+        $subject = 'SRAL Timesheet Received for Verification';
+        
+		$message = $this->LoadView('admin/email_responses/timesheetNotification_client', $data);
 
-		$message2 = '<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href=' . base_url('employee/t-view/' . encryptIt($id)) . ' style="background-color:#157DED;color:white;border: none;
-			color: white;
-			padding: 5px 10px;
-			text-align: center;
-			text-decoration: none;
-			display: inline-block;
-			font-size: 16px;
-			margin: 4px 2px;
-			cursor: pointer;">Click to View</a></body</html>';
+		$message2 = $this->LoadView('admin/email_responses/timesheetNotification_emp', $data);
 
 		$Nmodel->insert($newdata2);
 		$Nmodel->insert($newdata3);
@@ -2668,32 +2797,31 @@ class Backend extends BEBaseController
 				'em_status' => '0',
 			];
 			em_log($emLog);
-			return redirect()->to('backend/order-s4/' . encryptIt($id));
 		}
-		if (sendEmail($to2, $cc, $subject, $message2)) {
+		if (sendEmail($to2, $cc, $subject2, $message2)) {
 			$session->setFlashdata('success', 'TimeSheet Status Notified');
 			$emLog = [
 				'em_to' => $to2,
-				'em_subject' => $subject,
+				'em_subject' => $subject2,
 				'em_body' => $message2,
 				'row_id' => $id,
 				'action_table' => 'Orders',
 				'em_status' => '1',
 			];
 			em_log($emLog);
-			return redirect()->to('backend/order-s4/' . encryptIt($id));
+			return redirect()->to('backend/order-s5/' . encryptIt($id));
 		} else {
 			$session->setFlashdata('error', 'Email Failed to ' . $to2);
 			$emLog = [
 				'em_to' => $to2,
-				'em_subject' => $subject,
+				'em_subject' => $subject2,
 				'em_body' => $message2,
 				'row_id' => $id,
 				'action_table' => 'Orders',
 				'em_status' => '0',
 			];
 			em_log($emLog);
-			return redirect()->to('backend/order-s4/' . encryptIt($id));
+			return redirect()->to('backend/order-s5/' . encryptIt($id));
 		}
 	}
 
@@ -2832,7 +2960,11 @@ class Backend extends BEBaseController
 			display: inline-block;
 			font-size: 16px;
 			margin: 4px 2px;
-			cursor: pointer;">Click to View</a></body</html>';
+			cursor: pointer;">Click to View</a><h5 style="color:#157DED">Regards with Thanks</h5>
+                                    <h6 style="color:#157DED">SRA Locum</h6>
+                                    <p style="color:#157DED">2nd Floor, 13 Baggot St Upper</p>
+                                    <p style="color:#157DED">Saint Peter`s, Dublin 4 D04 W7K5</p>
+                                    <p style="color:#157DED"><a href="mailto:info@sralocum.com">info@sralocum.com</a> | 01 685 4700 | 01 699 4321</p></body</html>';
 
 		$message2 = '<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href=' . base_url('employee/t-view/' . encryptIt($ord_id)) . ' style="background-color:#157DED;color:white;border: none;
 			color: white;
@@ -2842,7 +2974,12 @@ class Backend extends BEBaseController
 			display: inline-block;
 			font-size: 16px;
 			margin: 4px 2px;
-			cursor: pointer;">Click to View</a></body</html>';
+			cursor: pointer;">Click to View</a>
+			<h5 style="color:#157DED">Regards with Thanks</h5>
+                                    <h6 style="color:#157DED">SRA Locum</h6>
+                                    <p style="color:#157DED">2nd Floor, 13 Baggot St Upper</p>
+                                    <p style="color:#157DED">Saint Peter`s, Dublin 4 D04 W7K5</p>
+                                    <p style="color:#157DED"><a href="mailto:info@sralocum.com">info@sralocum.com</a> | 01 685 4700 | 01 699 4321</p></body</html>';
 
 		$session = session();
 		if (sendEmail($to, $cc, $subject, $message)) {
@@ -2924,7 +3061,7 @@ class Backend extends BEBaseController
 		$to = $data['e_ord']['emp_email'];
 		$cc = 'info@sralocum.com';
 		$subject = 'SRAL Approved your Timesheet';
-		$message = '<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href=' . base_url('backend/t-view/' . encryptIt($id)) . ' style="background-color:#157DED;color:white;border: none;
+		$message = '<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href=' . base_url('employee/t-view/' . encryptIt($id)) . ' style="background-color:#157DED;color:white;border: none;
 			color: white;
 			padding: 5px 10px;
 			text-align: center;
@@ -2932,7 +3069,11 @@ class Backend extends BEBaseController
 			display: inline-block;
 			font-size: 16px;
 			margin: 4px 2px;
-			cursor: pointer;">Click to View</a></body</html>';
+			cursor: pointer;">Click to View</a><h5 style="color:#157DED">Regards with Thanks</h5>
+                                    <h6 style="color:#157DED">SRA Locum</h6>
+                                    <p style="color:#157DED">2nd Floor, 13 Baggot St Upper</p>
+                                    <p style="color:#157DED">Saint Peter`s, Dublin 4 D04 W7K5</p>
+                                    <p style="color:#157DED"><a href="mailto:info@sralocum.com">info@sralocum.com</a> | 01 685 4700 | 01 699 4321</p></body</html>';
 		// logs
 		$log = array(
 			'row_id' => $id,
@@ -3238,7 +3379,7 @@ class Backend extends BEBaseController
 		$data['v_ordr'] = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $id)->first();
 		$to = $data['v_ordr']['cl_cont_email'];
 		$cc = 'info@sralocum.com';
-		$subject = 'SRAL | Your Order is being Processed |' . $data['v_ordr']['spec_name'];
+		$subject = 'SRAL | ORDER REGISTERED |' . $data['v_ordr']['spec_name'];
 		$message = $this->LoadView('admin/email_responses/1st-response-email', $data);
 
 
@@ -3315,7 +3456,7 @@ class Backend extends BEBaseController
 		$clmodel = new ClientModel();
 		$data['c_det'] = $clmodel->where('cl_status', 1)->where('cl_h_name !=', Null)->where('cl_cont_name !=', Null)->find();
 		$Emodel = new EmpModel();
-		$data['emp_row'] = $Emodel->where('emp_status', 1)->where('emp_fname !=', Null)->Where('emp_spec1', $spec)->orWhere('emp_spec2', $spec)->orWhere('emp_spec2', $spec)->find();
+		$data['emp_row'] = $Emodel->where('emp_status', 1)->where('emp_fname !=', Null)->Where('emp_spec1', $spec)->orWhere('emp_spec2', $spec)->orWhere('emp_spec3', $spec)->find();
 
 
 
@@ -3560,7 +3701,7 @@ class Backend extends BEBaseController
 		$ToPay = $data['v_ordr']['ord_pay_to_dr'];
 
 		// Calculate Diff + Profit
-		$diff = $TCearn + $ToAdmin - $ToPay;
+		$diff = $TCearn - $ToPay;
 
 		if ($this->request->getMethod() == 'post') {
 			$rules = [
@@ -3734,7 +3875,7 @@ class Backend extends BEBaseController
 				em_log($emLog);
 				return redirect()->to('backend/order-s4/' . encryptIt($id));
 			}
-			if (sendEmail($to2, $cc, $subject, $message)) {
+			if (sendEmail($to2, $cc, $subject, $message2)) {
 				$session->setFlashdata('success', 'Locum Confirmation Email Succesfully Sent');
 				$emLog = [
 					'em_to' => $to2,
@@ -3900,7 +4041,7 @@ class Backend extends BEBaseController
 		$to =  $data['v_ordr']['emp_email'];
 		// $to2 =  $data['v_ordr']['cl_cont_email'];
 		$cc = 'info@sralocum.com';
-		$subject = 'SRA-Employee Confirmation';
+		$subject = 'SRA LOCUM – LOCUM CONFIRMATION';
 		$message = $this->LoadView('admin/email_responses/4th-response-email', $data);
 
 		if ($this->request->getMethod() == 'post') {
@@ -4089,14 +4230,23 @@ class Backend extends BEBaseController
 					'ord_status' => '5',
 				];
 				$omodel->update($id, $newData);
+				$empData = array_merge($data, [
+                'emp_fname' => $data['v_ordr']['emp_fname'],
+                'ord_ref_no' => $data['v_ordr']['ord_ref_no'],
+                'ord_pay_to_dr_date' => $data['v_ordr']['ord_pay_to_dr_date']
+                ]);
+                $clientData = array_merge($data, [
+                'cl_cont_name' => $data['v_ordr']['cl_cont_name'],
+                'ord_invoice_id' => $data['v_ordr']['ord_invoice_id'],
+                'ord_paymnt_rcvd_date' => $data['v_ordr']['ord_paymnt_rcvd_date']
+                ]);
 				$to =  $data['v_ordr']['emp_email'];
 				$to2 =  $data['v_ordr']['cl_cont_email'];
 				$cc = 'info@sralocum.com';
 				$subject = 'SRAL-Your Payment Paid | Locum Confirmation#' . $data['v_ordr']['ord_ref_no'];
 				$subject2 = 'SRAL-Payment Received | Invoice#' . $invoice_id;
-				$message = $this->LoadView('admin/email_responses/emp_payment', $data);
-				$message2 = $this->LoadView('admin/email_responses/client_payment', $data);
-	
+				$message = $this->LoadView('admin/email_responses/emp_payment', $empData);
+				$message2 = $this->LoadView('admin/email_responses/client_payment', $clientData);
 				$session = session();
 				if (sendEmail($to, $cc, $subject, $message)) {
 					$session->setFlashdata('success', 'Payment Done and Order Locked');
@@ -4155,6 +4305,7 @@ class Backend extends BEBaseController
 
 		return $this->LoadView('admin/order_s5', $data);
 	}
+	
 
 	public function Locum_confirmation_track()
 	{
@@ -4219,7 +4370,7 @@ class Backend extends BEBaseController
 		// $data['doc'] = $Emodel->findAll();
 		$data['ord'] = $model->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $id)->first();
 		$ord = $data['ord'];
-		$data['doc'] = $Emodel->select('emp_id,emp_email')->where('emp_spec1', $ord['ord_speciality'])->orWhere('emp_spec2', $ord['ord_speciality'])->orWhere('emp_spec3', $ord['ord_speciality'])->findAll();
+		$data['doc'] = $Emodel->select('emp_id,emp_email,emp_fname')->where('emp_spec1', $ord['ord_speciality'])->orWhere('emp_spec2', $ord['ord_speciality'])->orWhere('emp_spec3', $ord['ord_speciality'])->findAll();
 		$emp_id = $data['doc'];
 		foreach ($data['doc'] as &$item) {
 			unset($item['emp_id']);
@@ -4243,12 +4394,13 @@ class Backend extends BEBaseController
 		$session = session();
 
 		foreach ($data['doc'] as $doc) {
-
+            
 			$to = $doc['emp_email'];
 			$cc = 'info@sralocum.com';
-			$subject = 'SRA-New Locum';
-			$message = $this->LoadView('admin/email_responses/job-advertisement', $data);
-
+			$subject = 'SRA-New Locum '.$data['ord']['spec_name'].'|'.$data['ord']['grade_name'];
+			$messageData = array_merge($data, ['emp_fname' => $doc['emp_fname']]);
+			$message = $this->LoadView('admin/email_responses/job-advertisement', $messageData);
+            
 			if (sendEmail($to, $cc, $subject, $message)) {
 				$sucees[] = $to;
 				$emLog = [
@@ -4320,13 +4472,13 @@ class Backend extends BEBaseController
 		// Build your query using the filter values
 
 		// $query = $omodel->select('SUM(ord_hosp_earn + ord_vat_sale) AS total_sum');
-		$query = $omodel->table('orders')->selectSum('ord_hosp_earn', 'hosp')->selectSum('ord_vat_sale', 'sale');
+		$query = $omodel->table('orders')->selectSum('ord_hosp_earn', 'hosp')->selectSum('ord_vat_sale', 'sale')->where('ord_status >=', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0');
 		// $query->selectSum('ord_pay_to_dr');
 		// $query->selectSum('ord_vat_sale');
 
 		if (!empty($fromDate) && !empty($toDate)) {
-			$query->where('ord_created >=', $fromDate);
-			$query->where('ord_created <=', $toDate);
+			$query->where('DATE(ord_created) >=', $fromDate);
+			$query->where('DATE(ord_created) <=', $toDate);
 		}
 
 		if (!empty($hospital) && $hospital !== '0') {
@@ -4340,6 +4492,9 @@ class Backend extends BEBaseController
 		if (!empty($specialty) && $specialty !== '0') {
 			$query->where('ord_speciality', $specialty);
 		}
+		    
+		    
+		   
 
 		$data['sumry'] = $query->get()->getRow();
 		// print_r($data['sumry']);exit;
@@ -4378,13 +4533,13 @@ class Backend extends BEBaseController
 		// Build your query using the filter values
 
 		// $query = $omodel->select('SUM(ord_pay_to_dr + ord_vat_purch) AS total_sum');
-		$query = $omodel->table('orders')->selectSum('ord_pay_to_dr', 'dr')->selectSum('ord_vat_purch', 'purchase');
+		$query = $omodel->table('orders')->selectSum('ord_pay_to_dr', 'dr')->selectSum('ord_vat_purch', 'purchase')->where('ord_status >=', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0');
 		// $query->selectSum('ord_pay_to_dr');
 		// $query->selectSum('ord_vat_sale');
 
 		if (!empty($fromDate) && !empty($toDate)) {
-			$query->where('ord_created >=', $fromDate);
-			$query->where('ord_created <=', $toDate);
+			$query->where('DATE(ord_created) >=', $fromDate);
+			$query->where('DATE(ord_created) <=', $toDate);
 		}
 
 		if (!empty($hospital) && $hospital !== '0') {
@@ -4435,13 +4590,13 @@ class Backend extends BEBaseController
 
 		// Build your query using the filter values
 
-		$query = $omodel->select('SUM(ord_vat_sale) AS total_sum');
+		$query = $omodel->select('SUM(ord_vat_sale) AS total_sum')->where('ord_status >=', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0');
 		// $query->selectSum('ord_pay_to_dr');
 		// $query->selectSum('ord_vat_sale');
 
 		if (!empty($fromDate) && !empty($toDate)) {
-			$query->where('ord_created >=', $fromDate);
-			$query->where('ord_created <=', $toDate);
+			$query->where('DATE(ord_created) >=', $fromDate);
+			$query->where('DATE(ord_created) <=', $toDate);
 		}
 
 		if (!empty($hospital) && $hospital !== '0') {
@@ -4455,6 +4610,7 @@ class Backend extends BEBaseController
 		if (!empty($specialty) && $specialty !== '0') {
 			$query->where('ord_speciality', $specialty);
 		}
+		
 
 		$data['sumry'] = $query->get()->getRow();
 		// print_r($data['sumry']);exit;
@@ -4492,13 +4648,13 @@ class Backend extends BEBaseController
 
 		// Build your query using the filter values
 
-		$query = $omodel->select('SUM(ord_vat_purch) AS total_sum');
+		$query = $omodel->select('SUM(ord_vat_purch) AS total_sum')->where('ord_status >=', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0');
 		// $query->selectSum('ord_pay_to_dr');
 		// $query->selectSum('ord_vat_sale');
 
 		if (!empty($fromDate) && !empty($toDate)) {
-			$query->where('ord_created >=', $fromDate);
-			$query->where('ord_created <=', $toDate);
+			$query->where('DATE(ord_created) >=', $fromDate);
+			$query->where('DATE(ord_created) <=', $toDate);
 		}
 
 		if (!empty($hospital) && $hospital !== '0') {
@@ -4512,6 +4668,7 @@ class Backend extends BEBaseController
 		if (!empty($specialty) && $specialty !== '0') {
 			$query->where('ord_speciality', $specialty);
 		}
+		
 
 		$data['sumry'] = $query->get()->getRow();
 		// print_r($data['sumry']);exit;
@@ -4552,13 +4709,13 @@ class Backend extends BEBaseController
 
 		// $query = $omodel->select('(SELECT SUM(ord_vat_purch) FROM orders) AS purchase, (SELECT SUM(ord_vat_sale) FROM orders) AS sale');
 		// $query = $omodel->select('SUM(ord_vat_purch, ord_vat_sale)');
-		$query = $omodel->table('orders')->selectSum('ord_vat_purch', 'purchase')->selectSum('ord_vat_sale', 'sale');
+		$query = $omodel->table('orders')->selectSum('ord_vat_purch', 'purchase')->selectSum('ord_vat_sale', 'sale')->where('ord_status >=', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0');
 
 
 
 		if (!empty($fromDate) && !empty($toDate)) {
-			$query->where('ord_created >=', $fromDate);
-			$query->where('ord_created <=', $toDate);
+			$query->where('DATE(ord_created) >=', $fromDate);
+			$query->where('DATE(ord_created) <=', $toDate);
 		}
 
 		if (!empty($hospital) && $hospital !== '0') {
@@ -4572,8 +4729,7 @@ class Backend extends BEBaseController
 		if (!empty($specialty) && $specialty !== '0') {
 			$query->where('ord_speciality', $specialty);
 		}
-
-
+		
 		$data['sumry'] = $query->get()->getRow();
 		// 		echo $omodel->getLastQuery();
 		// exit;
@@ -4617,11 +4773,11 @@ class Backend extends BEBaseController
 
 		// $query = $omodel->select('(SELECT SUM(ord_vat_purch) FROM orders) AS purchase, (SELECT SUM(ord_vat_sale) FROM orders) AS sale');
 		// $query = $omodel->select('SUM(ord_vat_purch, ord_vat_sale)');
-		$queryCashIn = $omodel->table('orders')->selectSum('ord_hosp_earn', 'hosp')->selectSum('ord_adminchrg_intern', 'admin')->selectSum('ord_vat_sale', 'vos');
+		$queryCashIn = $omodel->table('orders')->selectSum('ord_hosp_earn', 'hosp')->selectSum('ord_adminchrg_intern', 'admin')->selectSum('ord_vat_sale', 'vos')->where('ord_status >=', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0');
 
 		if (!empty($fromDate) && !empty($toDate)) {
-			$queryCashIn->where('ord_created >=', $fromDate);
-			$queryCashIn->where('ord_created <=', $toDate);
+			$queryCashIn->where('DATE(ord_created) >=', $fromDate);
+			$queryCashIn->where('DATE(ord_created) <=', $toDate);
 		}
 
 		if (!empty($hospital) && $hospital !== '0') {
@@ -4636,13 +4792,12 @@ class Backend extends BEBaseController
 			$queryCashIn->where('ord_speciality', $specialty);
 		}
 
-
 		$data['CashIn'] = $queryCashIn->get()->getRow();
 
-		$queryCashOut = $omodel->table('orders')->selectSum('ord_pay_to_dr', 'dr')->selectSum('ord_vat_purch', 'vop');
+		$queryCashOut = $omodel->table('orders')->selectSum('ord_pay_to_dr', 'dr')->selectSum('ord_vat_purch', 'vop')->where('ord_status >=', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0');
 		if (!empty($fromDate) && !empty($toDate)) {
-			$queryCashOut->where('ord_created >=', $fromDate);
-			$queryCashOut->where('ord_created <=', $toDate);
+			$queryCashOut->where('DATE(ord_created) >=', $fromDate);
+			$queryCashOut->where('DATE(ord_created) <=', $toDate);
 		}
 
 		if (!empty($hospital) && $hospital !== '0') {
@@ -4656,8 +4811,7 @@ class Backend extends BEBaseController
 		if (!empty($specialty) && $specialty !== '0') {
 			$queryCashOut->where('ord_speciality', $specialty);
 		}
-
-
+		
 		$data['CashOut'] = $queryCashOut->get()->getRow();
 		// 		echo $omodel->getLastQuery();
 		// exit;
@@ -4673,27 +4827,28 @@ class Backend extends BEBaseController
 		$model = new ordersModel();
 		$startDate = $this->request->getPost('start_date');
 		$endDate = $this->request->getPost('end_date');
-
+    $timestamp = \time();
+		$dt = date('Y-m-d H:i:s', $timestamp);
 		// Fetch data from the database based on the selected date range and group by month
 		// Modify this query based on your database structure and requirements
 		$data = $model->table('orders')
 			->select("*")
 			->select("DATE_FORMAT(ord_created, '%Y-%m') AS month")
-			->select("SUM(CASE WHEN ord_status = 1 AND ord_cancel_bcl = 0 THEN 1 ELSE 0 END) AS ord_status_1_count")
+			->select("SUM(CASE WHEN (ord_status = 1 OR ord_status IS NULL) AND ord_required_to >= '$dt' AND ord_cancel_bdr = 1 AND ord_cancel_bcl = 0 THEN 1 ELSE 0 END) AS ord_status_1_count")
 			->select("SUM(CASE WHEN ord_status = 2 AND ord_cancel_bcl = 0 THEN 1 ELSE 0 END) AS ord_status_2_count")
 			->select("SUM(CASE WHEN ord_status = 3 AND ord_cancel_bcl = 0 THEN 1 ELSE 0 END) AS ord_status_3_count")
-			->select("SUM(CASE WHEN ord_cancel_bcl = 1 THEN 1 ELSE 0 END) AS ord_canc_bcl_count");
+			->select("SUM(CASE WHEN ord_cancel_bdr = 1 AND ord_cancel_bcl = 1 THEN 1 ELSE 0 END) AS ord_canc_bcl_count");
 
 		if (!empty($startDate) && !empty($endDate)) {
-			$data->where('ord_created >=', $startDate)
-				->where('ord_created <=', $endDate);
+			$data->where('DATE(ord_created) >=', $startDate)
+				->where('DATE(ord_created) <=', $endDate);
 		} else {
 			// Retrieve data for the current year
 			$currentYear = date('Y');
 			$startDate = $currentYear . '-01-01';
 			$endDate = $currentYear . '-12-31';
-			$data->where('ord_created >=', $startDate)
-				->where('ord_created <=', $endDate);
+			$data->where('DATE(ord_created) >=', $startDate)
+				->where('DATE(ord_created) <=', $endDate);
 		}
 
 		$data = $data->groupBy('month')
@@ -4730,9 +4885,9 @@ class Backend extends BEBaseController
 	{
 		$data = [];
 		$omodel = new ordersModel();
-		$hospital = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->where('cl_reg_as', '1')->countAllResults();
-		$gp = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->where('cl_reg_as', '3')->countAllResults();
-		$nurse = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->where('cl_reg_as', '7')->countAllResults();
+		$hospital = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->where('cl_reg_as', '1')->orWhere('cl_reg_as', '2')->where('ord_status >=',3)->countAllResults();
+		$gp = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->where('cl_reg_as', '3')->where('ord_status >=',3)->countAllResults();
+		$nurse = $omodel->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->where('cl_reg_as', '7')->where('ord_status >=',3)->countAllResults();
 
 		$response = [
 			'gp' => $gp,
@@ -4755,11 +4910,11 @@ class Backend extends BEBaseController
 			->selectSum('ord_on_call_hrs', 'onch')
 			->selectSum('ord_off_site_hrs', 'ofsh')
 			->selectSum('ord_bh_week_hrs', 'bhwh')
-			->where('ord_status >=', '3');
+			->where('ord_status >=', '3')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0');
 
 		if (!empty($startDate) && !empty($endDate)) {
-			$data->where('ord_created >=', $startDate)
-				->where('ord_created <=', $endDate);
+			$data->where('DATE(ord_created) >=', $startDate)
+				->where('DATE(ord_created) <=', $endDate);
 		}
 		if (!empty($type)) {
 			$data->where('cl_reg_as', $type);
@@ -4910,10 +5065,10 @@ class Backend extends BEBaseController
 		$model = new ordersModel();
 		$Emodel = new EmpModel();
 		// $data['doc'] = $Emodel->findAll();
-		$data['subject'] = 'SRA-New Locum';
 		$data['ord'] = $model->join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('ord_id', $id)->first();
 		$ord = $data['ord'];
-		$data['doc'] = $Emodel->select('emp_id,emp_email')->where('emp_spec1', $ord['ord_speciality'])->orWhere('emp_spec2', $ord['ord_speciality'])->orWhere('emp_spec3', $ord['ord_speciality'])->findAll();
+		$data['subject'] = 'SRA-New Locum '.$data['ord']['spec_name'].'|'.$data['ord']['grade_name'];
+		$data['doc'] = $Emodel->select('emp_id,emp_email,emp_fname')->where('emp_spec1', $ord['ord_speciality'])->orWhere('emp_spec2', $ord['ord_speciality'])->orWhere('emp_spec3', $ord['ord_speciality'])->findAll();
 		$emp_id = $data['doc'];
 		foreach ($data['doc'] as &$item) {
 			unset($item['emp_id']);

@@ -68,7 +68,7 @@
                                         </tr>
                                         <tr>
                                             <th style="border: 1px solid black;"><strong>Offered Doctor (s):</strong></th>
-                                            <td style="border: 1px solid black;"><strong>Dr. <?= $em_2['emp_fname'] . ' ' . $em_2['emp_lname'] . '( ' . $em_2['emp_imcr_no'] . ')' ?></strong></td>
+                                            <td style="border: 1px solid black;"><strong>Dr. <?= $em_2['emp_fname'] . ' ' . $em_2['emp_lname'] . ' (' . $em_2['emp_imcr_no'] . ')' ?></strong></td>
                                         </tr>
                                         <tr>
                                             <th style="border: 1px solid black;"><strong>Covering Date & Time:</strong></th>
@@ -97,7 +97,7 @@
                                     </table>
                                 </div>
 
-                                <p><strong>Find attached the relevant CV and other documents.</strong></p>
+                                <p><strong>Please Click on the links to download/view the proposed doctors documents.</strong></p>
 
                                 <?php if (!empty($em_2['emp_cv'])) : ?>
                                     <p class="mb-0"><strong>CV</strong></p>

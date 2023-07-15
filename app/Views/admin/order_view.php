@@ -100,7 +100,7 @@
                     </div>
                     <div class="card-body" id="printthis">
                         <page size="A4">
-                            <?php if ($ordr_row['ord_cancel_bdr'] == 1) : ?>
+                            <?php if (!empty($ordr_row['ord_cancel_bdr']) && $ordr_row['ord_cancel_bdr'] == 1) : ?>
                                 <div class="row">
                                     <div class="col-md-6 col-sm-6">
 
@@ -109,7 +109,7 @@
                                     </div>
                                 </div>
                             <?php endif; ?>
-                            <?php if ($ordr_row['ord_cancel_bcl'] == 1) : ?>
+                            <?php if (!empty($ordr_row['ord_cancel_bcl']) &&$ordr_row['ord_cancel_bcl'] == 1) : ?>
                                 <div class="row">
                                     <div class="col-md-6 col-sm-6">
 
@@ -147,10 +147,10 @@
                                                         <?= $ordr_row['emp_fname'] . ' ' . $ordr_row['emp_lname'] ?>
                                                     </u></p>
                                                 <p class="mb-0"><strong>Order Process Date: </strong>
-                                                    <?= $ordr_row['ord_process_date'] ?>
+                                                    <?=  date("d-m-y", strtotime($ordr_row['ord_process_date'])) ?>
                                                 </p>
                                                 <p class="mb-0"><strong>Order Status: </strong>
-                                                    <?php if ($ordr_row['ord_status'] == "1") : ?>
+                                                    <?php if ($ordr_row['ord_status'] == "1" || $ordr_row['ord_status'] == NULL || $ordr_row['ord_status'] == "0") : ?>
                                                         <span class="badge chart-color123">Pending</span>
                                                     <?php elseif ($ordr_row['ord_status'] == "2") : ?>
                                                         <span class="badge chart-color122 ">Processed</span>
@@ -158,7 +158,7 @@
                                                         <span class="badge bg-success">Confirmed</span>
                                                     <?php elseif ($ordr_row['ord_status'] == "4") : ?>
                                                         <span class="badge chart-color120">Ended</span>
-                                                    <?php else : ?>
+                                                    <?php elseif($ordr_row['ord_status'] == "5"): ?>
                                                         <span class="badge chart-color135">Paid</span>
                                                     <?php endif; ?>
                                                 </p>
@@ -261,7 +261,7 @@
                                                 </div>
                                                 <div class="form-group col-md-6 ">
                                                     <span class="cview ">
-                                                        <?= $ordr_row['ord_required_from'] . ' - ' . $ordr_row['ord_required_to'] ?>
+                                                        <?= date("d-m-y H:m:s a", strtotime($ordr_row['ord_required_from'])) . ' - ' . date("d-m-y H:m:s a", strtotime($ordr_row['ord_required_to'])) ?>
                                                     </span>
                                                     <hr class="primary">
                                                 </div>
@@ -286,7 +286,7 @@
                                                 </div>
                                                 <div class="form-group col-md-6 ">
                                                     <span class="cview ">
-                                                        <?= $ordr_row['ord_process_date'] ?>
+                                                        <?= date("d-m-y", strtotime($ordr_row['ord_process_date'])) ?>
                                                     </span>
                                                     <hr class="primary">
                                                 </div>
@@ -298,7 +298,7 @@
                                                 </div>
                                                 <div class="form-group col-md-6 ">
                                                     <span class="cview ">
-                                                        <?= $ordr_row['ord_confirmation_date'] ?>
+                                                        <?= date("d-m-y", strtotime($ordr_row['ord_confirmation_date'])) ?>
                                                     </span>
                                                     <hr class="primary">
                                                 </div>
@@ -310,7 +310,7 @@
                                                 </div>
                                                 <div class="form-group col-md-6 ">
                                                     <span class="cview ">
-                                                        <?= $ordr_row['ord_process_details_from'] . ' - ' . $ordr_row['ord_process_details_to']  ?>
+                                                        <?= date("d-m-y H:m:s a", strtotime($ordr_row['ord_process_details_from'])) . ' - ' . date("d-m-y H:m:s a", strtotime($ordr_row['ord_process_details_to']))  ?>
                                                     </span>
                                                     <hr class="primary">
                                                 </div>
@@ -557,7 +557,7 @@
                                                 </div>
                                                 <div class="form-group col-md-6 ">
                                                     <span class="cview ">
-                                                        <?= $ordr_row['ord_time_sheet_process'] ?>
+                                                        <?= date("d-m-y", strtotime($ordr_row['ord_time_sheet_process'])) ?>
                                                     </span>
                                                     <hr class="primary">
                                                 </div>
@@ -573,14 +573,14 @@
                                                             <?= $ordr_row['ord_time_sheet_approved'] ?>
                                                         </span>
                                                         <hr class="primary">
-                                                    <?php elseif ($ordr_row['ord_time_sheet_approved'] == "Due") : ?>
-                                                        <span class="cview badge chart-color123">Due</span>
+                                                    <?php elseif ($ordr_row['ord_time_sheet_approved'] == "Sent_for_verification") : ?>
+                                                        <span class="cview badge bg-warning">Sent For Verification</span>
                                                         <hr class="primary">
                                                     <?php elseif ($ordr_row['ord_time_sheet_approved'] == 'Received') : ?>
                                                         <span class="badge bg-info">Received</span>
                                                         <hr class="primary">
                                                     <?php else : ?>
-                                                        <span class="badge bg-warning">Sent For Verification</span>
+                                                        <span class="badge chart-color123">Due</span>
                                                         <hr class="primary">
                                                     <?php endif; ?>
                                                 </div>
@@ -619,7 +619,7 @@
                                                 </div>
                                                 <div class="form-group col-md-6">
                                                     <span class="cview">
-                                                        <?= $ordr_row['ord_invoice_date'] ?>
+                                                        <?= date("d-m-y", strtotime($ordr_row['ord_invoice_date'])) ?>
                                                     </span>
                                                     <hr class="primary">
                                                 </div>
@@ -658,7 +658,7 @@
                                                 </div>
                                                 <div class="form-group col-md-6">
                                                     <span class="cview">
-                                                        <?= $ordr_row['ord_paymnt_rcvd_date'] ?>
+                                                        <?= date("d-m-y", strtotime($ordr_row['ord_paymnt_rcvd_date'])) ?>
                                                     </span>
                                                     <hr class="primary">
                                                 </div>
@@ -671,7 +671,7 @@
                                                 </div>
                                                 <div class="form-group col-md-6">
                                                     <span class="cview">
-                                                        <?= $ordr_row['ord_pay_to_dr_date'] ?>
+                                                        <?= date("d-m-y", strtotime($ordr_row['ord_pay_to_dr_date'])) ?>
                                                     </span>
                                                     <hr class="primary">
                                                 </div>

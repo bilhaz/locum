@@ -270,7 +270,7 @@
                                     <div id="bcls-upload" style="display: none;">
                                         <input type="file" name="emp_bcls" id="file_bcls" data-parsley-max-file-size="2000" data-parsley-fileextension="jpg,JPEG,pdf,PDF,png,PNG,doc,docx"><br>
                                     </div>
-                                    <?php if (!empty($emp['ed_emp'])) : ?>
+                                    <?php if (!empty($ed_emp['emp_bcls'])) : ?>
                                         <a class="mb-3" href="<?= base_url('public/uploads/employee_attach/' . $ed_emp['emp_bcls']) ?>" target="_blank">View Document</a>
                                         <input type="hidden" name="emp_bclss" value="<?= $ed_emp['emp_bcls'] ?>">
                                     <?php endif; ?>

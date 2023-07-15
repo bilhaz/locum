@@ -10,8 +10,12 @@ class E_Auth implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        
+         $currentURL = current_url(); // Get the current URL
+            $session = session();
+    $session->set('redirect', $currentURL);
         if(! session()->get('EmpLoggedIn')){
+           
+            
             return redirect()->to('employee/login');
             // echo 'hello';
           }

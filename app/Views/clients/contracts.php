@@ -82,20 +82,25 @@
                                                 <small><?= $row['emp_imcr_no'] ?></small>
                                             </td>
                                             <td> <?php if ($row['ord_cancel_bcl'] <> 1) : ?>
-                                                    <?php if ($row['ord_client_confirnFlag'] < 1) : ?>
+                                                    <?php if ($row['ord_client_confirnFlag'] != '1' && $row['ord_status'] >= '2') : ?>
                                                         <h6 class="mb-0"><a id="confrmButton" href="<?= base_url('client/ord-confirm/' . encryptIt($row['ord_id'])) ?>" class="btn btn-primary">Click to Confirm</a></h6>
-                                                    <?php else: ?>
-                                                        <span class="badge bg-success">Confirmed</span>
+                                                    <?php elseif($row['ord_client_confirnFlag'] == '1'): ?>
+                                                        <span class="badge bg-success">Confirmed by Me</span>
                                                     <?php endif; ?>
                                                 <?php endif; ?>
+                                                </td>
                                             <td><?php $pros = explode(",", $row['ord_prosdatetime_detail']);
                                                 foreach ($pros as $var) : ?>
                                                     <?= $var ?> <br>
                                                 <?php endforeach; ?></td>
-                                            </td>
+                                            <!--</td>-->
                                             <td><?= date("d-m-y  h:i:s a", strtotime($row['ord_created'])) ?></td>
 
                                             <td>
+                                                <?php $timestamp = \time(); $date = date('Y-m-d H:i:s', $timestamp);
+                                                 if ($row['ord_status'] == NULL && $row['ord_required_to'] < $date || $row['ord_status'] == 1 && $row['ord_required_to'] < $date) : ?>
+                                                    <span class="badge badge chart-color119">Expired</span>
+                                                <?php else : ?>
                                                 <?php if ($row['ord_cancel_bdr'] == "1") : ?>
                                                     <span class="badge bg-danger">Dr. Cancelled</span>
                                                 <?php else : ?>
@@ -103,16 +108,17 @@
                                                         <span class="badge bg-danger">You Cancelled</span><br>
                                                         <span class="badge bg-warning text-dark"><?= $row['ord_cl_cremarks'] ?></span>
                                                     <?php else : ?>
-                                                        <?php if ($row['ord_status'] == "1") : ?>
+                                                        <?php if ($row['ord_status'] == "1" || $row['ord_status'] == NULL) : ?>
                                                             <span class="badge chart-color123">Pending</span>
                                                         <?php elseif ($row['ord_status'] == "2") : ?>
                                                             <span class="badge chart-color122">Processed</span>
                                                         <?php elseif ($row['ord_status'] == "3") : ?>
                                                             <span class="badge bg-success">Confirmed</span>
-                                                        <?php else : ?>
+                                                        <?php elseif($row['ord_status'] == "4") : ?>
                                                             <span class="badge chart-color120">Ended</span>
                                                         <?php endif; ?>
                                                     <?php endif; ?>
+                                                <?php endif; ?>
                                                 <?php endif; ?>
                                             </td>
                                             <td>
@@ -135,7 +141,7 @@
                                                 <?php endif; ?>
                                                 <a type="button" href="<?= base_url('client/ord-status/' . encryptIt($row['ord_id'])) ?>" class="btn btn-sm btn-outline-info" title="View your order"><i class="fa fa-eye"></i></a>
 
-                                                <?php if ($row['ord_cancel_bcl'] <> 1) : ?>
+                                                <?php if ($row['ord_cancel_bcl'] <> 1 && $row['ord_status'] <=3 ) : ?>
                                                     <button type="button" class="btn btn-sm btn-outline-danger js-sweetalert" onClick="setOrderId(<?= $row['ord_id'] ?>);" data-bs-toggle="modal" data-bs-target="#canc_order" title="Cancel and delta" data-type="confirm"><i class="fa fa-ban"></i></button>
                                                     <!-- <a type="button" href="<?php // base_url('client/canc-ord/'.encryptIt($row['ord_id']))
                                                                                 ?>" class="btn btn-sm btn-outline-danger js-sweetalert" title="Cancel" Onclick="return confirm('Are You sure?');" data-type="confirm"><i class="fa fa-ban"></i></a> -->

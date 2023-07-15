@@ -101,9 +101,9 @@ $(document).ready(function() {
         show: true,
         categories: months
       },
-      yaxis: {
-        show: true,
-      },
+       yaxis: {
+            show: true,
+        },
       legend: {
         position: 'top',
         horizontalAlign: 'center'
@@ -126,8 +126,8 @@ $(document).ready(function() {
         categories: months
       },
       yaxis: {
-        show: true,
-      },
+            show: true,
+        },
     });
 
     chartSpark1.updateSeries([

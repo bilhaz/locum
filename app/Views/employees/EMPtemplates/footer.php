@@ -6,7 +6,7 @@
 <!-- <script src="<?php // base_url('public/assets/bundles/libscripts.bundle.js')?>"></script> -->
 <script src="<?= base_url('public/assets/bundles/dataTables.bundle.js')?>"></script>
 <script src="<?= base_url('public/assets/js/my.js')?>"></script>
-
+<?php if (session()->get('EmpLoggedIn')) : ?>
 <script src="<?=  base_url('public/assets/bundles/mainscripts.bundle.js')?>"></script>
 <script>
   const link1 = '<?php echo base_url('employee/show-notif'); ?>';
@@ -18,7 +18,7 @@
 
 </script>
 <script src="<?= base_url('public/assets/js/EmpStats.js') ?>"></script>
- 
+ <?php endif;?>
   
 </body>
 

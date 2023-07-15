@@ -7,7 +7,6 @@
                                 <p><b style="color:#157DED">Hospital:</b> <?= $ord_row['cl_h_name']?></p>
                                 <p><b style="color:#157DED">Speciality:</b> <?= $ord_row['spec_name']?></p>
                                 <p><b style="color:#157DED">Grade:</b> <?= $ord_row['grade_name']?></p>
-                                <p><b style="color:#157DED">Required From-To:</b> <?= $ord_row['ord_required_from']. ' - '. $ord_row['ord_required_to']?></p>
                                 <p><b style="color:#157DED">Locum Date & Time Details:</b> <?php $pros = explode(",",$ord_row['ord_datetime_detail']);
                                         foreach($pros as $var): ?>
                                        <?= $var ?> <br>
@@ -27,4 +26,9 @@
                                                 </div>
                                 </div>
                     </div>
+                    <h5 style="color:#157DED">Regards with Thanks</h5>
+                                    <h6 style="color:#157DED">SRA Locum</h6>
+                                    <p style="color:#157DED">2nd Floor, 13 Baggot St Upper</p>
+                                    <p style="color:#157DED">Saint Peter's, Dublin 4 D04 W7K5</p>
+                                    <p style="color:#157DED"><a href="mailto:info@sralocum.com">info@sralocum.com</a> | 01 685 4700 | 01 699 4321</p>
 			</body></html>

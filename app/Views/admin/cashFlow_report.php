@@ -99,7 +99,7 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <?php $TcashIn = $CashIn->hosp + $CashIn->admin + $CashIn->vos;
+                                        <?php $TcashIn = $CashIn->hosp + $CashIn->vos;
                                         $TcashOut =  $CashOut->dr + $CashOut->vop;
                                         ?>
                                         <th class="text-primary">

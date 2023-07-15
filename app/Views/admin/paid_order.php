@@ -21,6 +21,15 @@
                             </li>
                         </ul>
                     </div>
+                    <div class="card-header float-end">
+                        <ul class="header-dropdown">
+                            <li>
+                                <div class="col-md-12 col-sm-12 float-end">
+                                <input name="tblSearch" id="tblSearch" class="form-control" placeholder="Search here">
+                            </div>
+                            </li>
+                        </ul>
+                        </div>
                     <?php if (isset($validation)) : ?>
                         <div class="alert alert-danger" role="alert">
                             <?= $validation->listErrors() ?>
@@ -48,7 +57,8 @@
                                     </h2>
                                     <div id="Daily" class="accordion-collapse collapse show" aria-labelledby="daily" data-bs-parent="#accordionExample">
                                         <div class="card-body">
-                                            <table id="employee_List" class="table table-hover">
+                                            <div class="table-responsive">
+                                            <table id="employee_List2" class="table table-hover">
                                                 <thead class="thead-dark">
                                                     <tr>
                                                         <th>ID</th>
@@ -100,6 +110,7 @@
 
                                                 </tbody>
                                             </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -111,6 +122,7 @@
                                     </h2>
                                     <div id="Monthly" class="accordion-collapse collapse show" aria-labelledby="monthly" data-bs-parent="#accordionExample">
                                         <div class="card-body">
+                                            <div class="table-responsive">
                                             <table id="this_month" class="table table-hover">
                                                 <thead class="thead-dark">
                                                     <tr>
@@ -164,6 +176,7 @@
 
                                                 </tbody>
                                             </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -176,6 +189,7 @@
                                     <div id="Yearly" class="accordion-collapse collapse show" aria-labelledby="yearly" data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
                                             <div class="card-body">
+                                                <div class="table-responsive">
                                                 <table id="this_year" class="table table-hover table-responsive">
                                                     <thead class="thead-dark">
                                                         <tr>
@@ -228,6 +242,7 @@
 
                                                     </tbody>
                                                 </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -241,6 +256,7 @@
                                     <div id="All" class="accordion-collapse collapse show" aria-labelledby="all" data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
                                             <div class="card-body">
+                                                <div class="table-responsive">
                                                 <table id="all_year" class="table table-hover table-responsive">
                                                     <thead class="thead-dark">
                                                         <tr>
@@ -293,6 +309,7 @@
 
                                                     </tbody>
                                                 </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

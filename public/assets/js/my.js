@@ -83,7 +83,7 @@ function calculateVopurchase() {
 // Calculate diff + profit
 function calculateDiff() {
     var hosp = parseFloat(document.getElementById("TcliEarn").value);
-    //var tadmin = parseFloat(document.getElementById("Tadmin").value);
+    // var tadmin = parseFloat(document.getElementById("Tadmin").value);
     var dr = parseFloat(document.getElementById("totpay").value);
 
     var diff = hosp - dr;
@@ -236,51 +236,25 @@ $(document).ready(function () {
             
     });
 });
-$(document).ready(function () {
-    $('#this_month')
-    .dataTable({
-        responsive: true,
-        order: false,
-        columnDefs: [
-            {
-                orderable: true,
-                targets: [0],
-            }
-            
-        ]
-            
+
+$(document).ready(function(){
+
+    $("#tblSearch").keyup(function () {
+        var value = this.value.toLowerCase().trim();
+
+        $("table tr").each(function (index) {
+            if (!index) return;
+            $(this).find("td").each(function () {
+                var id = $(this).text().toLowerCase().trim();
+                var not_found = (id.indexOf(value) == -1);
+                $(this).closest('tr').toggle(!not_found);
+                return not_found;
+            });
+        });
     });
 });
-$(document).ready(function () {
-    $('#this_year')
-    .dataTable({
-        responsive: true,
-        order: false,
-        columnDefs: [
-            {
-                orderable: true,
-                targets: [0],
-            }
-            
-        ]
-            
-    });
-});
-$(document).ready(function () {
-    $('#all_year')
-    .dataTable({
-        responsive: true,
-        order: false,
-        columnDefs: [
-            {
-                orderable: true,
-                targets: [0],
-            }
-            
-        ]
-            
-    });
-});
+
+
 
 // Employee profile Script
 $(document).ready(function() {
@@ -403,20 +377,4 @@ $(document).ready(function() {
     });
   }
   
-$(document).ready(function(){
-
-    $("#tblSearch").keyup(function () {
-        var value = this.value.toLowerCase().trim();
-
-        $("table tr").each(function (index) {
-            if (!index) return;
-            $(this).find("td").each(function () {
-                var id = $(this).text().toLowerCase().trim();
-                var not_found = (id.indexOf(value) == -1);
-                $(this).closest('tr').toggle(!not_found);
-                return not_found;
-            });
-        });
-    });
-});
 

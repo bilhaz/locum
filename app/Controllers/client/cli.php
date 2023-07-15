@@ -231,7 +231,7 @@ class cli extends CLIBaseController
 		$timestamp = \time();
 		$dt = date('Y-m-d H:i:s', $timestamp);
 		$model = new ordersModel();
-		$data['o_pen'] = $model->where('ord_status', '1')->where('cl_id', session()->cl_id)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
+		$data['o_pen'] = $model->where('ord_status', '1')->where('cl_id', session()->cl_id)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('ord_required_to >=', $dt)->orWhere('ord_status', NULL)->where('cl_id', session()->cl_id)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('ord_required_to >=', $dt)->countAllResults();
 		$data['o_pro'] = $model->where('ord_status', '2')->where('cl_id', session()->cl_id)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
 		$data['o_con'] = $model->where('ord_status', '3')->where('cl_id', session()->cl_id)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
 		$data['o_end'] = $model->where('ord_status', '4')->where('cl_id', session()->cl_id)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
@@ -329,7 +329,11 @@ class cli extends CLIBaseController
 			display: inline-block;
 			font-size: 16px;
 			margin: 4px 2px;
-			cursor: pointer;">Click to View</a></body</html>';
+			cursor: pointer;">Click to View</a><h5 style="color:#157DED">Regards with Thanks</h5>
+                                    <h6 style="color:#157DED">SRA Locum</h6>
+                                    <p style="color:#157DED">2nd Floor, 13 Baggot St Upper</p>
+                                    <p style="color:#157DED">Saint Peter`s, Dublin 4 D04 W7K5</p>
+                                    <p style="color:#157DED"><a href="mailto:info@sralocum.com">info@sralocum.com</a> | 01 685 4700 | 01 699 4321</p></body</html>';
 		helper(['form']);
 		if ($this->request->getMethod() == 'post') {
 			//let's do the validation here
@@ -419,15 +423,7 @@ class cli extends CLIBaseController
 			$to = $data['e_ord']['emp_email'];
 			$cc = 'info@sralocum.com';
 			$subject = ''.session()->cl_h_name.' Approved your Timesheet';
-			$message = '<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href='.base_url('backend/t-view/'.encryptIt($id)).' style="background-color:#157DED;color:white;border: none;
-			color: white;
-			padding: 5px 10px;
-			text-align: center;
-			text-decoration: none;
-			display: inline-block;
-			font-size: 16px;
-			margin: 4px 2px;
-			cursor: pointer;">Click to View</a></body</html>';
+			$message = $this->LoadView('clients/emails/timesheetApproved_emp', $data);
 
 		$newData = [
 			'ord_time_sheet_approved' => "Approved",
@@ -521,7 +517,6 @@ class cli extends CLIBaseController
 					'ord_required_from' => $this->request->getVar('ord_required_from'),
 					'ord_required_to' => $this->request->getVar('ord_required_to'),
 					'ord_datetime_detail' => $this->request->getVar('ord_datetime_detail'),
-					'ord_status' => 1,
 					'cl_id'=> session()->cl_id,
 					
 				];
@@ -538,7 +533,11 @@ class cli extends CLIBaseController
 			display: inline-block;
 			font-size: 16px;
 			margin: 4px 2px;
-			cursor: pointer;">Click to View</a></body</html>';
+			cursor: pointer;">Click to View</a><h5 style="color:#157DED">Regards with Thanks</h5>
+                                    <h6 style="color:#157DED">SRA Locum</h6>
+                                    <p style="color:#157DED">2nd Floor, 13 Baggot St Upper</p>
+                                    <p style="color:#157DED">Saint Peter`s, Dublin 4 D04 W7K5</p>
+                                    <p style="color:#157DED"><a href="mailto:info@sralocum.com">info@sralocum.com</a> | 01 685 4700 | 01 699 4321</p></body></html>';
 				$newdata2 = [
 					'ord_id' => $oid,
 					'emp_id' =>$id,
@@ -607,7 +606,11 @@ class cli extends CLIBaseController
 			display: inline-block;
 			font-size: 16px;
 			margin: 4px 2px;
-			cursor: pointer;">Click to View</a></body</html>';
+			cursor: pointer;">Click to View</a><h5 style="color:#157DED">Regards with Thanks</h5>
+                                    <h6 style="color:#157DED">SRA Locum</h6>
+                                    <p style="color:#157DED">2nd Floor, 13 Baggot St Upper</p>
+                                    <p style="color:#157DED">Saint Peter`s, Dublin 4 D04 W7K5</p>
+                                    <p style="color:#157DED"><a href="mailto:info@sralocum.com">info@sralocum.com</a> | 01 685 4700 | 01 699 4321</p></body</html>';
 		
 
 		
@@ -774,7 +777,11 @@ public function order_confirm($oid = null)
 			display: inline-block;
 			font-size: 16px;
 			margin: 4px 2px;
-			cursor: pointer;">Click to View</a></body</html>';
+			cursor: pointer;">Click to View</a><h5 style="color:#157DED">Regards with Thanks</h5>
+                                    <h6 style="color:#157DED">SRA Locum</h6>
+                                    <p style="color:#157DED">2nd Floor, 13 Baggot St Upper</p>
+                                    <p style="color:#157DED">Saint Peter`s, Dublin 4 D04 W7K5</p>
+                                    <p style="color:#157DED"><a href="mailto:info@sralocum.com">info@sralocum.com</a> | 01 685 4700 | 01 699 4321</p></body></html>';
 
             $newData1 = [
                 'ord_client_confirnFlag' => '1',
@@ -829,8 +836,8 @@ public function order_confirm($oid = null)
 		$dt = date('Y-m-d H:i:s', $timestamp);
 		helper(['form']);
 		$model = new ordersModel();
-		$data['o_pen'] = $model->where('ord_status', '1')->where('ord_required_to >=', $dt)->countAllResults();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->Join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->Join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('orders.ord_status', '1')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('clients.cl_id', session()->cl_id)->orderBy('ord_updated', 'DESC')->findAll();
+		$data['o_pen'] = $model->where('ord_status', '1')->where('ord_required_to >=', $dt)->orwhere('ord_status', NULL)->where('ord_required_to >=', $dt)->countAllResults();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id','LEFT')->Join('employee', 'employee.emp_id = orders.emp_id','LEFT')->Join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality','LEFT')->Join('emp_grade', 'emp_grade.grade_id = orders.ord_grade','LEFT')->where('orders.ord_status', '1')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('clients.cl_id', session()->cl_id)->where('ord_required_to >=', $dt)->orWhere('orders.ord_status', NULL)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('clients.cl_id', session()->cl_id)->where('ord_required_to >=', $dt)->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('clients/new_orders', $data);
 	}

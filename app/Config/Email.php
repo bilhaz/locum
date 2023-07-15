@@ -47,28 +47,28 @@ class Email extends BaseConfig
      *
      * @var string
      */
-    public $SMTPHost = 'smtp.gmail.com';
+    public $SMTPHost = 'mail.sralocum.com';
 
     /**
      * SMTP Username
      *
      * @var string
      */
-    public $SMTPUser = 'okashaali88@gmail.com';
+    public $SMTPUser = 'Info@sralocum.com';
 
     /**
      * SMTP Password
      *
      * @var string
      */
-    public $SMTPPass = 'wytkkjvypgctmuoq';
+    public $SMTPPass = 'Tesco1234';
 
     /**
      * SMTP Port
      *
      * @var int
      */
-    public $SMTPPort = 587;
+    public $SMTPPort = 465;
 
     /**
      * SMTP Timeout (in seconds)
@@ -89,7 +89,7 @@ class Email extends BaseConfig
      *
      * @var string
      */
-    public $SMTPCrypto = 'tls';
+    public $SMTPCrypto = 'ssl';
 
     /**
      * Enable word-wrap

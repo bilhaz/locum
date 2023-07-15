@@ -465,7 +465,7 @@
     <h2 style="text-indent: 0pt;text-align: left;">Confirmation of Assignment</h2>
     <hr class="primary">
     <p style="text-indent: 0pt;line-height: 1pt;text-align: left;"></p>
-    <h2 style="text-indent: 0pt;text-align: left;">Dear Dr. <?= $cont['emp_fname']. ' ' .$cont['emp_lname'] .' ( '. $cont['emp_imcr_no'].')' ?></h2>
+    <h2 style="text-indent: 0pt;text-align: left;">Dear <?= $cont['emp_fname']. ' ' .$cont['emp_lname'] .' ( '. $cont['emp_imcr_no'].')' ?></h2>
     
     <p style="text-indent: 0pt;text-align: left;">We are now in a position to confirm your placement as Locum doctor with following details:</p>
     
@@ -646,7 +646,7 @@
     <table style="border-collapse:collapse;margin-left:47.434pt" cellspacing="0" width="80%">
         <tr style="height:16pt">
             <td style="width:221pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-left: 74pt;padding-right: 73pt;text-indent: 0pt;line-height: 13pt;text-align: center;">DOCTOR NAME</p>
+                <p class="s2" style="padding-left: 74pt;padding-right: 73pt;text-indent: 0pt;line-height: 13pt;text-align: center;">NAME</p>
             </td>
             <td style="width:240pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
                 <p style="text-indent: 0pt;text-align: left;">&nbsp;<?= $cont['emp_fname']. ' ' .$cont['emp_lname'] ?></p>

@@ -153,7 +153,7 @@ $routes->match(['get' , 'post'], 'emails/SentMail', 'emails\emails::SentMail',['
 // route since we don't have to scan directories.
 $routes->match(['get' , 'post'], 'employee', 'employee\emp::dashboard',['filter' => 'E_Auth']);
 $routes->match(['get' , 'post'], 'employee/advt_apply/(:any)', 'employee\emp::advt_apply/$1',['filter' => 'E_Auth']);
-$routes->match(['get' , 'post'], 'employee/advt_applied', 'employee\emp::advt_applied',['filter' => 'E_Auth']);
+$routes->match(['get' , 'post'], 'employee/advt_applied/(:any)', 'employee\emp::advt_applied/$1',['filter' => 'E_Auth']);
 $routes->match(['get' , 'post'], 'employee/login', 'employee\emp::login',['filter' => 'E_noauth']);
 $routes->match(['get' , 'post'], 'employee/forgot-password', 'employee\emp::forgot_pass',['filter' => 'E_noauth']);
 $routes->match(['get' , 'post'], 'employee/passwordReset', 'employee\emp::passwordReset',['filter' => 'E_noauth']);

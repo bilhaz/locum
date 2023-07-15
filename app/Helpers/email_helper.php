@@ -61,7 +61,7 @@ function composeEmail($to, $cc, $bcc, $subject, $message, $attachments = [],$inR
 {
     $email = \Config\Services::email();
 
-    $email->setFrom('no-reply@sralocum.com');
+    $email->setFrom('info@sralocum.com');
     $email->setTo($to);
     $email->setBCC($bcc);
     $email->setCC($cc);

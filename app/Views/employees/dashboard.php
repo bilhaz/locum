@@ -4,6 +4,7 @@
 <div class="row g-3">
 <div class="col-md-6 col-sm-12">
 <h2 class="m-0 fs-5"><a href="javascript:void(0);" class="btn btn-sm btn-link ps-0 btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> Dashboard</h2>
+<p class="mt-3 text-justify text-danger"><strong>To view your all locum assignments, <br>Please click on My Assignment</strong></p>
 </div>
 </div>
 </div>

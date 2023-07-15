@@ -47,42 +47,102 @@
                         <div class="row mb-3 " id="email">
                             <form action="<?= base_url('backend/sFourthR/' . encryptIt($em_4['ord_id']))?>" method="post">
 
-                                <h5 style="color:#157DED">Dear Dr.
-
-                                    <?= $em_4['emp_fname'] . ' ' . $em_4['emp_lname'] . ' (' . $em_4['emp_imcr_no'] . ')' ?></h5>
+                                <h5 style="color:#157DED">Dear 
+                                
+                                <?= $em_4['emp_fname'].' '. $em_4['emp_lname']. ' ('. $em_4['emp_imcr_no']. ')'?></h5>
                                 <br>
-                                <p style="color:#157DED">Congratulations and thank you for taking up this Locum assignment with SRA Locum. Please find attached the confirmation of your booking.</p>
-                                <h5 style="color:#157DED">Attachment</h5>
-                                <ul class="spbull" style="line-height: 2em;">
-                                <li style="color:#157DED">Attached is the Confirmation of Locum Details with Term & Conditions and Contract<br>
-                                        <a type="button" target="_blank" href="<?= base_url('employee/ord-view/'.encryptIt($em_4['ord_id']))?>" class="btn" style="background-color:#157DED;color:white;">Click to View Contract</a>
-                                    </li>
-                                    <li style="color:#157DED">Attached is the Confirmation of Locum Details with Term & Conditions, Timesheet and Assessment form.<br>
-                                        <a type="button" target="_blank" href="<?= base_url('public/uploads/SRAL-timesheet.pdf') ?>" class="btn" style="background-color:#157DED;color:white;">Click to Download Timesheet</a>
-                                    </li>
-                                    <li style="color:#157DED">Timesheet you are required to complete and get signed by your consultant when you have finished the shifts.</li>
-                                    <li style="color:#157DED">Kindly ensure that you get your timesheet signed off at the end of the assignment. This is to make sure that you receive your payment promptly SRA Locum will only pay once Time sheet(s) is confirmed and the Client has paid SRA Locum (T&C applies).</li>
-                                    <li style="color:#157DED">Please also submit the attached assessment form to the consultant/ GP whilst you are working as this will enable us to book you out easier in the future.</li>
-                                    <li style="color:#157DED">Upon receipt of this email, please read the attached confirmation to confirm all details are correct, and then reply back to us immediately on by return Email.</li>
-                                </ul>
-
-
-                                <br>
-                                <h6 class="text-danger">NOTE:</h6>
-                                <span class="text-danger mb-2">If you are unable to reach GP/Hospital/assignment place of work on time for the agreed shifts please Contact Hospital/Surgery and SRA Locum on <a href="mailto:info@sralocum.com">info@sralocum.com</a> / 01-6854700. Unnecessary cancelation effects patient care please referrer to <a href="https://www.medicalcouncil.ie/">https://www.medicalcouncil.ie/</a> for additional information.</span>
-
-
-                                <hr class="primary">
-                                <br>
-                                <p style="color:#157DED"><strong>What is next:</strong>
-                                <ol type="1" style="color:#157DED; line-height: 2em;">
-                                    <li>You finish your locum Assignment</li>
-                                    <li>You send us a scan or fax of timesheet, Alternatively, leave it with HR.</li>
-                                    <li>Once your timesheet hours are confirmed</li>
-                                    <li>Your payment is processed subject to Hospital/ Surgery approval</li>
-                                    <li>Shamrock Assist Locum Services Pays. (All agreed rates are Limited company rates only)</li>
+                                <p style="color:#157DED">Congratulations, and thank you for taking up this Locum assignment with SRA Locum with the following details:</p>
+                                <table class="table table-bordered align-middle d-inline">
+      <tr>
+        <th style="border: 1px solid black;"><strong>Hospital Name & Address:</strong></th>
+        <td style="border: 1px solid black;"><strong><?= $em_4['cl_h_name']. ', '. $em_4['cl_address'].' | ' . $em_4['cl_eircode'] ?></strong></td>
+      </tr>
+     <tr>
+        <th style="border: 1px solid black;"><strong>Covering Specialty:</strong></th>
+        <td style="border: 1px solid black;"><strong><?= $em_4['spec_name'].' '. $em_4['grade_name']?></strong></td>
+     </tr>
+     <tr>
+	 <th style="border: 1px solid black;"><strong>Covering Date & Time:</strong></th>
+	 <td style="border: 1px solid black;"><strong>
+    <?php $pros = explode(",",$em_4['ord_prosdatetime_detail']);
+                                        foreach($pros as $var): ?>
+                                       <?= $var ?> <br>
+                                       <?php endforeach; ?>
+</strong></td>
+      </tr> 
+      <tr>
+        <th style="border: 1px solid black;"><strong>Rate:</strong></th>
+        <td style="border: 1px solid black;"><b>Normal:</b> &euro;<?=  $em_4['ord_normal_hrs_rt'] ?>&nbsp;<?php if($em_4['nh_p_type'] == 1): echo "/hr"; elseif($em_4['nh_p_type'] == 2): echo "/day"; else: echo "/halfday"; endif; ?><br>
+                                            <?php if($em_4['ord_ocall_rt'] > 0): ?>
+                                            <b>OnCall:</b> &euro;<?= $em_4['ord_ocall_rt']?>&nbsp;<?php if($em_4['oc_p_type'] == 1): echo "/hr"; elseif($em_4['oc_p_type'] == 2): echo "/day"; else: echo "/halfday"; endif; ?> <br>
+                                            <?php endif; ?>
+                                            <?php if($em_4['ord_osite_rt'] > 0): ?>
+                                            <b>OffSite:</b> &euro;<?= $em_4['ord_osite_rt'] ?>&nbsp;<?php if($em_4['os_p_type'] == 1): echo "/hr"; elseif($em_4['os_p_type'] == 2): echo "/day"; else: echo "/halfday"; endif; ?><br>
+                                            <?php endif; ?>
+                                            <?php if($em_4['ord_bhw_rt'] > 0): ?>
+                                            <b>Weekend:</b> &euro;<?= $em_4['ord_bhw_rt'] ?>&nbsp;<?php if($em_4['bhw_p_type'] == 1): echo "/hr"; elseif($em_4['bhw_p_type'] == 2): echo "/day"; else: echo "/halfday"; endif; ?><br></td>
+                                            <?php endif; ?>
+     </tr>
+  </table>
+  <br>
+  <br>
+  <p style="color:#157DED">You do not need to reply to this email. </p>
+                                    <ol>
+                                <li style="color:#157DED">To view your contract, please click here:
+                                        <a type="button" target="_blank" href="<?= base_url('employee/ord-view/'.encryptIt($em_4['ord_id']))?>" class="btn" style="background-color:#157DED;color:white;border: none;
+										color: white;
+										padding: 5px 10px;
+										text-align: center;
+										text-decoration: none;
+										display: inline-block;
+										font-size: 16px;
+										margin: 4px 2px;
+										cursor: pointer;">Click to View Contract</a></li>
+										
+										<li style="color:#157DED">To view your SRA Locum Terms and Condition, please click here:
+                                        <a type="button" target="_blank" href="https://sralocum.com/public/uploads/files/termsandconditions.pdf" class="btn" style="background-color:#157DED;color:white;border: none;
+										color: white;
+										padding: 5px 10px;
+										text-align: center;
+										text-decoration: none;
+										display: inline-block;
+										font-size: 16px;
+										margin: 4px 2px;
+										cursor: pointer;">Click to View Terms and Condition</a></li>
+										
+                                    <li style="color:#157DED">Once you have finished your locum, you will need to complete the time sheet.   Please login to your SRA Locum portal to complete your timesheet or alternatively click here to print your timesheet and send it to us after filling it.
+                                        <a type="button" target="_blank" href="<?= base_url('public/uploads/SRAL-timesheet.pdf')?>" class="btn" style="background-color:#157DED;color:white;border: none;
+										color: white;
+										padding: 5px 10px;
+										text-align: center;
+										text-decoration: none;
+										display: inline-block;
+										font-size: 16px;
+										margin: 4px 2px;
+										cursor: pointer;">Click to Download Timesheet</a></li>
+										
+										<li style="color:#157DED">We recommend that you have your assessment form completed and signed by the consultant and email it to us at info@sralocum.com
+                                        <a type="button" target="_blank" href="<?= base_url('public/uploads/Assesment_form.pdf')?>" class="btn" style="background-color:#157DED;color:white;border: none;
+										color: white;
+										padding: 5px 10px;
+										text-align: center;
+										text-decoration: none;
+										display: inline-block;
+										font-size: 16px;
+										margin: 4px 2px;
+										cursor: pointer;">Click to Download Assesment Form</a></li>
                                 </ol>
-                                </p>
+
+
+   <br>
+   <h6 style="color:red;">NOTE:</h6>
+   <ol style="color:red;" type="a">
+       <li>You remain responsible for the complete timesheet.</li>
+       <li>. SRA Locum will only pay the locum doctor once the Timesheet (s) is confirmed and the ordering Client has paid Shamrock Assist Limited.</li>
+       <li>We strongly recommend you have your assessment form completed as this will help us to secure locums for you.</li>
+       <li>If you are unable to reach the GP/Hospital/assignment place of work on time for the agreed shifts please Contact the Hospital/Surgery on the phone (usually though GP surgery/Hospital switchboard) and by emailing SRA Locum at <a href="mailto:info@sralocum.com">info@sralocum.com</a> / or by calling 01-6854700.</li>
+       <li>Unnecessary cancellation affects patient care. Please referrer to <a href="https://www.medicalcouncil.ie/">https://www.medicalcouncil.ie/</a> for additional information.</li>
+       </ol>
                                 <div style="float:right;">
                                     <a id="payment-button" href="<?= base_url('backend/order-s4/' . encryptIt($em_4['ord_id'])) ?>" class="btn btn-lg btn-dark btn-block">
                                         <span id="payment-button-amount">Back</span>
@@ -101,8 +161,7 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
+
 <?php }else{
     header('location: '.base_url().'/backend/order-s5/'.encryptIt($em_4['ord_id']));
     exit();

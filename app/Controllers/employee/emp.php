@@ -58,10 +58,20 @@ class emp extends EMPBaseController
 						->first();
 
 					$this->setUserSession($empuser);
+					        $sessionurl = session();
+    						$redirectURL = $sessionurl->get('redirect'); // Retrieve the URL from the session
+                            $sessionurl->remove('redirect'); // Remove the saved URL from the session
+
+                        // Redirect the user to the saved URL if it exists
+                            if (!empty($redirectURL)) {
+                             return redirect()->to($redirectURL);
+                            } else {
 					return redirect()->to('employee/dashboard');
 				}
 			}
 		}
+		}
+	
 
 		return $this->LoadView('employees/login', $data);
 	}
@@ -227,7 +237,7 @@ class emp extends EMPBaseController
 		$timestamp = \time();
 		$dt = date('Y-m-d H:i:s', $timestamp);
 		$model = new ordersModel();
-		$data['o_pen'] = $model->where('ord_status', '1')->where('emp_id', session()->emp_id)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
+		$data['o_pen'] = $model->where('ord_status', '1')->where('emp_id', session()->emp_id)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->orWhere('ord_status', NULL)->where('emp_id', session()->emp_id)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
 		$data['o_pro'] = $model->where('ord_status', '2')->where('emp_id', session()->emp_id)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
 		$data['o_con'] = $model->where('ord_status', '3')->where('emp_id', session()->emp_id)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
 		$data['o_end'] = $model->where('ord_status', '4')->where('emp_id', session()->emp_id)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->countAllResults();
@@ -323,7 +333,7 @@ class emp extends EMPBaseController
 		$data['e_ord'] = $model->where('ord_id', $asid)->first();
 		$to = 'info@sralocum.com';
 		$cc = '';
-		$subject = '' . session()->emp_email . ' Uploaded Assesment';
+		$subject = '' . session()->emp_fname.' '.session()->emp_lname . ' Uploaded Assesment';
 		$message = '<html><body><p> Here is the Assesment Link</p><br><a target="_blank" href=' . base_url('public/uploads/doc_assesment/' . encryptIt($data['e_ord']['ord_assignment'])) . ' style="background-color:#157DED;color:white;border: none;
 			color: white;
 			padding: 5px 10px;
@@ -332,7 +342,11 @@ class emp extends EMPBaseController
 			display: inline-block;
 			font-size: 16px;
 			margin: 4px 2px;
-			cursor: pointer;">Click to View</a></body</html>';
+			cursor: pointer;">Click to View</a><h5 style="color:#157DED">Regards with Thanks</h5>
+                                    <h6 style="color:#157DED">SRA Locum</h6>
+                                    <p style="color:#157DED">2nd Floor, 13 Baggot St Upper</p>
+                                    <p style="color:#157DED">Saint Peter`s, Dublin 4 D04 W7K5</p>
+                                    <p style="color:#157DED"><a href="mailto:info@sralocum.com">info@sralocum.com</a> | 01 685 4700 | 01 699 4321</p></body</html>';
 
 		if ($this->request->getMethod() == 'post') {
 			//let's do the validation here
@@ -449,7 +463,11 @@ class emp extends EMPBaseController
 			display: inline-block;
 			font-size: 16px;
 			margin: 4px 2px;
-			cursor: pointer;">Click to View</a></body</html>';
+			cursor: pointer;">Click to View</a><h5 style="color:#157DED">Regards with Thanks</h5>
+                                    <h6 style="color:#157DED">SRA Locum</h6>
+                                    <p style="color:#157DED">2nd Floor, 13 Baggot St Upper</p>
+                                    <p style="color:#157DED">Saint Peter`s, Dublin 4 D04 W7K5</p>
+                                    <p style="color:#157DED"><a href="mailto:info@sralocum.com">info@sralocum.com</a> | 01 685 4700 | 01 699 4321</p></body</html>';
 			$message2 = '<html><body><p> Here is the Timesheet Link</p><br><a target="_blank" href=' . base_url('client/timesheet/' . encryptIt($ord_id)) . ' style="background-color:#157DED;color:white;border: none;
 			color: white;
 			padding: 5px 10px;
@@ -458,7 +476,12 @@ class emp extends EMPBaseController
 			display: inline-block;
 			font-size: 16px;
 			margin: 4px 2px;
-			cursor: pointer;">Click to View</a></body</html>';
+			cursor: pointer;">Click to View</a>
+			<h5 style="color:#157DED">Regards with Thanks</h5>
+                                    <h6 style="color:#157DED">SRA Locum</h6>
+                                    <p style="color:#157DED">2nd Floor, 13 Baggot St Upper</p>
+                                    <p style="color:#157DED">Saint Peter`s, Dublin 4 D04 W7K5</p>
+                                    <p style="color:#157DED"><a href="mailto:info@sralocum.com">info@sralocum.com</a> | 01 685 4700 | 01 699 4321</p></body</html>';
 		foreach ($_POST['status'] as $row => $key) {
 
 			$model->insert(array('order_id' => $ord_id, 'dutyDate' => explode(',', $key)[0], 'dutyTime' => explode(',', $key)[1], 'siteStatus' => explode(',', $key)[2]));
@@ -574,7 +597,11 @@ class emp extends EMPBaseController
 			display: inline-block;
 			font-size: 16px;
 			margin: 4px 2px;
-			cursor: pointer;">Click to View</a></body</html>';
+			cursor: pointer;">Click to View</a><h5 style="color:#157DED">Regards with Thanks</h5>
+                                    <h6 style="color:#157DED">SRA Locum</h6>
+                                    <p style="color:#157DED">2nd Floor, 13 Baggot St Upper</p>
+                                    <p style="color:#157DED">Saint Peter`s, Dublin 4 D04 W7K5</p>
+                                    <p style="color:#157DED"><a href="mailto:info@sralocum.com">info@sralocum.com</a> | 01 685 4700 | 01 699 4321</p></body</html>';
 		// Delete all existing timesheet data for this order
 		$model->where(['order_id' => $ord_id])->delete();
 
@@ -664,7 +691,6 @@ class emp extends EMPBaseController
 				'emp_imcr_no' => ['label' => 'IMCR No.', 'rules' => 'required'],
 				'emp_cv' => ['label' => 'CV', 'rules' => 'uploaded[emp_cv]|ext_in[emp_cv,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_cv,2048]'],
 				'emp_imc_cert' => ['label' => 'IMC Certificate', 'rules' => 'uploaded[emp_imc_cert]|ext_in[emp_imc_cert,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_imc_cert,2048]'],
-				'emp_gv_cert' => ['label' => 'Garda Vetting', 'rules' => 'uploaded[emp_gv_cert]|ext_in[emp_gv_cert,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_gv_cert,2048]'],
 				'emp_rec_refer' => ['label' => 'Recent Reference', 'rules' => 'uploaded[emp_rec_refer]|ext_in[emp_rec_refer,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_rec_refer,2048]'],
 				'emp_passport' => ['label' => 'Passport', 'rules' => 'uploaded[emp_passport]|ext_in[emp_passport,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_passport,2048]'],
 				'emp_occup_health' => ['label' => 'Occupational Health', 'rules' => 'uploaded[emp_occup_health]|ext_in[emp_occup_health,doc,docx,png,PNG,jpg,jpeg,JPEG,JPG,pdf,PDF]|max_size[emp_occup_health,2048]'],
@@ -690,10 +716,6 @@ class emp extends EMPBaseController
 				],
 
 				'emp_imc_cert' => [
-					'uploaded' => 'Can not upload not a valid file',
-					'max_size' => 'File size must be less than 2MB'
-				],
-				'emp_gv_cert' => [
 					'uploaded' => 'Can not upload not a valid file',
 					'max_size' => 'File size must be less than 2MB'
 				],
@@ -765,17 +787,6 @@ class emp extends EMPBaseController
 				} else {
 					$emp_imc_cert = $this->request->getPost('emp_imc_certt');
 					$emp_imc_cert_name = $emp_imc_cert;
-				}
-
-				$emp_gv_cert = $this->request->getFile('emp_gv_cert');
-
-				if ($emp_gv_cert->isValid() && !$emp_gv_cert->hasMoved()) {
-					$emp_gv_cert_name = encryptIt($emp_gv_cert->getName()) . '.' . pathinfo($_FILES['emp_gv_cert']['name'], PATHINFO_EXTENSION);
-
-					$emp_gv_cert->move('public/uploads/employee_attach/', $emp_gv_cert_name, true);
-				} else {
-					$emp_gv_cert = $this->request->getPost('emp_gv_certt');
-					$emp_gv_cert_name = $emp_gv_cert;
 				}
 
 				$emp_rec_refer = $this->request->getFile('emp_rec_refer');
@@ -902,7 +913,6 @@ class emp extends EMPBaseController
 					'emp_imcr_no' => $this->request->getVar('emp_imcr_no'),
 					'emp_cv' => $cvname,
 					'emp_imc_cert' => $emp_imc_cert_name,
-					'emp_gv_cert' => $emp_gv_cert_name,
 					'emp_rec_refer' => $emp_rec_refer_name,
 					'emp_passport' => $emp_passport_name,
 					'emp_occup_health' => $emp_occup_health_name,
@@ -930,7 +940,7 @@ class emp extends EMPBaseController
 	{
 
 		$data = [];
-		$id = session()->cl_id;
+		$id = session()->emp_id;
 		$timestamp = \time();
 		$dt = date('Y-m-d H:i:s', $timestamp);
 		helper(['form']);
@@ -938,7 +948,7 @@ class emp extends EMPBaseController
 		$data['e_doc'] = $emodel->where('emp_id', $id)->first();
 		$model = new ordersModel();
 		$data['o_pen'] = $model->where('ord_status', '1')->where('ord_required_to >=', $dt)->countAllResults();
-		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->Join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->Join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('orders.ord_status', '1')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('employee.emp_id', session()->emp_id)->orderBy('ord_updated', 'DESC')->findAll();
+		$data['ord_row'] = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->Join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->Join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->where('orders.ord_status', '1')->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('employee.emp_id', session()->emp_id)->orWhere('orders.ord_status', NULL)->where('ord_cancel_bcl', '0')->where('ord_cancel_bdr', '0')->where('employee.emp_id', session()->emp_id)->orderBy('ord_updated', 'DESC')->findAll();
 
 		return $this->LoadView('employees/pending_assigment', $data);
 	}
@@ -946,7 +956,7 @@ class emp extends EMPBaseController
 	{
 
 		$data = [];
-		$id = session()->cl_id;
+		$id = session()->emp_id;
 		helper(['form']);
 		$emodel = new EmpModel();
 		$data['e_doc'] = $emodel->where('emp_id', $id)->first();
@@ -960,7 +970,7 @@ class emp extends EMPBaseController
 	{
 
 		$data = [];
-		$id = session()->cl_id;
+		$id = session()->emp_id;
 		helper(['form']);
 		$emodel = new EmpModel();
 		$data['e_doc'] = $emodel->where('emp_id', $id)->first();
@@ -974,7 +984,7 @@ class emp extends EMPBaseController
 	{
 
 		$data = [];
-		$id = session()->cl_id;
+		$id = session()->emp_id;
 		helper(['form']);
 		$emodel = new EmpModel();
 		$data['e_doc'] = $emodel->where('emp_id', $id)->first();
@@ -999,7 +1009,7 @@ class emp extends EMPBaseController
 
 		$to = 'info@sralocum.com';
 		$cc = '';
-		$subject = '' . session()->emp_email . ' Applied for Locum';
+		$subject = '' . session()->emp_fname.' ' . session()->emp_lname. ' Applied for Locum';
 		$message = $this->LoadView('employees/emails/advt_apply', $data);
 
 		$session = session();
@@ -1022,7 +1032,7 @@ class emp extends EMPBaseController
 				'usr_type' => "admin",
 			];
 			$Nmodel->insert($newdata2);
-			return redirect()->to('employee/advt_applied');
+			return redirect()->to('employee/advt_applied/'.encryptIt($id));
 		} else {
 			$session->setFlashdata('error', 'Apply Failed');
 			$emLog = [
@@ -1040,14 +1050,18 @@ class emp extends EMPBaseController
 	public function advt_applied($id = null)
 	{
 		$id = decryptIt($id);
+		$model = new ordersModel();
+		$order = $model->Join('clients', 'clients.cl_id = orders.cl_id', 'LEFT')->Join('employee', 'employee.emp_id = orders.emp_id', 'LEFT')->join('emp_speciality', 'emp_speciality.spec_id = orders.ord_speciality', 'LEFT')->join('emp_grade', 'emp_grade.grade_id = orders.ord_grade', 'LEFT')->Join('timesheets', 'timesheets.order_id = orders.ord_id', 'LEFT')->where('orders.ord_id', $id)->first();
+		$spec =$order['spec_name'];
+		$grade = $order['grade_name'];
 		$to = session()->emp_email;
 		$cc = 'info@sralocum.com';
-		$subject = 'Applied Successfully for Locum';
+		$subject = 'You have Successfully Applied  for '.$spec.' | '.$grade.' Locum';
 		$message = $this->LoadView('employees/emails/advt_applied');
 
 		$session = session();
 		if (sendEmail($to, $cc, $subject, $message)) {
-			$session->setFlashdata('success', 'Applied for Locum Successfully');
+			$session->setFlashdata('success', 'You have Successfully Applied  for '.$spec.' | '.$grade.' Locum');
 			$emLog = [
 				'em_to' => $to,
 				'em_subject' => $subject,
@@ -1083,7 +1097,14 @@ class emp extends EMPBaseController
 		$count = $model->where('status', 0)->countAllResults();
 
 		foreach ($data as $row) {
-			$url = base_url($row['link'] . '/' . encryptIt($row['ord_id']));
+		    if(!empty ($row['ord_id'])){
+		        $url = base_url($row['link'] . '/' . encryptIt($row['ord_id']));
+		    }
+		    else{
+		         $url = $url = base_url($row['link']);
+		    }
+		   
+// 			$url = base_url($row['link'] . '/' . encryptIt($row['ord_id']));
 			echo '<li class="d-flex">
 				<div class="feeds-left"><i class="fa fa-calendar"></i></div>
 				<div class="feeds-body flex-grow-1">

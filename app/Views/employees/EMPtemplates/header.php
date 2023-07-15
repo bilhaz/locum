@@ -31,7 +31,7 @@
 
 </head>
 
-<body onload="fetchNotifications(); fetchNotificationscount();">
+<body onload="<?php if (session()->get('EmpLoggedIn')){ echo 'fetchNotifications(); fetchNotificationscount();';}?>">
     <?php $uri = service('uri'); ?>
     <?php if (session()->get('EmpLoggedIn')) : ?>
 
@@ -52,9 +52,9 @@
                             <button type="button" class="btn-toggle-offcanvas"><i class="fa fa-bars"></i></button>
                         </div>
                         <div class="navbar-brand ps-2">
-                            <a class="mr-4" href="<?= base_url('backend/') ?>">
+                            <a class="mr-4" href="<?= base_url('employee/') ?>">
                                 <img src="<?= base_url('public/images/sralogo-icon.png') ?>" width="40" height="40" />
-                                <span class="text-success mt-4 text-center">SRA LOCUM</span>
+                                <span class="text-success d-none d-sm-inline mt-4 text-center">SRA LOCUM</span>
                             </a>
 
                         </div>
@@ -64,9 +64,9 @@
 
                                 </ul>
                                 <!-- <form id="navbar-search" class="navbar-form search-form position-relative d-none d-md-block">
-<input value="" class="form-control" placeholder="Search here..." type="text">
-<button type="button" class="btn btn-secondary"><i class="fa fa-search"></i></button>
-</form> -->
+    <input value="" class="form-control" placeholder="Search here..." type="text">
+    <button type="button" class="btn btn-secondary"><i class="fa fa-search"></i></button>
+    </form> -->
                             </div>
                             <div class="flex-grow-1">
                                 <ul class="nav navbar-nav flex-row justify-content-end align-items-center">
@@ -75,7 +75,7 @@
                                             <i class="fa fa-bell"></i>
                                             <span id="notif-count" class="badge bg-danger"></span>
                                         </a>
-                                        <div class="dropdown-menu notification-dropdown dropdown-menu-end p-0 shadow notification overflow">
+                                        <div class="dropdown-menu notification-dropdown dropdown-menu-end p-0 shadow notification tab-content overflow">
                                             <ul class="list-unstyled feeds_widget" id="notif">
                                                 <li class="d-flex">
                                                     <div class="feeds-body flex-grow-1">
