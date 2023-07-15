@@ -16,12 +16,14 @@
                         <div class="mail-right">
                             <div class="p-2 p-sm-3 d-flex justify-content-between align-items-center">
                                 <h6 class="card-title">Email List</h6>
-                                <div class="col-md-12 col-sm-12 float-end">
-                                <form action="" method="GET">
-                                <input name="search" id="search" class="form-control" placeholder="Search Email">
-                                <button type="submit" class="btn btn-success">Go</button>
-                                </form>
-                            </div>
+                                <div class="col-md-4 col-sm-3 float-end">
+                                    <form action="" method="GET">
+                                        <div class="input-group">
+                                            <input name="search" id="search" class="form-control" placeholder="Search Email">
+                                            <button type="submit" class="btn btn-success">Go</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                             <?php if (session()->get('success')) : ?>
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -65,40 +67,41 @@
 
                             </div>
                             <div id="update_data">
-                            <div class="mail-list">
+                                <div class="mail-list">
 
-                                <ul class="list-unstyled mb-0">
-                                    <div id="emailData">
-                                    <?php $i = 1;
-                                    foreach ($emails as $row) : ?>
-                                        <li class="clearfix <?php if ($row['seen'] != "1") echo "unread"; ?>" onclick="window.open('<?= base_url('emails/view_email/' . encryptIt($row['id'])) ?>')">
-                                            <div class="mail-detail-left float-start">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault7" disabled>
-                                                    <label class="form-check-label" for="flexCheckDefault7"></label>
-                                                </div>
-                                            </div>
-                                            <div class="mail-detail-right float-start">
-                                                <h6 class="sub">
-                                                    <a href="<?= base_url('emails/view_email/' .encryptIt($row['id'])) ?>" target="_blank" class="mail-detail-expand" data-index="<?= $i ?>"><?= isset($row['subject'])&&!empty($row['subject']) ? $row['subject'] : 'No-Subject' ?>&nbsp;<?php if($row['hasAttachment'] == "1"): echo '<i class="fa fa-paperclip"></i>'; endif;?></a>
-                                                    <?php if ($row['seen'] != "1") : ?>
-                                                        &nbsp;<span class="badge bg-success mb-0">New</span>
-                                                    <?php else : ?>
-                                                        
-                                                    <?php endif; ?>
-                                                </h6>
-                                                <p class="dep">
-                                                    <span class=""><?= $row['from'] ?></span>
-                                                </p>
-                                                <span class="time "><?= date("d-m-Y H:m A", strtotime($row['date'])) ?></span>
-                                            </div>
-                                        </li>
-                                    <?php $i++;
-                                    endforeach; ?>
-                                    </div>
-                                </ul>
-                            </div>
-                            
+                                    <ul class="list-unstyled mb-0">
+                                        <div id="emailData">
+                                            <?php $i = 1;
+                                            foreach ($emails as $row) : ?>
+                                                <li class="clearfix <?php if ($row['seen'] != "1") echo "unread"; ?>" onclick="window.open('<?= base_url('emails/view_email/' . encryptIt($row['id'])) ?>')">
+                                                    <div class="mail-detail-left float-start">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault7" disabled>
+                                                            <label class="form-check-label" for="flexCheckDefault7"></label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mail-detail-right float-start">
+                                                        <h6 class="sub">
+                                                            <a href="<?= base_url('emails/view_email/' . encryptIt($row['id'])) ?>" target="_blank" class="mail-detail-expand" data-index="<?= $i ?>"><?= isset($row['subject']) && !empty($row['subject']) ? $row['subject'] : 'No-Subject' ?>&nbsp;<?php if ($row['hasAttachment'] == "1") : echo '<i class="fa fa-paperclip"></i>';
+                                                                                                                                                                                                                                                                                                    endif; ?></a>
+                                                            <?php if ($row['seen'] != "1") : ?>
+                                                                &nbsp;<span class="badge bg-success mb-0">New</span>
+                                                            <?php else : ?>
+
+                                                            <?php endif; ?>
+                                                        </h6>
+                                                        <p class="dep">
+                                                            <span class=""><?= $row['from'] ?></span>
+                                                        </p>
+                                                        <span class="time "><?= date("d-m-Y H:m A", strtotime($row['date'])) ?></span>
+                                                    </div>
+                                                </li>
+                                            <?php $i++;
+                                            endforeach; ?>
+                                        </div>
+                                    </ul>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -127,7 +130,7 @@
         function updateEmailData() {
             // Perform AJAX request
             $.ajax({
-                url: '<?= base_url('emails/inboxUpdate_data')?>',
+                url: '<?= base_url('emails/inboxUpdate_data') ?>',
                 type: 'GET',
                 success: function(response) {
                     // Replace the updated data with the old data
@@ -144,4 +147,3 @@
         setInterval(updateEmailData, 30000);
     });
 </script>
-
