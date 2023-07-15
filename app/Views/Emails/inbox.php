@@ -16,7 +16,12 @@
                         <div class="mail-right">
                             <div class="p-2 p-sm-3 d-flex justify-content-between align-items-center">
                                 <h6 class="card-title">Email List</h6>
-
+                                <div class="col-md-12 col-sm-12 float-end">
+                                <form action="" method="GET">
+                                <input name="search" id="search" class="form-control" placeholder="Search Email">
+                                <button type="submit" class="btn btn-success">Go</button>
+                                </form>
+                            </div>
                             </div>
                             <?php if (session()->get('success')) : ?>
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
