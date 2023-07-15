@@ -18,13 +18,22 @@ class emails extends EMBaseController
 
         $mailbox = new Mailbox($hostname, $username, $password);
 
+        // Get the search keyword from the query string
+        $searchKeyword = isset($_GET['search']) ? $_GET['search'] : '';
+
         // Set the sorting order to descending
         $sortingOrder = 'SORTDATE';
         $searchCriteria = 'ALL';
 
+
+        // If a search keyword is provided, update the search criteria
+        if (!empty($searchKeyword)) {
+            $searchCriteria = 'TEXT "' . $searchKeyword . '"';
+        }
+
         // Retrieve all email IDs matching the search criteria
         $mailIds = $mailbox->searchMailbox($searchCriteria, $sortingOrder);
-
+        // print_r($mailIds);exit;
         $page = isset($_GET['page']) ? $_GET['page'] : 1;
         $perPage = Per_Page_Emails;
 
@@ -66,19 +75,22 @@ class emails extends EMBaseController
             // }
             // $attachments .= '<ul>';
             $hasAttachments = $email->hasAttachments();
-            $emails[] = [
-                'id' => $email->id,
-                'subject' => $email->subject,
-                'from' => $email->fromAddress,
-                // 'to' => $email->to,
-                // 'cc' => $email->cc,
-                // 'bcc' => $email->bcc,
-                'seen' => $email->isSeen,
-                'date' => $email->date,
-                'hasAttachment' => $hasAttachments,
-                // 'body' => (isset($email->textHtml)&&!empty($email->textHtml)?$email->textHtml : $email->textPlain),
-                // 'attachments' => $attachments
-            ];
+            // Only add the email to the list if it matches the search keyword
+            if (stripos($email->subject, $searchKeyword) !== false) {
+                $emails[] = [
+                    'id' => $email->id,
+                    'subject' => $email->subject,
+                    'from' => $email->fromAddress,
+                    // 'to' => $email->to,
+                    // 'cc' => $email->cc,
+                    // 'bcc' => $email->bcc,
+                    'seen' => $email->isSeen,
+                    'date' => $email->date,
+                    'hasAttachment' => $hasAttachments,
+                    // 'body' => (isset($email->textHtml)&&!empty($email->textHtml)?$email->textHtml : $email->textPlain),
+                    // 'attachments' => $attachments
+                ];
+            }
         }
 
         // Disconnect from the IMAP server
@@ -94,7 +106,7 @@ class emails extends EMBaseController
         $data['endIndex'] = $endIndex;
         $data['totalEmails'] = $totalEmails;
         $data['totalPages'] = $totalPages;
-        
+
         // Load the inbox view with the retrieved emails and pagination data
         return $this->LoadView('emails/inbox', $data);
     }
@@ -138,20 +150,20 @@ class emails extends EMBaseController
             if (!$email->isSeen) {
                 $mailbox->markMailAsRead($id);
             }
-            if(!empty($email->textHtml)){
+            if (!empty($email->textHtml)) {
                 $hbody = $email->textHtml;
-            }else{
+            } else {
                 $tbody = $email->textPlain;
             }
-            if(isset($email->headers->to[0]->mailbox)){
+            if (isset($email->headers->to[0]->mailbox)) {
                 $mail = $email->headers->to[0]->mailbox;
                 $host = $email->headers->to[0]->host;
-                $to = $mail.'@'.$host;
-                }else{
-                    $mail = $email->headers->bcc[0]->mailbox;
+                $to = $mail . '@' . $host;
+            } else {
+                $mail = $email->headers->bcc[0]->mailbox;
                 $host = $email->headers->bcc[0]->host;
-                $to = $mail.'@'.$host;
-                }
+                $to = $mail . '@' . $host;
+            }
             $emailData = [
                 'id' => $email->id,
                 'subject' => $email->subject,
@@ -242,7 +254,7 @@ class emails extends EMBaseController
             if ($row['seen'] != "1") {
                 echo ' unread';
             }
-            echo '" onclick="window.open(\'' . base_url('emails/view_email/' . encryptIt($row['id'])) . '\')">'; 
+            echo '" onclick="window.open(\'' . base_url('emails/view_email/' . encryptIt($row['id'])) . '\')">';
             echo '<div class="mail-detail-left float-start">';
             echo '<div class="form-check">';
             echo '<input class="form-check-input" disabled type="checkbox" value="" id="flexCheckDefault7">';
@@ -251,7 +263,7 @@ class emails extends EMBaseController
             echo '</div>';
             echo '<div class="mail-detail-right float-start">';
             echo '<h6 class="sub">';
-            echo '<a href="' . base_url('emails/view_email/' . encryptIt($row['id'])) . '" target="_blank" class="mail-detail-expand">' . (isset($row['subject']) && !empty($row['subject']) ? $row['subject'] : 'No-Subject') .'&nbsp;'.'</a>';
+            echo '<a href="' . base_url('emails/view_email/' . encryptIt($row['id'])) . '" target="_blank" class="mail-detail-expand">' . (isset($row['subject']) && !empty($row['subject']) ? $row['subject'] : 'No-Subject') . '&nbsp;' . '</a>';
             echo ($row['hasAttachment'] == "1") ? '<i class="fa fa-paperclip"></i>' : '';
             echo ($row['seen'] != "1") ? '&nbsp;<span class="badge bg-success mb-0">New</span>' : '';
             echo '</h6>';
@@ -295,7 +307,7 @@ class emails extends EMBaseController
                     'content' => $attachment->getContents()
                 ];
             }
-           
+
             $attachmentLinks .= '</ul>';
             // Retrieve the necessary data from the email
             $id = $email->id;
@@ -305,7 +317,7 @@ class emails extends EMBaseController
             //  $bcc = $email->bcc;
             $inReplyTo = $email->headers->message_id;
             $body = (isset($email->textHtml) && !empty($email->textHtml)) ? $email->textHtml : $email->textPlain; // Use the plain text version of the email as the default body
-            
+
 
 
             // Prepare the data to be passed to the view
@@ -382,7 +394,7 @@ class emails extends EMBaseController
                     'em_status' => '1',
                 ];
                 em_log($emLog);
-                return redirect()->to('emails/reply_email/'.encryptIt($id));
+                return redirect()->to('emails/reply_email/' . encryptIt($id));
             } else {
                 $session->setFlashdata('error', 'Email Failed, might be issue in your Internet');
                 $emLog = [
@@ -394,7 +406,7 @@ class emails extends EMBaseController
                     'em_status' => '0',
                 ];
                 em_log($emLog);
-                return redirect()->to('emails/reply_email/'.encryptIt($id));
+                return redirect()->to('emails/reply_email/' . encryptIt($id));
             }
         }
     }
@@ -405,7 +417,7 @@ class emails extends EMBaseController
         if ($this->request->getMethod() == 'post') {
             $to = $this->request->getVar('email_to');
             $subject = $this->request->getVar('subject');
-            $inReplyTo ='';
+            $inReplyTo = '';
             $cc = $this->request->getVar('cc');
             $bcc = $this->request->getVar('bcc');
             $message = $this->request->getVar('body');
@@ -510,18 +522,18 @@ class emails extends EMBaseController
             // }
             // $attachments .= '<ul>';
             $hasAttachments = $email->hasAttachments();
-            if(isset($email->headers->to[0]->mailbox)){
-            $mail = $email->headers->to[0]->mailbox;
-            $host = $email->headers->to[0]->host;
-            $to = $mail.'@'.$host;
-            }else{
+            if (isset($email->headers->to[0]->mailbox)) {
+                $mail = $email->headers->to[0]->mailbox;
+                $host = $email->headers->to[0]->host;
+                $to = $mail . '@' . $host;
+            } else {
                 $mail = $email->headers->bcc[0]->mailbox;
-            $host = $email->headers->bcc[0]->host;
-            $to = $mail.'@'.$host;
+                $host = $email->headers->bcc[0]->host;
+                $to = $mail . '@' . $host;
             }
             // $tt  = $email->headers;
             // var_dump($to);
-            
+
             $emails[] = [
                 'id' => $email->id,
                 'subject' => $email->subject,
@@ -552,7 +564,7 @@ class emails extends EMBaseController
         $data['totalPages'] = $totalPages;
 
         // Load the inbox view with the retrieved emails and pagination data
-        return $this->LoadView('emails/sent-mail',$data);
+        return $this->LoadView('emails/sent-mail', $data);
     }
     public function view_SentEmail($id = null)
     {
@@ -588,20 +600,20 @@ class emails extends EMBaseController
             }
 
             $attachmentLinks .= '</ul>';
-            if(!empty($email->textHtml)){
+            if (!empty($email->textHtml)) {
                 $hbody = $email->textHtml;
-            }else{
+            } else {
                 $tbody = $email->textPlain;
             }
-            if(isset($email->headers->to[0]->mailbox)){
+            if (isset($email->headers->to[0]->mailbox)) {
                 $mail = $email->headers->to[0]->mailbox;
                 $host = $email->headers->to[0]->host;
-                $to = $mail.'@'.$host;
-                }else{
-                    $mail = $email->headers->bcc[0]->mailbox;
+                $to = $mail . '@' . $host;
+            } else {
+                $mail = $email->headers->bcc[0]->mailbox;
                 $host = $email->headers->bcc[0]->host;
-                $to = $mail.'@'.$host;
-                }
+                $to = $mail . '@' . $host;
+            }
             $emailData = [
                 'id' => $email->id,
                 'subject' => $email->subject,
